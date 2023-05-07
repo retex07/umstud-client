@@ -1,5 +1,18 @@
 @use "variables";
 
 :root {
+  --color-derk-text: #{variables.$color__black-text};
+  --color-gray-text: #{variables.$color__gray-text};
 
+  --color-gray: #{variables.$color__gray};
+  --color-gray-light: #{variables.$color__gray-light};
+
+  --color-white: #{variables.$color__white};
+  --color-green: #{variables.$color__green};
+  --color-yellow: #{variables.$color__yellow};
+  --color-red: #{variables.$color__red};
+  --color-red-light: #{variables.$color__red-light};
+
+  --color-blue: #{variables.$color__blue};
+  --color-blue-dark: #{variables.$color__blue-dark};
 }
