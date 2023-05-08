@@ -1,0 +1,99 @@
+@use "css-variables";
+
+// Figma name: Заголовки главной страницы
+@mixin main_heading {
+  font-size: 36px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 1.2;
+  color: var(--color-derk-text);
+}
+// Figma name: Подзаголовки главной (и авторизации)
+@mixin main_subtitle {
+  font-size: 28px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 1.2;
+  color: var(--color-derk-text);
+}
+
+// Figma name: Заголовки страниц
+@mixin page_head {
+  font-size: 26px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 1.2;
+  color: var(--color-derk-text);
+}
+
+// Figma name: Подзаголовки страниц
+@mixin page_subtitle {
+  font-size: 20px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 1.2;
+  color: var(--color-derk-text);
+}
+
+// Figma name: Обычный текст
+@mixin ordinary {
+  font-size: 17px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.2;
+  color: var(--color-derk-text);
+}
+
+// Figma name: Подзаголовки к обычному тексту
+@mixin ordinary_subtitle {
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.2;
+  color: var(--color-derk-text);
+}
+
+// Figma name: Описание
+@mixin description {
+  font-size: 14px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.2;
+  color: var(--color-derk-text);
+}
+
+// Figma name: Подписи
+@mixin signature {
+  font-size: 12px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.2;
+  color: var(--color-derk-text);
+}
+
+// Figma name: Текст кнопки (big)
+@mixin button_big {
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 1.2;
+  color: var(--color-derk-text);
+}
+
+// Figma name: Текст кнопки (middle)
+@mixin button_middle {
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 1.2;
+  color: var(--color-derk-text);
+}
+
+// Figma name: Текст кнопки (small)
+@mixin button_small {
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 1.2;
+  color: var(--color-derk-text);
+}
