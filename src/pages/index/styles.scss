@@ -1,0 +1,40 @@
+@use "src/styles/typography";
+@use "src/styles/css-variables";
+
+.index-page {
+  display: flex;
+}
+
+.head-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 100px 250px;
+  width: 100%;
+
+  background: linear-gradient(103.13deg, #0567FF 0%, #3C42CC 100%);
+}
+.head-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.head-text-container {
+  display: flex;
+  flex-direction: column;
+
+  gap: 30px;
+
+  max-width: 460px;
+}
+
+.heading {
+  @include typography.main_heading;
+  color: var(--color-white);
+}
+
+.subtitle {
+  @include typography.main_subtitle;
+  color: var(--color-white);
+}
