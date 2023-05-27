@@ -13,16 +13,21 @@ interface Props {
   disabled?: boolean;
   onClick?: () => void;
   onChange?: ({ ...event }) => void;
-  afterItem?: ReactNode;
-  isWarning?: boolean;
+  icon?: ReactNode;
+  hasError?: boolean;
+  errorMessage?: string;
   fullWidth?: boolean;
   readonly?: boolean;
+  placeholder?: string;
 }
 
 export default function Input(props: Props) {
   const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
+
   const {
-    isWarning,
+    hasError,
+    errorMessage,
+    placeholder,
     fullWidth,
     classNames,
     name,
@@ -30,7 +35,7 @@ export default function Input(props: Props) {
     disabled,
     onChange,
     onClick,
-    afterItem,
+    icon,
     readonly,
     type,
   } = props;
@@ -47,7 +52,7 @@ export default function Input(props: Props) {
       <div
         className={cn("input--container", classNames, {
           "input--container--full-width": fullWidth,
-          "input--container--warning": isWarning,
+          "input--container--warning": hasError,
         })}
       >
         <input
@@ -58,10 +63,11 @@ export default function Input(props: Props) {
           onChange={onChange}
           onClick={onClick}
           readOnly={readonly}
+          placeholder={placeholder}
           className="input--select-from"
         />
-        {afterItem && type != "password" && (
-          <div className="input--after-icon">{afterItem}</div>
+        {icon && type != "password" && (
+          <div className="input--after-icon">{icon}</div>
         )}
         {type == "password" && (
           <div
@@ -72,10 +78,10 @@ export default function Input(props: Props) {
           </div>
         )}
       </div>
-      {isWarning && (
+      {hasError && (
         <div className="input--warning">
           <Warning />
-          <label>Ошибка</label>
+          <label>{errorMessage}</label>
         </div>
       )}
     </div>
