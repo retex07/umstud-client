@@ -1,5 +1,5 @@
 import React, { StrictMode, Suspense } from "react";
-import { render } from "react-dom";
+import ReactDOM from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
 import { Router } from "react-router-dom";
@@ -18,7 +18,11 @@ const queryClient = new QueryClient({
   },
 });
 
-render(
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
+
+root.render(
   <StrictMode>
     <Suspense fallback={<>Loading...</>}>
       <QueryClientProvider client={queryClient}>
@@ -29,6 +33,5 @@ render(
         </Provider>
       </QueryClientProvider>
     </Suspense>
-  </StrictMode>,
-  document.getElementById("root")
+  </StrictMode>
 );
