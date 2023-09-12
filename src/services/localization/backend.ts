@@ -22,7 +22,7 @@ const Backend: BackendModule = {
       })
       .join("/");
 
-    import(`constants/localeResources/${path}/${language}.json`)
+    import(`/src/constants/localeResources/${path}/${language}.json`)
       .then((resources) => callback(null, resources))
       .catch((error) => callback(error, null));
   },

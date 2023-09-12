@@ -1,11 +1,11 @@
-import i18next from "i18next";
+import i18n from "i18next";
 import languageDetector from "i18next-browser-languagedetector";
 import intervalPlural from "i18next-intervalplural-postprocessor";
 import { initReactI18next } from "react-i18next";
 
 import Backend from "./backend";
 
-i18next
+i18n
   .use(initReactI18next)
   .use(languageDetector)
   .use(intervalPlural)
@@ -18,4 +18,4 @@ i18next
     },
   });
 
-export default i18next;
+export default i18n;

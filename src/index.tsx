@@ -5,10 +5,10 @@ import { Provider } from "react-redux";
 import { Router } from "react-router-dom";
 import { history } from "services/router";
 import Store from "store/index";
+import "./services/localization";
+import "./index.scss";
 
 import App from "./App";
-
-import "./index.scss";
 
 const queryClient = new QueryClient({
   defaultOptions: {
