@@ -1,0 +1,22 @@
+{
+  "navigation": {
+    "title": "Навигация",
+    "main": "Главная",
+    "services": "Услуги",
+    "orders": "Заказы",
+    "forum": "Форум",
+    "account": "Личный кабинет",
+    "rating": "Рейтинг"
+  },
+  "socialNetwork": "Мы в социальных сетях",
+  "contacts": "Связаться с нами",
+  "other": {
+    "title": "Другое",
+    "privacyPolicy": "Политика конфиденциальности",
+    "userAgreement": "Пользовательское соглашение",
+    "aboutPayment": "Об оплате",
+    "secureTransaction": "Безопасная сделка",
+    "guarantees": "Гарантии",
+    "reviews": "Отзывы"
+  }
+}

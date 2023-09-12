@@ -1,0 +1,50 @@
+@use "src/styles/typography";
+
+.footer {
+  padding: 20px 46px;
+
+  background: var(--gradient-blue-two);
+
+  &--wrapper {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+  }
+
+  &--info-section {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+  }
+
+  &--definition-term {
+    @include typography.page_subtitle;
+
+    cursor: pointer;
+    color: var(--color-white);
+
+    margin-bottom: 6px;
+  }
+
+  &--definition-details {
+    display: flex;
+
+    align-items: center;
+    margin-bottom: 6px;
+    gap: 4px;
+
+    &--description {
+      @include typography.ordinary_subtitle;
+
+      cursor: pointer;
+      color: var(--color-white);
+    }
+  }
+
+  &--description-system {
+    @extend .footer--definition-term;
+    margin: auto 0 0 0;
+  }
+}

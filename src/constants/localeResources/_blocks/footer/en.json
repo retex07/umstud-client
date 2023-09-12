@@ -1,0 +1,22 @@
+{
+  "navigation": {
+    "title": "Navigation",
+    "main": "Main page",
+    "services": "Services",
+    "orders": "Orders",
+    "forum": "Forum",
+    "account": "Personal account",
+    "rating": "Rating"
+  },
+  "socialNetwork": "We are in social networks",
+  "contacts": "Contact us",
+  "other": {
+    "title": "Other",
+    "privacyPolicy": "Privacy policy",
+    "userAgreement": "User agreement",
+    "aboutPayment": "About payment",
+    "secureTransaction": "Secure transaction",
+    "guarantees": "Guarantees",
+    "reviews": "Reviews"
+  }
+}

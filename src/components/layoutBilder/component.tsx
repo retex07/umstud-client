@@ -1,3 +1,4 @@
+import Footer from "blocks/footer";
 import React, { LazyExoticComponent, ReactElement, Suspense } from "react";
 
 interface Props {
@@ -20,6 +21,7 @@ export default function LayoutBuilder(props: Props) {
   return (
     <Suspense fallback={<>Loading...</>}>
       <Component />
+      <Footer />
     </Suspense>
   );
 }
