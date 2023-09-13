@@ -1,0 +1,10 @@
+{
+  "navigation": {
+    "services": "Services",
+    "orders": "Orders",
+    "forum": "Forum",
+    "rating": "Rating",
+    "contacts": "Contacts"
+  },
+  "login": "Log-in"
+}

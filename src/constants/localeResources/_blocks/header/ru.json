@@ -1,0 +1,10 @@
+{
+  "navigation": {
+    "services": "Услуги",
+    "orders": "Заказы",
+    "forum": "Форум",
+    "rating": "Рейтинг",
+    "contacts": "Контакты"
+  },
+  "login": "Войти"
+}

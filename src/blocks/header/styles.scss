@@ -1,0 +1,61 @@
+@use "src/styles/typography";
+
+.header {
+  background: var(--gradient-blue-one);
+
+  &--wrapper {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+
+    padding: 10px 142px;
+  }
+
+  &--change-block {
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+  }
+}
+
+.navigation {
+  &--wrapper {
+  }
+  &--list {
+    display: flex;
+
+    gap: 71px;
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+  }
+
+  &--item-link {
+    @include typography.button_big;
+
+    text-decoration: none;
+    color: var(--color-white);
+  }
+}
+
+.language-block {
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+
+  path {
+    stroke: var(--color-white);
+  }
+
+  > svg {
+    max-width: 24px;
+    max-height: 24px;
+  }
+}
