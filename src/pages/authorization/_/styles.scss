@@ -1,0 +1,60 @@
+@use "styles/typography";
+
+.authorization {
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  &--wrapper {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 20px;
+    margin: 57px 20px;
+    padding: 20px 40px;
+    width: 100%;
+    max-width: 394px;
+
+    border-radius: 26px;
+    background-color: var(--color-white);
+  }
+
+  &--heading {
+    @include typography.main_subtitle;
+    color: var(--color-derk-text);
+  }
+
+  &--actions {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    gap: 18px;
+    svg {
+      width: 100%;
+    }
+  }
+
+  &--description {
+    @include typography.signature;
+    text-align: center;
+    color: var(--color-gray-text);
+  }
+  &--action-text {
+    @include typography.description;
+    text-align: center;
+    color: var(--color-gray-text);
+  }
+
+  &--form-submit {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+    width: 100%;
+  }
+}

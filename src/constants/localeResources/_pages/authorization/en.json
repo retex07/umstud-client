@@ -1,0 +1,38 @@
+{
+  "login": {
+    "title": "Login"
+  },
+  "register": {
+    "title": "Register"
+  },
+  "actions": {
+    "login": "Log In",
+    "register": "Register",
+    "or": "or",
+    "username": {
+      "title": "Nickname",
+      "press": "Enter your nickname"
+    },
+    "email": {
+      "title": "Email",
+      "press": "Enter your email"
+    },
+    "password": {
+      "title": "Password",
+      "press": "Enter your password"
+    },
+    "repeatPassword": {
+      "title": "Repeat Password",
+      "press": "Repeat your password"
+    },
+    "firstname": {
+      "title": "First Name",
+      "press": "Enter your first name"
+    },
+    "lastname": {
+      "title": "Last Name",
+      "press": "Enter your last name"
+    }
+  },
+  "police": "By registering and logging in, you agree to the terms of service and data processing policy"
+}
