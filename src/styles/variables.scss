@@ -20,14 +20,21 @@ $color__gray-text: hsl(0, 0%, 38%);
 $color__gray: hsl(0, 0%, 80%);
 // Figma name: Свело-серый (hex #F8F8F8)
 $color__gray-light: hsl(0, 0%, 97%);
+// Figma name: Прозрачный-серый (hex #CDCDCD2B 17%)
+$color__gray-transparent: rgba(205, 205, 205, 0.17);
+// Figma name: Модальный-серый (hex #000000 30%)
+$color__gray-modal: rgba(0, 0, 0, 0.30);
 
 // Figma name: Желтый (hex #FAFF00)
 $color__yellow: hsl(61, 100%, 50%);
+// Figma name: Тёмно-желтый (hex #DEE114FF)
+$color__yellow-dark: hsl(61, 84%, 48%);
 
 // Figma name: Красный (hex #D90000)
 $color__red: hsl(0, 100%, 43%);
 // Figma name: Светло-красный (hex #FFE2E2)
 $color__red-light: hsl(0, 100%, 94%);
 
-$gradient__blue-one: linear-gradient(269deg, #0467FF 0%, #3C42CB 119.04%);
-$gradient__blue-two: linear-gradient(92deg, #0E64FA 0%, #3945D0 100%);
+$gradient__blue: linear-gradient(92deg, #0E64FA 0%, #3945D0 100%);
+
+$font-size-default: 16;
