@@ -1,3 +1,5 @@
+import { CONFIG_SYSTEM } from "constants/config";
+
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { ReactComponent as LogoSvg } from "static/images/logo.svg";
@@ -47,7 +49,9 @@ export default function Footer() {
             </a>
           </dd>
         </dl>
-        <LogoSvg />
+        <div className="footer--logo-web">
+          <LogoSvg />
+        </div>
       </section>
       <section className="footer--info-section">
         <dl>
@@ -69,17 +73,19 @@ export default function Footer() {
           <dd className="footer--definition-details">
             <MailSvg />
             <span className="footer--definition-details--description">
-              support@helpup.ru
+              {CONFIG_SYSTEM.mail}
             </span>
           </dd>
           <dd className="footer--definition-details">
             <PhoneSvg />
             <span className="footer--definition-details--description">
-              +7(923)491-20-64
+              {CONFIG_SYSTEM.phone}
             </span>
           </dd>
         </dl>
-        <p className="footer--description-system">©2023 «УмСтуд»</p>
+        <p className="footer--description-system-web">
+          {CONFIG_SYSTEM.nameSystem}
+        </p>
       </section>
       <section className="footer--info-section">
         <dl>
@@ -115,6 +121,12 @@ export default function Footer() {
             </a>
           </dd>
         </dl>
+        <div className="footer--logo-mobile">
+          <LogoSvg />
+          <p className="footer--description-system-mobile">
+            {CONFIG_SYSTEM.nameSystem}
+          </p>
+        </div>
       </section>
     </footer>
   );

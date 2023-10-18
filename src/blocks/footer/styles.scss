@@ -3,11 +3,19 @@
 .footer {
   padding: 20px 46px;
 
-  background: var(--gradient-blue-two);
+  background: var(--gradient-blue);
+
+  margin-bottom: 0;
+  margin-top: auto;
 
   &--wrapper {
     display: flex;
     flex-direction: row;
+
+    @media screen and (max-width: 1220px) {
+      flex-direction: column;
+      gap: 18px;
+    }
 
     justify-content: space-between;
   }
@@ -15,6 +23,12 @@
   &--info-section {
     display: flex;
     flex-direction: column;
+
+    @media screen and (max-width: 1220px) {
+      align-items: center;
+      text-align: center;
+      gap: 18px;
+    }
 
     gap: 2px;
   }
@@ -35,6 +49,11 @@
     margin-bottom: 6px;
     gap: 4px;
 
+    @media screen and (max-width: 1220px) {
+      justify-content: center;
+      margin: 0;
+    }
+
     &--description {
       @include typography.ordinary_subtitle;
 
@@ -43,8 +62,31 @@
     }
   }
 
-  &--description-system {
+  &--description-system-web {
     @extend .footer--definition-term;
     margin: auto 0 0 0;
+
+    @media screen and (max-width: 1220px) {
+      display: none;
+    }
+  }
+  &--description-system-mobile {
+    @extend .footer--definition-term;
+    margin: auto 0 0 0;
+
+    @media screen and (min-width: 1220px) {
+      display: none;
+    }
+  }
+
+  &--logo-web {
+    @media screen and (max-width: 1220px) {
+      display: none;
+    }
+  }
+  &--logo-mobile {
+    @media screen and (min-width: 1220px) {
+      display: none;
+    }
   }
 }
