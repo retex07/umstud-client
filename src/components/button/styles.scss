@@ -1,0 +1,115 @@
+@use "src/styles/typography";
+
+.button {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  &--full-width {
+    width: 100%;
+  }
+
+  &--loading-icon {
+    display: inline-flex;
+
+    align-items: center;
+
+    margin-right: 0.5em;
+  }
+
+  &--small {
+    @include typography.button_small;
+
+    padding: 10px 12px;
+  }
+  &--middle {
+    @include typography.button_middle;
+
+    padding: 12px 14px;
+  }
+  &--big {
+    @include typography.button_big;
+
+    padding: 14px 16px;
+  }
+
+  &--blue {
+    background: var(--color-blue);
+    color: var(--color-white);
+    border: 2px solid var(--color-blue);
+    transition: 0.2s;
+
+    &--is-transparent {
+      background: transparent;
+      color: var(--color-blue);
+      border: 2px solid var(--color-blue);
+      transition: 0.3s;
+    }
+    &:hover {
+      @extend .button--blue--is-transparent;
+    }
+  }
+  &--blue-dark {
+    background: var(--color-blue-dark);
+    color: var(--color-white);
+    border: 2px solid var(--color-blue-dark);
+    transition: 0.2s;
+
+    &--is-transparent {
+      background: transparent;
+      color: var(--color-blue-dark);
+      transition: 0.3s;
+    }
+    &:hover {
+      @extend .button--blue-dark--is-transparent;
+    }
+  }
+  &--green {
+    background: var(--color-green);
+    color: var(--color-white);
+    border: 2px solid var(--color-green);
+    transition: 0.2s;
+
+    &--is-transparent {
+      background: transparent;
+      color: var(--color-green);
+      transition: 0.3s;
+    }
+    &:hover {
+      @extend .button--green--is-transparent;
+    }
+  }
+  &--red {
+    background: var(--color-red);
+    color: var(--color-white);
+    border: 2px solid var(--color-red);
+    transition: 0.2s;
+
+    &--is-transparent {
+      background: transparent;
+      color: var(--color-red);
+      transition: 0.3s;
+    }
+    &:hover {
+      @extend .button--red--is-transparent;
+    }
+  }
+  &--yellow {
+    background: var(--color-yellow-dark);
+    color: var(--color-white);
+    border: 2px solid var(--color-yellow-dark);
+    transition: 0.2s;
+
+    &--is-transparent {
+      background: transparent;
+      color: var(--color-yellow-dark);
+      transition: 0.3s;
+    }
+    &:hover {
+      @extend .button--yellow--is-transparent;
+    }
+  }
+}
