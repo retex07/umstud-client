@@ -1,19 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink } from "react-router-dom";
+import { ReactComponent as CloseMenuSvg } from "static/images/exit.svg";
 import { ReactComponent as LanguageSvg } from "static/images/language.svg";
 import { ReactComponent as LogoSvg } from "static/images/logo.svg";
+import { ReactComponent as AlignMenuSvg } from "static/images/menu-align.svg";
 import "./styles.scss";
 
 export default function Header() {
+  const [isOpenSideBar, setIsOpenSideBar] = useState(false);
   const { t } = useTranslation("b_header");
+
+  useEffect(() => {
+    document.body.style.overflow = isOpenSideBar ? "hidden" : "auto";
+  }, [isOpenSideBar]);
+
+  const header = document.querySelector("header");
+  window.addEventListener("scroll", (e) => {
+    if (e.target && header && window.scrollY > 0) {
+      header.classList.add("scroll");
+    } else {
+      if (header) {
+        header.classList.remove("scroll");
+      }
+    }
+  });
 
   function renderNavigation() {
     return (
-      <nav className="navigation--wrapper">
+      <nav>
         <ul className="navigation--list">
           <li>
-            <NavLink to="/sevices" className="navigation--item-link">
+            <NavLink to="/" className="navigation--item-link">
+              {t("navigation.index")}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/services" className="navigation--item-link">
               {t("navigation.services")}
             </NavLink>
           </li>
@@ -43,18 +66,35 @@ export default function Header() {
   }
 
   return (
-    <header className="header header--wrapper">
-      <Link to="/">
-        <LogoSvg />
-      </Link>
-      {renderNavigation()}
-      <div className="header--change-block">
-        <div className="language-block">
-          <LanguageSvg />
+    <header className="header">
+      <div className="header--wrapper">
+        <div className="mobile-menu">
+          <input
+            type="checkbox"
+            id="sidebar-checkbox"
+            checked={isOpenSideBar}
+            onChange={() => setIsOpenSideBar(!isOpenSideBar)}
+            hidden
+          />
+          <label htmlFor="sidebar-checkbox" className="mobile-menu-icon">
+            {isOpenSideBar ? <CloseMenuSvg /> : <AlignMenuSvg />}
+          </label>
         </div>
-        <Link to="#" className="navigation--item-link">
-          {t("login")}
+        <Link to="/">
+          <LogoSvg />
         </Link>
+        <div className="navigation--wrapper">{renderNavigation()}</div>
+        <div className="header--change-block">
+          <div className="language-block">
+            <LanguageSvg />
+          </div>
+          <Link to="/sign-in" className="log-in">
+            {t("login")}
+          </Link>
+        </div>
+      </div>
+      <div className={`sidebar ${isOpenSideBar ? "checked" : ""}`}>
+        {renderNavigation()}
       </div>
     </header>
   );
