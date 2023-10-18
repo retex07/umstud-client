@@ -10,5 +10,6 @@ export interface Route {
   settings: Pick<RouteProps, "exact" | "strict" | "sensitive">;
   layoutSettings: {
     withFooter?: boolean;
+    withHeader?: boolean;
   };
 }
