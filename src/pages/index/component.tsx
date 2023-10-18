@@ -1,90 +1,73 @@
+import Button from "components/button";
+import CardReview from "components/cardReview";
+import { REVIEWS } from "mocks/reviews";
 import React from "react";
-import { ReactComponent as ManWithBoardSvg } from "static/images/index/man-with-board.svg";
-import { ReactComponent as PhoneOneSvg } from "static/images/index/phone-one.svg";
-import { ReactComponent as PhoneThreeSvg } from "static/images/index/phone-three.svg";
-import { ReactComponent as PhoneTwoSvg } from "static/images/index/phone-two.svg";
-
+import { useTranslation } from "react-i18next";
+import { ReactComponent as ManSvg } from "static/images/index/man-with-board.svg";
+import { ReactComponent as TusurSvg } from "static/images/index/tusur.svg";
 import "./styles.scss";
 
 export default function IndexPage() {
+  const { t } = useTranslation("p_index");
+
   return (
-    <main>
-      <div>
-        <ManWithBoardSvg />
-        <header>
-          <h1>Помощь студентам - наша цель</h1>
-          <p>Мы имеем дело с превосходными исполнителями учебных работ</p>
+    <main className="index-page-container">
+      <section className="section-welcome">
+        <div className="section-welcome--wrapper">
+          <ManSvg />
+          <div className="section-welcome--info-block">
+            <h1 className="main-heading">{t("title")}</h1>
+            <h2 className="heading">{t("subtitle")}</h2>
+            <Button label={t("goWork")} />
+          </div>
+        </div>
+      </section>
+      <section className="section-container container">
+        <header className="partner--header">
+          <h2 className="sub-heading">{t("partners.title")}</h2>
+          <p className="description">{t("partners.description")}</p>
         </header>
-      </div>
-      <section>
-        <h2>Популярные виды работ</h2>
-        <p>Здесь собраны самые популярные работы, которые обожают студенты</p>
-        {[0, 1, 2, 3].map((comment) => (
-          <article key={comment}>
-            <h3>Контрольная работа</h3>
-            <p>Стоимость: </p>
-            <p>от 1000р</p>
-            <p>Сроки: </p>
-            <p>от 1 дня</p>
-          </article>
-        ))}
-      </section>
-      <section>
-        <h2>Наши преимущества</h2>
-        <p>Главные преимущества, которые отделяют нас от конкурентов</p>
-        <div>
-          <p>Проверка работ на плагиат</p>
-          <p>Рейтинговая система</p>
-          <p>Оплата не только деньгами</p>
-        </div>
-      </section>
-      <section>
-        <h2>Как это работает?</h2>
-        <p>Убедитесь в том, что это очень просто!</p>
-        <div>
-          <div>
-            <div>
-              <div>1</div>
-              <p>Сфотографируй или опиши словами своё задание</p>
+        <div className="partner--list">
+          <div className="partner--item">
+            <div className="partner--logo">
+              <TusurSvg />
             </div>
-            <PhoneOneSvg />
+            <p className="partner--description">{t("partners.tusur")}</p>
           </div>
-          <div>
-            <div>
-              <div>2</div>
-              <p>Выбери эксперта и обсуди задание в чате</p>
+          <div className="partner--item">
+            <div className="partner--logo">
+              <img
+                src={require("static/images/index/sbi-tusur.png")}
+                alt="sbi-tusur"
+              />
             </div>
-            <PhoneTwoSvg />
-          </div>
-          <div>
-            <div>
-              <div>3</div>
-              <p>Получай развёрнутые ответы и решения</p>
-            </div>
-            <PhoneThreeSvg />
+            <p className="partner--description">{t("partners.sbi")}</p>
           </div>
         </div>
       </section>
-      <section>
-        <h2>Отзывы наших студентов</h2>
-        <p>Общий рейтинг: *****</p>
-        <p>34343434 отзывов</p>
-        {[0, 1, 2, 3].map((comment) => (
-          <article key={comment}>
-            <h3>Магомедик</h3>
-            <p>Комментарий</p>
-            <p>Слишком дорогой сервис!</p>
-            <p>3 марта 2023</p>
-          </article>
-        ))}
+      <section className="section-reviews section-reviews--wrapper">
+        <header className="section-reviews--header">
+          <h2 className="sub-heading">{t("reviews.title")}</h2>
+          <p className="section-reviews--description">{t("reviews.rating")}</p>
+        </header>
+        <div className="section-reviews--cards">
+          {REVIEWS.map((item, index) => (
+            <CardReview
+              key={index}
+              date={item.date}
+              author={item.author}
+              comment={item.comment}
+              countStars={item.countStars}
+            />
+          ))}
+        </div>
       </section>
-      <section>
-        <h2>Ответы на вопросы</h2>
-        <p>
-          Не нашли ответа на свой вопрос? Задайте его нам, и мы постараемся
-          быстро и четко на него ответить
-        </p>
-        <button>Задать вопрос</button>
+      <section className="section-answer-questions container">
+        <header className="section-answer-questions--header">
+          <h2 className="sub-heading">{t("support.title")}</h2>
+          <p className="description">{t("support.description")}</p>
+        </header>
+        <Button label={t("support.sendQuestion")} size="middle" />
       </section>
     </main>
   );

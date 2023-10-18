@@ -1,0 +1,20 @@
+{
+  "title": "Our Mission - Helping Students Achieve Success",
+  "subtitle": "Dealing with Exceptional Academic Performers",
+  "goWork": "Post a Job",
+  "partners": {
+    "title": "Trusted By",
+    "description": "Our partners recommend us because we offer high-quality products and services that meet their requirements and expectations. We work closely with partners to develop our joint projects and achieve mutual benefits.",
+    "tusur": "Tomsk State University of Control Systems and Radioelectronics",
+    "sbi": "First Student Business Incubator in Russia. A launching pad for successful companies in the fields of Information Technology and Electronics."
+  },
+  "reviews": {
+    "title": "Reviews",
+    "rating": "Overall Rating: 4.3"
+  },
+  "support": {
+    "title": "FAQs",
+    "description": "Didn't find an answer to your question? Ask us, and we'll strive to provide a quick and clear response.",
+    "sendQuestion": "Ask a Question"
+  }
+}
