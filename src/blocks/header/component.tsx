@@ -1,3 +1,4 @@
+import SwitchLanguage from "components/switchLanguage";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink } from "react-router-dom";
@@ -8,8 +9,9 @@ import { ReactComponent as AlignMenuSvg } from "static/images/menu-align.svg";
 import "./styles.scss";
 
 export default function Header() {
-  const [isOpenSideBar, setIsOpenSideBar] = useState(false);
   const { t } = useTranslation("b_header");
+  const [isOpenSideBar, setIsOpenSideBar] = useState(false);
+  const [isOpenSwitcher, setIsOpenSwitcher] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = isOpenSideBar ? "hidden" : "auto";
@@ -25,6 +27,13 @@ export default function Header() {
       }
     }
   });
+
+  function changeOpenSideBar() {
+    setIsOpenSideBar(!isOpenSideBar);
+  }
+  function changeOpenSwitcher() {
+    setIsOpenSwitcher(!isOpenSwitcher);
+  }
 
   function renderNavigation() {
     return (
@@ -73,7 +82,7 @@ export default function Header() {
             type="checkbox"
             id="sidebar-checkbox"
             checked={isOpenSideBar}
-            onChange={() => setIsOpenSideBar(!isOpenSideBar)}
+            onChange={changeOpenSideBar}
             hidden
           />
           <label htmlFor="sidebar-checkbox" className="mobile-menu-icon">
@@ -85,15 +94,16 @@ export default function Header() {
         </Link>
         <div className="navigation--wrapper">{renderNavigation()}</div>
         <div className="header--change-block">
-          <div className="language-block">
+          <div className="language-block" onClick={changeOpenSwitcher}>
             <LanguageSvg />
+            {isOpenSwitcher && <SwitchLanguage onClose={changeOpenSwitcher} />}
           </div>
           <Link to="/sign-in" className="log-in">
             {t("login")}
           </Link>
         </div>
       </div>
-      <div className={`sidebar ${isOpenSideBar ? "checked" : ""}`}>
+      <div className={`sidebar ${isOpenSideBar && "checked"}`}>
         {renderNavigation()}
       </div>
     </header>

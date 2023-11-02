@@ -95,15 +95,22 @@
 
 .log-in {
   @extend .navigation--item-link;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
 
   @media screen and (max-width: 1220px) {
     content: url("../../static/images/log-in.svg");
-
     max-width: 24px;
   }
 }
 
 .language-block {
+  position: relative;
+
   display: flex;
   align-items: center;
 

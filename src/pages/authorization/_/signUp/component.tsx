@@ -24,7 +24,7 @@ export default function SignUpPage() {
   }
 
   return (
-    <div className="page-container authorization">
+    <div id="page" className="page-container authorization">
       <div className="authorization--wrapper">
         <h1 className="authorization--heading">{t("register.title")}</h1>
         <form

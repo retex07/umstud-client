@@ -11,7 +11,7 @@ export default function IndexPage() {
   const { t } = useTranslation("p_index");
 
   return (
-    <main className="index-page-container">
+    <main id="page" className="index-page-container">
       <section className="section-welcome">
         <div className="section-welcome--wrapper">
           <ManSvg />
