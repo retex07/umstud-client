@@ -5,14 +5,17 @@ import Field from "components/formElements/field";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import { ReactComponent as LineSvg } from "static/images/line.svg";
+import { getBasePath } from "utils/router.utils";
 import "../styles.scss";
 
 export default function SignInPage() {
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation("p_authorization");
+  const { path } = useRouteMatch();
 
+  const basePath = getBasePath(path);
   const login = useLogin();
   const history = useHistory();
 
@@ -71,7 +74,6 @@ export default function SignInPage() {
             type="submit"
             fullWidth
             label={t("actions.login")}
-            onClick={() => history.push("/sign-in")}
             isLoading={isLoading}
           />
         </form>
@@ -86,7 +88,7 @@ export default function SignInPage() {
             label={t("actions.register")}
             fullWidth
             isTransparent
-            onClick={() => history.push("/sign-up")}
+            onClick={() => history.push(basePath + "/sign-up")}
           />
           <p className="authorization--description">{t("police")}</p>
         </div>

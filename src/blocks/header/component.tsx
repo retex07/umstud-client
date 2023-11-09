@@ -98,7 +98,7 @@ export default function Header() {
             <LanguageSvg />
             {isOpenSwitcher && <SwitchLanguage onClose={changeOpenSwitcher} />}
           </div>
-          <Link to="/sign-in" className="log-in">
+          <Link to="/auth/sign-in" className="log-in">
             {t("login")}
           </Link>
         </div>

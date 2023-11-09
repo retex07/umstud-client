@@ -5,6 +5,7 @@ import { Route } from "./types";
 const IndexPageResolver = lazy(() => import("pages/index"));
 const ServicesPageResolver = lazy(() => import("pages/services"));
 const AuthorizationPageResolver = lazy(() => import("pages/authorization"));
+const ProfilePageResolver = lazy(() => import("pages/profile/resolver"));
 
 const Routes: Route[] = [
   {
@@ -16,16 +17,8 @@ const Routes: Route[] = [
     layoutSettings: {},
   },
   {
-    path: "/services",
-    component: ServicesPageResolver,
-    settings: {
-      exact: false,
-    },
-    layoutSettings: {},
-  },
-  {
-    path: "/sign-in",
-    component: AuthorizationPageResolver,
+    path: "/profile",
+    component: ProfilePageResolver,
     settings: {
       exact: false,
     },
@@ -35,7 +28,15 @@ const Routes: Route[] = [
     },
   },
   {
-    path: "/sign-up",
+    path: "/services",
+    component: ServicesPageResolver,
+    settings: {
+      exact: false,
+    },
+    layoutSettings: {},
+  },
+  {
+    path: "/auth",
     component: AuthorizationPageResolver,
     settings: {
       exact: false,

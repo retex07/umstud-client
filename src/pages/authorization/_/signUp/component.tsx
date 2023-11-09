@@ -1,18 +1,20 @@
-import useRegister from "api/mutations/api/register";
 import { Register_RequestBody } from "api/mutations/api/register/types";
 import Button from "components/button";
 import Field from "components/formElements/field";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import { ReactComponent as LineSvg } from "static/images/line.svg";
+import { getBasePath } from "utils/router.utils";
 import "../styles.scss";
 
 export default function SignUpPage() {
   const { t } = useTranslation("p_authorization");
+  const { path } = useRouteMatch();
 
-  const register = useRegister();
+  const basePath = getBasePath(path);
+  // const register = useRegister();
   const history = useHistory();
 
   const { control, handleSubmit, formState } = useForm<Register_RequestBody>({
@@ -102,7 +104,7 @@ export default function SignUpPage() {
           fullWidth
           isTransparent
           label={t("actions.login")}
-          onClick={() => history.push("/sign-in")}
+          onClick={() => history.push(basePath + "/sign-in")}
         />
       </div>
     </div>
