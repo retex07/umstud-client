@@ -81,8 +81,8 @@
     flex-direction: row;
 
     align-items: center;
-   margin-top: 4px;
-    gap: 8px;
+    margin: 4px 0 0 2px;
+    gap: 4px;
 
     width: 100%;
 
@@ -90,13 +90,13 @@
       max-width: 16px;
       max-height: 16px;
     }
-    > svg path {
+    > svg, path {
       fill: var(--color-red);
     }
   }
 
   &--label-warning {
-    @include typography.ordinary;
+    @include typography.signature;
     color: var(--color-red);
   }
 }
