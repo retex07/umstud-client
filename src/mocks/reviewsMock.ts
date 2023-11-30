@@ -1,4 +1,4 @@
-export const REVIEWS = [
+export const ReviewsMock = [
   {
     date: "3 марта 2023",
     author: "Александр",

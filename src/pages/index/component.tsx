@@ -1,6 +1,6 @@
 import Button from "components/button";
 import CardReview from "components/cardReview";
-import { REVIEWS } from "mocks/reviews";
+import { ReviewsMock } from "mocks/reviewsMock";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { ReactComponent as ManSvg } from "static/images/index/man-with-board.svg";
@@ -51,7 +51,7 @@ export default function IndexPage() {
           <p className="section-reviews--description">{t("reviews.rating")}</p>
         </header>
         <div className="section-reviews--cards">
-          {REVIEWS.map((item, index) => (
+          {ReviewsMock.map((item, index) => (
             <CardReview
               key={index}
               date={item.date}
