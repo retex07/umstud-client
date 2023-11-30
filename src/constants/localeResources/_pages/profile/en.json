@@ -1,0 +1,14 @@
+{
+  "index": {
+    "birth": "Date of birth:",
+    "phone": "Phone:",
+    "email": "Mail:",
+    "workPlace": "Place of study/work:",
+    "skills": "Skills",
+    "about": "About me",
+    "exampleTasks": {
+      "title": "Examples of works",
+      "nothing": "There's nothing here yet"
+    }
+  }
+}

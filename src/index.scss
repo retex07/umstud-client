@@ -39,6 +39,7 @@ h4,
 h5,
 h6,
 dl,
+ul,
 p {
   margin: 0;
 
@@ -60,4 +61,17 @@ input::-ms-clear {
 
 .page-container {
   margin-top: 60px;
+}
+
+.page-content-wrapper {
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  gap: 20px;
+  padding: 20px 40px;
+
+  border-radius: 26px;
+  background: var(--color-white);
 }
