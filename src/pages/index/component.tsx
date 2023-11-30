@@ -1,5 +1,5 @@
 import Button from "components/button";
-import CardReview from "components/cardReview";
+import CardReview from "components/cards/cardReview";
 import { ReviewsMock } from "mocks/reviewsMock";
 import React from "react";
 import { useTranslation } from "react-i18next";
