@@ -1,0 +1,7 @@
+{
+  "form": {
+    "rules": {
+      "required": "The field is required to fill in"
+    }
+  }
+}

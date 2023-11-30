@@ -14,8 +14,8 @@
       "press": "Enter your nickname"
     },
     "email": {
-      "title": "Email",
-      "press": "Enter your email"
+      "title": "Login",
+      "press": "Enter your email or username"
     },
     "password": {
       "title": "Password",

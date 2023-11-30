@@ -2,30 +2,35 @@ import useLogin from "api/mutations/api/login";
 import { Login_RequestBody } from "api/mutations/api/login/types";
 import Button from "components/button";
 import Field from "components/formElements/field";
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { ReactComponent as LineSvg } from "static/images/line.svg";
+import { Dispatch } from "store/types";
+import { actions as userActions } from "store/user";
 import { getBasePath } from "utils/router.utils";
 import "../styles.scss";
 
 export default function SignInPage() {
-  const [isLoading, setIsLoading] = useState(false);
-  const { t } = useTranslation("p_authorization");
   const { path } = useRouteMatch();
+  const { t } = useTranslation("p_authorization");
+  const { t: tRules } = useTranslation("translation", {
+    keyPrefix: "form.rules",
+  });
 
+  const dispatch = useDispatch<Dispatch>();
   const basePath = getBasePath(path);
   const login = useLogin();
   const history = useHistory();
 
-  const { control, handleSubmit, formState, reset, setError } =
+  const { control, handleSubmit, formState, setError } =
     useForm<Login_RequestBody>({
-      reValidateMode: "onSubmit",
+      mode: "onSubmit",
     });
 
   function onValidSubmit(data: Login_RequestBody) {
-    setIsLoading(true);
     login.mutate(
       {
         data: {
@@ -34,11 +39,19 @@ export default function SignInPage() {
         },
       },
       {
-        onSuccess: () => {
-          setIsLoading(false);
-          reset();
+        onSuccess: (res) => {
+          dispatch(userActions.login(res.data));
         },
-        onError: (err) => setError("login", { message: err.message }),
+        onError: (err) => {
+          if (err.response?.data.message) {
+            setError("login", {
+              message: err.response.data.message,
+            });
+            setError("password", {
+              message: err.response.data.message,
+            });
+          }
+        },
       }
     );
   }
@@ -50,7 +63,6 @@ export default function SignInPage() {
         <form
           className="authorization--form-submit"
           onSubmit={handleSubmit(onValidSubmit)}
-          onReset={() => reset()}
         >
           <Field
             name="login"
@@ -59,6 +71,9 @@ export default function SignInPage() {
             label={t("actions.email.title")}
             placeholder={t("actions.email.press")}
             readonly={formState.isSubmitted}
+            rules={{
+              required: tRules("required"),
+            }}
           />
           <Field
             name="password"
@@ -68,13 +83,15 @@ export default function SignInPage() {
             label={t("actions.password.title")}
             placeholder={t("actions.password.press")}
             readonly={formState.isSubmitted}
+            rules={{
+              required: tRules("required"),
+            }}
           />
           <Button
             size="big"
             type="submit"
             fullWidth
             label={t("actions.login")}
-            isLoading={isLoading}
           />
         </form>
         <div className="authorization--actions">

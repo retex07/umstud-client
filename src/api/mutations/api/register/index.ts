@@ -4,11 +4,15 @@ import { PureResponse } from "api/types";
 import { AxiosError, AxiosResponse, CancelToken } from "axios";
 import { useMutation, UseMutationOptions } from "react-query";
 
-import { Register_RequestBody, Register_Response } from "./types";
+import {
+  Register_ErrorBody,
+  Register_RequestBody,
+  Register_Response,
+} from "./types";
 
 type Data = AxiosResponse<Register_Response>;
 
-type Error = AxiosError<{ code: string; message: string }>;
+type Error = AxiosError<Register_ErrorBody>;
 
 interface Variables {
   data: Register_RequestBody;
