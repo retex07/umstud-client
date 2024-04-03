@@ -117,7 +117,7 @@
   }
 }
 
-.partner {
+.type-work {
   &--header {
     display: flex;
     flex-direction: column;
@@ -129,9 +129,32 @@
     }
   }
 
-  &--list {
+  &--info-wrapper {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: 26px;
+  }
+
+  &--problems {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    &-title {
+      @include typography.page_subtitle;
+      color: var(--color-dark-text);
+    }
+
+    &-subtitle {
+      @include typography.ordinary;
+      color: var(--color-gray-text);
+    }
+  }
+
+  &--action {
+    display: inline-flex;
+    justify-content: center;
   }
 
   &--item {
@@ -177,7 +200,6 @@
 
 .section-answer-questions {
   @extend .section-container;
-
   margin-bottom: 40px;
 
   &--header {
@@ -190,22 +212,18 @@
 
 .main-heading {
   @include typography.main_heading;
-
   color: var(--color-white);
 }
 .heading {
   @include typography.main_subtitle;
-
   color: var(--color-white);
 }
 
 .sub-heading {
   @include typography.page_head;
-
   color: var(--color-dark-text);
 }
 .description {
   @include typography.ordinary;
-
   color: var(--color-dark-text);
 }

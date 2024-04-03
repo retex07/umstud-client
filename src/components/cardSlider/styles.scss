@@ -1,0 +1,18 @@
+.card-slider {
+  display: inline-flex;
+  align-items: center;
+  gap: 30px;
+
+  &--items {
+    display: inline-flex;
+    gap: 16px;
+  }
+
+  &--action {
+    cursor: pointer;
+    > svg, path {
+      max-width: 28px;
+      max-height: 28px;
+    }
+  }
+}

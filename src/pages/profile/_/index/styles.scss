@@ -3,7 +3,6 @@
 .profile-index {
   display: flex;
   justify-content: center;
-  padding: 22px 16px;
   box-sizing: border-box;
 
   &--container {
@@ -24,11 +23,9 @@
 
   &--subtitle {
     @include typography.page_subtitle;
-    color: var(--color-derk-text);
   }
   &--text {
     @include typography.ordinary;
-    color: var(--color-gray-text);
   }
 
   &--ul {
@@ -60,11 +57,9 @@
 
     &--title {
       @include typography.page_head;
-      color: var(--color-derk-text);
     }
     &--description {
       @include typography.page_subtitle;
-      color: var(--color-derk-text);
     }
 
     &--description {

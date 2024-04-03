@@ -1,5 +1,8 @@
 import useRegister from "api/mutations/api/register";
-import { Register_RequestBody } from "api/mutations/api/register/types";
+import {
+  Register_ErrorBody,
+  Register_RequestBody,
+} from "api/mutations/api/register/types";
 import Button from "components/button";
 import Field from "components/formElements/field";
 import React from "react";
@@ -20,6 +23,16 @@ export default function SignUpPage() {
   const { t: tRules } = useTranslation("translation", {
     keyPrefix: "form.rules",
   });
+
+  type KeysOfRegister_RequestBody = keyof Register_RequestBody;
+  const keysRegisterRequest: KeysOfRegister_RequestBody[] = [
+    "username",
+    "email",
+    "password",
+    "password2",
+    "first_name",
+    "last_name",
+  ];
 
   const dispatch = useDispatch<Dispatch>();
   const basePath = getBasePath(path);
@@ -48,39 +61,21 @@ export default function SignUpPage() {
           dispatch(userActions.login(res.data));
         },
         onError: (err) => {
-          if (err.response?.data.email) {
-            setError("email", {
-              message: err.response.data.email[0],
-            });
-          }
-          if (err.response?.data.first_name) {
-            setError("first_name", {
-              message: err.response.data.first_name[0],
-            });
-          }
-          if (err.response?.data.last_name) {
-            setError("last_name", {
-              message: err.response.data.last_name[0],
-            });
-          }
-          if (err.response?.data.username) {
-            setError("username", {
-              message: err.response.data.username[0],
-            });
-          }
-          if (err.response?.data.password) {
-            setError("password", {
-              message: err.response.data.password[0],
-            });
-          }
-          if (err.response?.data.password2) {
-            setError("password2", {
-              message: err.response.data.password2[0],
+          if (err.response) {
+            Object.entries(err.response.data).map(([key, value]) => {
+              const typedKey = key as keyof Register_ErrorBody;
+              setError(typedKey, {
+                message: value[0],
+              });
             });
           }
         },
       }
     );
+  }
+
+  function splitKey(key: string) {
+    return key.split("_").join("");
   }
 
   return (
@@ -91,75 +86,20 @@ export default function SignUpPage() {
           className="authorization--form-submit"
           onSubmit={handleSubmit(onValidSubmit)}
         >
-          <Field
-            name="username"
-            control={control}
-            fullWidth
-            label={t("actions.username.title")}
-            placeholder={t("actions.username.press")}
-            readonly={formState.isSubmitted}
-            rules={{
-              required: tRules("required"),
-            }}
-          />
-          <Field
-            name="email"
-            control={control}
-            fullWidth
-            label={t("actions.email.title")}
-            placeholder={t("actions.email.press")}
-            readonly={formState.isSubmitted}
-            rules={{
-              required: tRules("required"),
-            }}
-          />
-          <div className="authorization--form-submit">
+          {keysRegisterRequest.map((key) => (
             <Field
-              name="password"
+              key={key}
+              name={key}
               control={control}
-              type="password"
               fullWidth
-              label={t("actions.password.title")}
-              placeholder={t("actions.password.press")}
+              label={t(`actions.${splitKey(key)}.title`)}
+              placeholder={t(`actions.${splitKey(key)}.press`)}
               readonly={formState.isSubmitted}
               rules={{
                 required: tRules("required"),
               }}
             />
-            <Field
-              name="password2"
-              control={control}
-              type="password"
-              fullWidth
-              placeholder={t("actions.repeatPassword.press")}
-              readonly={formState.isSubmitted}
-              rules={{
-                required: tRules("required"),
-              }}
-            />
-          </div>
-          <Field
-            name="first_name"
-            control={control}
-            fullWidth
-            label={t("actions.firstname.title")}
-            placeholder={t("actions.firstname.press")}
-            readonly={formState.isSubmitted}
-            rules={{
-              required: tRules("required"),
-            }}
-          />
-          <Field
-            name="last_name"
-            control={control}
-            fullWidth
-            label={t("actions.lastname.title")}
-            placeholder={t("actions.lastname.press")}
-            readonly={formState.isSubmitted}
-            rules={{
-              required: tRules("required"),
-            }}
-          />
+          ))}
           <div className="authorization--form-submit">
             <Button
               size="big"

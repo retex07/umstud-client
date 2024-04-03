@@ -1,10 +1,13 @@
 import Button from "components/button";
+import CardSlider from "components/cardSlider";
 import CardReview from "components/cards/cardReview";
 import { ReviewsMock } from "mocks/reviewsMock";
+import { WorkTypesMock } from "mocks/workTypeMock";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { ReactComponent as ManSvg } from "static/images/index/man-with-board.svg";
-import { ReactComponent as TusurSvg } from "static/images/index/tusur.svg";
+
+import CardTypeWork from "./components/cardTypeWork/component";
 import "./styles.scss";
 
 export default function IndexPage() {
@@ -18,30 +21,37 @@ export default function IndexPage() {
           <div className="section-welcome--info-block">
             <h1 className="main-heading">{t("title")}</h1>
             <h2 className="heading">{t("subtitle")}</h2>
-            <Button label={t("goWork")} />
+            <div>
+              <Button label={t("goWork")} />
+            </div>
           </div>
         </div>
       </section>
       <section className="section-container container">
-        <header className="partner--header">
-          <h2 className="sub-heading">{t("partners.title")}</h2>
-          <p className="description">{t("partners.description")}</p>
+        <header className="type-work--header">
+          <h2 className="sub-heading">Популярные виды работ</h2>
+          <p className="description">Качетсвенные работы в короткие сроки</p>
         </header>
-        <div className="partner--list">
-          <div className="partner--item">
-            <div className="partner--logo">
-              <TusurSvg />
-            </div>
-            <p className="partner--description">{t("partners.tusur")}</p>
-          </div>
-          <div className="partner--item">
-            <div className="partner--logo">
-              <img
-                src={require("static/images/index/sbi-tusur.png")}
-                alt="sbi-tusur"
+        <div className="type-work--info-wrapper">
+          <CardSlider>
+            {WorkTypesMock.map((typeWork) => (
+              <CardTypeWork
+                key={typeWork.id}
+                title={typeWork.title}
+                startPrice={typeWork.startPrice}
+                startDeadline={typeWork.startDeadline}
               />
+            ))}
+          </CardSlider>
+          <div className="type-work--problems">
+            <h3 className="type-work--problems-title">Проблемы с учёбой?</h3>
+            <p className="type-work--problems-subtitle">
+              Обратитесь за помощью к студентам, вы получите готовую работу с
+              соблюдением всех требований вашего преподавателя
+            </p>
+            <div className="type-work--action">
+              <Button label="Посмотреть все работы" size="middle" />
             </div>
-            <p className="partner--description">{t("partners.sbi")}</p>
           </div>
         </div>
       </section>
@@ -67,7 +77,9 @@ export default function IndexPage() {
           <h2 className="sub-heading">{t("support.title")}</h2>
           <p className="description">{t("support.description")}</p>
         </header>
-        <Button label={t("support.sendQuestion")} size="middle" />
+        <div>
+          <Button label={t("support.sendQuestion")} size="middle" />
+        </div>
       </section>
     </main>
   );

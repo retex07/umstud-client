@@ -1,0 +1,5 @@
+@use "sass:math";
+
+@function flex-font-size($pixels) {
+  @return calc((100vw - 480px)/(1280 - 480) * (24 - 16) + #{$pixels}px);
+}

@@ -1,0 +1,32 @@
+@use "styles/typography";
+
+@mixin hoverStyles {
+  text-decoration: underline;
+  color: var(--color-blue);
+}
+
+.inline-user {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+    @include hoverStyles;
+
+    .inline-user__whois {
+      @include hoverStyles;
+    }
+  }
+
+  &__img, svg {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+  }
+
+  &__whois {
+    @include typography.ordinary_subtitle;
+  }
+}

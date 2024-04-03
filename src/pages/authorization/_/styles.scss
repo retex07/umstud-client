@@ -25,7 +25,6 @@
 
   &--heading {
     @include typography.main_subtitle;
-    color: var(--color-derk-text);
   }
 
   &--actions {

@@ -1,0 +1,72 @@
+@use "styles/typography";
+
+.card-task {
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+  padding: 20px;
+  max-width: 660px; //TODO: Убрать это свойство на прод
+
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--color-gray-text);
+  background: var(--color-white);
+
+  &--order {
+    @extend .card-task;
+    border-radius: 10px;
+    border-top: 1px solid var(--color-gray-text);
+  }
+
+  &--header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &--title {
+    @include typography.page_subtitle;
+  }
+  &--description {
+    @include typography.ordinary;
+    color: var(--color-gray-text);
+  }
+
+  &--states {
+    display: inline-flex;
+    flex-wrap: wrap;
+
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  &--closed {
+    @include typography.signature;
+
+    &::after {
+      content: ":";
+    }
+  }
+
+  &--person {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &--text {
+    @include typography.ordinary_subtitle;
+    &::after {
+      content: ":";
+    }
+  }
+  &--link {
+    @include typography.ordinary_subtitle;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}

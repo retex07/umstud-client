@@ -20,10 +20,12 @@ export const { actions, reducer } = createSlice({
     login: (state, action: PayloadAction<LoginReducer>) => {
       state.accessToken = action.payload.access;
       state.refreshToken = action.payload.refresh;
+      localStorage.setItem("accessToken", state.accessToken);
     },
     update: (state, action: PayloadAction<LoginReducer>) => {
       state.accessToken = action.payload.access;
       state.refreshToken = action.payload.refresh;
+      localStorage.setItem("accessToken", state.accessToken);
     },
   },
 });

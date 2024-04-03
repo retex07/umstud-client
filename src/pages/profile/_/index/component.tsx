@@ -15,7 +15,7 @@ export default function ProfileIndexPage() {
 
   return (
     <div id="page" className="page-container profile-index">
-      <div className="profile-index--container">
+      <div className="container-bar">
         <div className="page-content-wrapper">
           <header className="profile-index--header">
             <ExampleAvatarSvg />

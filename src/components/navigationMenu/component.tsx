@@ -18,20 +18,22 @@ export default function NavigationMenu(props: Props) {
   const location = useLocation();
 
   return (
-    <div className="navigation-menu">
-      {props.items.map((item, index) => (
-        <label
-          className={cn("navigation-menu__item-route", {
-            "navigation-menu__item-route-active":
-              location.pathname == props.baseUrl + item.route ||
-              (location.pathname == props.baseUrl && item.route == "/"),
-          })}
-          key={index}
-          onClick={() => history.push(props.baseUrl + item.route)}
-        >
-          {item.title}
-        </label>
-      ))}
+    <div style={{ position: "relative", display: "flex", width: "267px" }}>
+      <div className="navigation-menu">
+        {props.items.map((item, index) => (
+          <label
+            className={cn("navigation-menu__item-route", {
+              "navigation-menu__item-route-active":
+                location.pathname == props.baseUrl + item.route ||
+                (location.pathname == props.baseUrl && item.route == "/"),
+            })}
+            key={index}
+            onClick={() => history.push(props.baseUrl + item.route)}
+          >
+            {item.title}
+          </label>
+        ))}
+      </div>
     </div>
   );
 }
