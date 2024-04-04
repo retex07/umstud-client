@@ -1,4 +1,4 @@
-import { CONFIG_SYSTEM } from "constants/config";
+import { CONFIG_SYSTEM, hrefs } from "constants/config";
 
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -57,7 +57,12 @@ export default function Footer() {
         <dl>
           <dt className="footer--definition-term">{t("socialNetwork")}</dt>
           <dd className="footer--definition-details">
-            <a className="footer--definition-details--description">
+            <a
+              className="footer--definition-details--description"
+              href={hrefs.telegram}
+              target="_blank"
+              rel="noreferrer"
+            >
               <TelegramSvg />
             </a>
             <a className="footer--definition-details--description">
