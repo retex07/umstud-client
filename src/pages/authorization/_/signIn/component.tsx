@@ -34,7 +34,7 @@ export default function SignInPage() {
     login.mutate(
       {
         data: {
-          login: data.login,
+          login_or_email: data.login_or_email,
           password: data.password,
         },
       },
@@ -44,7 +44,7 @@ export default function SignInPage() {
         },
         onError: (err) => {
           if (err.response?.data.message) {
-            setError("login", {
+            setError("login_or_email", {
               message: err.response.data.message,
             });
             setError("password", {
@@ -65,7 +65,7 @@ export default function SignInPage() {
           onSubmit={handleSubmit(onValidSubmit)}
         >
           <Field
-            name="login"
+            name="login_or_email"
             control={control}
             fullWidth
             label={t("actions.email.title")}

@@ -29,7 +29,7 @@ export default function SignUpPage() {
     "username",
     "email",
     "password",
-    "password2",
+    "password_confirm",
     "first_name",
     "last_name",
   ];
@@ -52,7 +52,7 @@ export default function SignUpPage() {
           last_name: data.last_name,
           username: data.username,
           password: data.password,
-          password2: data.password2,
+          password_confirm: data.password_confirm,
           email: data.email,
         },
       },

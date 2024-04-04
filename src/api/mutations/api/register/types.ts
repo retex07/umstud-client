@@ -3,7 +3,7 @@ export interface Register_RequestBody {
   last_name: string;
   username: string;
   password: string;
-  password2: string;
+  password_confirm: string;
   email: string;
 }
 
@@ -12,7 +12,7 @@ export interface Register_ErrorBody {
   last_name?: string[];
   username?: string[];
   password?: string[];
-  password2?: string[];
+  password_confirm?: string[];
   email?: string[];
 }
 
