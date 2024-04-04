@@ -19,13 +19,13 @@ function App() {
     useMeProfile<DetailUserProfile>();
   const { accessToken } = useSelector((state: UserState) => state);
 
-  const checkAuth = () => {
-    if (!accessToken && location.pathname !== "/") {
-      history.push("/auth/sign-in");
-    }
-  };
-
   useEffect(() => {
+    const checkAuth = () => {
+      if (!accessToken && location.pathname !== "/") {
+        history.push("/auth/sign-in");
+      }
+    };
+
     checkAuth();
 
     const tokenCheckInterval = setInterval(() => {
