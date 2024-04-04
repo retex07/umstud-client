@@ -69,6 +69,7 @@ input::-ms-clear {
 
 .container-bar {
   display: inline-flex;
+  justify-content: center;
   max-width: 1040px;
   width: 100%;
   gap: 20px;

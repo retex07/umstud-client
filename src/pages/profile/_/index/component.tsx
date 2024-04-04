@@ -4,7 +4,6 @@ import { ProfileMock } from "mocks/profileMock";
 import { routes, baseUrl } from "pages/profile/routes";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { ReactComponent as EditSvg } from "static/images/edit.svg";
 import { ReactComponent as ExampleAvatarSvg } from "static/images/example-avatar.svg";
 import { ReactComponent as FillStarSvg } from "static/images/fill-star.svg";
 
@@ -18,44 +17,57 @@ export default function ProfileIndexPage() {
       <div className="container-bar">
         <div className="page-content-wrapper">
           <header className="profile-index--header">
-            <ExampleAvatarSvg />
+            <div className="profile-index--user-avatar">
+              <ExampleAvatarSvg />
+            </div>
             <div className="profile-index--header-info">
-              <div className="profile-index--header-info--wrapper">
-                <div className="profile-index--header-info--wrapper-text">
-                  <h2 className="profile-index--header-info--title">
-                    {ProfileMock.userFullName}
-                  </h2>
-                  <p className="profile-index--subtitle">
-                    {ProfileMock.nickname}
-                  </p>
-                  <div>
-                    {[...Array(5)].map((item, index) => (
-                      <FillStarSvg key={index} />
-                    ))}
-                  </div>
-                </div>
-                <EditSvg />
+              <div className="profile-index--user-info">
+                <h2 className="profile-index--header-info--title">
+                  {ProfileMock.userFullName}
+                </h2>
+                <p className="profile-index--subtitle">
+                  {ProfileMock.nickname}
+                </p>
               </div>
-              <div className="profile-index--header-info--description">
-                <div className="profile-index--header-info--item">
-                  <h3 className="profile-index--text">{t("birth")}</h3>
-                  <p className="profile-index--text">{ProfileMock.birthday}</p>
-                </div>
-                <div className="profile-index--header-info--item">
-                  <h3 className="profile-index--text">{t("phone")}</h3>
-                  <p className="profile-index--text">{ProfileMock.phone}</p>
-                </div>
-                <div className="profile-index--header-info--item">
-                  <h3 className="profile-index--text">{t("email")}</h3>
-                  <p className="profile-index--text">{ProfileMock.email}</p>
-                </div>
-                <div className="profile-index--header-info--item">
-                  <h3 className="profile-index--text">{t("workPlace")}</h3>
-                  <p className="profile-index--text">{ProfileMock.address}</p>
-                </div>
+              <div className="profile-index--user-email">
+                {ProfileMock.email}
+              </div>
+              <div className="profile-index--change-action">
+                <Button
+                  size="small"
+                  label="Редактировать профиль"
+                  isTransparent
+                />
               </div>
             </div>
           </header>
+          <section className="profile-index--section">
+            <h2 className="profile-index--subtitle">Личный рейтинг</h2>
+            <div>
+              {[...Array(5)].map((item, index) => (
+                <FillStarSvg key={index} />
+              ))}
+            </div>
+          </section>
+          <section className="profile-index--section">
+            <h2 className="profile-index--subtitle">Общая информация</h2>
+            <div className="profile-index--header-info--item">
+              <h3 className="profile-index--text">{t("birth")}</h3>
+              <p className="profile-index--text">{ProfileMock.birthday}</p>
+            </div>
+            <div className="profile-index--header-info--item">
+              <h3 className="profile-index--text">{t("phone")}</h3>
+              <p className="profile-index--text">{ProfileMock.phone}</p>
+            </div>
+            <div className="profile-index--header-info--item">
+              <h3 className="profile-index--text">{t("email")}</h3>
+              <p className="profile-index--text">{ProfileMock.email}</p>
+            </div>
+            <div className="profile-index--header-info--item">
+              <h3 className="profile-index--text">{t("workPlace")}</h3>
+              <p className="profile-index--text">{ProfileMock.address}</p>
+            </div>
+          </section>
           <section className="profile-index--section">
             <h2 className="profile-index--subtitle">{t("skills")}</h2>
             <ul className="profile-index--ul">

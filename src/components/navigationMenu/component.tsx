@@ -18,7 +18,7 @@ export default function NavigationMenu(props: Props) {
   const location = useLocation();
 
   return (
-    <div style={{ position: "relative", display: "flex", width: "267px" }}>
+    <div className="navigation-menu__container">
       <div className="navigation-menu">
         {props.items.map((item, index) => (
           <label

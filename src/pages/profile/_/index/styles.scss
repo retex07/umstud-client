@@ -5,6 +5,37 @@
   justify-content: center;
   box-sizing: border-box;
 
+  &--change-action {
+    display: inline-flex;
+    width: 100%;
+
+    @media screen and (max-width: 1220px) {
+      justify-content: center;
+    }
+  }
+
+  &--user-avatar {
+    > svg {
+      width: 160px;
+      height: 160px;
+    }
+  }
+
+  &--user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    @media screen and (max-width: 1220px) {
+      align-items: center;
+    }
+  }
+
+  &--user-email {
+    @include typography.ordinary;
+    color: var(--color-gray-text);
+  }
+
   &--container {
     display: inline-flex;
     gap: 20px;
@@ -15,10 +46,15 @@
   }
 
   &--header {
-    display: inline-flex;
+    display: flex;
+    flex-direction: row;
     gap: 26px;
     align-items: center;
     width: 100%;
+
+    @media screen and (max-width: 1220px) {
+      flex-direction: column;
+    }
   }
 
   &--subtitle {
@@ -41,25 +77,17 @@
     gap: 8px;
     width: 100%;
 
-    &--wrapper {
-      display: inline-flex;
-      justify-content: space-between;
+    @media screen and (max-width: 1220px) {
       align-items: center;
-      width: 100%;
-      gap: 12px;
-    }
-
-    &--wrapper-text {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
+      align-self: center;
+      justify-content: center;
     }
 
     &--title {
       @include typography.page_head;
-    }
-    &--description {
-      @include typography.page_subtitle;
+      @media screen and (max-width: 1220px) {
+        text-align: center;
+      }
     }
 
     &--description {
