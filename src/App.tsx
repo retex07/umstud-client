@@ -21,7 +21,11 @@ function App() {
 
   useEffect(() => {
     const checkAuth = () => {
-      if (!accessToken && location.pathname !== "/") {
+      if (
+        !accessToken &&
+        location.pathname !== "/" &&
+        location.pathname !== "/auth/sign-up"
+      ) {
         history.push("/auth/sign-in");
       }
     };

@@ -21,7 +21,7 @@
       "title": "Password",
       "press": "Enter your password"
     },
-    "password2": {
+    "passwordconfirm": {
       "title": "Repeat Password",
       "press": "Repeat your password"
     },
