@@ -9,6 +9,7 @@ import "./services/localization";
 import "./index.scss";
 
 import App from "./App";
+import { initializeState } from "./store/user/user.slice";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,6 +22,8 @@ const queryClient = new QueryClient({
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
+initializeState();
 
 root.render(
   <StrictMode>

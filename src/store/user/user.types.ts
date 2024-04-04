@@ -1,7 +1,7 @@
-import { Login_Response } from "../../api/mutations/api/login/types";
+import { DetailUserProfile } from "../../api/queries/user/types";
 
 export type State = {
-  user: Login_Response | null;
+  user: DetailUserProfile | null;
   accessToken: string | null;
   refreshToken: string | null;
 };

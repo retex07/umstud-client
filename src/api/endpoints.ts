@@ -5,5 +5,6 @@ export const ENDPOINTS_CONFIG = {
     login: baseUrl + "/api/users/login/",
     register: baseUrl + "/api/users/register/",
     users: baseUrl + "/api/users/list/",
+    meProfile: baseUrl + "/api/users/profile/",
   },
 };
