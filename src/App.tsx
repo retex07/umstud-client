@@ -35,22 +35,6 @@ function App() {
   }, [accessToken]);
 
   useEffect(() => {
-    const checkAuth = () => {
-      if (
-        (!accessToken || !userProfile) &&
-        location.pathname !== "/" &&
-        location.pathname !== "/auth/sign-up"
-      ) {
-        history.push("/auth/sign-in");
-      } else if (
-        userProfile &&
-        accessToken &&
-        location.pathname.includes("auth")
-      ) {
-        history.push("/profile");
-      }
-    };
-
     checkAuth();
 
     const tokenCheckInterval = setInterval(() => {
@@ -65,6 +49,22 @@ function App() {
       dispatch(userActions.updateUser(userProfile));
     }
   }, [accessToken, userProfile, isLoadingUserProfile, userProfile, dispatch]);
+
+  const checkAuth = () => {
+    if (
+      (!accessToken || !userProfile) &&
+      location.pathname !== "/" &&
+      location.pathname !== "/auth/sign-up"
+    ) {
+      history.push("/auth/sign-in");
+    } else if (
+      userProfile &&
+      accessToken &&
+      location.pathname.includes("auth")
+    ) {
+      history.push("/profile");
+    }
+  };
 
   return (
     <Switch>
