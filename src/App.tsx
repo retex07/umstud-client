@@ -12,9 +12,9 @@ import { user as user_selector } from "./store/user/user.selectors";
 import { initializeState } from "./store/user/user.slice";
 
 function App() {
-  const dispatch = useDispatch<Dispatch>();
   const history = useHistory();
   const location = useLocation();
+  const dispatch = useDispatch<Dispatch>();
 
   initializeState();
 
@@ -32,6 +32,7 @@ function App() {
         dispatch(userActions.updateUser(res.data || null))
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);
 
   useEffect(() => {
@@ -42,12 +43,14 @@ function App() {
     }, 30000);
 
     return () => clearInterval(tokenCheckInterval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken, userProfile, history, location.pathname]);
 
   useEffect(() => {
     if (accessToken && userProfile && !isLoadingUserProfile && userProfile) {
       dispatch(userActions.updateUser(userProfile));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken, userProfile, isLoadingUserProfile, userProfile, dispatch]);
 
   const checkAuth = () => {
