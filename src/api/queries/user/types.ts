@@ -11,7 +11,7 @@ export interface DetailUserProfile {
   birth_date: Date;
   description?: string;
   language?: string;
-  photo: string;
+  photo: string | null;
   views: number;
   rating: any; //TODO: Исправить поле API
 }

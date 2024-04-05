@@ -8,25 +8,46 @@ import { useMeProfile } from "./api/queries/user";
 import { DetailUserProfile } from "./api/queries/user/types";
 import { Dispatch } from "./store/types";
 import { actions as userActions } from "./store/user";
-import { State as UserState } from "./store/user/user.types";
+import { user as user_selector } from "./store/user/user.selectors";
+import { initializeState } from "./store/user/user.slice";
 
 function App() {
   const dispatch = useDispatch<Dispatch>();
   const history = useHistory();
   const location = useLocation();
 
-  const { data: userProfile, isLoading: isLoadingUserProfile } =
-    useMeProfile<DetailUserProfile>();
-  const { accessToken } = useSelector((state: UserState) => state);
+  initializeState();
+
+  const { accessToken } = useSelector(user_selector);
+
+  const {
+    data: userProfile,
+    isLoading: isLoadingUserProfile,
+    refetch: refetchUserProfile,
+  } = useMeProfile<DetailUserProfile>();
+
+  useEffect(() => {
+    if (accessToken) {
+      refetchUserProfile().then((res) =>
+        dispatch(userActions.updateUser(res.data || null))
+      );
+    }
+  }, [accessToken]);
 
   useEffect(() => {
     const checkAuth = () => {
       if (
-        !accessToken &&
+        (!accessToken || !userProfile) &&
         location.pathname !== "/" &&
         location.pathname !== "/auth/sign-up"
       ) {
         history.push("/auth/sign-in");
+      } else if (
+        userProfile &&
+        accessToken &&
+        location.pathname.includes("auth")
+      ) {
+        history.push("/profile");
       }
     };
 
@@ -37,16 +58,13 @@ function App() {
     }, 30000);
 
     return () => clearInterval(tokenCheckInterval);
-  }, [accessToken, history, location.pathname]);
+  }, [accessToken, userProfile, history, location.pathname]);
 
   useEffect(() => {
-    if (accessToken && !isLoadingUserProfile && userProfile) {
+    if (accessToken && userProfile && !isLoadingUserProfile && userProfile) {
       dispatch(userActions.updateUser(userProfile));
     }
-    if (!accessToken) {
-      dispatch(userActions.logout());
-    }
-  }, [accessToken, isLoadingUserProfile, userProfile, dispatch]);
+  }, [accessToken, userProfile, isLoadingUserProfile, userProfile, dispatch]);
 
   return (
     <Switch>

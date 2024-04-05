@@ -65,6 +65,9 @@ input::-ms-clear {
   margin-top: 60px;
   justify-content: center;
   padding: 22px 16px;
+  @media screen and (max-width: 1220px) {
+    padding: 0;
+  }
 }
 
 .container-bar {

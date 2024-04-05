@@ -1,16 +1,24 @@
 import Button from "components/button";
 import NavigationMenu from "components/navigationMenu";
-import { ProfileMock } from "mocks/profileMock";
 import { routes, baseUrl } from "pages/profile/routes";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import { ReactComponent as ExampleAvatarSvg } from "static/images/example-avatar.svg";
 import { ReactComponent as FillStarSvg } from "static/images/fill-star.svg";
+import { user as user_selector } from "store/user/user.selectors";
 
 import "./styles.scss";
 
 export default function ProfileIndexPage() {
   const { t } = useTranslation("p_profile", { keyPrefix: "index" });
+  const { user } = useSelector(user_selector);
+  const splited = user?.birth_date?.toString().split(".") || [];
+  const birthday = new Date(
+    Number(splited[2]),
+    Number(splited[1]),
+    Number(splited[0])
+  );
 
   return (
     <div id="page" className="page-container profile-index">
@@ -18,20 +26,20 @@ export default function ProfileIndexPage() {
         <div className="page-content-wrapper">
           <header className="profile-index--header">
             <div className="profile-index--user-avatar">
-              <ExampleAvatarSvg />
+              {user?.photo ? (
+                <img src={user.photo} alt={user?.username} />
+              ) : (
+                <ExampleAvatarSvg />
+              )}
             </div>
             <div className="profile-index--header-info">
               <div className="profile-index--user-info">
                 <h2 className="profile-index--header-info--title">
-                  {ProfileMock.userFullName}
+                  {user?.last_name} {user?.first_name} {user?.patronymic}
                 </h2>
-                <p className="profile-index--subtitle">
-                  {ProfileMock.nickname}
-                </p>
+                <p className="profile-index--subtitle">{user?.username}</p>
               </div>
-              <div className="profile-index--user-email">
-                {ProfileMock.email}
-              </div>
+              <div className="profile-index--user-email">{user?.email}</div>
               <div className="profile-index--change-action">
                 <Button
                   size="small"
@@ -53,35 +61,42 @@ export default function ProfileIndexPage() {
             <h2 className="profile-index--subtitle">Общая информация</h2>
             <div className="profile-index--header-info--item">
               <h3 className="profile-index--text">{t("birth")}</h3>
-              <p className="profile-index--text">{ProfileMock.birthday}</p>
+              <p className="profile-index--text">
+                {birthday.getDate()} {birthday.getMonth()}{" "}
+                {birthday.getFullYear()}
+              </p>
             </div>
-            <div className="profile-index--header-info--item">
-              <h3 className="profile-index--text">{t("phone")}</h3>
-              <p className="profile-index--text">{ProfileMock.phone}</p>
-            </div>
-            <div className="profile-index--header-info--item">
-              <h3 className="profile-index--text">{t("email")}</h3>
-              <p className="profile-index--text">{ProfileMock.email}</p>
-            </div>
-            <div className="profile-index--header-info--item">
-              <h3 className="profile-index--text">{t("workPlace")}</h3>
-              <p className="profile-index--text">{ProfileMock.address}</p>
-            </div>
+            {user?.phone && (
+              <div className="profile-index--header-info--item">
+                <h3 className="profile-index--text">{t("phone")}</h3>
+                <p className="profile-index--text">{user.phone}</p>
+              </div>
+            )}
+            {user?.place_study_work && (
+              <div className="profile-index--header-info--item">
+                <h3 className="profile-index--text">{t("workPlace")}</h3>
+                <p className="profile-index--text">{user.place_study_work}</p>
+              </div>
+            )}
           </section>
-          <section className="profile-index--section">
-            <h2 className="profile-index--subtitle">{t("skills")}</h2>
-            <ul className="profile-index--ul">
-              {ProfileMock.skills.map((skill, index) => (
-                <li className="profile-index--text" key={index}>
-                  {skill}
-                </li>
-              ))}
-            </ul>
-          </section>
-          <section className="profile-index--section">
-            <h2 className="profile-index--subtitle">{t("about")}</h2>
-            <p className="profile-index--text">{ProfileMock.aboutMe}</p>
-          </section>
+          {user?.skills && (
+            <section className="profile-index--section">
+              <h2 className="profile-index--subtitle">{t("skills")}</h2>
+              <ul className="profile-index--ul">
+                {user.skills.map((skill, index) => (
+                  <li className="profile-index--text" key={index}>
+                    {skill}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+          {user?.description && (
+            <section className="profile-index--section">
+              <h2 className="profile-index--subtitle">{t("about")}</h2>
+              <p className="profile-index--text">{user.description}</p>
+            </section>
+          )}
           <section className="profile-index--section">
             <h2 className="profile-index--subtitle">
               {t("exampleTasks.title")}

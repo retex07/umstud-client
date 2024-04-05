@@ -40,7 +40,7 @@ export default function SignInPage() {
       },
       {
         onSuccess: (res) => {
-          dispatch(userActions.login(res.data));
+          dispatch(userActions.login({ ...res.data.tokens }));
         },
         onError: (err) => {
           if (err.response?.data.message) {

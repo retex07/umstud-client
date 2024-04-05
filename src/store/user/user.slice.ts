@@ -16,7 +16,7 @@ export function initializeState() {
 
   if (accessToken && refreshToken) {
     Store.dispatch(
-      actions.login({
+      actions.updateToken({
         access: accessToken,
         refresh: refreshToken,
       })
@@ -34,6 +34,7 @@ export const { actions, reducer } = createSlice({
       state.accessToken = null;
       state.refreshToken = null;
       state.user = null;
+      localStorage.clear();
     },
     login: (state, action: PayloadAction<LoginReducer>) => {
       state.accessToken = action.payload.access;
@@ -47,7 +48,7 @@ export const { actions, reducer } = createSlice({
       localStorage.setItem("accessToken", state.accessToken);
       localStorage.setItem("refreshToken", state.refreshToken);
     },
-    updateUser: (state, action: PayloadAction<DetailUserProfile>) => {
+    updateUser: (state, action: PayloadAction<DetailUserProfile | null>) => {
       state.user = action.payload;
     },
   },

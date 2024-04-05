@@ -4,6 +4,10 @@ export interface Login_RequestBody {
 }
 
 export interface Login_Response {
-  refresh: string;
-  access: string;
+  username: string;
+  email: string;
+  tokens: {
+    refresh: string;
+    access: string;
+  };
 }
