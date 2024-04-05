@@ -8,11 +8,8 @@ import Field from "components/formElements/field";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { ReactComponent as LineSvg } from "static/images/line.svg";
-import { Dispatch } from "store/types";
-import { actions as userActions } from "store/user";
 import { getBasePath } from "utils/router.utils";
 
 import "../styles.scss";
@@ -34,7 +31,6 @@ export default function SignUpPage() {
     "last_name",
   ];
 
-  const dispatch = useDispatch<Dispatch>();
   const basePath = getBasePath(path);
   const register = useRegister();
   const history = useHistory();
@@ -57,8 +53,8 @@ export default function SignUpPage() {
         },
       },
       {
-        onSuccess: (res) => {
-          dispatch(userActions.login(res.data));
+        onSuccess: () => {
+          history.push("/auth/sign-in");
         },
         onError: (err) => {
           if (err.response) {
@@ -90,6 +86,11 @@ export default function SignUpPage() {
             <Field
               key={key}
               name={key}
+              type={
+                key === "password" || key === "password_confirm"
+                  ? "password"
+                  : "text"
+              }
               control={control}
               fullWidth
               label={t(`actions.${splitKey(key)}.title`)}
