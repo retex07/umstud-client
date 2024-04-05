@@ -64,7 +64,7 @@ input::-ms-clear {
   display: flex;
   margin-top: 60px;
   justify-content: center;
-  padding: 22px 16px;
+  padding: 22px 0;
   @media screen and (max-width: 1220px) {
     padding: 0;
   }
