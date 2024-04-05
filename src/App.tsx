@@ -1,15 +1,14 @@
+import { useMeProfile } from "api/queries/user";
+import { DetailUserProfile } from "api/queries/user/types";
 import LayoutBuilder from "components/layoutBuilder";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import Routes from "services/router/config";
-
-import { useMeProfile } from "./api/queries/user";
-import { DetailUserProfile } from "./api/queries/user/types";
-import { Dispatch } from "./store/types";
-import { actions as userActions } from "./store/user";
-import { user as user_selector } from "./store/user/user.selectors";
-import { initializeState } from "./store/user/user.slice";
+import { Dispatch } from "store/types";
+import { actions as userActions } from "store/user";
+import { user as user_selector } from "store/user/user.selectors";
+import { initializeState } from "store/user/user.slice";
 
 function App() {
   const history = useHistory();
@@ -66,6 +65,8 @@ function App() {
       location.pathname.includes("auth")
     ) {
       history.push("/profile");
+    } else if (accessToken && !userProfile) {
+      dispatch(userActions.logout());
     }
   };
 

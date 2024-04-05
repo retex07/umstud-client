@@ -1,17 +1,23 @@
+import MenuUser from "components/menuUser";
 import SwitchLanguage from "components/switchLanguage";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import { ReactComponent as CloseMenuSvg } from "static/images/exit.svg";
 import { ReactComponent as LanguageSvg } from "static/images/language.svg";
 import { ReactComponent as LogoSvg } from "static/images/logo.svg";
 import { ReactComponent as AlignMenuSvg } from "static/images/menu-align.svg";
+import { user as user_selector } from "store/user/user.selectors";
+
 import "./styles.scss";
 
 export default function Header() {
   const { t } = useTranslation("b_header");
+  const { user } = useSelector(user_selector);
   const [isOpenSideBar, setIsOpenSideBar] = useState(false);
   const [isOpenSwitcher, setIsOpenSwitcher] = useState(false);
+  const [isOpenMenuUser, setIsOpenMenuUser] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = isOpenSideBar ? "hidden" : "auto";
@@ -30,9 +36,18 @@ export default function Header() {
 
   function changeOpenSideBar() {
     setIsOpenSideBar(!isOpenSideBar);
+    setIsOpenSwitcher(false);
+    setIsOpenMenuUser(false);
   }
   function changeOpenSwitcher() {
     setIsOpenSwitcher(!isOpenSwitcher);
+    setIsOpenSideBar(false);
+    setIsOpenMenuUser(false);
+  }
+  function changeOpenMenuUser() {
+    setIsOpenMenuUser(!isOpenMenuUser);
+    setIsOpenSideBar(false);
+    setIsOpenSwitcher(false);
   }
 
   function renderNavigation() {
@@ -98,9 +113,16 @@ export default function Header() {
             <LanguageSvg />
             {isOpenSwitcher && <SwitchLanguage onClose={changeOpenSwitcher} />}
           </div>
-          <Link to="/auth/sign-in" className="log-in">
-            {t("login")}
-          </Link>
+          {!user && (
+            <Link to="/auth/sign-in" className="log-in">
+              {t("login")}
+            </Link>
+          )}
+          {user && (
+            <div className="header--user" onClick={changeOpenMenuUser}>
+              <MenuUser isOpen={isOpenMenuUser} onHide={changeOpenMenuUser} />
+            </div>
+          )}
         </div>
       </div>
       <div className={`sidebar ${isOpenSideBar && "checked"}`}>

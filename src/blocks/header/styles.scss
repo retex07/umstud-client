@@ -35,6 +35,16 @@
     }
   }
 
+  &--user {
+    position: relative;
+    cursor: pointer;
+    img, svg {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+    }
+  }
+
   &--change-block {
     display: flex;
 
