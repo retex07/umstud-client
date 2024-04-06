@@ -1,3 +1,5 @@
+import { baseLinkMedias, linkMediaFiles } from "constants/config";
+
 import Button from "components/button";
 import NavigationMenu from "components/navigationMenu";
 import { routes, baseUrl } from "pages/profile/routes";
@@ -7,12 +9,20 @@ import { useSelector } from "react-redux";
 import { ReactComponent as ExampleAvatarSvg } from "static/images/example-avatar.svg";
 import { ReactComponent as FillStarSvg } from "static/images/fill-star.svg";
 import { user as user_selector } from "store/user/user.selectors";
+import { replaceSubstringLink } from "utils/link.utils";
 
 import "./styles.scss";
 
 export default function ProfileIndexPage() {
   const { t } = useTranslation("p_profile", { keyPrefix: "index" });
   const { user } = useSelector(user_selector);
+
+  const avatarUrl = replaceSubstringLink(
+    user?.photo || "",
+    baseLinkMedias,
+    linkMediaFiles
+  );
+
   const splited = user?.birth_date?.toString().split(".") || [];
   const birthday = new Date(
     Number(splited[2]),
@@ -27,7 +37,7 @@ export default function ProfileIndexPage() {
           <header className="profile-index--header">
             <div className="profile-index--user-avatar">
               {user?.photo ? (
-                <img src={user.photo} alt={user?.username} />
+                <img src={avatarUrl} alt={user?.username} />
               ) : (
                 <ExampleAvatarSvg />
               )}
@@ -42,7 +52,7 @@ export default function ProfileIndexPage() {
               <div className="profile-index--user-email">{user?.email}</div>
               <div className="profile-index--change-action">
                 <Button
-                  size="small"
+                  size="middle"
                   label="Редактировать профиль"
                   isTransparent
                 />
@@ -57,29 +67,36 @@ export default function ProfileIndexPage() {
               ))}
             </div>
           </section>
-          <section className="profile-index--section">
-            <h2 className="profile-index--subtitle">Общая информация</h2>
-            <div className="profile-index--header-info--item">
-              <h3 className="profile-index--text">{t("birth")}</h3>
-              <p className="profile-index--text">
-                {birthday.getDate()} {birthday.getMonth()}{" "}
-                {birthday.getFullYear()}
-              </p>
-            </div>
-            {user?.phone && (
-              <div className="profile-index--header-info--item">
-                <h3 className="profile-index--text">{t("phone")}</h3>
-                <p className="profile-index--text">{user.phone}</p>
-              </div>
-            )}
-            {user?.place_study_work && (
-              <div className="profile-index--header-info--item">
-                <h3 className="profile-index--text">{t("workPlace")}</h3>
-                <p className="profile-index--text">{user.place_study_work}</p>
-              </div>
-            )}
-          </section>
-          {user?.skills && (
+          {(user?.phone ||
+            user?.place_study_work ||
+            user?.birth_date ||
+            (user?.skills && user.skills.length > 0)) && (
+            <section className="profile-index--section">
+              <h2 className="profile-index--subtitle">Общая информация</h2>
+              {user?.birth_date && (
+                <div className="profile-index--header-info--item">
+                  <h3 className="profile-index--text">{t("birth")}</h3>
+                  <p className="profile-index--text">
+                    {birthday.getDate()}.{birthday.getMonth()}.
+                    {birthday.getFullYear()}
+                  </p>
+                </div>
+              )}
+              {user?.phone && (
+                <div className="profile-index--header-info--item">
+                  <h3 className="profile-index--text">{t("phone")}</h3>
+                  <p className="profile-index--text">{user.phone}</p>
+                </div>
+              )}
+              {user?.place_study_work && (
+                <div className="profile-index--header-info--item">
+                  <h3 className="profile-index--text">{t("workPlace")}</h3>
+                  <p className="profile-index--text">{user.place_study_work}</p>
+                </div>
+              )}
+            </section>
+          )}
+          {user?.skills && user.skills.length > 0 && (
             <section className="profile-index--section">
               <h2 className="profile-index--subtitle">{t("skills")}</h2>
               <ul className="profile-index--ul">
@@ -91,7 +108,7 @@ export default function ProfileIndexPage() {
               </ul>
             </section>
           )}
-          {user?.description && (
+          {user?.description && user.description.length > 0 && (
             <section className="profile-index--section">
               <h2 className="profile-index--subtitle">{t("about")}</h2>
               <p className="profile-index--text">{user.description}</p>

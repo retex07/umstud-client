@@ -14,3 +14,12 @@ export function convertSlashLink(
 
   return convert(links);
 }
+
+export function replaceSubstringLink(
+  str: string,
+  searchValue: string,
+  newValue: string
+): string {
+  const searchRegExp = new RegExp(searchValue, "g");
+  return str.replace(searchRegExp, newValue);
+}

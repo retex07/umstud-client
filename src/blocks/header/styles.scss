@@ -26,8 +26,6 @@
     margin-right: auto;
 
     max-width: 1440px;
-
-
     padding: 10px 142px;
 
     @media screen and (max-width: 1220px){
@@ -36,8 +34,13 @@
   }
 
   &--user {
-    position: relative;
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
     cursor: pointer;
+
     img, svg {
       width: 36px;
       height: 36px;
