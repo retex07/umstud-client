@@ -1,7 +1,6 @@
 import CardTask from "components/cards/cardTask";
-import NavigationMenu from "components/navigationMenu";
 import { myWorkMock } from "mocks/profileMock";
-import { routes, baseUrl } from "pages/profile/routes";
+import NavigationMenu from "pages/profile/components/navigationMenu";
 import React from "react";
 
 import "./styles.scss";
@@ -24,7 +23,7 @@ export default function ProfileMuWorkPage() {
             />
           ))}
         </div>
-        <NavigationMenu baseUrl={baseUrl} items={routes} />
+        <NavigationMenu />
       </div>
     </div>
   );

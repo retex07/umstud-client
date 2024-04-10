@@ -1,5 +1,6 @@
 {
   "index": {
+    "title": "Profile",
     "birth": "Date of birth:",
     "phone": "Phone:",
     "email": "Mail:",
@@ -10,5 +11,20 @@
       "title": "Examples of works",
       "nothing": "There's nothing here yet"
     }
+  },
+  "messages": {
+    "title": "Messages"
+  },
+  "readyTasks": {
+    "title": "Ready tasks"
+  },
+  "blackList": {
+    "title": "Black list"
+  },
+  "orders": {
+    "title": "My orders"
+  },
+  "works": {
+    "title": "My works"
   }
 }
