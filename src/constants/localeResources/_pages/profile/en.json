@@ -10,7 +10,10 @@
     "exampleTasks": {
       "title": "Examples of works",
       "nothing": "There's nothing here yet"
-    }
+    },
+    "rating": "Personal rating",
+    "generalInfo": "General information",
+    "addWork": "Add a job"
   },
   "messages": {
     "title": "Messages"
@@ -19,7 +22,8 @@
     "title": "Ready tasks"
   },
   "blackList": {
-    "title": "Black list"
+    "title": "Black list",
+    "removeUser": "Remove from the list"
   },
   "orders": {
     "title": "My orders"

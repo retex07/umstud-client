@@ -2,15 +2,17 @@ import CardTask from "components/cards/cardTask";
 import { myWorkMock } from "mocks/profileMock";
 import NavigationMenu from "pages/profile/components/navigationMenu";
 import React from "react";
-
+import { useTranslation } from "react-i18next";
 import "./styles.scss";
 
 export default function ProfileMuWorkPage() {
+  const { t } = useTranslation("p_profile", { keyPrefix: "works" });
+
   return (
     <div id="page" className="page-container">
       <div className="container-bar">
         <div className="page-content-wrapper">
-          <header className="page-content-title">Моя работа</header>
+          <header className="page-content-title">{t("title")}</header>
           {myWorkMock.map((workCard) => (
             <CardTask
               key={workCard.id}

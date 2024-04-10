@@ -59,7 +59,7 @@ export default function ProfileIndexPage() {
             </div>
           </header>
           <section className="profile-index--section">
-            <h2 className="profile-index--subtitle">Личный рейтинг</h2>
+            <h2 className="profile-index--subtitle">{t("rating")}</h2>
             <div>
               {[...Array(5)].map((item, index) => (
                 <FillStarSvg key={index} />
@@ -71,7 +71,7 @@ export default function ProfileIndexPage() {
             user?.birth_date ||
             (user?.skills && user.skills.length > 0)) && (
             <section className="profile-index--section">
-              <h2 className="profile-index--subtitle">Общая информация</h2>
+              <h2 className="profile-index--subtitle">{t("generalInfo")}</h2>
               {user?.birth_date && (
                 <div className="profile-index--header-info--item">
                   <h3 className="profile-index--text">{t("birth")}</h3>
@@ -118,7 +118,7 @@ export default function ProfileIndexPage() {
               {t("exampleTasks.title")}
             </h2>
             <p className="profile-index--text">{t("exampleTasks.nothing")}</p>
-            <Button label="Добавить работу" size="middle" />
+            <Button label={t("addWork")} size="small" />
           </section>
         </div>
         <NavigationMenu />
