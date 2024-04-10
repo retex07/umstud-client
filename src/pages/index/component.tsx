@@ -29,8 +29,8 @@ export default function IndexPage() {
       </section>
       <section className="section-container container">
         <header className="type-work--header">
-          <h2 className="sub-heading">Популярные виды работ</h2>
-          <p className="description">Качетсвенные работы в короткие сроки</p>
+          <h2 className="sub-heading">{t("work.popular")}</h2>
+          <p className="description">{t("work.quality")}</p>
         </header>
         <div className="type-work--info-wrapper">
           <CardSlider>
@@ -44,13 +44,10 @@ export default function IndexPage() {
             ))}
           </CardSlider>
           <div className="type-work--problems">
-            <h3 className="type-work--problems-title">Проблемы с учёбой?</h3>
-            <p className="type-work--problems-subtitle">
-              Обратитесь за помощью к студентам, вы получите готовую работу с
-              соблюдением всех требований вашего преподавателя
-            </p>
+            <h3 className="type-work--problems-title">{t("trouble")}</h3>
+            <p className="type-work--problems-subtitle">{t("helpers")}</p>
             <div className="type-work--action">
-              <Button label="Посмотреть все работы" size="middle" />
+              <Button label={t("viewWorks")} size="middle" />
             </div>
           </div>
         </div>
