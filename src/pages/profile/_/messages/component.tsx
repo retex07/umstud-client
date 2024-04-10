@@ -1,5 +1,4 @@
-import NavigationMenu from "components/navigationMenu";
-import { routes, baseUrl } from "pages/profile/routes";
+import NavigationMenu from "pages/profile/components/navigationMenu";
 import React from "react";
 
 import "./styles.scss";
@@ -11,7 +10,7 @@ export default function ProfileMessagesPage() {
         <div className="page-content-wrapper">
           <header className="page-content-title">Сообщения</header>
         </div>
-        <NavigationMenu baseUrl={baseUrl} items={routes} />
+        <NavigationMenu />
       </div>
     </div>
   );

@@ -59,30 +59,3 @@ export const Routes: Route[] = [
     layoutSettings: {},
   },
 ];
-
-export const routes = [
-  {
-    route: "/",
-    title: "Профиль",
-  },
-  {
-    route: "/messages",
-    title: "Сообщения",
-  },
-  {
-    route: "/ready-tasks",
-    title: "Выполненные работы",
-  },
-  {
-    route: "/black-list",
-    title: "Черный список",
-  },
-  {
-    route: "/orders",
-    title: "Мои заказы",
-  },
-  {
-    route: "/works",
-    title: "Моя работа",
-  },
-];

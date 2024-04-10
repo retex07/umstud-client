@@ -1,8 +1,7 @@
 import { baseLinkMedias, linkMediaFiles } from "constants/config";
 
 import Button from "components/button";
-import NavigationMenu from "components/navigationMenu";
-import { routes, baseUrl } from "pages/profile/routes";
+import NavigationMenu from "pages/profile/components/navigationMenu";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -52,7 +51,7 @@ export default function ProfileIndexPage() {
               <div className="profile-index--user-email">{user?.email}</div>
               <div className="profile-index--change-action">
                 <Button
-                  size="middle"
+                  size="small"
                   label="Редактировать профиль"
                   isTransparent
                 />
@@ -122,7 +121,7 @@ export default function ProfileIndexPage() {
             <Button label="Добавить работу" size="middle" />
           </section>
         </div>
-        <NavigationMenu baseUrl={baseUrl} items={routes} />
+        <NavigationMenu />
       </div>
     </div>
   );

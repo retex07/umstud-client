@@ -1,9 +1,8 @@
 import InlineUser from "components/inlineUser";
-import NavigationMenu from "components/navigationMenu";
 import { blackList } from "mocks/profileMock";
+import NavigationMenu from "pages/profile/components/navigationMenu";
 import React from "react";
 
-import { routes, baseUrl } from "../../routes";
 import "./styles.scss";
 
 export default function ProfileBlackListPage() {
@@ -25,7 +24,7 @@ export default function ProfileBlackListPage() {
             ))}
           </section>
         </div>
-        <NavigationMenu baseUrl={baseUrl} items={routes} />
+        <NavigationMenu />
       </div>
     </div>
   );
