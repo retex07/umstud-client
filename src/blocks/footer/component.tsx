@@ -2,9 +2,9 @@ import { CONFIG_SYSTEM, hrefs } from "constants/config";
 
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { ReactComponent as LogoSvg } from "static/images/logo.svg";
 import { ReactComponent as MailSvg } from "static/images/mail.svg";
-import { ReactComponent as OkSvg } from "static/images/odnoklassniki.svg";
 import { ReactComponent as PhoneSvg } from "static/images/phone.svg";
 import { ReactComponent as TelegramSvg } from "static/images/telegram.svg";
 import { ReactComponent as VkSvg } from "static/images/vk.svg";
@@ -19,34 +19,49 @@ export default function Footer() {
         <dl>
           <dt className="footer--definition-term">{t("navigation.title")}</dt>
           <dd className="footer--definition-details">
-            <a className="footer--definition-details--description">
+            <Link to="/" className="footer--definition-details--description">
               {t("navigation.main")}
-            </a>
+            </Link>
           </dd>
           <dd className="footer--definition-details">
-            <a className="footer--definition-details--description">
+            <Link
+              to="/services"
+              className="footer--definition-details--description"
+            >
               {t("navigation.services")}
-            </a>
+            </Link>
           </dd>
           <dd className="footer--definition-details">
-            <a className="footer--definition-details--description">
+            <Link
+              to="/orders"
+              className="footer--definition-details--description"
+            >
               {t("navigation.orders")}
-            </a>
+            </Link>
           </dd>
           <dd className="footer--definition-details">
-            <a className="footer--definition-details--description">
+            <Link
+              to="/forum"
+              className="footer--definition-details--description"
+            >
               {t("navigation.forum")}
-            </a>
+            </Link>
           </dd>
           <dd className="footer--definition-details">
-            <a className="footer--definition-details--description">
+            <Link
+              to="/profile"
+              className="footer--definition-details--description"
+            >
               {t("navigation.account")}
-            </a>
+            </Link>
           </dd>
           <dd className="footer--definition-details">
-            <a className="footer--definition-details--description">
+            <Link
+              to="/rating"
+              className="footer--definition-details--description"
+            >
               {t("navigation.rating")}
-            </a>
+            </Link>
           </dd>
         </dl>
         <div className="footer--logo-web">
@@ -65,11 +80,13 @@ export default function Footer() {
             >
               <TelegramSvg />
             </a>
-            <a className="footer--definition-details--description">
+            <a
+              className="footer--definition-details--description"
+              href={hrefs.vk}
+              target="_blank"
+              rel="noreferrer"
+            >
               <VkSvg />
-            </a>
-            <a className="footer--definition-details--description">
-              <OkSvg />
             </a>
           </dd>
         </dl>

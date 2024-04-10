@@ -6,6 +6,7 @@ export const CONFIG_SYSTEM = {
 
 export const hrefs = {
   telegram: "https://t.me/fleelance_exchange_bot",
+  vk: "https://vk.com/umstudents",
 };
 
 //FIXME: На бэкенде должны исправить этот бред с ссылками на медиа

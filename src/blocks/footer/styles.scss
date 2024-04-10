@@ -57,6 +57,7 @@
     &--description {
       @include typography.ordinary_subtitle;
 
+      text-decoration: none;
       cursor: pointer;
       color: var(--color-white);
     }
