@@ -5,7 +5,8 @@
 
   &__wrapper {
     position: absolute;
-    margin-top: 130px;
+    top: 40px;
+    left: 0;
 
     display: flex;
     flex-direction: column;
@@ -19,16 +20,24 @@
     background: var(--color-white);
 
     @media screen and (max-width: 1220px) {
-      margin-left: -200%;
+      right: 0;
+      left: auto;
     }
   }
 
   &__item {
     cursor: pointer;
     margin: 4px 0;
+    text-align: center;
+    text-decoration: none;
+    color: var(--color-dark-text);
 
     &.red {
       color: var(--color-red);
+    }
+
+    &:hover {
+      text-decoration: underline;
     }
   }
 }
