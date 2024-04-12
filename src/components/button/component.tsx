@@ -30,7 +30,9 @@ export default function Button(props: Props) {
       type={props.type}
       onClick={props.onClick}
       title={props.title}
-      className={`${props.fullWidth && "button--full-width"}
+      className={`${props.fullWidth && "button--full-width"} ${
+        props.disabled && "button--disabled"
+      }
       ${!props.isTransparent && "button--" + props.color} 
       ${props.isTransparent && "button--" + props.color + "--is-transparent"}
       button--${props.size} button`}

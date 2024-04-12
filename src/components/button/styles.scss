@@ -113,4 +113,13 @@
       @extend .button--yellow--is-transparent;
     }
   }
+
+  &--disabled {
+    background-color: var(--color-blue);
+    color: var(--color-white);
+    &:hover {
+      background: var(--color-blue);
+      color: var(--color-white);
+    }
+  }
 }
