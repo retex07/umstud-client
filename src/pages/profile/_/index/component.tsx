@@ -6,7 +6,9 @@ import { useSelector } from "react-redux";
 import { ReactComponent as ExampleAvatarSvg } from "static/images/example-avatar.svg";
 import { ReactComponent as FillStarSvg } from "static/images/fill-star.svg";
 import { user as user_selector } from "store/user/user.selectors";
-import { formatPhoneNumber } from "utils/constant.utils";
+import { formatPhoneNumber, isMobileVersion } from "utils/constant.utils";
+
+import MobileNavigationMenu from "../../components/mobileNavigationMenu";
 import "./styles.scss";
 
 export default function ProfileIndexPage() {
@@ -26,6 +28,7 @@ export default function ProfileIndexPage() {
   return (
     <div id="page" className="page-container profile-index">
       <div className="container-bar">
+        {isMobileVersion() && <MobileNavigationMenu />}
         <div className="page-content-wrapper">
           <header className="profile-index--header">
             <div className="profile-index--user-avatar">{renderAvatar()}</div>
