@@ -6,19 +6,12 @@ import { useSelector } from "react-redux";
 import { ReactComponent as ExampleAvatarSvg } from "static/images/example-avatar.svg";
 import { ReactComponent as FillStarSvg } from "static/images/fill-star.svg";
 import { user as user_selector } from "store/user/user.selectors";
-
+import { formatPhoneNumber } from "utils/constant.utils";
 import "./styles.scss";
 
 export default function ProfileIndexPage() {
   const { t } = useTranslation("p_profile", { keyPrefix: "index" });
   const { user } = useSelector(user_selector);
-
-  const splited = user?.birth_date?.toString().split(".") || [];
-  const birthday = new Date(
-    Number(splited[2]),
-    Number(splited[1]),
-    Number(splited[0])
-  );
 
   function renderAvatar() {
     switch (true) {
@@ -71,15 +64,16 @@ export default function ProfileIndexPage() {
                 <div className="profile-index--header-info--item">
                   <h3 className="profile-index--text">{t("birth")}</h3>
                   <p className="profile-index--text">
-                    {birthday.getDate()}.{birthday.getMonth()}.
-                    {birthday.getFullYear()}
+                    {user.birth_date.toString()}
                   </p>
                 </div>
               )}
               {user?.phone && (
                 <div className="profile-index--header-info--item">
                   <h3 className="profile-index--text">{t("phone")}</h3>
-                  <p className="profile-index--text">{user.phone}</p>
+                  <p className="profile-index--text">
+                    {formatPhoneNumber(user.phone)}
+                  </p>
                 </div>
               )}
               {user?.place_study_work && (
