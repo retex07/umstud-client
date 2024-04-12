@@ -2,7 +2,7 @@ import useLogin from "api/mutations/api/login";
 import { Login_RequestBody } from "api/mutations/api/login/types";
 import Button from "components/button";
 import Field from "components/formElements/field";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
@@ -20,6 +20,8 @@ export default function SignInPage() {
     keyPrefix: "form.rules",
   });
 
+  const [isLoadingLogin, setIsLoadingLogin] = useState(false);
+
   const dispatch = useDispatch<Dispatch>();
   const basePath = getBasePath(path);
   const login = useLogin();
@@ -31,6 +33,7 @@ export default function SignInPage() {
     });
 
   function onValidSubmit(data: Login_RequestBody) {
+    setIsLoadingLogin(true);
     login.mutate(
       {
         data: {
@@ -41,8 +44,10 @@ export default function SignInPage() {
       {
         onSuccess: (res) => {
           dispatch(userActions.login({ ...res.data.tokens }));
+          setIsLoadingLogin(false);
         },
         onError: (err) => {
+          setIsLoadingLogin(false);
           if (err.response?.data.message) {
             setError("login_or_email", {
               message: err.response.data.message,
@@ -91,6 +96,8 @@ export default function SignInPage() {
             size="big"
             type="submit"
             fullWidth
+            isLoading={isLoadingLogin}
+            disabled={isLoadingLogin}
             label={t("actions.login")}
           />
         </form>

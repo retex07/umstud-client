@@ -5,7 +5,7 @@ import {
 } from "api/mutations/api/register/types";
 import Button from "components/button";
 import Field from "components/formElements/field";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
@@ -20,6 +20,8 @@ export default function SignUpPage() {
   const { t: tRules } = useTranslation("translation", {
     keyPrefix: "form.rules",
   });
+
+  const [isLoadingRegister, setIsLoadingRegister] = useState(false);
 
   type KeysOfRegister_RequestBody = keyof Register_RequestBody;
   const keysRegisterRequest: KeysOfRegister_RequestBody[] = [
@@ -41,6 +43,7 @@ export default function SignUpPage() {
     });
 
   function onValidSubmit(data: Register_RequestBody) {
+    setIsLoadingRegister(true);
     register.mutate(
       {
         data: {
@@ -55,8 +58,10 @@ export default function SignUpPage() {
       {
         onSuccess: () => {
           history.push("/auth/sign-in");
+          setIsLoadingRegister(false);
         },
         onError: (err) => {
+          setIsLoadingRegister(false);
           if (err.response) {
             Object.entries(err.response.data).map(([key, value]) => {
               const typedKey = key as keyof Register_ErrorBody;
@@ -107,6 +112,8 @@ export default function SignUpPage() {
               label={t("actions.register")}
               fullWidth
               type="submit"
+              isLoading={isLoadingRegister}
+              disabled={isLoadingRegister}
             />
             <p className="authorization--description">{t("police")}</p>
           </div>
