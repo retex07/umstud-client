@@ -6,6 +6,9 @@
 
   padding: 22px 18px;
   gap: 22px;
+  box-sizing: border-box;
+  max-width: 260px;
+  width: 100%;
 
   background: var(--color-white);
   border-radius: 10px;
@@ -15,8 +18,8 @@
     flex-direction: row;
 
     align-items: center;
-
-    gap: 24px;
+    justify-content: space-between;
+    gap: 8px;
   }
 
   &--heading {

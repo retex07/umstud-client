@@ -23,7 +23,7 @@
 }
 
 .section-welcome {
-  background-image: url("../../static/images/index/vetor-one.svg");
+  background-image: url("../../static/images/index/veсtor-one.svg");
   background-size: cover;
   padding: 60px 0;
 
@@ -76,6 +76,127 @@
   }
 }
 
+.section-how-work {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 0;
+  gap: 26px;
+
+  &--title {
+    @include typography.page_head;
+  }
+
+  &--points {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 32px;
+
+    @media screen and (max-width: 1220px) {
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+
+  &--block-point {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 26px;
+    @media screen and (max-width: 1220px) {
+      gap: 10px;
+    }
+  }
+
+  &--point-info {
+    display: inline-flex;
+    gap: 12px;
+    align-items: center;
+    max-width: 282px;
+  }
+
+  &--point {
+    @include typography.main_subtitle;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    color: var(--color-white);
+    background-color: var(--color-blue);
+    border-radius: 50%;
+
+    width: 100%;
+    max-width: 41px;
+    height: 41px;
+  }
+
+  &--point-descr {
+    @include typography.ordinary;
+    color: var(--color-gray-text);
+    text-align: start;
+  }
+}
+
+.section-advantages {
+  background-image: url("../../static/images/index/veсtor-three.svg");
+  background-size: cover;
+
+  max-height: 355px;
+  height: 100%;
+
+  &--wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    gap: 26px;
+    padding: 118px 0;
+  }
+
+  &--info {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    > svg {
+      max-width: 24px;
+      max-height: 24px;
+    }
+
+    &.warn {
+      > svg {
+        stroke: var(--color-red);
+      }
+    }
+  }
+
+  &--title {
+    @include typography.page_head;
+    color: var(--color-white);
+  }
+
+  &--subtitle {
+    @include typography.ordinary;
+    color: var(--color-white);
+  }
+
+  &--about {
+    display: flex;
+    flex-direction: row;
+    gap: 34px;
+    justify-content: center;
+    @media screen and (max-width: 1220px) {
+      align-items: center;
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+}
+
 .section-reviews {
   background-image: url("../../static/images/index/vector-two.svg");
   background-size: cover;
@@ -92,6 +213,11 @@
 
     gap: 22px;
     padding: 50px 65px 110px;
+  }
+
+  &--sub-heading {
+    @extend .sub-heading;
+    text-align: center;
   }
 
   &--header {
