@@ -10,12 +10,24 @@
   },
   "viewWorks": "View all the works",
   "reviews": {
-    "title": "Reviews",
+    "title": "Feedback from our users",
     "rating": "Overall Rating: 4.3"
   },
   "support": {
     "title": "FAQs",
     "description": "Didn't find an answer to your question? Ask us, and we'll strive to provide a quick and clear response.",
     "sendQuestion": "Ask a Question"
+  },
+  "advantages": {
+    "title": "Our Advantages",
+    "plagiarism": "Plagiarism Checking",
+    "rating": "Rating System",
+    "payment": "Payment Not Only in Cash"
+  },
+  "howWork": {
+    "title": "How Does It Work?",
+    "pointOne": "Take a photo or describe your task in words",
+    "pointTwo": "Choose an expert and discuss the task in chat",
+    "pointThree": "Receive detailed answers and solutions"
   }
 }
