@@ -1,0 +1,68 @@
+.swiper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  max-width: 1092px;
+
+  &__wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 26px;
+    @media screen and (max-width: 1220px) {
+      gap: 6px;
+    }
+  }
+
+  &__slider {
+    display: inline-flex;
+    gap: 12px;
+  }
+
+  &__action {
+    border: none;
+    background: none;
+    cursor: pointer;
+    > svg, path {
+      transition: 0.1s;
+      max-width: 28px;
+      max-height: 28px;
+    }
+
+    &:hover {
+      > svg, path {
+        stroke: var(--color-gray);
+        transition: 0.1s;
+      }
+    }
+  }
+
+  &__action-inactive {
+    > svg, path {
+      stroke: var(--color-gray);
+      transition: 0.1s;
+    }
+  }
+
+  &__dot {
+    border-radius: 50%;
+    background-color: var(--color-gray-text);
+    height: 6px;
+    width: 6px;
+    cursor: pointer;
+    &:hover {
+      background-color: var(--color-gray);
+    }
+
+    &.active {
+      background-color: var(--color-gray);
+    }
+  }
+
+  &__dots {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+}

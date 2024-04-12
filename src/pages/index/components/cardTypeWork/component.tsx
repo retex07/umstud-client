@@ -27,7 +27,7 @@ export default function CardTypeWork(props: Props) {
         <div className="card-type-work--info-wrapper">
           <span className="card-type-work--subtitle">Сроки</span>
           <p className="card-type-work--description">
-            от {props.startPrice} д.
+            от {props.startDeadline} д.
           </p>
         </div>
       </footer>

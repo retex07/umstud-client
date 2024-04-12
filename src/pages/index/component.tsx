@@ -1,6 +1,6 @@
 import Button from "components/button";
-import CardSlider from "components/cardSlider";
 import CardReview from "components/cards/cardReview";
+import Swiper from "components/swiper";
 import { ReviewsMock } from "mocks/reviewsMock";
 import { WorkTypesMock } from "mocks/workTypeMock";
 import React from "react";
@@ -33,7 +33,7 @@ export default function IndexPage() {
           <p className="description">{t("work.quality")}</p>
         </header>
         <div className="type-work--info-wrapper">
-          <CardSlider>
+          <Swiper>
             {WorkTypesMock.map((typeWork) => (
               <CardTypeWork
                 key={typeWork.id}
@@ -42,7 +42,7 @@ export default function IndexPage() {
                 startDeadline={typeWork.startDeadline}
               />
             ))}
-          </CardSlider>
+          </Swiper>
           <div className="type-work--problems">
             <h3 className="type-work--problems-title">{t("trouble")}</h3>
             <p className="type-work--problems-subtitle">{t("helpers")}</p>
