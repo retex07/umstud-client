@@ -1,5 +1,3 @@
-import { baseLinkMedias, linkMediaFiles } from "constants/config";
-
 import Button from "components/button";
 import NavigationMenu from "pages/profile/components/navigationMenu";
 import React from "react";
@@ -8,19 +6,12 @@ import { useSelector } from "react-redux";
 import { ReactComponent as ExampleAvatarSvg } from "static/images/example-avatar.svg";
 import { ReactComponent as FillStarSvg } from "static/images/fill-star.svg";
 import { user as user_selector } from "store/user/user.selectors";
-import { replaceSubstringLink } from "utils/link.utils";
 
 import "./styles.scss";
 
 export default function ProfileIndexPage() {
   const { t } = useTranslation("p_profile", { keyPrefix: "index" });
   const { user } = useSelector(user_selector);
-
-  const avatarUrl = replaceSubstringLink(
-    user?.photo || "",
-    baseLinkMedias,
-    linkMediaFiles
-  );
 
   const splited = user?.birth_date?.toString().split(".") || [];
   const birthday = new Date(
@@ -29,18 +20,22 @@ export default function ProfileIndexPage() {
     Number(splited[0])
   );
 
+  function renderAvatar() {
+    switch (true) {
+      case user && !!user.photo: {
+        return <img src={user?.photo || ""} alt={user?.username} />;
+      }
+      default:
+        return <ExampleAvatarSvg />;
+    }
+  }
+
   return (
     <div id="page" className="page-container profile-index">
       <div className="container-bar">
         <div className="page-content-wrapper">
           <header className="profile-index--header">
-            <div className="profile-index--user-avatar">
-              {user?.photo ? (
-                <img src={avatarUrl} alt={user?.username} />
-              ) : (
-                <ExampleAvatarSvg />
-              )}
-            </div>
+            <div className="profile-index--user-avatar">{renderAvatar()}</div>
             <div className="profile-index--header-info">
               <div className="profile-index--user-info">
                 <h2 className="profile-index--header-info--title">
