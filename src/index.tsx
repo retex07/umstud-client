@@ -1,3 +1,4 @@
+import PageLoader from "components/loaders/pageLoader";
 import React, { StrictMode, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -5,11 +6,11 @@ import { Provider } from "react-redux";
 import { Router } from "react-router-dom";
 import { history } from "services/router";
 import Store from "store/index";
-import "./services/localization";
-import "./index.scss";
+import { initializeState } from "store/user/user.slice";
 
 import App from "./App";
-import { initializeState } from "./store/user/user.slice";
+import "./services/localization";
+import "./index.scss";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,7 +28,7 @@ initializeState();
 
 root.render(
   <StrictMode>
-    <Suspense fallback={<>Loading...</>}>
+    <Suspense fallback={<PageLoader />}>
       <QueryClientProvider client={queryClient}>
         <Provider store={Store}>
           <Router history={history}>

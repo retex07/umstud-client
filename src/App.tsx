@@ -1,6 +1,7 @@
 import { useMeProfile } from "api/queries/user";
 import { DetailUserProfile } from "api/queries/user/types";
 import LayoutBuilder from "components/layoutBuilder";
+import PageLoader from "components/loaders/pageLoader";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
@@ -43,32 +44,41 @@ function App() {
 
     return () => clearInterval(tokenCheckInterval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accessToken, userProfile, history, location.pathname]);
+  }, [accessToken, userProfile, location.pathname]);
 
   useEffect(() => {
-    if (accessToken && userProfile && !isLoadingUserProfile && userProfile) {
+    if (accessToken && userProfile && !isLoadingUserProfile) {
       dispatch(userActions.updateUser(userProfile));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accessToken, userProfile, isLoadingUserProfile, userProfile, dispatch]);
+  }, [accessToken, userProfile]);
 
   const checkAuth = () => {
-    if (
-      (!accessToken || !userProfile) &&
-      location.pathname !== "/" &&
-      location.pathname !== "/auth/sign-up"
-    ) {
-      history.push("/auth/sign-in");
-    } else if (
-      userProfile &&
-      accessToken &&
-      location.pathname.includes("auth")
-    ) {
-      history.push("/profile");
-    } else if (accessToken && !userProfile) {
-      dispatch(userActions.logout());
+    if (!isLoadingUserProfile) {
+      if (
+        (!accessToken || !userProfile) &&
+        location.pathname !== "/" &&
+        location.pathname !== "/auth/sign-up"
+      ) {
+        history.push("/auth/sign-in");
+      } else if (
+        userProfile &&
+        accessToken &&
+        location.pathname.includes("auth")
+      ) {
+        history.push("/profile");
+      } else if (
+        (accessToken && !userProfile) ||
+        (!accessToken && userProfile)
+      ) {
+        dispatch(userActions.logout());
+      }
     }
   };
+
+  if (isLoadingUserProfile) {
+    return <PageLoader />;
+  }
 
   return (
     <Switch>
