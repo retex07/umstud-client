@@ -7,6 +7,7 @@
   align-items: center;
   justify-content: center;
 
+  box-sizing: border-box;
   border-radius: 10px;
 
   &--full-width {
@@ -24,16 +25,19 @@
   &--small {
     @include typography.button_small;
 
+    box-sizing: border-box;
     padding: 10px 12px;
   }
   &--middle {
     @include typography.button_middle;
 
+    box-sizing: border-box;
     padding: 12px 14px;
   }
   &--big {
     @include typography.button_big;
 
+    box-sizing: border-box;
     padding: 14px 16px;
   }
 
