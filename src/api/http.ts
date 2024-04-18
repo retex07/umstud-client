@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 
 export const RequestConfig: AxiosRequestConfig = {
-  baseURL: process.env.REACT_BASE_URL_API,
+  baseURL: process.env.REACT_APP_SERVER_URL,
   headers: {
     "Content-Type": "application/json",
   },

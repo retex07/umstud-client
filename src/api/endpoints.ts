@@ -1,10 +1,8 @@
-const baseUrl = process.env.REACT_APP_SERVER_URL;
-
 export const ENDPOINTS_CONFIG = {
   api: {
-    login: baseUrl + "/api/users/login/",
-    register: baseUrl + "/api/users/register/",
-    users: baseUrl + "/api/users/list/",
-    meProfile: baseUrl + "/api/users/profile/",
+    login: "/users/login/",
+    register: "/users/register/",
+    users: "/users/list/",
+    profile: "/users/profile/",
   },
 };

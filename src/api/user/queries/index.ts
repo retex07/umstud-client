@@ -5,7 +5,7 @@ import { QueryFunction, useQuery, UseQueryOptions } from "react-query";
 
 import { DetailUserProfile } from "../types";
 
-const url = ENDPOINTS_CONFIG.api.meProfile;
+const url = ENDPOINTS_CONFIG.api.profile;
 type QueryKey = typeof url;
 
 type Response = DetailUserProfile;
