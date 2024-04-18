@@ -1,5 +1,5 @@
-import { useMeProfile } from "api/queries/user";
-import { DetailUserProfile } from "api/queries/user/types";
+import { useMeProfile } from "api/user/queries";
+import { DetailUserProfile } from "api/user/types";
 import LayoutBuilder from "components/layoutBuilder";
 import PageLoader from "components/loaders/pageLoader";
 import React, { useEffect } from "react";

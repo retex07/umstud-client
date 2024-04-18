@@ -8,7 +8,7 @@ import {
   Register_ErrorBody,
   Register_RequestBody,
   Register_Response,
-} from "./types";
+} from "../types";
 
 type Data = AxiosResponse<Register_Response>;
 

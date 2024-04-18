@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { DetailUserProfile } from "api/user/types";
 
 import { LoginReducer, State } from "./user.types";
-import { DetailUserProfile } from "../../api/queries/user/types";
 import Store from "../index";
 
 const initialState: State = {

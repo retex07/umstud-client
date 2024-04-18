@@ -4,7 +4,7 @@ import { PureResponse } from "api/types";
 import { AxiosError, AxiosResponse, CancelToken } from "axios";
 import { useMutation, UseMutationOptions } from "react-query";
 
-import { Login_RequestBody, Login_Response } from "./types";
+import { Login_RequestBody, Login_Response } from "../types";
 
 type Data = AxiosResponse<Login_Response>;
 

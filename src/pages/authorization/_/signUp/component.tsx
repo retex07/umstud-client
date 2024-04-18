@@ -1,8 +1,5 @@
-import useRegister from "api/mutations/api/register";
-import {
-  Register_ErrorBody,
-  Register_RequestBody,
-} from "api/mutations/api/register/types";
+import useRegister from "api/register/mutations";
+import { Register_ErrorBody, Register_RequestBody } from "api/register/types";
 import Button from "components/button";
 import Field from "components/formElements/field";
 import React, { useState } from "react";

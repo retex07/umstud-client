@@ -1,5 +1,5 @@
-import useLogin from "api/mutations/api/login";
-import { Login_RequestBody } from "api/mutations/api/login/types";
+import useLogin from "api/login/mutations";
+import { Login_RequestBody } from "api/login/types";
 import Button from "components/button";
 import Field from "components/formElements/field";
 import React, { useState } from "react";

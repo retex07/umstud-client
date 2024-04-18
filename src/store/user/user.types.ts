@@ -1,4 +1,4 @@
-import { DetailUserProfile } from "../../api/queries/user/types";
+import { DetailUserProfile } from "api/user/types";
 
 export type State = {
   user: DetailUserProfile | null;

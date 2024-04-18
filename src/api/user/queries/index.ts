@@ -3,7 +3,7 @@ import http from "api/http";
 import { AxiosError } from "axios";
 import { QueryFunction, useQuery, UseQueryOptions } from "react-query";
 
-import { DetailUserProfile } from "./types";
+import { DetailUserProfile } from "../types";
 
 const url = ENDPOINTS_CONFIG.api.meProfile;
 type QueryKey = typeof url;
