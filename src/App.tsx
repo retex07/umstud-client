@@ -76,7 +76,7 @@ function App() {
     }
   };
 
-  if (isLoadingUserProfile) {
+  if (accessToken && isLoadingUserProfile) {
     return <PageLoader />;
   }
 
