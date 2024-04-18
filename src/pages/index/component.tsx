@@ -1,3 +1,5 @@
+import { CONFIG_SYSTEM } from "constants/config";
+
 import Button from "components/button";
 import CardReview from "components/cards/cardReview";
 import Swiper from "components/swiper";
@@ -5,6 +7,7 @@ import { ReviewsMock } from "mocks/reviewsMock";
 import { WorkTypesMock } from "mocks/workTypeMock";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
 import { ReactComponent as StarSvg } from "static/images/fill-star.svg";
 import { ReactComponent as ManSvg } from "static/images/index/man-with-board.svg";
 import { ReactComponent as PhoneOneSvg } from "static/images/index/phone-one.svg";
@@ -18,6 +21,7 @@ import "./styles.scss";
 
 export default function IndexPage() {
   const { t } = useTranslation("p_index");
+  const history = useHistory();
 
   return (
     <main id="page" className="index-page-container">
@@ -28,7 +32,10 @@ export default function IndexPage() {
             <h1 className="main-heading">{t("title")}</h1>
             <h2 className="heading">{t("subtitle")}</h2>
             <div>
-              <Button label={t("goWork")} />
+              <Button
+                label={t("goWork")}
+                onClick={() => history.push("/orders")}
+              />
             </div>
           </div>
         </div>
@@ -53,7 +60,11 @@ export default function IndexPage() {
             <h3 className="type-work--problems-title">{t("trouble")}</h3>
             <p className="type-work--problems-subtitle">{t("helpers")}</p>
             <div className="type-work--action">
-              <Button label={t("viewWorks")} size="middle" />
+              <Button
+                label={t("viewWorks")}
+                size="middle"
+                onClick={() => history.push("/orders")}
+              />
             </div>
           </div>
         </div>
@@ -137,9 +148,12 @@ export default function IndexPage() {
           <h2 className="sub-heading">{t("support.title")}</h2>
           <p className="description">{t("support.description")}</p>
         </header>
-        <div>
+        <a
+          className="section-answer-questions--action"
+          href={`mailto: ${CONFIG_SYSTEM.mail}`}
+        >
           <Button label={t("support.sendQuestion")} size="middle" />
-        </div>
+        </a>
       </section>
     </main>
   );
