@@ -8,3 +8,5 @@ export const hrefs = {
   telegram: "https://t.me/fleelance_exchange_bot",
   vk: "https://vk.com/umstudents",
 };
+
+export const codeTokenNoValid = "token_not_valid";

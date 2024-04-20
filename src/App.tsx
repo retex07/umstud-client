@@ -1,3 +1,5 @@
+import { codeTokenNoValid } from "constants/config";
+
 import { useMeProfile } from "api/user/queries";
 import { DetailUserProfile } from "api/user/types";
 import LayoutBuilder from "components/layoutBuilder";
@@ -24,7 +26,14 @@ function App() {
     data: userProfile,
     isLoading: isLoadingUserProfile,
     refetch: refetchUserProfile,
+    error: errorGetProfile,
   } = useMeProfile<DetailUserProfile>();
+
+  const errorCodeProfile = errorGetProfile?.response?.data.code || null;
+
+  if (errorCodeProfile && errorCodeProfile === codeTokenNoValid) {
+    dispatch(userActions.logout());
+  }
 
   useEffect(() => {
     if (accessToken) {
