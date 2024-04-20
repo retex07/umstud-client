@@ -10,3 +10,7 @@ export function formatPhoneNumber(phone: string) {
 export function isMobileVersion() {
   return window.innerWidth <= 1220;
 }
+
+export function splitKey(key: string) {
+  return key.split("_").join("");
+}

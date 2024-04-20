@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { ReactComponent as LineSvg } from "static/images/line.svg";
+import { splitKey } from "utils/constant.utils";
 import { getBasePath } from "utils/router.utils";
 
 import "../styles.scss";
@@ -70,10 +71,6 @@ export default function SignUpPage() {
         },
       }
     );
-  }
-
-  function splitKey(key: string) {
-    return key.split("_").join("");
   }
 
   return (
