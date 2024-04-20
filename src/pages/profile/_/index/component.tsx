@@ -3,17 +3,20 @@ import NavigationMenu from "pages/profile/components/navigationMenu";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { ReactComponent as ExampleAvatarSvg } from "static/images/example-avatar.svg";
 import { ReactComponent as FillStarSvg } from "static/images/fill-star.svg";
 import { user as user_selector } from "store/user/user.selectors";
 import { formatPhoneNumber, isMobileVersion } from "utils/constant.utils";
 
 import MobileNavigationMenu from "../../components/mobileNavigationMenu";
+import { baseUrl } from "../../routes";
 import "./styles.scss";
 
 export default function ProfileIndexPage() {
   const { t } = useTranslation("p_profile", { keyPrefix: "index" });
   const { user } = useSelector(user_selector);
+  const history = useHistory();
 
   function renderAvatar() {
     switch (true) {
@@ -28,7 +31,9 @@ export default function ProfileIndexPage() {
   return (
     <div id="page" className="page-container profile-index">
       <div className="container-bar">
-        {isMobileVersion() && <MobileNavigationMenu />}
+        <div className="profile-tabs">
+          {isMobileVersion() && <MobileNavigationMenu />}
+        </div>
         <div className="page-content-wrapper">
           <header className="profile-index--header">
             <div className="profile-index--user-avatar">{renderAvatar()}</div>
@@ -45,6 +50,7 @@ export default function ProfileIndexPage() {
                   size="small"
                   label="Редактировать профиль"
                   isTransparent
+                  onClick={() => history.push(baseUrl + "/edit")}
                 />
               </div>
             </div>

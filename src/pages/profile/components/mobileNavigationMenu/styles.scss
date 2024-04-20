@@ -12,6 +12,7 @@
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
 
+  width: 100%;
   max-width: 740px;
   box-sizing: border-box;
 
@@ -58,7 +59,7 @@
     }
   }
 
-  &__item-route-active {
-
+  &__container {
+    width: 100%;
   }
 }
