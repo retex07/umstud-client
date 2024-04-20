@@ -4,24 +4,32 @@ import {
   Control,
   FieldValues,
   Path,
+  PathValue,
+  UnpackNestedValue,
   useController,
   UseControllerProps,
 } from "react-hook-form";
 
 interface Props<T extends FieldValues>
-  extends Pick<
-    InputProps,
-    | "id"
-    | "type"
-    | "readonly"
-    | "disabled"
-    | "fullWidth"
-    | "label"
-    | "placeholder"
-    | "name"
+  extends Omit<
+    Pick<
+      InputProps,
+      | "id"
+      | "type"
+      | "readonly"
+      | "disabled"
+      | "fullWidth"
+      | "label"
+      | "placeholder"
+      | "classNames"
+      | "value"
+    >,
+    "name"
   > {
+  name: Path<T>;
   control: Control<T>;
   rules?: UseControllerProps["rules"];
+  defaultValue?: UnpackNestedValue<PathValue<T, Path<T>>>;
 }
 
 export default function Field<FormField extends FieldValues>(
@@ -29,12 +37,14 @@ export default function Field<FormField extends FieldValues>(
 ) {
   const { field, fieldState } = useController({
     control: props.control,
-    name: props.name as Path<FormField>,
+    name: props.name,
     rules: props.rules,
+    defaultValue: props.defaultValue,
   });
 
   return (
     <Input
+      classNames={props.classNames}
       placeholder={props.placeholder}
       label={props.label}
       type={props.type}
