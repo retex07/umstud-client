@@ -1,56 +1,29 @@
-@use "src/styles/variables";
 @use "src/styles/typography";
 
 .select {
-  display: flex;
-  flex-direction: row;
-
-  padding: 16px;
-  gap: 4px;
-
-  margin: 0;
-  border: 1px solid var(--color-gray);
-  border-radius: 10px;
-
-  outline: none;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
-  &::-ms-expand {
-    display: none;
-  }
-  &:not([multiple]) {
-    background-repeat: no-repeat;
-    background-position: calc(100% - 0.25em) 12px;
-    background-size: 28px auto;
-    background-image: url("../../static/images/chevron-down.svg");
-  }
-  &:not([multiple]):focus {
-    background-repeat: no-repeat;
-    background-position: calc(100% - 0.25em) 12px;
-    background-size: 28px auto;
-    background-image: url("../../static/images/chevron-up.svg");
-  }
-
-  @include typography.ordinary_subtitle;
-
-  &:focus {
-    border: 1px solid var(--color-blue);
-  }
-
-  &__fullWidth {
+  &__warning {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 4px 0 0 2px;
+    gap: 4px;
     width: 100%;
   }
 
-  &__option {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+  &__label-warning {
+    @include typography.signature;
+    color: var(--color-red);
+  }
 
-    padding: 12px;
+  &__full-width {
+    width: 100%;
+  }
 
-    border: 1px solid var(--color-gray);
+  &__label-block {
+    margin-bottom: 4px;
+  }
 
-    @include typography.ordinary_subtitle
+  &__label {
+    @include typography.ordinary;
   }
 }

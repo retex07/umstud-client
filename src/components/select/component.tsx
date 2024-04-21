@@ -1,36 +1,58 @@
-import React, { FocusEventHandler } from "react";
+import cn, { Argument as ClassNamesArgument } from "classnames";
+import React, { RefCallback, RefObject } from "react";
+import Select, { Props as SelectProps, CSSObjectWithLabel } from "react-select";
 import "./styles.scss";
 
-interface Props {
-  name: string;
-  id?: string;
-  listDrop: string[];
-  value?: string;
-  multiple?: boolean;
+export interface Props extends Omit<SelectProps, "classNames"> {
+  innerRef?: RefObject<HTMLSelectElement> | RefCallback<HTMLSelectElement>;
+  hasError?: boolean;
+  errorMessage?: string;
   fullWidth?: boolean;
-  disabled?: boolean;
-  onChange?: ({ ...event }) => void;
-  onBlur?: FocusEventHandler<HTMLSelectElement>;
+  label?: string;
+  classNames?: ClassNamesArgument;
 }
 
-export default function Select(props: Props) {
+export default function CustomSelect({
+  hasError,
+  errorMessage,
+  fullWidth,
+  label,
+  classNames,
+  ...props
+}: Props) {
+  const customStyles = {
+    control: (provided: CSSObjectWithLabel, state: any) => ({
+      ...provided,
+      borderRadius: 10,
+      minHeight: 50,
+      borderColor: hasError
+        ? "var(--color-red)"
+        : state.isFocused
+        ? "var(--color-blue)"
+        : "var(--color-gray)",
+      "&:hover": {
+        borderColor: "var(--color-blue)",
+      },
+    }),
+  };
+
   return (
-    <select
-      id="select-component"
-      className={`${props.fullWidth ? "select__fullWidth" : undefined} select`}
-      name={props.name}
-      value={props.value}
-      onChange={props.onChange}
-      multiple={props.multiple}
-      disabled={props.disabled}
-      onBlur={props.onBlur}
+    <div
+      className={cn("select", classNames, {
+        "select__full-width": fullWidth,
+      })}
     >
-      <option className="select__option" value="" disabled />
-      {props.listDrop.map((option, key) => (
-        <option className="select__option" key={key}>
-          {option}
-        </option>
-      ))}
-    </select>
+      {label && (
+        <div className="select__label-block">
+          <label className="select__label">{label}</label>
+        </div>
+      )}
+      <Select {...props} styles={customStyles} />
+      {hasError && (
+        <div className="select__warning">
+          <label className="select__label-warning">{errorMessage}</label>
+        </div>
+      )}
+    </div>
   );
 }
