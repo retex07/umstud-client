@@ -99,7 +99,7 @@ export default function ProfileIndexPage() {
               <ul className="profile-index--ul">
                 {user.skills.map((skill, index) => (
                   <li className="profile-index--text" key={index}>
-                    {skill}
+                    {skill.name}
                   </li>
                 ))}
               </ul>

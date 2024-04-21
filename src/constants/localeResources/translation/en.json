@@ -1,7 +1,14 @@
 {
   "form": {
     "rules": {
-      "required": "The field is required to fill in"
+      "required": "This field is required",
+      "pattern_email": "Allowed characters are A-Z, a-z, 0-9, -, _, ., @",
+      "pattern_firstname": "Allowed are upper and lower case letters of supported languages, as well as the symbols - `",
+      "pattern_lastname": "Allowed are upper and lower case letters of supported languages, as well as the symbols - `",
+      "pattern_patronymic": "Allowed are upper and lower case letters of supported languages, as well as the symbols - `",
+      "pattern_phone": "Invalid phone number entered",
+      "pattern_birthdate": "Invalid date entered, valid format: DD.MM.YYYY",
+      "pattern_placestudywork": "Allowed are upper and lower case letters of supported languages, as well as the symbols - ` ,"
     }
   }
 }

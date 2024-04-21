@@ -52,9 +52,8 @@ export default function ProfileEdit() {
     "birth_date",
   ];
 
-  const userSkillsOptions = user?.skills.map((skillId) => {
-    const skill = dataSkills?.find((s) => s.id === skillId);
-    return { value: skillId, label: skill ? skill.name : "Unknown" };
+  const userSkillsOptions = user?.skills.map((skill) => {
+    return { value: skill.id, label: skill.name };
   });
 
   const { control, handleSubmit, formState } = useForm<UserPut_FormBody>({

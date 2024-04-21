@@ -14,7 +14,7 @@ export type DetailUserProfile = {
   email: string;
   phone: string;
   place_study_work: string;
-  skills: number[];
+  skills: Skill[];
   birth_date: Date;
   description?: string;
   language?: string;
