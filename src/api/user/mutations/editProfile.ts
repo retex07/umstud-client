@@ -14,7 +14,7 @@ interface Variables {
   data: FormData;
 }
 
-function index(
+function editProfile(
   data: FormData,
   cancelToken?: CancelToken
 ): PureResponse<UserPut_Response> {
@@ -28,7 +28,7 @@ export default function useEditProfile(
   options?: Omit<UseMutationOptions<Data, Error, Variables>, "mutationFn">
 ) {
   return useMutation<Data, Error, Variables>(
-    (variables) => index(variables.data),
+    (variables) => editProfile(variables.data),
     options
   );
 }

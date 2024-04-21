@@ -1,7 +1,7 @@
 import { RegExp } from "constants/config";
 
-import useEditProfile from "api/user/mutations";
-import { useMeProfile } from "api/user/queries";
+import useEditProfile from "api/user/mutations/editProfile";
+import { useMeProfile } from "api/user/queries/meProfile";
 import { useSkills } from "api/user/queries/skills";
 import { DetailUserProfile, Skill, UserPut_FormBody } from "api/user/types";
 import Button from "components/button";

@@ -1,6 +1,6 @@
 import { codeTokenNoValid } from "constants/config";
 
-import { useMeProfile } from "api/user/queries";
+import { useMeProfile } from "api/user/queries/meProfile";
 import { DetailUserProfile } from "api/user/types";
 import LayoutBuilder from "components/layoutBuilder";
 import PageLoader from "components/loaders/pageLoader";
