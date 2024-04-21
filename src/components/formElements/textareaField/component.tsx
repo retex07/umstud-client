@@ -1,4 +1,4 @@
-import Input, { Props as InputProps } from "components/input";
+import Textarea, { Props as TextareaProps } from "components/textarea";
 import React from "react";
 import {
   Control,
@@ -13,9 +13,8 @@ import {
 interface Props<T extends FieldValues>
   extends Omit<
     Pick<
-      InputProps,
+      TextareaProps,
       | "id"
-      | "type"
       | "readonly"
       | "disabled"
       | "fullWidth"
@@ -26,6 +25,7 @@ interface Props<T extends FieldValues>
     >,
     "name"
   > {
+  resize?: boolean;
   name: Path<T>;
   control: Control<T>;
   rules?: UseControllerProps["rules"];
@@ -43,11 +43,11 @@ export default function Field<FormField extends FieldValues>(
   });
 
   return (
-    <Input
+    <Textarea
+      resize={props.resize}
       classNames={props.classNames}
       placeholder={props.placeholder}
       label={props.label}
-      type={props.type}
       name={field.name}
       id={props.id}
       fullWidth={props.fullWidth}
