@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import { Route } from "services/router/types";
 
+const EditPage = lazy(() => import("./_/edit"));
 const IndexPage = lazy(() => import("./_/index"));
 const BlackListPage = lazy(() => import("./_/blackList"));
 const MessagesPage = lazy(() => import("./_/messages"));
@@ -21,6 +22,14 @@ export const Routes: Route[] = [
   {
     path: "/messages",
     component: MessagesPage,
+    settings: {
+      exact: false,
+    },
+    layoutSettings: {},
+  },
+  {
+    path: "/edit",
+    component: EditPage,
     settings: {
       exact: false,
     },

@@ -4,5 +4,6 @@ export const ENDPOINTS_CONFIG = {
     register: "/users/register/",
     users: "/users/list/",
     profile: "/users/profile/",
+    skills: "/users/skills_change/",
   },
 };

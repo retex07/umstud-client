@@ -10,3 +10,13 @@ export const hrefs = {
 };
 
 export const codeTokenNoValid = "token_not_valid";
+
+export const RegExp = {
+  last_name: /^[a-zA-Zа-яА-Я-`']+$/,
+  first_name: /^[a-zA-Zа-яА-Я-`']+$/,
+  patronymic: /^[a-zA-Zа-яА-Я-`']+$/,
+  email: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+  place_study_work: /^[a-zA-Zа-яА-Я0-9,\s]+$/,
+  phone: /^\+?[\s()0-9-]{5,}$/,
+  birth_date: /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.\d{4}$/,
+};

@@ -31,5 +31,49 @@
   "works": {
     "title": "My works"
   },
+  "edit": {
+    "title": "Edit Profile",
+    "cancel": "Cancel",
+    "save": "Save",
+    "loadPhoto": "Upload Photo",
+    "actions": {
+      "firstname": {
+        "title": "First Name",
+        "press": "Enter your first name"
+      },
+      "lastname": {
+        "title": "Last Name",
+        "press": "Enter your last name"
+      },
+      "patronymic": {
+        "title": "Patronymic",
+        "press": "Enter your patronymic"
+      },
+      "email": {
+        "title": "Email",
+        "press": "Enter your email"
+      },
+      "placestudywork": {
+        "title": "Place of Study / Work",
+        "press": "Enter your place of study / work"
+      },
+      "skills": {
+        "title": "Skills",
+        "press": "Enter your skills separated by commas"
+      },
+      "phone": {
+        "title": "Phone Number",
+        "press": "Enter your phone number"
+      },
+      "birthdate": {
+        "title": "Birth Date",
+        "press": "Select your birth date"
+      },
+      "description": {
+        "title": "About Yourself",
+        "press": "Tell about yourself"
+      }
+    }
+  },
   "selectSection": "Select a section"
 }
