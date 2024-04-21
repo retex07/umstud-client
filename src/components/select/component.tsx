@@ -1,6 +1,10 @@
 import cn, { Argument as ClassNamesArgument } from "classnames";
 import React, { RefCallback, RefObject } from "react";
-import Select, { Props as SelectProps, CSSObjectWithLabel } from "react-select";
+import Select, {
+  Props as SelectProps,
+  CSSObjectWithLabel,
+  ControlProps,
+} from "react-select";
 import "./styles.scss";
 
 export interface Props extends Omit<SelectProps, "classNames"> {
@@ -21,7 +25,7 @@ export default function CustomSelect({
   ...props
 }: Props) {
   const customStyles = {
-    control: (provided: CSSObjectWithLabel, state: any) => ({
+    control: (provided: CSSObjectWithLabel, state: ControlProps) => ({
       ...provided,
       borderRadius: 10,
       minHeight: 50,
