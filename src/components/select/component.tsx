@@ -29,6 +29,7 @@ export default function CustomSelect({
       ...provided,
       borderRadius: 10,
       minHeight: 50,
+      padding: 8,
       borderColor: hasError
         ? "var(--color-red)"
         : state.isFocused
