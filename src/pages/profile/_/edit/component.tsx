@@ -19,7 +19,7 @@ import { Dispatch } from "store/types";
 import { actions as userActions } from "store/user";
 import { user as user_selector } from "store/user/user.selectors";
 import { SelectOption } from "types/components";
-import { splitKey } from "utils/constant.utils";
+import { convertDate, splitKey } from "utils/constant.utils";
 
 import "./styles.scss";
 
@@ -65,7 +65,7 @@ export default function ProfileEdit() {
       email: user?.email,
       place_study_work: user?.place_study_work,
       phone: user?.phone,
-      birth_date: user?.birth_date,
+      birth_date: convertDate(user?.birth_date, true, "."),
       description: user?.description,
       skills: userSkillsOptions,
     },
@@ -74,8 +74,13 @@ export default function ProfileEdit() {
   function onValidSubmit(data: UserPut_FormBody) {
     setIsLoadingEditProfile(true);
 
+    const newData = {
+      ...data,
+      birth_date: convertDate(data.birth_date),
+    };
+
     const formData = new FormData();
-    Object.entries(data).forEach(([key, value]) => {
+    Object.entries(newData).forEach(([key, value]) => {
       if (value !== null) {
         if (Array.isArray(value) && key === "skills") {
           value.forEach((skill) =>
@@ -83,8 +88,6 @@ export default function ProfileEdit() {
           );
         } else if (Array.isArray(value)) {
           value.forEach((item) => formData.append(`${key}`, item.toString()));
-        } else if (value instanceof Date) {
-          formData.append(key, value.toISOString());
         } else {
           formData.append(key, value.toString());
         }
@@ -218,6 +221,7 @@ export default function ProfileEdit() {
                 key={key}
                 name={key}
                 control={control}
+                type={key === "birth_date" ? "date" : "text"}
                 label={t(`actions.${splitKey(key)}.title`)}
                 placeholder={t(`actions.${splitKey(key)}.press`)}
                 readonly={formState.isSubmitted}

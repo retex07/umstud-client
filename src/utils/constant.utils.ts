@@ -14,3 +14,21 @@ export function isMobileVersion() {
 export function splitKey(key: string) {
   return key.split("_").join("");
 }
+
+export function convertDate(
+  dateString: string | undefined,
+  reverse = false,
+  separator = "-"
+) {
+  if (!dateString) {
+    return "";
+  }
+
+  if (!reverse) {
+    const [year, month, day] = dateString.split(separator);
+    return `${day}.${month}.${year}`;
+  } else {
+    const [day, month, year] = dateString.split(separator);
+    return `${year}-${month}-${day}`;
+  }
+}
