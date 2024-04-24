@@ -40,6 +40,8 @@ function App() {
       refetchUserProfile().then((res) =>
         dispatch(userActions.updateUser(res.data || null))
       );
+    } else {
+      dispatch(userActions.logout());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);
@@ -52,13 +54,6 @@ function App() {
     }, 30000);
 
     return () => clearInterval(tokenCheckInterval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accessToken, userProfile, location.pathname]);
-
-  useEffect(() => {
-    if (accessToken && userProfile && !isLoadingUserProfile) {
-      dispatch(userActions.updateUser(userProfile));
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken, userProfile]);
 
