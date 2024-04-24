@@ -66,8 +66,7 @@ function App() {
     if (!isLoadingUserProfile) {
       if (
         (!accessToken || !userProfile) &&
-        location.pathname !== "/" &&
-        location.pathname !== "/auth/sign-up"
+        !location.pathname.includes("auth")
       ) {
         history.push("/auth/sign-in");
       } else if (
