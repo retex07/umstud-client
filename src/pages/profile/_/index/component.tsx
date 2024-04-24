@@ -3,19 +3,22 @@ import NavigationMenu from "pages/profile/components/navigationMenu";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import { ReactComponent as ExampleAvatarSvg } from "static/images/example-avatar.svg";
 import { ReactComponent as FillStarSvg } from "static/images/fill-star.svg";
 import { user as user_selector } from "store/user/user.selectors";
 import { formatPhoneNumber, isMobileVersion } from "utils/constant.utils";
+import { getBasePath } from "utils/router.utils";
 
 import MobileNavigationMenu from "../../components/mobileNavigationMenu";
 import "./styles.scss";
 
 export default function ProfileIndexPage() {
   const { t } = useTranslation("p_profile", { keyPrefix: "index" });
+  const { path } = useRouteMatch();
   const { user } = useSelector(user_selector);
   const history = useHistory();
+  const basePath = getBasePath(path);
 
   function renderAvatar() {
     switch (true) {
@@ -48,9 +51,7 @@ export default function ProfileIndexPage() {
                 <Button
                   size="small"
                   label={t("actions.edit")}
-                  onClick={() =>
-                    history.push(history.location.pathname + "/edit")
-                  }
+                  onClick={() => history.push(basePath + "/edit")}
                 />
                 <Button size="small" label={t("actions.cp")} isTransparent />
               </div>
