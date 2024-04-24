@@ -19,6 +19,7 @@
   &--change-action {
     display: inline-flex;
     width: 100%;
+    gap: 8px;
 
     @media screen and (max-width: 1220px) {
       justify-content: center;

@@ -10,7 +10,6 @@ import { user as user_selector } from "store/user/user.selectors";
 import { formatPhoneNumber, isMobileVersion } from "utils/constant.utils";
 
 import MobileNavigationMenu from "../../components/mobileNavigationMenu";
-import { baseUrl } from "../../routes";
 import "./styles.scss";
 
 export default function ProfileIndexPage() {
@@ -48,10 +47,12 @@ export default function ProfileIndexPage() {
               <div className="profile-index--change-action">
                 <Button
                   size="small"
-                  label="Редактировать профиль"
-                  isTransparent
-                  onClick={() => history.push(baseUrl + "/edit")}
+                  label={t("actions.edit")}
+                  onClick={() =>
+                    history.push(history.location.pathname + "/edit")
+                  }
                 />
+                <Button size="small" label={t("actions.cp")} isTransparent />
               </div>
             </div>
           </header>

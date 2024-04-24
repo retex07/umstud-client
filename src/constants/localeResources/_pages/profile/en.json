@@ -13,7 +13,11 @@
     },
     "rating": "Personal rating",
     "generalInfo": "General information",
-    "addWork": "Add a job"
+    "addWork": "Add a job",
+    "actions": {
+      "edit": "Edit profile",
+      "cp": "Change password"
+    }
   },
   "messages": {
     "title": "Messages"
