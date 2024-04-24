@@ -5,9 +5,19 @@
   "register": {
     "title": "Регистрация"
   },
+  "recover": {
+    "title": "Восстановление"
+  },
+  "reset": {
+    "title": "Сброс пароля"
+  },
   "actions": {
     "login": "Войти",
     "register": "Зарегистрироваться",
+    "recover": "Забыли пароль?",
+    "recoverAccess": "Восстановить доступ",
+    "resetPassword": "Сбросить пароль",
+    "remember": "Вспомнили пароль?",
     "or": "или",
     "username": {
       "title": "Никнейм",

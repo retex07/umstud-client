@@ -5,9 +5,19 @@
   "register": {
     "title": "Register"
   },
+  "recover": {
+    "title": "Recovery"
+  },
+  "reset": {
+    "title": "Password Reset"
+  },
   "actions": {
     "login": "Log In",
     "register": "Register",
+    "recover": "Forgot your password?",
+    "recoverAccess": "Restore access",
+    "resetPassword": "Reset your password",
+    "remember": "Remember the password?",
     "or": "or",
     "username": {
       "title": "Nickname",
