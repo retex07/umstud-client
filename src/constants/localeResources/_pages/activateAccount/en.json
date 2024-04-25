@@ -1,0 +1,8 @@
+{
+  "success": "Success!",
+  "description": "You have confirmed your account via email.",
+  "login": "Login",
+  "error": "Error!",
+  "errorMsg": "An error occurred during confirmation.",
+  "sendAdmin": "Please contact the administrator."
+}

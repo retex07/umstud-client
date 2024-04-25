@@ -6,6 +6,7 @@ const IndexPageResolver = lazy(() => import("pages/index"));
 const ServicesPageResolver = lazy(() => import("pages/services"));
 const AuthorizationPageResolver = lazy(() => import("pages/authorization"));
 const ProfilePageResolver = lazy(() => import("pages/profile/resolver"));
+const ActivateAccountPageResolver = lazy(() => import("pages/activateAccount"));
 
 const Routes: Route[] = [
   {
@@ -13,6 +14,14 @@ const Routes: Route[] = [
     component: IndexPageResolver,
     settings: {
       exact: true,
+    },
+    layoutSettings: {},
+  },
+  {
+    path: "/activate",
+    component: ActivateAccountPageResolver,
+    settings: {
+      exact: false,
     },
     layoutSettings: {},
   },

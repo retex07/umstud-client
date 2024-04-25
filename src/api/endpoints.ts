@@ -8,5 +8,6 @@ export const ENDPOINTS_CONFIG = {
     skills: "/users/skills_change/",
     recover: "/users/password_reset/",
     reset: "/users/password_reset_confirm/",
+    activateAccount: "/users/activate/",
   },
 };
