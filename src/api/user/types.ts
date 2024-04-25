@@ -20,7 +20,7 @@ export type DetailUserProfile = {
   language?: string;
   photo: string | null;
   views: number;
-  rating: number; //TODO: Исправить поле API
+  stars: number | null;
 };
 
 export type UserPut_RequestBody = Omit<

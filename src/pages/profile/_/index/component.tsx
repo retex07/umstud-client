@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { ReactComponent as ExampleAvatarSvg } from "static/images/example-avatar.svg";
 import { ReactComponent as FillStarSvg } from "static/images/fill-star.svg";
+import { ReactComponent as HollowStarSvg } from "static/images/hollow-star.svg";
 import { user as user_selector } from "store/user/user.selectors";
 import { formatPhoneNumber, isMobileVersion } from "utils/constant.utils";
 import { getBasePath } from "utils/router.utils";
@@ -60,8 +61,11 @@ export default function ProfileIndexPage() {
           <section className="profile-index--section">
             <h2 className="profile-index--subtitle">{t("rating")}</h2>
             <div>
-              {[...Array(5)].map((item, index) => (
+              {[...Array(user?.stars || 0)].map((item, index) => (
                 <FillStarSvg key={index} />
+              ))}
+              {[...Array(5 - (user?.stars || 0))].map((item, index) => (
+                <HollowStarSvg key={index} />
               ))}
             </div>
           </section>
