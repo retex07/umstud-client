@@ -1,6 +1,8 @@
+import { useRecover } from "api/recover/mutations/recover";
+import { PasswordReset_RequestBody } from "api/recover/types";
 import Button from "components/button";
 import Field from "components/formElements/field";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
@@ -15,12 +17,29 @@ export default function RecoverPage() {
     keyPrefix: "form.rules",
   });
 
+  const [stateMessage, setStateMessage] = useState<string | null>(null);
+
+  const recover = useRecover();
   const basePath = getBasePath(path);
   const history = useHistory();
 
-  const { control, handleSubmit, formState } = useForm({
-    mode: "onSubmit",
-  });
+  const { control, handleSubmit, formState, setError } =
+    useForm<PasswordReset_RequestBody>({
+      mode: "onSubmit",
+    });
+
+  function onValidSubmit(data: PasswordReset_RequestBody) {
+    recover.mutate(
+      { data: data },
+      {
+        onSuccess: (res) => setStateMessage(res.data.message),
+        onError: (err) => {
+          setError("email", { message: err.message });
+          setStateMessage(null);
+        },
+      }
+    );
+  }
 
   return (
     <div id="page" className="page-container authorization">
@@ -28,10 +47,10 @@ export default function RecoverPage() {
         <h1 className="authorization--heading">{t("recover.title")}</h1>
         <form
           className="authorization--form-submit"
-          onSubmit={handleSubmit(() => console.log())}
+          onSubmit={handleSubmit(onValidSubmit)}
         >
           <Field
-            name="login_or_email"
+            name="email"
             control={control}
             fullWidth
             label={t("actions.email.title")}
@@ -41,6 +60,9 @@ export default function RecoverPage() {
               required: tRules("required"),
             }}
           />
+          {stateMessage && (
+            <p className="authorization__response-msg">{stateMessage}</p>
+          )}
           <Button
             size="big"
             type="submit"

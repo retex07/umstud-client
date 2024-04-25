@@ -31,6 +31,10 @@
       "title": "Password",
       "press": "Enter your password"
     },
+    "newpassword": {
+      "title": "New password",
+      "press": "Enter a new password"
+    },
     "passwordconfirm": {
       "title": "Repeat Password",
       "press": "Repeat your password"

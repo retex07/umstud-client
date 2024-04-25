@@ -65,4 +65,9 @@
       text-decoration: underline;
     }
   }
+
+  &__response-msg {
+    @include typography.description;
+    color: var(--color-green);
+  }
 }

@@ -5,5 +5,7 @@ export const ENDPOINTS_CONFIG = {
     users: "/users/list/",
     profile: "/users/profile/",
     skills: "/users/skills_change/",
+    recover: "/users/password_reset/",
+    reset: "/users/password_reset_confirm/",
   },
 };

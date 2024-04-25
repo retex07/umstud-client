@@ -1,26 +1,51 @@
+import { useReset } from "api/reset/mutations/reset";
+import { PasswordResetConfirm_RequestBody } from "api/reset/types";
 import Button from "components/button";
 import Field from "components/formElements/field";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import { ReactComponent as LineSvg } from "static/images/line.svg";
-import { getBasePath } from "utils/router.utils";
+import { getBasePath, useQuery } from "utils/router.utils";
+
 import "../styles.scss";
 
 export default function ResetPage() {
   const { path } = useRouteMatch();
+  const basePath = getBasePath(path);
+  const query = useQuery();
+  const history = useHistory();
+  const uidb64 = query.get("uidb64");
+  const token = query.get("token");
+
   const { t } = useTranslation("p_authorization");
   const { t: tRules } = useTranslation("translation", {
     keyPrefix: "form.rules",
   });
 
-  const basePath = getBasePath(path);
-  const history = useHistory();
+  const [stateMessage, setStateMessage] = useState<string | null>(null);
 
-  const { control, handleSubmit, formState } = useForm({
-    mode: "onSubmit",
-  });
+  const reset = useReset(uidb64 || "", token || "");
+
+  const { control, handleSubmit, formState, setError } =
+    useForm<PasswordResetConfirm_RequestBody>({
+      mode: "onSubmit",
+    });
+
+  function onValidSubmit(data: PasswordResetConfirm_RequestBody) {
+    reset.mutate(
+      { data: data },
+      {
+        onSuccess: (res) => setStateMessage(res.data.message),
+        onError: (err) => {
+          setStateMessage(null);
+          setError("new_password", { message: err.message });
+          setError("confirm_password", { message: err.message });
+        },
+      }
+    );
+  }
 
   return (
     <div id="page" className="page-container authorization">
@@ -28,23 +53,23 @@ export default function ResetPage() {
         <h1 className="authorization--heading">{t("reset.title")}</h1>
         <form
           className="authorization--form-submit"
-          onSubmit={handleSubmit(() => console.log())}
+          onSubmit={handleSubmit(onValidSubmit)}
         >
           <Field
-            name="password"
+            name="new_password"
             type="password"
             control={control}
             fullWidth
-            label={t(`actions.password.title`)}
-            placeholder={t(`actions.password.press`)}
+            label={t(`actions.newpassword.title`)}
+            placeholder={t(`actions.newpassword.press`)}
             readonly={formState.isSubmitted}
             rules={{
               required: tRules("required"),
             }}
           />
           <Field
-            name="passwordconfirm"
-            type="passwordconfirm"
+            name="confirm_password"
+            type="password"
             control={control}
             fullWidth
             label={t(`actions.passwordconfirm.title`)}
@@ -54,6 +79,9 @@ export default function ResetPage() {
               required: tRules("required"),
             }}
           />
+          {stateMessage && (
+            <p className="authorization__response-msg">{stateMessage}</p>
+          )}
           <Button
             size="big"
             type="submit"
