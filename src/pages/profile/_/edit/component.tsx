@@ -170,6 +170,20 @@ export default function ProfileEdit() {
     }
   }
 
+  function checkRequired(key: string) {
+    switch (key) {
+      case "patronymic":
+      case "place_study_work":
+      case "description":
+      case "phone": {
+        return false;
+      }
+      default: {
+        return true;
+      }
+    }
+  }
+
   function renderAvatar() {
     return imagePreview ? (
       <img src={imagePreview} alt={user?.username || "Avatar"} />
@@ -226,7 +240,7 @@ export default function ProfileEdit() {
                 placeholder={t(`actions.${splitKey(key)}.press`)}
                 readonly={formState.isSubmitted}
                 rules={{
-                  required: tRules("required"),
+                  required: checkRequired(key) ? tRules("required") : false,
                   pattern: {
                     value: getRegExpOfKey(key),
                     message: tRules(`pattern_${splitKey(key)}`),
