@@ -18,7 +18,9 @@ function App() {
   const location = useLocation();
   const dispatch = useDispatch<Dispatch>();
 
-  initializeState();
+  useEffect(() => {
+    initializeState();
+  }, []);
 
   const { accessToken } = useSelector(user_selector);
 
