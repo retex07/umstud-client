@@ -1,4 +1,4 @@
-![UmStud Logo](public/icons/logo.svg)
+![UmStud Logo](public/icons/logo.png)
 
 # `umstud-client`
 
