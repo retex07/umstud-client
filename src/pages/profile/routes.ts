@@ -21,10 +21,10 @@ export const Routes: Route[] = [
     layoutSettings: {},
   },
   {
-    path: "/:profileId",
+    path: "/user/:profileId",
     component: ProfileUserPage,
     settings: {
-      exact: true,
+      exact: false,
     },
     layoutSettings: {},
   },

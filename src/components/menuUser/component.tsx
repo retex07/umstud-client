@@ -67,7 +67,8 @@ export default function MenuUser(props: Props) {
       {renderAvatar()}
       {isOpen && (
         <div className="menu-user__wrapper">
-          {!location.pathname.includes(baseUrlProfile) &&
+          {(!location.pathname.includes(baseUrlProfile) ||
+            location.pathname.includes("/user/")) &&
             items.map((item, index) => (
               <Link
                 key={index}
