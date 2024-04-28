@@ -1,5 +1,3 @@
-import { codeTokenNoValid } from "constants/config";
-
 import { useMeProfile } from "api/user/queries/meProfile";
 import { DetailUserProfile } from "api/user/types";
 import LayoutBuilder from "components/layoutBuilder";
@@ -22,42 +20,27 @@ function App() {
     initializeState();
   }, []);
 
-  const { accessToken } = useSelector(user_selector);
+  const { accessToken, user: userProfile } = useSelector(user_selector);
 
-  const {
-    data: userProfile,
-    isLoading: isLoadingUserProfile,
-    refetch: refetchUserProfile,
-    error: errorGetProfile,
-  } = useMeProfile<DetailUserProfile>();
+  const { isLoading: isLoadingUserProfile, refetch: refetchUserProfile } =
+    useMeProfile<DetailUserProfile>({ enabled: false });
 
-  const errorCodeProfile = errorGetProfile?.response?.data.code || null;
-
-  if (errorCodeProfile && errorCodeProfile === codeTokenNoValid) {
-    dispatch(userActions.logout());
-  }
+  useEffect(() => {
+    checkAuth();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userProfile]);
 
   useEffect(() => {
     if (accessToken) {
-      refetchUserProfile().then((res) =>
-        dispatch(userActions.updateUser(res.data || null))
-      );
+      refetchUserProfile().then((res) => {
+        dispatch(userActions.updateUser(res.data || null));
+        checkAuth();
+      });
     } else {
       dispatch(userActions.logout());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);
-
-  useEffect(() => {
-    checkAuth();
-
-    const tokenCheckInterval = setInterval(() => {
-      checkAuth();
-    }, 30000);
-
-    return () => clearInterval(tokenCheckInterval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accessToken, userProfile]);
 
   const checkAuth = () => {
     if (!isLoadingUserProfile) {
@@ -72,11 +55,6 @@ function App() {
         location.pathname.includes("auth")
       ) {
         history.push("/profile");
-      } else if (
-        (accessToken && !userProfile) ||
-        (!accessToken && userProfile)
-      ) {
-        dispatch(userActions.logout());
       }
     }
   };
