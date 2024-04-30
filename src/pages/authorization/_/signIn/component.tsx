@@ -48,12 +48,13 @@ export default function SignInPage() {
         },
         onError: (err) => {
           setIsLoadingLogin(false);
-          if (err.response?.data.message) {
+          const errors = err.response?.data.errors;
+          if (errors) {
             setError("login_or_email", {
-              message: err.response.data.message,
+              message: errors[0].error,
             });
             setError("password", {
-              message: err.response.data.message,
+              message: errors[0].error,
             });
           }
         },

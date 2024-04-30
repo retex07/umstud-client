@@ -11,3 +11,10 @@ export interface Login_Response {
     access: string;
   };
 }
+
+export interface Login_ErrorResponse {
+  errors: Array<{
+    error: string;
+    type: string;
+  }>;
+}
