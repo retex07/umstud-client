@@ -105,3 +105,16 @@ input::-ms-clear {
 .page-content-title {
   @include page_head;
 }
+
+.blue-star {
+  svg, path {
+    fill: none;
+    stroke: var(--color-blue);
+  }
+
+  &.fill {
+    svg, path {
+      fill: var(--color-blue-dark);
+    }
+  }
+}
