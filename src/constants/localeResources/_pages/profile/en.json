@@ -19,6 +19,33 @@
       "cp": "Change password"
     }
   },
+  "security": {
+    "title": "Security",
+    "changePass": {
+      "title": "Change Password",
+      "oldpassword": {
+        "title": "Old Password",
+        "press": "Enter old password"
+      },
+      "newpassword": {
+        "title": "New Password",
+        "press": "Enter new password"
+      },
+      "newpasswordconfirm": {
+        "title": "Confirm Password",
+        "press": "Repeat new password"
+      }
+    },
+    "changeEmail": {
+      "title": "Change Email",
+      "email": {
+        "title": "Email"
+      }
+    },
+    "save": "Save",
+    "cancel": "Cancel",
+    "next": "Continue"
+  },
   "messages": {
     "title": "Messages"
   },

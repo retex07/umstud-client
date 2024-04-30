@@ -44,6 +44,7 @@ export default function Field<FormField extends FieldValues>(
 
   return (
     <Input
+      readonly={props.readonly}
       classNames={props.classNames}
       placeholder={props.placeholder}
       label={props.label}

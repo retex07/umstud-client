@@ -18,6 +18,10 @@ export default function NavigationMenu() {
       title: t("index.title"),
     },
     {
+      route: "/security",
+      title: t("security.title"),
+    },
+    {
       route: "/messages",
       title: t("messages.title"),
     },

@@ -16,7 +16,7 @@ export default function MobileNavigationMenu() {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  function onChageisOpen() {
+  function onChageIsOpen() {
     setIsOpen(!isOpen);
   }
 
@@ -24,6 +24,10 @@ export default function MobileNavigationMenu() {
     {
       route: "/",
       title: t("index.title"),
+    },
+    {
+      route: "/security",
+      title: t("security.title"),
     },
     {
       route: "/messages",
@@ -56,7 +60,7 @@ export default function MobileNavigationMenu() {
       className={cn("mobile-navigation-menu", {
         "mobile-navigation-menu__open": isOpen,
       })}
-      onClick={onChageisOpen}
+      onClick={onChageIsOpen}
     >
       <div className="mobile-navigation-menu__container">
         <div className="mobile-navigation-menu__wrapper">
