@@ -52,9 +52,9 @@ export default function ProfileIndexPage() {
                 <Button
                   size="small"
                   label={t("actions.edit")}
+                  color="blue-dark"
                   onClick={() => history.push(basePath + "/edit")}
                 />
-                <Button size="small" label={t("actions.cp")} isTransparent />
               </div>
             </div>
           </header>

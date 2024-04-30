@@ -1,0 +1,38 @@
+@use "src/styles/typography";
+
+.profile-security {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 20px;
+
+  &__main-sec {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 40px;
+    width: 100%;
+
+    @media screen and (max-width: 1220px) {
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+
+    &-title {
+      @include typography.page_subtitle;
+    }
+  }
+
+  &__actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+}

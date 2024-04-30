@@ -35,3 +35,16 @@ export type UserPut_FormBody = Omit<UserPut_RequestBody, "skills"> & {
 export type UserPut_Response = UserPut_RequestBody;
 
 export type UserPut_ErrorBody = UserPut_RequestBody;
+
+export type ChangePassword_RequestBody = {
+  old_password: string;
+  new_password: string;
+  new_password_confirm: string;
+};
+
+export type ChangePassword_ErrorBody = {
+  old_password?: string[];
+  new_password?: string[];
+  new_password_confirm?: string[];
+  non_field_errors?: string[];
+};
