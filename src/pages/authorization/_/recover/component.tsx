@@ -17,6 +17,7 @@ export default function RecoverPage() {
     keyPrefix: "form.rules",
   });
 
+  const [isLoadingRecover, setIsLoadingRecover] = useState(false);
   const [stateMessage, setStateMessage] = useState<string | null>(null);
 
   const recover = useRecover();
@@ -29,11 +30,17 @@ export default function RecoverPage() {
     });
 
   function onValidSubmit(data: PasswordReset_RequestBody) {
+    setIsLoadingRecover(true);
+
     recover.mutate(
       { data: data },
       {
-        onSuccess: (res) => setStateMessage(res.data.message),
+        onSuccess: (res) => {
+          setStateMessage(res.data.message);
+          setIsLoadingRecover(false);
+        },
         onError: (err) => {
+          setIsLoadingRecover(false);
           setError("email", { message: err.message });
           setStateMessage(null);
         },
@@ -55,7 +62,7 @@ export default function RecoverPage() {
             fullWidth
             label={t("actions.email.title")}
             placeholder={t("actions.email.press")}
-            readonly={formState.isSubmitted}
+            readonly={formState.isSubmitting || isLoadingRecover}
             rules={{
               required: tRules("required"),
             }}
@@ -68,6 +75,8 @@ export default function RecoverPage() {
             type="submit"
             fullWidth
             label={t("actions.recoverAccess")}
+            isLoading={isLoadingRecover}
+            disabled={isLoadingRecover}
           />
         </form>
         <Link to={basePath + "/sign-in"} className="authorization__link">

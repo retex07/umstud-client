@@ -238,7 +238,7 @@ export default function ProfileEdit() {
                 type={key === "birth_date" ? "date" : "text"}
                 label={t(`actions.${splitKey(key)}.title`)}
                 placeholder={t(`actions.${splitKey(key)}.press`)}
-                readonly={formState.isSubmitted}
+                readonly={formState.isSubmitting || isLoadingEditProfile}
                 rules={{
                   required: checkRequired(key) ? tRules("required") : false,
                   pattern: {
@@ -266,7 +266,7 @@ export default function ProfileEdit() {
               control={control}
               label={t("actions.description.title")}
               placeholder={t("actions.description.press")}
-              readonly={formState.isSubmitted}
+              readonly={formState.isSubmitting || isLoadingEditProfile}
               fullWidth
             />
           </div>

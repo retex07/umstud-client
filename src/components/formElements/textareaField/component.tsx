@@ -45,6 +45,7 @@ export default function Field<FormField extends FieldValues>(
   return (
     <Textarea
       resize={props.resize}
+      readonly={props.readonly}
       classNames={props.classNames}
       placeholder={props.placeholder}
       label={props.label}

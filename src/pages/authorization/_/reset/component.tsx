@@ -24,6 +24,7 @@ export default function ResetPage() {
     keyPrefix: "form.rules",
   });
 
+  const [isLoadingReset, setIsLoadingReset] = useState(false);
   const [stateMessage, setStateMessage] = useState<string | null>(null);
 
   const reset = useReset(uidb64 || "", token || "");
@@ -34,11 +35,17 @@ export default function ResetPage() {
     });
 
   function onValidSubmit(data: PasswordResetConfirm_RequestBody) {
+    setIsLoadingReset(true);
+
     reset.mutate(
       { data: data },
       {
-        onSuccess: (res) => setStateMessage(res.data.message),
+        onSuccess: (res) => {
+          setStateMessage(res.data.message);
+          setIsLoadingReset(false);
+        },
         onError: (err) => {
+          setIsLoadingReset(false);
           setStateMessage(null);
           setError("new_password", { message: err.message });
           setError("confirm_password", { message: err.message });
@@ -62,7 +69,7 @@ export default function ResetPage() {
             fullWidth
             label={t(`actions.newpassword.title`)}
             placeholder={t(`actions.newpassword.press`)}
-            readonly={formState.isSubmitted}
+            readonly={formState.isSubmitting || isLoadingReset}
             rules={{
               required: tRules("required"),
             }}
@@ -74,7 +81,7 @@ export default function ResetPage() {
             fullWidth
             label={t(`actions.passwordconfirm.title`)}
             placeholder={t(`actions.passwordconfirm.press`)}
-            readonly={formState.isSubmitted}
+            readonly={formState.isSubmitting || isLoadingReset}
             rules={{
               required: tRules("required"),
             }}
@@ -87,6 +94,8 @@ export default function ResetPage() {
             type="submit"
             fullWidth
             label={t("actions.resetPassword")}
+            isLoading={isLoadingReset}
+            disabled={isLoadingReset}
           />
         </form>
         <Link to={basePath + "/sign-in"} className="authorization__link">

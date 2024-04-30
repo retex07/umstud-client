@@ -83,7 +83,7 @@ export default function SignInPage() {
             fullWidth
             label={t("actions.loginOrEmail.title")}
             placeholder={t("actions.loginOrEmail.press")}
-            readonly={formState.isSubmitted}
+            readonly={formState.isSubmitting || isLoadingLogin}
             rules={{
               required: tRules("required"),
             }}
@@ -95,7 +95,7 @@ export default function SignInPage() {
             type="password"
             label={t("actions.password.title")}
             placeholder={t("actions.password.press")}
-            readonly={formState.isSubmitted}
+            readonly={formState.isSubmitting || isLoadingLogin}
             rules={{
               required: tRules("required"),
             }}
