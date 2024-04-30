@@ -5,11 +5,12 @@ import Field from "components/formElements/field";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import { ReactComponent as LineSvg } from "static/images/line.svg";
 import { Dispatch } from "store/types";
 import { actions as userActions } from "store/user";
+import { user as user_selector } from "store/user/user.selectors";
 import { getBasePath } from "utils/router.utils";
 import "../styles.scss";
 
@@ -20,6 +21,7 @@ export default function SignInPage() {
     keyPrefix: "form.rules",
   });
 
+  const { accessToken } = useSelector(user_selector);
   const [isLoadingLogin, setIsLoadingLogin] = useState(false);
 
   const dispatch = useDispatch<Dispatch>();
@@ -34,6 +36,11 @@ export default function SignInPage() {
 
   function onValidSubmit(data: Login_RequestBody) {
     setIsLoadingLogin(true);
+
+    if (accessToken) {
+      dispatch(userActions.logout());
+    }
+
     login.mutate(
       {
         data: {
