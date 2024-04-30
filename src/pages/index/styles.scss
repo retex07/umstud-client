@@ -25,7 +25,10 @@
 .section-welcome {
   background-image: url("../../static/images/index/veсtor-one.svg");
   background-size: cover;
-  padding: 60px 0;
+  padding: 110px 0;
+  @media screen and (max-width: 1220px) {
+    padding: 60px 0;
+  }
 
   &--background {
     position: absolute;
@@ -38,7 +41,6 @@
     justify-content: center;
     align-items: center;
 
-    gap: 86px;
     height: 100%;
 
     img {
