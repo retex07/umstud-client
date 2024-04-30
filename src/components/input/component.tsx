@@ -48,18 +48,18 @@ export default function Input(props: Props) {
   return (
     <div
       className={cn("input", props.classNames, {
-        "input--full-width": props.fullWidth,
+        "input__full-width": props.fullWidth,
       })}
     >
       {props.label && (
-        <div className="input--label-block">
-          <label className="input--label">{props.label}</label>
+        <div className="input__label-block">
+          <label className="input__label">{props.label}</label>
         </div>
       )}
       <div
-        className={cn("input--container", props.classNames, {
-          "input--container--full-width": props.fullWidth,
-          "input--container--warning": props.hasError,
+        className={cn("input__container", props.classNames, {
+          "input__container-full-width": props.fullWidth,
+          "input__container-warning": props.hasError,
         })}
       >
         <input
@@ -75,14 +75,14 @@ export default function Input(props: Props) {
           onBlur={props.onBlur}
           readOnly={props.readonly}
           placeholder={props.placeholder}
-          className="input--select-from"
+          className="input__select-from"
         />
         {props.icon && props.type != "password" && (
-          <div className="input--after-icon">{props.icon}</div>
+          <div className="input__after-icon">{props.icon}</div>
         )}
         {props.type == "password" && (
           <div
-            className="input--after-icon"
+            className="input__after-icon"
             onClick={() => setIsShowPassword(!isShowPassword)}
           >
             {isShowPassword ? <ShowPasswordSwg /> : <HidePasswordSwg />}
@@ -90,9 +90,9 @@ export default function Input(props: Props) {
         )}
       </div>
       {props.hasError && (
-        <div className="input--warning">
+        <div className="input__warning">
           <Warning />
-          <label className="input--label-warning">{props.errorMessage}</label>
+          <label className="input__label-warning">{props.errorMessage}</label>
         </div>
       )}
     </div>
