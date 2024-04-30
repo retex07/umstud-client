@@ -20,6 +20,7 @@ export default function SignUpPage() {
   });
 
   const [isLoadingRegister, setIsLoadingRegister] = useState(false);
+  const [stateMessage, setStateMessage] = useState<string | null>(null);
 
   type KeysOfRegister_RequestBody = keyof Register_RequestBody;
   const keysRegisterRequest: KeysOfRegister_RequestBody[] = [
@@ -54,12 +55,13 @@ export default function SignUpPage() {
         },
       },
       {
-        onSuccess: () => {
-          history.push("/auth/sign-in");
+        onSuccess: (res) => {
           setIsLoadingRegister(false);
+          setStateMessage(res.data.message);
         },
         onError: (err) => {
           setIsLoadingRegister(false);
+          setStateMessage(null);
           if (err.response) {
             Object.entries(err.response.data).map(([key, value]) => {
               const typedKey = key as keyof Register_ErrorBody;
@@ -100,6 +102,9 @@ export default function SignUpPage() {
               }}
             />
           ))}
+          {stateMessage && (
+            <p className="authorization__response-msg">{stateMessage}</p>
+          )}
           <div className="authorization--form-submit">
             <Button
               size="big"

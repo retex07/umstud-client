@@ -17,6 +17,5 @@ export interface Register_ErrorBody {
 }
 
 export interface Register_Response {
-  refresh: string;
-  access: string;
+  message: string;
 }

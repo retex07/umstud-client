@@ -74,8 +74,8 @@ export default function SignInPage() {
             name="login_or_email"
             control={control}
             fullWidth
-            label={t("actions.email.title")}
-            placeholder={t("actions.email.press")}
+            label={t("actions.loginOrEmail.title")}
+            placeholder={t("actions.loginOrEmail.press")}
             readonly={formState.isSubmitted}
             rules={{
               required: tRules("required"),
