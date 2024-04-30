@@ -60,13 +60,17 @@ export default function ProfileIndexPage() {
           </header>
           <section className="profile-index--section">
             <h2 className="profile-index--subtitle">{t("rating")}</h2>
-            <div>
+            <div className="profile-index__stars">
               {[...Array(Math.round(user?.stars || 0))].map((item, index) => (
-                <FillStarSvg key={index} />
+                <div key={index} className="blue-star fill">
+                  <FillStarSvg />
+                </div>
               ))}
               {[...Array(5 - Math.round(user?.stars || 0))].map(
                 (item, index) => (
-                  <HollowStarSvg key={index} />
+                  <div key={index} className="blue-star">
+                    <HollowStarSvg />
+                  </div>
                 )
               )}
             </div>

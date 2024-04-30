@@ -70,6 +70,10 @@
     }
   }
 
+  &__stars {
+    display: inline-flex;
+  }
+
   &--subtitle {
     @include typography.page_subtitle;
   }
