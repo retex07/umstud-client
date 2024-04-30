@@ -59,7 +59,8 @@ function App() {
     if (!isLoadingUserProfile) {
       if (
         (!accessToken || !userProfile) &&
-        !location.pathname.includes("auth")
+        !location.pathname.includes("auth") &&
+        !location.pathname.includes("activate")
       ) {
         history.push("/auth/sign-in");
       } else if (
