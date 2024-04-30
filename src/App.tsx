@@ -1,3 +1,5 @@
+import { codeTokenNoValid } from "constants/config";
+
 import { useMeProfile } from "api/user/queries/meProfile";
 import { DetailUserProfile } from "api/user/types";
 import LayoutBuilder from "components/layoutBuilder";
@@ -22,8 +24,13 @@ function App() {
 
   const { accessToken, user: userProfile } = useSelector(user_selector);
 
-  const { isLoading: isLoadingUserProfile, refetch: refetchUserProfile } =
-    useMeProfile<DetailUserProfile>({ enabled: false });
+  const {
+    isLoading: isLoadingUserProfile,
+    refetch: refetchUserProfile,
+    error: errorGetProfile,
+  } = useMeProfile<DetailUserProfile>({ enabled: !!accessToken });
+
+  const errorCodeProfile = errorGetProfile?.response?.data.code || null;
 
   useEffect(() => {
     checkAuth();
@@ -32,15 +39,21 @@ function App() {
 
   useEffect(() => {
     if (accessToken) {
-      refetchUserProfile().then((res) => {
-        dispatch(userActions.updateUser(res.data || null));
-        checkAuth();
-      });
+      if (errorCodeProfile && errorCodeProfile === codeTokenNoValid) {
+        dispatch(userActions.logout());
+      } else {
+        refetchUserProfile()
+          .then((res) => {
+            dispatch(userActions.updateUser(res.data || null));
+            checkAuth();
+          })
+          .catch(() => dispatch(userActions.logout()));
+      }
     } else {
       dispatch(userActions.logout());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accessToken]);
+  }, [accessToken, userProfile]);
 
   const checkAuth = () => {
     if (!isLoadingUserProfile) {
