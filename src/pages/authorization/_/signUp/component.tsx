@@ -45,14 +45,7 @@ export default function SignUpPage() {
     setIsLoadingRegister(true);
     register.mutate(
       {
-        data: {
-          first_name: data.first_name,
-          last_name: data.last_name,
-          username: data.username,
-          password: data.password,
-          password_confirm: data.password_confirm,
-          email: data.email,
-        },
+        data: data,
       },
       {
         onSuccess: (res) => {
@@ -96,7 +89,7 @@ export default function SignUpPage() {
               fullWidth
               label={t(`actions.${splitKey(key)}.title`)}
               placeholder={t(`actions.${splitKey(key)}.press`)}
-              readonly={formState.isSubmitted}
+              readonly={formState.isSubmitting || isLoadingRegister}
               rules={{
                 required: tRules("required"),
               }}

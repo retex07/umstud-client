@@ -23,13 +23,12 @@ export default function ProfileSecurityPage() {
   });
 
   const { user: userProfile } = useSelector(user_selector);
+  const changePassword = useChangePass();
 
   const [changingPass, setChangingPass] = useState(false);
   const [isLoadingChangePass, setIsLoadingChangePass] = useState(false);
 
-  const changePassword = useChangePass();
-
-  const { control, handleSubmit, setError, reset } = useForm<
+  const { control, handleSubmit, setError, reset, formState } = useForm<
     ChangePassword_RequestBody | { email: string }
   >({
     mode: "onSubmit",
@@ -111,7 +110,7 @@ export default function ProfileSecurityPage() {
                       control={control}
                       label={t("changePass.oldpassword.title")}
                       placeholder={t("changePass.oldpassword.press")}
-                      readonly={isLoadingChangePass}
+                      readonly={formState.isSubmitting || isLoadingChangePass}
                       type="password"
                       rules={{
                         required: tRules("required"),
@@ -123,7 +122,7 @@ export default function ProfileSecurityPage() {
                       control={control}
                       label={t("changePass.newpassword.title")}
                       placeholder={t("changePass.newpassword.press")}
-                      readonly={isLoadingChangePass}
+                      readonly={formState.isSubmitting || isLoadingChangePass}
                       type="password"
                       rules={{
                         required: tRules("required"),
@@ -135,7 +134,7 @@ export default function ProfileSecurityPage() {
                       control={control}
                       label={t("changePass.newpasswordconfirm.title")}
                       placeholder={t("changePass.newpasswordconfirm.press")}
-                      readonly={isLoadingChangePass}
+                      readonly={formState.isSubmitting || isLoadingChangePass}
                       type="password"
                       rules={{
                         required: tRules("required"),
