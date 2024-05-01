@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import { NotificationError } from "utils/error.utils";
 
 export const RequestConfig: AxiosRequestConfig = {
   baseURL: process.env.REACT_APP_SERVER_URL,
@@ -45,5 +46,6 @@ export function onFulfilledResponse(response: AxiosResponse) {
 }
 
 export function onRejectedResponse(error: AxiosError) {
+  NotificationError(error.response?.status || 0);
   return Promise.reject(error);
 }
