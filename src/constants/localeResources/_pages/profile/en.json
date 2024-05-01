@@ -23,6 +23,7 @@
     "title": "Security",
     "changePass": {
       "title": "Change Password",
+      "notification": "Password changed successfully",
       "oldpassword": {
         "title": "Old Password",
         "press": "Enter old password"
@@ -65,8 +66,10 @@
   "edit": {
     "title": "Edit Profile",
     "cancel": "Cancel",
+    "toCancel": "To cancel",
     "save": "Save",
     "loadPhoto": "Upload Photo",
+    "notification": "Profile successfully changed",
     "actions": {
       "firstname": {
         "title": "First Name",

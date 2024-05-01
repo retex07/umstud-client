@@ -7,6 +7,7 @@ import Button from "components/button";
 import Field from "components/formElements/field";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { user as user_selector } from "store/user/user.selectors";
@@ -26,7 +27,6 @@ export default function ProfileSecurityPage() {
   const changePassword = useChangePass();
 
   const [changingPass, setChangingPass] = useState(false);
-  const [isLoadingChangePass, setIsLoadingChangePass] = useState(false);
 
   const { control, handleSubmit, setError, reset, formState } = useForm<
     ChangePassword_RequestBody | { email: string }
@@ -35,18 +35,15 @@ export default function ProfileSecurityPage() {
   });
 
   function onChangePassSubmit(data: ChangePassword_RequestBody) {
-    setIsLoadingChangePass(true);
-
     changePassword.mutate(
       { data: data },
       {
         onSuccess: () => {
-          setIsLoadingChangePass(false);
+          toast.success(t("changePass.notification"), { duration: 5000 });
           setChangingPass(false);
           reset();
         },
         onError: (err) => {
-          setIsLoadingChangePass(false);
           const errData = err.response?.data;
           if (!errData) return;
 
@@ -91,7 +88,9 @@ export default function ProfileSecurityPage() {
   return (
     <div id="page" className="page-container">
       <div className="container-bar">
-        {isMobileVersion() && <MobileNavigationMenu />}
+        <div className="profile-tabs">
+          {isMobileVersion() && <MobileNavigationMenu />}
+        </div>
         <div className="page-content-wrapper">
           <header className="page-content-title">{t("title")}</header>
           <div className="profile-security">
@@ -110,7 +109,9 @@ export default function ProfileSecurityPage() {
                       control={control}
                       label={t("changePass.oldpassword.title")}
                       placeholder={t("changePass.oldpassword.press")}
-                      readonly={formState.isSubmitting || isLoadingChangePass}
+                      readonly={
+                        formState.isSubmitting || changePassword.isLoading
+                      }
                       type="password"
                       rules={{
                         required: tRules("required"),
@@ -122,7 +123,9 @@ export default function ProfileSecurityPage() {
                       control={control}
                       label={t("changePass.newpassword.title")}
                       placeholder={t("changePass.newpassword.press")}
-                      readonly={formState.isSubmitting || isLoadingChangePass}
+                      readonly={
+                        formState.isSubmitting || changePassword.isLoading
+                      }
                       type="password"
                       rules={{
                         required: tRules("required"),
@@ -134,7 +137,9 @@ export default function ProfileSecurityPage() {
                       control={control}
                       label={t("changePass.newpasswordconfirm.title")}
                       placeholder={t("changePass.newpasswordconfirm.press")}
-                      readonly={formState.isSubmitting || isLoadingChangePass}
+                      readonly={
+                        formState.isSubmitting || changePassword.isLoading
+                      }
                       type="password"
                       rules={{
                         required: tRules("required"),
@@ -146,14 +151,14 @@ export default function ProfileSecurityPage() {
                         color="blue-dark"
                         label={t("save")}
                         type="submit"
-                        isLoading={isLoadingChangePass}
-                        disabled={isLoadingChangePass}
+                        isLoading={changePassword.isLoading}
+                        disabled={changePassword.isLoading}
                       />
                       <Button
                         isTransparent
                         label={t("cancel")}
                         onClick={onCancelChangePass}
-                        disabled={isLoadingChangePass}
+                        disabled={changePassword.isLoading}
                       />
                     </div>
                   </>

@@ -11,6 +11,7 @@ import TextareaField from "components/formElements/textareaField";
 import PageLoader from "components/loaders/pageLoader";
 import React, { ChangeEvent, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -29,17 +30,16 @@ export default function ProfileEdit() {
     keyPrefix: "form.rules",
   });
 
-  const { data: dataSkills, isLoading: isLoadingSkills } = useSkills();
-
-  const { user } = useSelector(user_selector);
-  const [isLoadingEditProfile, setIsLoadingEditProfile] = useState(false);
-  const [imagePreview, setImagePreview] = useState(user?.photo || "");
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const { refetch: refetchUserProfile } = useMeProfile<DetailUserProfile>();
-
   const dispatch = useDispatch<Dispatch>();
   const history = useHistory();
   const editProfile = useEditProfile();
+
+  const { data: dataSkills, isLoading: isLoadingSkills } = useSkills();
+  const { refetch: refetchUserProfile } = useMeProfile<DetailUserProfile>();
+  const { user } = useSelector(user_selector);
+
+  const [imagePreview, setImagePreview] = useState(user?.photo || "");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   type KeysOfEditProfile_RequestBody = keyof UserPut_FormBody;
   const keysEditProfileRequest: KeysOfEditProfile_RequestBody[] = [
@@ -72,8 +72,6 @@ export default function ProfileEdit() {
   });
 
   function onValidSubmit(data: UserPut_FormBody) {
-    setIsLoadingEditProfile(true);
-
     const newData = {
       ...data,
       birth_date: convertDate(data.birth_date),
@@ -101,14 +99,13 @@ export default function ProfileEdit() {
       { data: formData },
       {
         onSuccess: () => {
-          setIsLoadingEditProfile(false);
+          toast.success(t("notification"), { duration: 5000 });
           history.push("/profile");
           refetchUserProfile().then((res) =>
             dispatch(userActions.updateUser(res.data || null))
           );
         },
         onError: () => {
-          setIsLoadingEditProfile(false);
           // Empty
         },
       }
@@ -238,7 +235,7 @@ export default function ProfileEdit() {
                 type={key === "birth_date" ? "date" : "text"}
                 label={t(`actions.${splitKey(key)}.title`)}
                 placeholder={t(`actions.${splitKey(key)}.press`)}
-                readonly={formState.isSubmitting || isLoadingEditProfile}
+                readonly={formState.isSubmitting || editProfile.isLoading}
                 rules={{
                   required: checkRequired(key) ? tRules("required") : false,
                   pattern: {
@@ -266,17 +263,26 @@ export default function ProfileEdit() {
               control={control}
               label={t("actions.description.title")}
               placeholder={t("actions.description.press")}
-              readonly={formState.isSubmitting || isLoadingEditProfile}
+              readonly={formState.isSubmitting || editProfile.isLoading}
               fullWidth
             />
           </div>
-          <Button
-            size="big"
-            label={t("save")}
-            type="submit"
-            isLoading={isLoadingEditProfile}
-            disabled={isLoadingEditProfile}
-          />
+          <div className="profile-edit__actions">
+            <Button
+              size="big"
+              label={t("save")}
+              type="submit"
+              isLoading={editProfile.isLoading}
+              disabled={editProfile.isLoading}
+            />
+            <Button
+              size="big"
+              label={t("toCancel")}
+              isTransparent
+              disabled={editProfile.isLoading}
+              onClick={() => history.goBack()}
+            />
+          </div>
         </form>
       </div>
     </div>

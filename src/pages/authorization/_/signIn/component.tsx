@@ -2,7 +2,7 @@ import useLogin from "api/login/mutations";
 import { Login_RequestBody } from "api/login/types";
 import Button from "components/button";
 import Field from "components/formElements/field";
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,13 +21,12 @@ export default function SignInPage() {
     keyPrefix: "form.rules",
   });
 
-  const { accessToken } = useSelector(user_selector);
-  const [isLoadingLogin, setIsLoadingLogin] = useState(false);
-
   const dispatch = useDispatch<Dispatch>();
   const basePath = getBasePath(path);
-  const login = useLogin();
   const history = useHistory();
+
+  const { accessToken } = useSelector(user_selector);
+  const login = useLogin();
 
   const { control, handleSubmit, formState, setError } =
     useForm<Login_RequestBody>({
@@ -35,8 +34,6 @@ export default function SignInPage() {
     });
 
   function onValidSubmit(data: Login_RequestBody) {
-    setIsLoadingLogin(true);
-
     if (accessToken) {
       dispatch(userActions.logout());
     }
@@ -51,10 +48,8 @@ export default function SignInPage() {
       {
         onSuccess: (res) => {
           dispatch(userActions.login({ ...res.data.tokens }));
-          setIsLoadingLogin(false);
         },
         onError: (err) => {
-          setIsLoadingLogin(false);
           const errors = err.response?.data.errors;
           if (errors) {
             setError("login_or_email", {
@@ -83,7 +78,7 @@ export default function SignInPage() {
             fullWidth
             label={t("actions.loginOrEmail.title")}
             placeholder={t("actions.loginOrEmail.press")}
-            readonly={formState.isSubmitting || isLoadingLogin}
+            readonly={formState.isSubmitting || login.isLoading}
             rules={{
               required: tRules("required"),
             }}
@@ -95,7 +90,7 @@ export default function SignInPage() {
             type="password"
             label={t("actions.password.title")}
             placeholder={t("actions.password.press")}
-            readonly={formState.isSubmitting || isLoadingLogin}
+            readonly={formState.isSubmitting || login.isLoading}
             rules={{
               required: tRules("required"),
             }}
@@ -104,8 +99,8 @@ export default function SignInPage() {
             size="big"
             type="submit"
             fullWidth
-            isLoading={isLoadingLogin}
-            disabled={isLoadingLogin}
+            isLoading={login.isLoading}
+            disabled={login.isLoading}
             label={t("actions.login")}
           />
         </form>

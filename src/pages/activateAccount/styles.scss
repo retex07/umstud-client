@@ -7,6 +7,9 @@
   justify-content: center;
   margin: auto auto;
   padding: 62px 12px;
+  @media screen and (max-width: 1220px) {
+    min-height: 60vh;
+  }
 
   svg {
     width: 41px;

@@ -1,6 +1,12 @@
 @use "styles/typography";
 
 .profile-edit {
+  &__actions {
+    display: inline-flex;
+    align-self: flex-start;
+    gap: 10px;
+  }
+
   &__wrapper {
     display: flex;
     flex-direction: column;

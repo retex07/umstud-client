@@ -14,7 +14,9 @@ export default function ProfileReadyTasksPage() {
   return (
     <div id="page" className="page-container">
       <div className="container-bar">
-        {isMobileVersion() && <MobileNavigationMenu />}
+        <div className="profile-tabs">
+          {isMobileVersion() && <MobileNavigationMenu />}
+        </div>
         <div className="page-content-wrapper">
           <header className="page-content-title">{t("title")}</header>
           {myWorkMock.map((workCard) => (

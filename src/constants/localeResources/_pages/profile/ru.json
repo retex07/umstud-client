@@ -23,6 +23,7 @@
     "title": "Безопасность",
     "changePass": {
       "title": "Изменить пароль",
+      "notification": "Пароль успешно изменён",
       "oldpassword": {
         "title": "Старый пароль",
         "press": "Введите старый пароль"
@@ -65,8 +66,10 @@
   "edit": {
     "title": "Редактирование профиля",
     "cancel": "Отмена",
+    "toCancel": "Отменить",
     "save": "Сохранить",
     "loadPhoto": "Загрузить фото",
+    "notification": "Профиль успешно изменён",
     "actions": {
       "firstname": {
         "title": "Имя",

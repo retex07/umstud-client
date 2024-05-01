@@ -2,14 +2,18 @@ import useRegister from "api/register/mutations";
 import { Register_ErrorBody, Register_RequestBody } from "api/register/types";
 import Button from "components/button";
 import Field from "components/formElements/field";
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { ReactComponent as LineSvg } from "static/images/line.svg";
+import { Dispatch } from "store/types";
+import { actions as userActions } from "store/user";
+import { user as user_selector } from "store/user/user.selectors";
 import { splitKey } from "utils/constant.utils";
 import { getBasePath } from "utils/router.utils";
-
 import "../styles.scss";
 
 export default function SignUpPage() {
@@ -18,9 +22,6 @@ export default function SignUpPage() {
   const { t: tRules } = useTranslation("translation", {
     keyPrefix: "form.rules",
   });
-
-  const [isLoadingRegister, setIsLoadingRegister] = useState(false);
-  const [stateMessage, setStateMessage] = useState<string | null>(null);
 
   type KeysOfRegister_RequestBody = keyof Register_RequestBody;
   const keysRegisterRequest: KeysOfRegister_RequestBody[] = [
@@ -33,8 +34,11 @@ export default function SignUpPage() {
   ];
 
   const basePath = getBasePath(path);
-  const register = useRegister();
   const history = useHistory();
+  const dispatch = useDispatch<Dispatch>();
+
+  const { accessToken } = useSelector(user_selector);
+  const register = useRegister();
 
   const { control, handleSubmit, formState, setError } =
     useForm<Register_RequestBody>({
@@ -42,19 +46,19 @@ export default function SignUpPage() {
     });
 
   function onValidSubmit(data: Register_RequestBody) {
-    setIsLoadingRegister(true);
+    if (accessToken) {
+      dispatch(userActions.logout());
+    }
+
     register.mutate(
       {
         data: data,
       },
       {
         onSuccess: (res) => {
-          setIsLoadingRegister(false);
-          setStateMessage(res.data.message);
+          toast.success(res.data.message, { duration: 5000 });
         },
         onError: (err) => {
-          setIsLoadingRegister(false);
-          setStateMessage(null);
           if (err.response) {
             Object.entries(err.response.data).map(([key, value]) => {
               const typedKey = key as keyof Register_ErrorBody;
@@ -89,23 +93,20 @@ export default function SignUpPage() {
               fullWidth
               label={t(`actions.${splitKey(key)}.title`)}
               placeholder={t(`actions.${splitKey(key)}.press`)}
-              readonly={formState.isSubmitting || isLoadingRegister}
+              readonly={formState.isSubmitting || register.isLoading}
               rules={{
                 required: tRules("required"),
               }}
             />
           ))}
-          {stateMessage && (
-            <p className="authorization__response-msg">{stateMessage}</p>
-          )}
           <div className="authorization--form-submit">
             <Button
               size="big"
               label={t("actions.register")}
               fullWidth
               type="submit"
-              isLoading={isLoadingRegister}
-              disabled={isLoadingRegister}
+              isLoading={register.isLoading}
+              disabled={register.isLoading}
             />
             <p className="authorization--description">{t("police")}</p>
           </div>

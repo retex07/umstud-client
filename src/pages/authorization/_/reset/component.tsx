@@ -2,20 +2,27 @@ import { useReset } from "api/reset/mutations/reset";
 import { PasswordResetConfirm_RequestBody } from "api/reset/types";
 import Button from "components/button";
 import Field from "components/formElements/field";
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import { ReactComponent as LineSvg } from "static/images/line.svg";
+import { Dispatch } from "store/types";
+import { actions as userActions } from "store/user";
+import { user as user_selector } from "store/user/user.selectors";
 import { getBasePath, useQuery } from "utils/router.utils";
-
 import "../styles.scss";
 
 export default function ResetPage() {
   const { path } = useRouteMatch();
   const basePath = getBasePath(path);
+
   const query = useQuery();
   const history = useHistory();
+  const dispatch = useDispatch<Dispatch>();
+
   const uidb64 = query.get("uidb64");
   const token = query.get("token");
 
@@ -24,9 +31,7 @@ export default function ResetPage() {
     keyPrefix: "form.rules",
   });
 
-  const [isLoadingReset, setIsLoadingReset] = useState(false);
-  const [stateMessage, setStateMessage] = useState<string | null>(null);
-
+  const { accessToken } = useSelector(user_selector);
   const reset = useReset(uidb64 || "", token || "");
 
   const { control, handleSubmit, formState, setError } =
@@ -35,20 +40,23 @@ export default function ResetPage() {
     });
 
   function onValidSubmit(data: PasswordResetConfirm_RequestBody) {
-    setIsLoadingReset(true);
+    if (accessToken) {
+      dispatch(userActions.logout());
+    }
 
     reset.mutate(
       { data: data },
       {
         onSuccess: (res) => {
-          setStateMessage(res.data.message);
-          setIsLoadingReset(false);
+          toast.success(res.data.message, { duration: 5000 });
         },
         onError: (err) => {
-          setIsLoadingReset(false);
-          setStateMessage(null);
-          setError("new_password", { message: err.message });
-          setError("confirm_password", { message: err.message });
+          setError("new_password", {
+            message: err.response?.data.confirm_password[0],
+          });
+          setError("confirm_password", {
+            message: err.response?.data.confirm_password[0],
+          });
         },
       }
     );
@@ -69,7 +77,7 @@ export default function ResetPage() {
             fullWidth
             label={t(`actions.newpassword.title`)}
             placeholder={t(`actions.newpassword.press`)}
-            readonly={formState.isSubmitting || isLoadingReset}
+            readonly={formState.isSubmitting || reset.isLoading}
             rules={{
               required: tRules("required"),
             }}
@@ -81,21 +89,18 @@ export default function ResetPage() {
             fullWidth
             label={t(`actions.passwordconfirm.title`)}
             placeholder={t(`actions.passwordconfirm.press`)}
-            readonly={formState.isSubmitting || isLoadingReset}
+            readonly={formState.isSubmitting || reset.isLoading}
             rules={{
               required: tRules("required"),
             }}
           />
-          {stateMessage && (
-            <p className="authorization__response-msg">{stateMessage}</p>
-          )}
           <Button
             size="big"
             type="submit"
             fullWidth
             label={t("actions.resetPassword")}
-            isLoading={isLoadingReset}
-            disabled={isLoadingReset}
+            isLoading={reset.isLoading}
+            disabled={reset.isLoading}
           />
         </form>
         <Link to={basePath + "/sign-in"} className="authorization__link">
