@@ -2,6 +2,7 @@ import Footer from "blocks/footer";
 import Header from "blocks/header";
 import PageLoader from "components/loaders/pageLoader";
 import React, { LazyExoticComponent, ReactElement, Suspense } from "react";
+import { Toaster } from "react-hot-toast";
 
 interface Props {
   component:
@@ -27,6 +28,7 @@ export default function LayoutBuilder(props: Props) {
       {props.renderHeader && <Header />}
       <Component />
       {props.renderFooter && <Footer />}
+      <Toaster position="top-right" reverseOrder={false} />
     </Suspense>
   );
 }
