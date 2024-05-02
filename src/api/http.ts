@@ -46,6 +46,9 @@ export function onFulfilledResponse(response: AxiosResponse) {
 }
 
 export function onRejectedResponse(error: AxiosError) {
-  NotificationError(error.response?.status || 0);
+  NotificationError(
+    error.response?.status || 0,
+    error.response?.data.detail || null
+  );
   return Promise.reject(error);
 }
