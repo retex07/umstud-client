@@ -1,10 +1,10 @@
 import React from "react";
 import "./styles.scss";
 
-export default function ServicesPage() {
+export default function ContactsPage() {
   return (
     <div id="page" className="page-container">
-      Services
+      Contacts
     </div>
   );
 }
