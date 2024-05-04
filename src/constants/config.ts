@@ -16,7 +16,7 @@ export const RegExp = {
   first_name: /^[a-zA-Zа-яА-Я-`']+$/,
   patronymic: /^[a-zA-Zа-яА-Я-`']+$/,
   email: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-  place_study_work: /^[a-zA-Zа-яА-Я0-9,\s]+$/,
+  place_study_work: /^[a-zA-Zа-яА-Я0-9,\s"'./]+$/,
   phone: /^\+?[\s()0-9-]{5,}$/,
   birth_date: /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/,
 };
