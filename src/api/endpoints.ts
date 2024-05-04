@@ -10,6 +10,7 @@ export const ENDPOINTS_CONFIG = {
     reset: "/users/password_reset_confirm/",
     changePassword: "/users/change_password/",
     activateAccount: "/users/activate/",
-    userList: "/users/list/",
+    userList: "/users/listfull/",
+    blackList: "/users/blacklist/",
   },
 };

@@ -27,7 +27,7 @@ export default function InlineUser(user: DetailUserProfile) {
   }
 
   return (
-    <Link className="inline-user" to={baseUrlProfile + "/user" + user.slug}>
+    <Link className="inline-user" to={baseUrlProfile + "/user/" + user.slug}>
       {renderAvatar()}
       <p className="inline-user__whois">
         {user.last_name} {user.first_name}
