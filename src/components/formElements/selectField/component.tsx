@@ -23,6 +23,7 @@ interface Props<T extends FieldValues>
       | "required"
       | "isMulti"
       | "options"
+      | "closeMenuOnSelect"
     >,
     "name"
   > {

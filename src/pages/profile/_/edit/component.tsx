@@ -246,6 +246,7 @@ export default function ProfileEdit() {
               />
             ))}
             <SelectField
+              closeMenuOnSelect={false}
               classNames="profile-edit__select"
               name="skills"
               control={control}
