@@ -14,13 +14,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Redirect,
-  useHistory,
-  useLocation,
-  useParams,
-  useRouteMatch,
-} from "react-router-dom";
+import { Redirect, useHistory, useLocation, useParams } from "react-router-dom";
 import { ReactComponent as DownloadSvg } from "static/images/download-cloud.svg";
 import { ReactComponent as ExampleAvatarSvg } from "static/images/example-avatar.svg";
 import { ReactComponent as FileSvg } from "static/images/file.svg";
@@ -36,9 +30,9 @@ import {
   isMobileVersion,
 } from "utils/constant.utils";
 import { convertDataToFormData } from "utils/formdata.utils";
-import { getBasePath } from "utils/router.utils";
 
 import MobileNavigationMenu from "../../components/mobileNavigationMenu";
+import { baseUrl as baseProfileUrl } from "../../routes";
 import "./styles.scss";
 
 export default function ProfileIndexPage() {
@@ -47,14 +41,11 @@ export default function ProfileIndexPage() {
     keyPrefix: "form.rules",
   });
 
-  const { path } = useRouteMatch();
-
   const [addingWork, setAddingWork] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const history = useHistory();
   const location = useLocation();
-  const basePath = getBasePath(path);
   const dispatch = useDispatch<Dispatch>();
   const params = useParams<{ profileId: string }>();
 
@@ -337,7 +328,7 @@ export default function ProfileIndexPage() {
                   size="small"
                   label={t("actions.edit")}
                   color="blue-dark"
-                  onClick={() => history.push(basePath + "/edit")}
+                  onClick={() => history.push(baseProfileUrl + "/edit")}
                 />
               </div>
             </div>
