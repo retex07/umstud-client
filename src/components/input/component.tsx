@@ -36,10 +36,23 @@ export interface Props {
 }
 
 export default function Input(props: Props) {
-  const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
+  const [isShowPassword, setIsShowPassword] = useState(false);
+  const [fileName, setFileName] = useState(props.placeholder);
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      if (file) {
+        setFileName(file.name);
+        props.onChange && props.onChange(e);
+      } else {
+        setFileName(props.placeholder);
+      }
+    }
+  };
 
   const typeInput =
-    props.type == "password"
+    props.type === "password"
       ? isShowPassword
         ? "text"
         : "password"
@@ -50,6 +63,7 @@ export default function Input(props: Props) {
       className={cn("input", props.classNames, {
         "input__full-width": props.fullWidth,
       })}
+      onClick={props.onClick}
     >
       {props.label && (
         <div className="input__label-block">
@@ -65,22 +79,28 @@ export default function Input(props: Props) {
         <input
           name={props.name}
           required={props.required}
-          value={props.value || ""}
+          value={props.type === "file" ? undefined : props.value || ""}
           ref={props.innerRef}
           id={props.id || props.name}
           type={typeInput}
           disabled={props.disabled}
-          onChange={props.onChange}
+          onChange={typeInput === "file" ? handleFileChange : props.onChange}
           onClick={props.onClick}
           onBlur={props.onBlur}
           readOnly={props.readonly}
           placeholder={props.placeholder}
           className="input__select-from"
+          hidden={props.innerRef && typeInput === "file"}
         />
-        {props.icon && props.type != "password" && (
+        {props.innerRef && typeInput === "file" && (
+          <div className="input__select-from-file">
+            {fileName || props.placeholder}
+          </div>
+        )}
+        {props.icon && props.type !== "password" && (
           <div className="input__after-icon">{props.icon}</div>
         )}
-        {props.type == "password" && (
+        {props.type === "password" && (
           <div
             className="input__after-icon"
             onClick={() => setIsShowPassword(!isShowPassword)}

@@ -23,6 +23,8 @@ interface Props<T extends FieldValues>
       | "placeholder"
       | "classNames"
       | "value"
+      | "innerRef"
+      | "onClick"
     >,
     "name"
   > {
@@ -52,10 +54,11 @@ export default function Field<FormField extends FieldValues>(
       name={field.name}
       id={props.id}
       fullWidth={props.fullWidth}
-      innerRef={field.ref}
+      innerRef={props.innerRef}
       value={field.value}
       onChange={field.onChange}
       onBlur={field.onBlur}
+      onClick={props.onClick}
       hasError={fieldState.error != null}
       errorMessage={fieldState.error ? fieldState.error.message : ""}
     />
