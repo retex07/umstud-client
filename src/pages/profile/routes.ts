@@ -3,7 +3,6 @@ import { Route } from "services/router/types";
 
 const EditPage = lazy(() => import("./_/edit"));
 const IndexPage = lazy(() => import("./_/index"));
-const ProfileUserPage = lazy(() => import("./_/index/{id}"));
 const SecurityPage = lazy(() => import("./_/security"));
 const BlackListPage = lazy(() => import("./_/blackList"));
 const MessagesPage = lazy(() => import("./_/messages"));
@@ -23,7 +22,7 @@ export const Routes: Route[] = [
   },
   {
     path: "/user/:profileId",
-    component: ProfileUserPage,
+    component: IndexPage,
     settings: {
       exact: false,
     },

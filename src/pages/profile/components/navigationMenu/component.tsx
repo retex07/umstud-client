@@ -1,20 +1,22 @@
 import cn from "classnames";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
+import { user as user_selector } from "store/user/user.selectors";
 
 import { baseUrl as baseUrlProfile } from "../../routes";
-
 import "./styles.scss";
 
 export default function NavigationMenu() {
   const { t } = useTranslation("p_profile");
   const history = useHistory();
   const location = useLocation();
+  const { user } = useSelector(user_selector);
 
   const items = [
     {
-      route: "/",
+      route: `/user/${user?.slug}`,
       title: t("index.title"),
     },
     {

@@ -9,6 +9,10 @@
   @media screen and (max-width: 1220px) {
     display: block;
   }
+
+  &.item-hidden {
+    display: none;
+  }
 }
 
 .profile-index {
@@ -23,6 +27,10 @@
 
     @media screen and (max-width: 1220px) {
       justify-content: center;
+    }
+
+    &.item-hidden {
+      display: none;
     }
   }
 

@@ -1,12 +1,13 @@
 import cn from "classnames";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { ReactComponent as ChevronDownSvg } from "static/images/chevron-down.svg";
 import { ReactComponent as ChevronUpSvg } from "static/images/chevron-up.svg";
+import { user as user_selector } from "store/user/user.selectors";
 
 import { baseUrl as baseUrlProfile } from "../../routes";
-
 import "./styles.scss";
 
 export default function MobileNavigationMenu() {
@@ -15,6 +16,7 @@ export default function MobileNavigationMenu() {
   const location = useLocation();
 
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useSelector(user_selector);
 
   function onChageIsOpen() {
     setIsOpen(!isOpen);
@@ -22,7 +24,7 @@ export default function MobileNavigationMenu() {
 
   const items = [
     {
-      route: "/",
+      route: `/user/${user?.slug}`,
       title: t("index.title"),
     },
     {

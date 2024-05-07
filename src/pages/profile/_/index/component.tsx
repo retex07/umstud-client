@@ -2,16 +2,25 @@ import { RegExp } from "constants/config";
 
 import { useAddPortfolio } from "api/user/mutations/addPortfolio";
 import { useRemoveFilePortfolio } from "api/user/mutations/removeFilePortfolio";
+import { useUserProfile } from "api/user/queries/userProfile";
 import { PortfolioItem_RequestBody } from "api/user/types";
+import cn from "classnames";
 import Button from "components/button";
 import Field from "components/formElements/field";
+import PageLoader from "components/loaders/pageLoader";
 import NavigationMenu from "pages/profile/components/navigationMenu";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import {
+  Redirect,
+  useHistory,
+  useLocation,
+  useParams,
+  useRouteMatch,
+} from "react-router-dom";
 import { ReactComponent as DownloadSvg } from "static/images/download-cloud.svg";
 import { ReactComponent as ExampleAvatarSvg } from "static/images/example-avatar.svg";
 import { ReactComponent as FileSvg } from "static/images/file.svg";
@@ -39,14 +48,18 @@ export default function ProfileIndexPage() {
   });
 
   const { path } = useRouteMatch();
-  const { user } = useSelector(user_selector);
 
   const [addingWork, setAddingWork] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const history = useHistory();
+  const location = useLocation();
   const basePath = getBasePath(path);
   const dispatch = useDispatch<Dispatch>();
+  const params = useParams<{ profileId: string }>();
+
+  const { user: myProfile } = useSelector(user_selector);
+  const { data: user, isLoading } = useUserProfile(params.profileId);
 
   const addPortfolio = useAddPortfolio();
   const removeFilePortfolio = useRemoveFilePortfolio();
@@ -189,6 +202,7 @@ export default function ProfileIndexPage() {
                 <DownloadSvg />
               </a>
               <button
+                hidden={myProfile?.slug !== user?.slug}
                 className="portfolio__img"
                 title={t("portfolio.delete")}
                 onClick={() => handleRemoveFilePortfolio(item.id)}
@@ -203,6 +217,10 @@ export default function ProfileIndexPage() {
   }
 
   function renderAddingWork() {
+    if (myProfile?.slug !== user?.slug) {
+      return;
+    }
+
     if (!addingWork) {
       return (
         <Button
@@ -281,10 +299,22 @@ export default function ProfileIndexPage() {
     );
   }
 
+  if (location.pathname === "/profile/" || location.pathname === "/profile") {
+    return <Redirect to={`/profile/user/${myProfile?.slug}`} />;
+  }
+
+  if (isLoading && myProfile?.slug !== params.profileId) {
+    return <PageLoader />;
+  }
+
   return (
     <div id="page" className="page-container profile-index">
       <div className="container-bar">
-        <div className="profile-tabs">
+        <div
+          className={cn("profile-tabs", {
+            "item-hidden": myProfile?.slug !== user?.slug,
+          })}
+        >
           {isMobileVersion() && <MobileNavigationMenu />}
         </div>
         <div className="page-content-wrapper">
@@ -298,7 +328,11 @@ export default function ProfileIndexPage() {
                 <p className="profile-index--subtitle">{user?.username}</p>
               </div>
               <div className="profile-index--user-email">{user?.email}</div>
-              <div className="profile-index--change-action">
+              <div
+                className={cn("profile-index--change-action", {
+                  "item-hidden": myProfile?.slug !== user?.slug,
+                })}
+              >
                 <Button
                   size="small"
                   label={t("actions.edit")}
@@ -379,7 +413,7 @@ export default function ProfileIndexPage() {
             {renderAddingWork()}
           </section>
         </div>
-        <NavigationMenu />
+        {myProfile?.slug === user?.slug && <NavigationMenu />}
       </div>
     </div>
   );
