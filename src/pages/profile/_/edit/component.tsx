@@ -21,7 +21,7 @@ import { actions as userActions } from "store/user";
 import { user as user_selector } from "store/user/user.selectors";
 import { SelectOption } from "types/components";
 import { convertDate, splitKey } from "utils/constant.utils";
-
+import { convertDataToFormData } from "utils/formdata.utils";
 import "./styles.scss";
 
 export default function ProfileEdit() {
@@ -77,20 +77,7 @@ export default function ProfileEdit() {
       birth_date: convertDate(data.birth_date),
     };
 
-    const formData = new FormData();
-    Object.entries(newData).forEach(([key, value]) => {
-      if (value !== null) {
-        if (Array.isArray(value) && key === "skills") {
-          value.forEach((skill) =>
-            formData.append(`${key}`, skill.value.toString())
-          );
-        } else if (Array.isArray(value)) {
-          value.forEach((item) => formData.append(`${key}`, item.toString()));
-        } else {
-          formData.append(key, value.toString());
-        }
-      }
-    });
+    const formData = convertDataToFormData(newData);
 
     if (fileInputRef.current?.files && fileInputRef.current.files[0]) {
       formData.append("photo", fileInputRef.current.files[0]);
