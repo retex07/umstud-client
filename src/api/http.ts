@@ -1,3 +1,5 @@
+import { codeTokenNoValid } from "constants/config";
+
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { NotificationError } from "utils/error.utils";
 
@@ -46,9 +48,20 @@ export function onFulfilledResponse(response: AxiosResponse) {
 }
 
 export function onRejectedResponse(error: AxiosError) {
-  NotificationError(
-    error.response?.status || 0,
-    error.response?.data.detail || null
-  );
+  if (error.response?.data.code === codeTokenNoValid) {
+    localStorage.clear();
+  }
+
+  switch (true) {
+    case !error.response:
+      NotificationError(502);
+      break;
+    default:
+      NotificationError(
+        error.response?.status || 0,
+        error.response?.data.detail || null
+      );
+      break;
+  }
   return Promise.reject(error);
 }
