@@ -35,6 +35,7 @@
       "success": "The work has been successfully added to the portfolio",
       "deleted": "The work was successfully deleted",
       "delete": "Delete",
+      "edit": "Change",
       "download": "Download"
     },
     "save": "Save",

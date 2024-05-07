@@ -1,9 +1,10 @@
 import { RegExp } from "constants/config";
 
 import { useAddPortfolio } from "api/user/mutations/addPortfolio";
+import { useEditFilePortfolio } from "api/user/mutations/editFilePortfolio";
 import { useRemoveFilePortfolio } from "api/user/mutations/removeFilePortfolio";
 import { useUserProfile } from "api/user/queries/userProfile";
-import { PortfolioItem_RequestBody } from "api/user/types";
+import { PortfolioItem, PortfolioItem_RequestBody } from "api/user/types";
 import cn from "classnames";
 import Button from "components/button";
 import Field from "components/formElements/field";
@@ -16,6 +17,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useLocation, useParams } from "react-router-dom";
 import { ReactComponent as DownloadSvg } from "static/images/download-cloud.svg";
+import { ReactComponent as EditSvg } from "static/images/edit.svg";
 import { ReactComponent as ExampleAvatarSvg } from "static/images/example-avatar.svg";
 import { ReactComponent as FileSvg } from "static/images/file.svg";
 import { ReactComponent as FillStarSvg } from "static/images/fill-star.svg";
@@ -42,6 +44,10 @@ export default function ProfileIndexPage() {
   });
 
   const [addingWork, setAddingWork] = useState(false);
+  const [editingProfile, setEditingProfile] = useState<{
+    isEdit: boolean;
+    idFile: number | null;
+  }>({ isEdit: false, idFile: null });
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const history = useHistory();
@@ -55,9 +61,10 @@ export default function ProfileIndexPage() {
   const isMyProfile = myProfile?.slug == user?.slug;
 
   const addPortfolio = useAddPortfolio();
+  const editFilePortfolio = useEditFilePortfolio();
   const removeFilePortfolio = useRemoveFilePortfolio();
 
-  const { control, handleSubmit, formState, reset, setError } =
+  const { control, handleSubmit, formState, setValue, reset, setError } =
     useForm<PortfolioItem_RequestBody>({
       mode: "onSubmit",
     });
@@ -83,7 +90,20 @@ export default function ProfileIndexPage() {
     reset();
   }
 
-  function onSubmitAddPortfolio(data: PortfolioItem_RequestBody) {
+  function onCancel() {
+    setAddingWork(false);
+    setEditingProfile({ isEdit: false, idFile: null });
+    reset();
+  }
+
+  async function setValuePortfolio(item: PortfolioItem) {
+    setAddingWork(true);
+    setEditingProfile({ isEdit: true, idFile: item.id });
+    setValue("title", item.title);
+    setValue("description", item.description);
+  }
+
+  function onSubmitPortfolio(data: PortfolioItem_RequestBody) {
     const newData = { title: data.title, description: data.description };
     const formData = convertDataToFormData(newData);
 
@@ -91,43 +111,72 @@ export default function ProfileIndexPage() {
       formData.append("file", fileInputRef.current.files[0]);
     }
 
-    addPortfolio.mutate(
-      { data: formData },
-      {
-        onSuccess: (res) => {
-          toast.success(t("portfolio.success"));
-          onChangeAdding();
-          if (user) {
-            dispatch(
-              userActions.updateUser({
-                ...user,
-                portfolio_items: [...user.portfolio_items, res.data],
-              })
-            );
-          }
+    if (editingProfile.isEdit && editingProfile.idFile) {
+      editFilePortfolio.mutate(
+        {
+          idFile: editingProfile.idFile,
+          data: formData,
         },
-        onError: (err) => {
-          if (err.response) {
-            if (err.response.data.title && err.response.data.title.length) {
-              setError("title", { message: err.response.data.title[0] });
+        {
+          onSuccess: (res) => {
+            toast.success(t("portfolio.success"));
+            onChangeAdding();
+            setEditingProfile({ isEdit: false, idFile: null });
+            if (user) {
+              dispatch(
+                userActions.updateUser({
+                  ...user,
+                  portfolio_items: [
+                    ...user.portfolio_items.filter(
+                      (i) => i.id !== editingProfile.idFile
+                    ),
+                    res.data,
+                  ],
+                })
+              );
             }
-            if (
-              err.response.data.description &&
-              err.response.data.description.length
-            ) {
-              setError("description", {
-                message: err.response.data.description[0],
-              });
+          },
+        }
+      );
+    } else {
+      addPortfolio.mutate(
+        { data: formData },
+        {
+          onSuccess: (res) => {
+            toast.success(t("portfolio.success"));
+            onChangeAdding();
+            if (user) {
+              dispatch(
+                userActions.updateUser({
+                  ...user,
+                  portfolio_items: [...user.portfolio_items, res.data],
+                })
+              );
             }
-            if (err.response.data.file && err.response.data.file.length) {
-              setError("file", {
-                message: err.response.data.file[0],
-              });
+          },
+          onError: (err) => {
+            if (err.response) {
+              if (err.response.data.title && err.response.data.title.length) {
+                setError("title", { message: err.response.data.title[0] });
+              }
+              if (
+                err.response.data.description &&
+                err.response.data.description.length
+              ) {
+                setError("description", {
+                  message: err.response.data.description[0],
+                });
+              }
+              if (err.response.data.file && err.response.data.file.length) {
+                setError("file", {
+                  message: err.response.data.file[0],
+                });
+              }
             }
-          }
-        },
-      }
-    );
+          },
+        }
+      );
+    }
   }
 
   function handleRemoveFilePortfolio(idFile: number) {
@@ -157,7 +206,10 @@ export default function ProfileIndexPage() {
   }
 
   function renderPortfolio() {
-    if (!user?.portfolio_items.length) {
+    if (
+      (!isMyProfile && !user?.portfolio_items.length) ||
+      (isMyProfile && !myProfile?.portfolio_items.length)
+    ) {
       return <p className="profile-index--text">{t("exampleTasks.nothing")}</p>;
     }
 
@@ -197,6 +249,14 @@ export default function ProfileIndexPage() {
               <button
                 hidden={!isMyProfile}
                 className="portfolio__img"
+                title={t("portfolio.edit")}
+                onClick={() => setValuePortfolio(item)}
+              >
+                <EditSvg />
+              </button>
+              <button
+                hidden={!isMyProfile}
+                className="portfolio__img"
                 title={t("portfolio.delete")}
                 onClick={() => handleRemoveFilePortfolio(item.id)}
               >
@@ -227,7 +287,7 @@ export default function ProfileIndexPage() {
 
     return (
       <form
-        onSubmit={handleSubmit(onSubmitAddPortfolio)}
+        onSubmit={handleSubmit(onSubmitPortfolio)}
         className="profile-index__portfolio"
       >
         <div className="profile-index__portfolio-filelds">
@@ -236,7 +296,11 @@ export default function ProfileIndexPage() {
             control={control}
             label={t("portfolio.title.title")}
             placeholder={t("portfolio.title.press")}
-            readonly={formState.isSubmitting || addPortfolio.isLoading}
+            readonly={
+              formState.isSubmitting ||
+              addPortfolio.isLoading ||
+              editFilePortfolio.isLoading
+            }
             rules={{
               required: tRules("required"),
               pattern: {
@@ -250,7 +314,11 @@ export default function ProfileIndexPage() {
             control={control}
             label={t("portfolio.description.title")}
             placeholder={t("portfolio.description.press")}
-            readonly={formState.isSubmitting || addPortfolio.isLoading}
+            readonly={
+              formState.isSubmitting ||
+              addPortfolio.isLoading ||
+              editFilePortfolio.isLoading
+            }
             rules={{
               required: tRules("required"),
               pattern: {
@@ -264,6 +332,11 @@ export default function ProfileIndexPage() {
             control={control}
             label={t("portfolio.file.title")}
             placeholder={t("portfolio.file.press")}
+            readonly={
+              formState.isSubmitting ||
+              addPortfolio.isLoading ||
+              editFilePortfolio.isLoading
+            }
             type="file"
             innerRef={fileInputRef}
             onClick={triggerFileInput}
@@ -277,15 +350,27 @@ export default function ProfileIndexPage() {
             type="submit"
             label={t("save")}
             size="small"
-            isLoading={formState.isSubmitting || addPortfolio.isLoading}
-            disabled={formState.isSubmitting || addPortfolio.isLoading}
+            isLoading={
+              formState.isSubmitting ||
+              addPortfolio.isLoading ||
+              editFilePortfolio.isLoading
+            }
+            disabled={
+              formState.isSubmitting ||
+              addPortfolio.isLoading ||
+              editFilePortfolio.isLoading
+            }
           />
           <Button
             isTransparent
             label={t("cancel")}
             size="small"
-            onClick={onChangeAdding}
-            disabled={formState.isSubmitting || addPortfolio.isLoading}
+            onClick={onCancel}
+            disabled={
+              formState.isSubmitting ||
+              addPortfolio.isLoading ||
+              editFilePortfolio.isLoading
+            }
           />
         </div>
       </form>
