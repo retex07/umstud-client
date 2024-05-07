@@ -9,4 +9,5 @@ export interface PasswordResetConfirm_Response {
 
 export interface PasswordResetConfirm_ErrorBody {
   confirm_password: string[];
+  error?: string;
 }

@@ -8,4 +8,5 @@ export interface PasswordReset_Response {
 
 export interface PasswordReset_ErrorBody {
   email: string[];
+  message?: string;
 }

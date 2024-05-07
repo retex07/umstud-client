@@ -49,8 +49,12 @@ export default function ResetPage() {
       {
         onSuccess: (res) => {
           toast.success(res.data.message, { duration: 5000 });
+          history.push("/auth/sign-in");
         },
         onError: (err) => {
+          if (err.response && err.response.data.error) {
+            toast.error(err.response.data.error);
+          }
           setError("new_password", {
             message: err.response?.data.confirm_password[0],
           });
@@ -99,8 +103,8 @@ export default function ResetPage() {
             type="submit"
             fullWidth
             label={t("actions.resetPassword")}
-            isLoading={reset.isLoading}
-            disabled={reset.isLoading}
+            isLoading={formState.isSubmitting || reset.isLoading}
+            disabled={formState.isSubmitting || reset.isLoading}
           />
         </form>
         <Link to={basePath + "/sign-in"} className="authorization__link">

@@ -49,6 +49,9 @@ export default function RecoverPage() {
           if (err.response && err.response.data.email) {
             setError("email", { message: err.response.data.email[0] });
           }
+          if (err.response && err.response.data.message) {
+            toast.error(err.response.data.message);
+          }
         },
       }
     );
