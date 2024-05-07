@@ -1,5 +1,5 @@
 export const CONFIG_SYSTEM = {
-  nameSystem: "©2023 «УмСтуд»",
+  nameSystem: "©2023-2024 «УмСтуд»",
   phone: "+7(923)491-20-64",
   mail: "support@umstud.ru",
 };
@@ -14,6 +14,8 @@ export const codeTokenNoValid = "token_not_valid";
 export const RegExp = {
   last_name: /^[a-zA-Zа-яА-Я-`']+$/,
   first_name: /^[a-zA-Zа-яА-Я-`']+$/,
+  portfolio_title: /^[a-zA-Zа-яА-Я-`']+$/,
+  portfolio_description: /^[a-zA-Zа-яА-Я0-9,\s"'./]+$/,
   patronymic: /^[a-zA-Zа-яА-Я-`']+$/,
   email: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
   place_study_work: /^[a-zA-Zа-яА-Я0-9,\s"'./]+$/,
