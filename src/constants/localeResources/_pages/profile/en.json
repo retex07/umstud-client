@@ -17,7 +17,28 @@
     "actions": {
       "edit": "Edit profile",
       "cp": "Change password"
-    }
+    },
+    "portfolio": {
+      "title": {
+        "title": "Title",
+        "press": "Enter the title of the work"
+      },
+      "description": {
+        "title": "Description",
+        "press": "Enter the description of the work"
+      },
+      "file": {
+        "title": "File upload",
+        "press": "Select the file to upload the work"
+      },
+      "dateToLoad": "Upload date",
+      "success": "The work has been successfully added to the portfolio",
+      "deleted": "The work was successfully deleted",
+      "delete": "Delete",
+      "download": "Download"
+    },
+    "save": "Save",
+    "cancel": "Cancel"
   },
   "security": {
     "title": "Security",

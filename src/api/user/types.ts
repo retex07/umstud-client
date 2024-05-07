@@ -83,8 +83,10 @@ export type PortfolioItem_Response = PortfolioItem;
 export type PortfolioItem_ErrorBody = {
   title?: string[];
   description?: string[];
+  file?: string[];
 };
 export type PortfolioItem_RequestBody = {
   title: string;
   description: string;
+  file: File;
 };

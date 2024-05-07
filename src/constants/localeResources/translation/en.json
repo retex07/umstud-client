@@ -6,9 +6,11 @@
       "pattern_firstname": "Allowed are upper and lower case letters of supported languages, as well as the symbols - `",
       "pattern_lastname": "Allowed are upper and lower case letters of supported languages, as well as the symbols - `",
       "pattern_patronymic": "Allowed are upper and lower case letters of supported languages, as well as the symbols - `",
+      "pattern_portfolio_title": "Allowed are upper and lower case letters of supported languages, as well as the symbols - `",
       "pattern_phone": "Invalid phone number entered",
       "pattern_birthdate": "Invalid date entered, valid format: DD.MM.YYYY",
-      "pattern_placestudywork": "Allowed are upper and lower case letters of supported languages, as well as the symbols - ` ,"
+      "pattern_placestudywork": "Allowed are upper and lower case letters of supported languages, as well as the symbols - ` ,",
+      "pattern_portfolio_description": "Allowed are upper and lower case letters of supported languages, as well as the symbols - ` ,"
     }
   }
 }

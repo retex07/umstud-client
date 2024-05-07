@@ -1,14 +1,32 @@
+import { RegExp } from "constants/config";
+
+import { useAddPortfolio } from "api/user/mutations/addPortfolio";
+import { useRemoveFilePortfolio } from "api/user/mutations/removeFilePortfolio";
+import { PortfolioItem_RequestBody } from "api/user/types";
 import Button from "components/button";
+import Field from "components/formElements/field";
 import NavigationMenu from "pages/profile/components/navigationMenu";
-import React from "react";
+import React, { useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useRouteMatch } from "react-router-dom";
+import { ReactComponent as DownloadSvg } from "static/images/download-cloud.svg";
 import { ReactComponent as ExampleAvatarSvg } from "static/images/example-avatar.svg";
+import { ReactComponent as FileSvg } from "static/images/file.svg";
 import { ReactComponent as FillStarSvg } from "static/images/fill-star.svg";
 import { ReactComponent as HollowStarSvg } from "static/images/hollow-star.svg";
+import { ReactComponent as TrashSvg } from "static/images/trash.svg";
+import { Dispatch } from "store/types";
+import { actions as userActions } from "store/user";
 import { user as user_selector } from "store/user/user.selectors";
-import { formatPhoneNumber, isMobileVersion } from "utils/constant.utils";
+import {
+  formatPhoneNumber,
+  getFullDate,
+  isMobileVersion,
+} from "utils/constant.utils";
+import { convertDataToFormData } from "utils/formdata.utils";
 import { getBasePath } from "utils/router.utils";
 
 import MobileNavigationMenu from "../../components/mobileNavigationMenu";
@@ -16,10 +34,27 @@ import "./styles.scss";
 
 export default function ProfileIndexPage() {
   const { t } = useTranslation("p_profile", { keyPrefix: "index" });
+  const { t: tRules } = useTranslation("translation", {
+    keyPrefix: "form.rules",
+  });
+
   const { path } = useRouteMatch();
   const { user } = useSelector(user_selector);
+
+  const [addingWork, setAddingWork] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const history = useHistory();
   const basePath = getBasePath(path);
+  const dispatch = useDispatch<Dispatch>();
+
+  const addPortfolio = useAddPortfolio();
+  const removeFilePortfolio = useRemoveFilePortfolio();
+
+  const { control, handleSubmit, formState, reset, setError } =
+    useForm<PortfolioItem_RequestBody>({
+      mode: "onSubmit",
+    });
 
   function renderAvatar() {
     switch (true) {
@@ -29,6 +64,221 @@ export default function ProfileIndexPage() {
       default:
         return <ExampleAvatarSvg />;
     }
+  }
+
+  function triggerFileInput() {
+    if (fileInputRef && fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  }
+
+  function onChangeAdding() {
+    setAddingWork(!addingWork);
+    reset();
+  }
+
+  function onSubmitAddPortfolio(data: PortfolioItem_RequestBody) {
+    const newData = { title: data.title, description: data.description };
+    const formData = convertDataToFormData(newData);
+
+    if (fileInputRef.current?.files && fileInputRef.current.files[0]) {
+      formData.append("file", fileInputRef.current.files[0]);
+    }
+
+    addPortfolio.mutate(
+      { data: formData },
+      {
+        onSuccess: (res) => {
+          toast.success(t("portfolio.success"));
+          onChangeAdding();
+          if (user) {
+            dispatch(
+              userActions.updateUser({
+                ...user,
+                portfolio_items: [...user.portfolio_items, res.data],
+              })
+            );
+          }
+        },
+        onError: (err) => {
+          if (err.response) {
+            if (err.response.data.title && err.response.data.title.length) {
+              setError("title", { message: err.response.data.title[0] });
+            }
+            if (
+              err.response.data.description &&
+              err.response.data.description.length
+            ) {
+              setError("description", {
+                message: err.response.data.description[0],
+              });
+            }
+            if (err.response.data.file && err.response.data.file.length) {
+              setError("file", {
+                message: err.response.data.file[0],
+              });
+            }
+          }
+        },
+      }
+    );
+  }
+
+  function handleRemoveFilePortfolio(idFile: number) {
+    removeFilePortfolio.mutate(
+      { idFile },
+      {
+        onSuccess: () => {
+          toast.success(t("portfolio.deleted"));
+          if (user) {
+            dispatch(
+              userActions.updateUser({
+                ...user,
+                portfolio_items: user.portfolio_items.filter(
+                  (i) => i.id !== idFile
+                ),
+              })
+            );
+          }
+        },
+        onError: (err) => {
+          if (err.response && err.response.data.detail) {
+            toast.error(err.response.data.detail);
+          }
+        },
+      }
+    );
+  }
+
+  function renderPortfolio() {
+    if (!user?.portfolio_items.length) {
+      return <p className="profile-index--text">{t("exampleTasks.nothing")}</p>;
+    }
+
+    return (
+      <div className="portfolio__wrapper">
+        {user.portfolio_items.map((item) => (
+          <div className="portfolio__item" key={item.id}>
+            <div className="portfolio__header">
+              <div className="portfolio__img">
+                <FileSvg />
+              </div>
+              <div className="portfolio__item-info">
+                <h3 className="portfolio__title">{item.title}</h3>
+                <p className="portfolio__description" title={item.description}>
+                  {item.description}
+                </p>
+                <div className="portfolio__item-other">
+                  <label className="portfolio__item-signature content">
+                    {t("portfolio.dateToLoad")}
+                  </label>
+                  <label className="portfolio__item-signature">
+                    {getFullDate(item.uploaded_at)}
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div className="portfolio__actions">
+              <a
+                rel="noreferrer"
+                className="portfolio__img"
+                title={t("portfolio.download")}
+                href={item.file}
+                target="_blank"
+              >
+                <DownloadSvg />
+              </a>
+              <button
+                className="portfolio__img"
+                title={t("portfolio.delete")}
+                onClick={() => handleRemoveFilePortfolio(item.id)}
+              >
+                <TrashSvg />
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  function renderAddingWork() {
+    if (!addingWork) {
+      return (
+        <Button
+          label={t("addWork")}
+          isLoading={formState.isSubmitting || removeFilePortfolio.isLoading}
+          size="small"
+          onClick={onChangeAdding}
+        />
+      );
+    }
+
+    return (
+      <form
+        onSubmit={handleSubmit(onSubmitAddPortfolio)}
+        className="profile-index__portfolio"
+      >
+        <div className="profile-index__portfolio-filelds">
+          <Field
+            name="title"
+            control={control}
+            label={t("portfolio.title.title")}
+            placeholder={t("portfolio.title.press")}
+            readonly={formState.isSubmitting || addPortfolio.isLoading}
+            rules={{
+              required: tRules("required"),
+              pattern: {
+                value: RegExp.portfolio_title,
+                message: tRules("pattern_portfolio_title"),
+              },
+            }}
+          />
+          <Field
+            name="description"
+            control={control}
+            label={t("portfolio.description.title")}
+            placeholder={t("portfolio.description.press")}
+            readonly={formState.isSubmitting || addPortfolio.isLoading}
+            rules={{
+              required: tRules("required"),
+              pattern: {
+                value: RegExp.portfolio_description,
+                message: tRules("pattern_portfolio_description"),
+              },
+            }}
+          />
+          <Field
+            name="file"
+            control={control}
+            label={t("portfolio.file.title")}
+            placeholder={t("portfolio.file.press")}
+            type="file"
+            innerRef={fileInputRef}
+            onClick={triggerFileInput}
+            rules={{
+              required: tRules("required"),
+            }}
+          />
+        </div>
+        <div className="profile-index__portfolio-actions">
+          <Button
+            type="submit"
+            label={t("save")}
+            size="small"
+            isLoading={formState.isSubmitting || addPortfolio.isLoading}
+            disabled={formState.isSubmitting || addPortfolio.isLoading}
+          />
+          <Button
+            isTransparent
+            label={t("cancel")}
+            size="small"
+            onClick={onChangeAdding}
+            disabled={formState.isSubmitting || addPortfolio.isLoading}
+          />
+        </div>
+      </form>
+    );
   }
 
   return (
@@ -61,18 +311,16 @@ export default function ProfileIndexPage() {
           <section className="profile-index--section">
             <h2 className="profile-index--subtitle">{t("rating")}</h2>
             <div className="profile-index__stars">
-              {[...Array(Math.round(user?.stars || 0))].map((item, index) => (
+              {[...Array(Math.round(user?.stars || 0))].map((_, index) => (
                 <div key={index} className="blue-star fill">
                   <FillStarSvg />
                 </div>
               ))}
-              {[...Array(5 - Math.round(user?.stars || 0))].map(
-                (item, index) => (
-                  <div key={index} className="blue-star">
-                    <HollowStarSvg />
-                  </div>
-                )
-              )}
+              {[...Array(5 - Math.round(user?.stars || 0))].map((_, index) => (
+                <div key={index} className="blue-star">
+                  <HollowStarSvg />
+                </div>
+              ))}
             </div>
           </section>
           {(user?.phone ||
@@ -127,8 +375,8 @@ export default function ProfileIndexPage() {
             <h2 className="profile-index--subtitle">
               {t("exampleTasks.title")}
             </h2>
-            <p className="profile-index--text">{t("exampleTasks.nothing")}</p>
-            <Button label={t("addWork")} size="small" />
+            {renderPortfolio()}
+            {renderAddingWork()}
           </section>
         </div>
         <NavigationMenu />
