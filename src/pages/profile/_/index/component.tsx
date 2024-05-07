@@ -52,6 +52,8 @@ export default function ProfileIndexPage() {
   const { user: myProfile } = useSelector(user_selector);
   const { data: user, isLoading } = useUserProfile(params.profileId);
 
+  const isMyProfile = myProfile?.slug == user?.slug;
+
   const addPortfolio = useAddPortfolio();
   const removeFilePortfolio = useRemoveFilePortfolio();
 
@@ -161,7 +163,7 @@ export default function ProfileIndexPage() {
 
     return (
       <div className="portfolio__wrapper">
-        {user.portfolio_items.map((item) => (
+        {(isMyProfile ? myProfile : user)?.portfolio_items.map((item) => (
           <div className="portfolio__item" key={item.id}>
             <div className="portfolio__header">
               <div className="portfolio__img">
@@ -193,7 +195,7 @@ export default function ProfileIndexPage() {
                 <DownloadSvg />
               </a>
               <button
-                hidden={myProfile?.slug !== user?.slug}
+                hidden={!isMyProfile}
                 className="portfolio__img"
                 title={t("portfolio.delete")}
                 onClick={() => handleRemoveFilePortfolio(item.id)}
@@ -208,7 +210,7 @@ export default function ProfileIndexPage() {
   }
 
   function renderAddingWork() {
-    if (myProfile?.slug !== user?.slug) {
+    if (!isMyProfile) {
       return;
     }
 
@@ -303,7 +305,7 @@ export default function ProfileIndexPage() {
       <div className="container-bar">
         <div
           className={cn("profile-tabs", {
-            "item-hidden": myProfile?.slug !== user?.slug,
+            "item-hidden": !isMyProfile,
           })}
         >
           {isMobileVersion() && <MobileNavigationMenu />}
@@ -321,7 +323,7 @@ export default function ProfileIndexPage() {
               <div className="profile-index--user-email">{user?.email}</div>
               <div
                 className={cn("profile-index--change-action", {
-                  "item-hidden": myProfile?.slug !== user?.slug,
+                  "item-hidden": !isMyProfile,
                 })}
               >
                 <Button
@@ -404,7 +406,7 @@ export default function ProfileIndexPage() {
             {renderAddingWork()}
           </section>
         </div>
-        {myProfile?.slug === user?.slug && <NavigationMenu />}
+        {isMyProfile && <NavigationMenu />}
       </div>
     </div>
   );
