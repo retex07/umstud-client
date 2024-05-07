@@ -32,3 +32,19 @@ export function convertDate(
     return `${year}-${month}-${day}`;
   }
 }
+
+export function getFullDate(date: Date) {
+  const prevDate = new Date(date);
+
+  const d =
+    prevDate.getDate().toString().length == 1
+      ? "0" + prevDate.getDate().toString()
+      : prevDate.getDate();
+  const m =
+    (prevDate.getMonth() + 1).toString().length == 1
+      ? "0" + (prevDate.getMonth() + 1).toString()
+      : prevDate.getMonth();
+  const y = prevDate.getFullYear();
+
+  return `${d}.${m}.${y}`;
+}
