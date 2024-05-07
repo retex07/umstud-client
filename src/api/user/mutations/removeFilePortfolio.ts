@@ -5,32 +5,32 @@ import { AxiosError, AxiosResponse, CancelToken } from "axios";
 import { useMutation, UseMutationOptions } from "react-query";
 
 import {
-  RemoveUserBlackList_ErrorBody,
-  RemoveUserBlackList_Response,
+  RemovePortfolioItem_ErrorBody,
+  RemovePortfolioItem_Response,
 } from "../types";
 
-type Data = AxiosResponse<RemoveUserBlackList_Response>;
+type Data = AxiosResponse<RemovePortfolioItem_Response>;
 
 type Variables = {
-  idUser: number;
+  idFile: number;
 };
 
-type Error = AxiosError<RemoveUserBlackList_ErrorBody>;
+type Error = AxiosError<RemovePortfolioItem_ErrorBody>;
 
 function index(
-  idUser: number,
+  idFile: number,
   cancelToken?: CancelToken
-): PureResponse<RemoveUserBlackList_Response> {
-  return http.delete(ENDPOINTS_CONFIG.api.addToBlackList + idUser + "/", {
+): PureResponse<RemovePortfolioItem_Response> {
+  return http.delete(ENDPOINTS_CONFIG.api.portfolio + idFile + "/", {
     cancelToken,
   });
 }
 
-export function useAddToBlackList(
+export function useRemoveFilePortfolio(
   options?: Omit<UseMutationOptions<Data, Error, Variables>, "mutationFn">
 ) {
   return useMutation<Data, Error, Variables>(
-    (variables) => index(variables.idUser),
+    (variables) => index(variables.idFile),
     options
   );
 }

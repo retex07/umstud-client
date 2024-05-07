@@ -4,6 +4,7 @@ export const ENDPOINTS_CONFIG = {
     register: "/users/register/",
     users: "/users/list/",
     profile: "/users/profile/",
+    portfolio: "/users/portfolio/",
     userProfile: "/users/",
     skills: "/users/skills_change/",
     recover: "/users/password_reset/",

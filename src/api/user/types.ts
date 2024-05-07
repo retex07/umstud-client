@@ -1,5 +1,13 @@
 import { SelectOption } from "types/components";
 
+export type PortfolioItem = {
+  id: number;
+  title: string;
+  description: string;
+  file: string;
+  uploaded_at: Date;
+};
+
 export type Skill = {
   id: number;
   name: string;
@@ -21,11 +29,12 @@ export type DetailUserProfile = {
   photo: string | null;
   views: number;
   stars: number | null;
+  portfolio_items: PortfolioItem[];
 };
 
 export type UserPut_RequestBody = Omit<
   DetailUserProfile,
-  "username" | "slug" | "language" | "views" | "rating"
+  "username" | "slug" | "language" | "views" | "rating" | "portfolio_items"
 >;
 
 export type UserPut_FormBody = Omit<UserPut_RequestBody, "skills"> & {
@@ -66,3 +75,16 @@ export type RemoveUserBlackList_ErrorBody = {
 };
 
 export type RemoveUserBlackList_Response = CreateBlackList_Response;
+
+export type RemovePortfolioItem_ErrorBody = RemoveUserBlackList_ErrorBody;
+export type RemovePortfolioItem_Response = CreateBlackList_Response;
+
+export type PortfolioItem_Response = PortfolioItem;
+export type PortfolioItem_ErrorBody = {
+  title?: string[];
+  description?: string[];
+};
+export type PortfolioItem_RequestBody = {
+  title: string;
+  description: string;
+};
