@@ -48,3 +48,21 @@ export type ChangePassword_ErrorBody = {
   new_password_confirm?: string[];
   non_field_errors?: string[];
 };
+
+export type CreateBlackList_ErrorBody = {
+  blocked_user: string[];
+};
+
+export type CreateBlackList_RequestBody = {
+  blocked_user: number;
+};
+
+export type CreateBlackList_Response = {
+  message: string;
+};
+
+export type RemoveUserBlackList_ErrorBody = {
+  detail: string;
+};
+
+export type RemoveUserBlackList_Response = CreateBlackList_Response;

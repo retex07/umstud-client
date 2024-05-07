@@ -12,5 +12,6 @@ export const ENDPOINTS_CONFIG = {
     activateAccount: "/users/activate/",
     userList: "/users/listfull/",
     blackList: "/users/blacklist/",
+    addToBlackList: "/users/blacklist/add/",
   },
 };
