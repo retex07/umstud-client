@@ -12,9 +12,7 @@
     flex-direction: column;
     align-items: center;
 
-    gap: 10px;
-    padding: 12px 20px;
-    border-radius: 10px;
+    border-radius: 6px;
 
     box-shadow: 0 4px 4px 0 var(--color-gray-box-shadow);
     background: var(--color-white);
@@ -27,9 +25,11 @@
 
   &__item {
     cursor: pointer;
-    margin: 4px 0;
     text-align: center;
     text-decoration: none;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    width: 100%;
     color: var(--color-dark-text);
 
     &.red {
@@ -37,7 +37,8 @@
     }
 
     &:hover {
-      text-decoration: underline;
+      border-radius: 6px;
+      background-color: var(--color-gray-light);
     }
   }
 }

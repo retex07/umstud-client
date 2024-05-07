@@ -1,9 +1,8 @@
-import { Dispatch } from "@reduxjs/toolkit";
 import { baseUrl as baseUrlProfile } from "pages/profile/routes";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { ReactComponent as ExampleAvatarSvg } from "static/images/example-avatar.svg";
 import { actions as userActions } from "store/user";
 import { user as user_selector } from "store/user/user.selectors";
@@ -18,8 +17,10 @@ export default function MenuUser(props: Props) {
   const { isOpen, onHide } = props;
   const { t } = useTranslation("p_profile");
   const { user } = useSelector(user_selector);
-  const dispatch = useDispatch<Dispatch>();
-  const location = useLocation();
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const items = [
     {
@@ -27,32 +28,31 @@ export default function MenuUser(props: Props) {
       title: t("index.title"),
     },
     {
-      route: "/messages",
-      title: t("messages.title"),
-    },
-    {
-      route: "/ready-tasks",
-      title: t("readyTasks.title"),
-    },
-    {
-      route: "/black-list",
-      title: t("blackList.title"),
-    },
-    {
-      route: "/orders",
-      title: t("orders.title"),
-    },
-    {
-      route: "/works",
-      title: t("works.title"),
+      route: "/security",
+      title: t("security.title"),
     },
   ];
 
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        onHide();
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen, onHide]);
+
   function renderAvatar() {
     switch (true) {
-      case user && !!user.photo: {
+      case user && !!user.photo:
         return <img src={user?.photo || ""} alt={user?.username} />;
-      }
       default:
         return <ExampleAvatarSvg />;
     }
@@ -63,22 +63,29 @@ export default function MenuUser(props: Props) {
   }
 
   return (
-    <div className="menu-user" onClick={onHide}>
+    <div ref={menuRef} className="menu-user">
       {renderAvatar()}
       {isOpen && (
         <div className="menu-user__wrapper">
-          {(!location.pathname.includes(baseUrlProfile) ||
-            location.pathname.includes("/user/")) &&
-            items.map((item, index) => (
-              <Link
-                key={index}
-                className="menu-user__item"
-                to={baseUrlProfile + item.route}
-              >
-                {item.title}
-              </Link>
-            ))}
-          <label className="menu-user__item red" onClick={onLogout}>
+          {items.map((item, index) => (
+            <label
+              key={index}
+              className="menu-user__item"
+              onClick={(e) => {
+                e.stopPropagation();
+                history.push(baseUrlProfile + item.route);
+              }}
+            >
+              {item.title}
+            </label>
+          ))}
+          <label
+            className="menu-user__item red"
+            onClick={(e) => {
+              e.stopPropagation();
+              onLogout();
+            }}
+          >
             Выйти
           </label>
         </div>
