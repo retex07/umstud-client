@@ -28,7 +28,11 @@ export default function LayoutBuilder(props: Props) {
       {props.renderHeader && <Header />}
       <Component />
       {props.renderFooter && <Footer />}
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster
+        containerClassName="toaster"
+        position="top-right"
+        reverseOrder={false}
+      />
     </Suspense>
   );
 }
