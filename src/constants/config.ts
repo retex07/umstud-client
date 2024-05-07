@@ -14,7 +14,7 @@ export const codeTokenNoValid = "token_not_valid";
 export const RegExp = {
   last_name: /^[a-zA-Zа-яА-Я-`']+$/,
   first_name: /^[a-zA-Zа-яА-Я-`']+$/,
-  portfolio_title: /^[a-zA-Zа-яА-Я-`']+$/,
+  portfolio_title: /^[a-zA-Zа-яА-Я0-9,\s"'./]+$/,
   portfolio_description: /^[a-zA-Zа-яА-Я0-9,\s"'./]+$/,
   patronymic: /^[a-zA-Zа-яА-Я-`']+$/,
   email: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
