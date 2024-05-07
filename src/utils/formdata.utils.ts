@@ -1,4 +1,4 @@
-export function convertDataToFormData(form: any) {
+export function convertDataToFormData(form: Record<string, unknown>): FormData {
   const formData = new FormData();
   Object.entries(form).forEach(([key, value]) => {
     if (value) {
