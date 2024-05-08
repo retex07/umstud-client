@@ -1,20 +1,5 @@
 @use "styles/typography";
 
-.profile-tabs {
-  display: none;
-  align-self: center;
-  width: 100%;
-  max-width: 740px;
-  box-sizing: border-box;
-  @media screen and (max-width: 1220px) {
-    display: block;
-  }
-
-  &.item-hidden {
-    display: none;
-  }
-}
-
 .profile-index {
   display: flex;
   justify-content: center;

@@ -9,6 +9,7 @@ import { user as user_selector } from "store/user/user.selectors";
 import { isMobileVersion } from "utils/constant.utils";
 
 import NavigationMenu from "../../components/navigationMenu";
+import "../../styles.scss";
 import "./styles.scss";
 
 export default function ProfileBlackListPage() {

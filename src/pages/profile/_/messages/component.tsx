@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { isMobileVersion } from "utils/constant.utils";
 
 import MobileNavigationMenu from "../../components/mobileNavigationMenu";
+import "../../styles.scss";
 import "./styles.scss";
 
 export default function ProfileMessagesPage() {

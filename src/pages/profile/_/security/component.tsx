@@ -15,6 +15,7 @@ import { isMobileVersion } from "utils/constant.utils";
 
 import MobileNavigationMenu from "../../components/mobileNavigationMenu";
 import NavigationMenu from "../../components/navigationMenu";
+import "../../styles.scss";
 import "./styles.scss";
 
 export default function ProfileSecurityPage() {

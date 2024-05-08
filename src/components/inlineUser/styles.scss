@@ -28,5 +28,6 @@
 
   &__whois {
     @include typography.ordinary_subtitle;
+    display: inline;
   }
 }

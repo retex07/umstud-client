@@ -35,6 +35,7 @@ import { convertDataToFormData } from "utils/formdata.utils";
 
 import MobileNavigationMenu from "../../components/mobileNavigationMenu";
 import { baseUrl as baseProfileUrl } from "../../routes";
+import "../../styles.scss";
 import "./styles.scss";
 
 export default function ProfileIndexPage() {
