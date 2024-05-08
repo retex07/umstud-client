@@ -122,7 +122,7 @@ export default function ProfileIndexPage() {
           onSuccess: (res) => {
             toast.success(t("portfolio.success"));
             onChangeAdding();
-            setEditingProfile({ isEdit: false, idFile: null });
+            onCancel();
             if (user) {
               dispatch(
                 userActions.updateUser({
@@ -185,6 +185,9 @@ export default function ProfileIndexPage() {
       { idFile },
       {
         onSuccess: () => {
+          if (editingProfile.idFile && editingProfile.idFile === idFile) {
+            onCancel();
+          }
           toast.success(t("portfolio.deleted"));
           if (user) {
             dispatch(
