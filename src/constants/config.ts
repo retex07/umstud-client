@@ -9,6 +9,8 @@ export const hrefs = {
   vk: "https://vk.com/umstudents",
 };
 
+export const adminSymbol = "👑";
+
 export const codeTokenNoValid = "token_not_valid";
 
 export const RegExp = {

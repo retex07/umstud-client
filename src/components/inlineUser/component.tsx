@@ -3,6 +3,7 @@ import { baseUrl as baseUrlProfile } from "pages/profile/routes";
 import React from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as ExampleAvatarSvg } from "static/images/example-avatar.svg";
+import { infoUser } from "utils/user.utils";
 import "./styles.scss";
 
 export default function InlineUser(user: DetailUserProfile) {
@@ -29,9 +30,7 @@ export default function InlineUser(user: DetailUserProfile) {
   return (
     <Link className="inline-user" to={baseUrlProfile + "/user/" + user.slug}>
       <picture>{renderAvatar()}</picture>
-      <span className="inline-user__whois">
-        {user.last_name} {user.first_name}
-      </span>
+      <span className="inline-user__whois">{infoUser(user)}</span>
     </Link>
   );
 }

@@ -32,6 +32,7 @@ import {
   isMobileVersion,
 } from "utils/constant.utils";
 import { convertDataToFormData } from "utils/formdata.utils";
+import { infoUser } from "utils/user.utils";
 
 import MobileNavigationMenu from "../../components/mobileNavigationMenu";
 import { baseUrl as baseProfileUrl } from "../../routes";
@@ -405,7 +406,7 @@ export default function ProfileIndexPage() {
             <div className="profile-index--header-info">
               <div className="profile-index--user-info">
                 <h2 className="profile-index--header-info--title">
-                  {user?.last_name} {user?.first_name} {user?.patronymic}
+                  {user && infoUser(user, true)}
                 </h2>
                 <p className="profile-index--subtitle">{user?.username}</p>
               </div>
