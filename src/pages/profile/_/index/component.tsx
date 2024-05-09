@@ -225,7 +225,17 @@ export default function ProfileIndexPage() {
       (!isMyProfile && !user?.portfolio_items.length) ||
       (isMyProfile && !myProfile?.portfolio_items.length)
     ) {
-      return <p className="profile-index--text">{t("exampleTasks.nothing")}</p>;
+      return (
+        <>
+          <p className="profile-index--text">{t("exampleTasks.nothing")}</p>
+          <Button
+            label={t("addWork")}
+            isLoading={formState.isSubmitting || removeFilePortfolio.isLoading}
+            size="small"
+            onClick={onChangeAdding}
+          />
+        </>
+      );
     }
 
     return (
