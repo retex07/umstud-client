@@ -74,6 +74,7 @@ export default function Input(props: Props) {
         className={cn("input__container", props.classNames, {
           "input__container-full-width": props.fullWidth,
           "input__container-warning": props.hasError,
+          "input__container-file": typeInput === "file",
         })}
       >
         <input

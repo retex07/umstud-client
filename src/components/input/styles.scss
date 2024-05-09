@@ -32,12 +32,25 @@
       width: 100%;
     }
 
+    &-file {
+      border-style: dashed;
+    }
+
     #{$this}:hover & {
       border: 1px solid var(--color-blue);
       cursor: text;
+
+      &-file {
+        border-style: dashed;
+        cursor: pointer;
+      }
     }
     #{$this}:focus-within & {
       border: 1px solid var(--color-blue);
+      &-file {
+        border-style: dashed;
+        cursor: pointer;
+      }
     }
   }
 
@@ -49,21 +62,13 @@
     border: 0;
     outline: none;
 
-    padding: 16px 16px;
+    padding: 16px;
+    box-sizing: border-box;
     border-radius: inherit;
   }
 
   &__select-from-file {
-    @include typography.ordinary_subtitle;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-
-    border: 0;
-    outline: none;
-
-    padding: 16px 16px;
-    border-radius: inherit;
+    @extend .input__select-from;
   }
 
   &__after-icon {
