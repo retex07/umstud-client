@@ -36,7 +36,8 @@
       "deleted": "The work was successfully deleted",
       "delete": "Delete",
       "edit": "Change",
-      "download": "Download"
+      "download": "Download",
+      "confirm": "Are you sure you want to delete the work '{{title }}'"
     },
     "save": "Save",
     "cancel": "Cancel"

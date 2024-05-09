@@ -9,6 +9,7 @@ import cn from "classnames";
 import Button from "components/button";
 import Field from "components/formElements/field";
 import PageLoader from "components/loaders/pageLoader";
+import { useConfirm } from "contexts/confirm/hooks";
 import NavigationMenu from "pages/profile/components/navigationMenu";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -57,6 +58,7 @@ export default function ProfileIndexPage() {
   const dispatch = useDispatch<Dispatch>();
   const params = useParams<{ profileId: string }>();
 
+  const { requestConfirm } = useConfirm();
   const { user: myProfile } = useSelector(user_selector);
   const { data: user, isLoading } = useUserProfile(params.profileId);
 
@@ -181,33 +183,40 @@ export default function ProfileIndexPage() {
     }
   }
 
-  function handleRemoveFilePortfolio(idFile: number) {
-    removeFilePortfolio.mutate(
-      { idFile },
-      {
-        onSuccess: () => {
-          if (editingProfile.idFile && editingProfile.idFile === idFile) {
-            onCancel();
-          }
-          toast.success(t("portfolio.deleted"));
-          if (user) {
-            dispatch(
-              userActions.updateUser({
-                ...user,
-                portfolio_items: user.portfolio_items.filter(
-                  (i) => i.id !== idFile
-                ),
-              })
-            );
-          }
-        },
-        onError: (err) => {
-          if (err.response && err.response.data.detail) {
-            toast.error(err.response.data.detail);
-          }
-        },
-      }
+  async function handleRemoveFilePortfolio(item: PortfolioItem) {
+    const confirm = await requestConfirm(
+      t("portfolio.confirm", { title: item.title }),
+      true
     );
+
+    if (confirm) {
+      removeFilePortfolio.mutate(
+        { idFile: item.id },
+        {
+          onSuccess: () => {
+            if (editingProfile.idFile && editingProfile.idFile === item.id) {
+              onCancel();
+            }
+            toast.success(t("portfolio.deleted"));
+            if (user) {
+              dispatch(
+                userActions.updateUser({
+                  ...user,
+                  portfolio_items: user.portfolio_items.filter(
+                    (i) => i.id !== item.id
+                  ),
+                })
+              );
+            }
+          },
+          onError: (err) => {
+            if (err.response && err.response.data.detail) {
+              toast.error(err.response.data.detail);
+            }
+          },
+        }
+      );
+    }
   }
 
   function renderPortfolio() {
@@ -263,7 +272,7 @@ export default function ProfileIndexPage() {
                 hidden={!isMyProfile}
                 className="portfolio__img"
                 title={t("portfolio.delete")}
-                onClick={() => handleRemoveFilePortfolio(item.id)}
+                onClick={() => handleRemoveFilePortfolio(item)}
               >
                 <TrashSvg />
               </button>
