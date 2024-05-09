@@ -1,0 +1,19 @@
+@use "styles/typography";
+
+.confirm {
+  &__actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__msg {
+    @include typography.ordinary_subtitle;
+
+    &.question {
+      &::after {
+        content: "?";
+      }
+    }
+  }
+}

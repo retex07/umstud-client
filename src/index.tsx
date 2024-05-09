@@ -1,4 +1,5 @@
 import PageLoader from "components/loaders/pageLoader";
+import { ConfirmProvider } from "contexts/confirm/provider";
 import React, { StrictMode, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -32,7 +33,9 @@ root.render(
       <QueryClientProvider client={queryClient}>
         <Provider store={Store}>
           <Router history={history}>
-            <App />
+            <ConfirmProvider>
+              <App />
+            </ConfirmProvider>
           </Router>
         </Provider>
       </QueryClientProvider>
