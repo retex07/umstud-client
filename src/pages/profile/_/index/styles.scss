@@ -125,7 +125,8 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    margin-top: 12px;
+
+    min-width: 25vw;
 
     &-filelds {
       display: flex;

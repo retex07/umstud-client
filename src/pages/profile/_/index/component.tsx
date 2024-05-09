@@ -9,6 +9,7 @@ import cn from "classnames";
 import Button from "components/button";
 import Field from "components/formElements/field";
 import PageLoader from "components/loaders/pageLoader";
+import Modal from "components/modal";
 import { useConfirm } from "contexts/confirm/hooks";
 import NavigationMenu from "pages/profile/components/navigationMenu";
 import React, { useRef, useState } from "react";
@@ -279,6 +280,12 @@ export default function ProfileIndexPage() {
             </div>
           </div>
         ))}
+        <Button
+          label={t("addWork")}
+          isLoading={formState.isSubmitting || removeFilePortfolio.isLoading}
+          size="small"
+          onClick={onChangeAdding}
+        />
       </div>
     );
   }
@@ -288,106 +295,104 @@ export default function ProfileIndexPage() {
       return;
     }
 
-    if (!addingWork) {
-      return (
-        <Button
-          label={t("addWork")}
-          isLoading={formState.isSubmitting || removeFilePortfolio.isLoading}
-          size="small"
-          onClick={onChangeAdding}
-        />
-      );
-    }
-
     return (
-      <form
-        onSubmit={handleSubmit(onSubmitPortfolio)}
-        className="profile-index__portfolio"
+      <Modal
+        title={t("portfolio.adding")}
+        isOpen={addingWork}
+        onClose={onChangeAdding}
       >
-        <div className="profile-index__portfolio-filelds">
-          <Field
-            name="title"
-            control={control}
-            label={t("portfolio.title.title")}
-            placeholder={t("portfolio.title.press")}
-            readonly={
-              formState.isSubmitting ||
-              addPortfolio.isLoading ||
-              editFilePortfolio.isLoading
-            }
-            rules={{
-              required: tRules("required"),
-              pattern: {
-                value: RegExp.portfolio_title,
-                message: tRules("pattern_portfolio_title"),
-              },
-            }}
-          />
-          <Field
-            name="description"
-            control={control}
-            label={t("portfolio.description.title")}
-            placeholder={t("portfolio.description.press")}
-            readonly={
-              formState.isSubmitting ||
-              addPortfolio.isLoading ||
-              editFilePortfolio.isLoading
-            }
-            rules={{
-              required: tRules("required"),
-              pattern: {
-                value: RegExp.portfolio_description,
-                message: tRules("pattern_portfolio_description"),
-              },
-            }}
-          />
-          <Field
-            name="file"
-            control={control}
-            label={t("portfolio.file.title")}
-            placeholder={t("portfolio.file.press")}
-            readonly={
-              formState.isSubmitting ||
-              addPortfolio.isLoading ||
-              editFilePortfolio.isLoading
-            }
-            type="file"
-            innerRef={fileInputRef}
-            onClick={triggerFileInput}
-            rules={{
-              required: tRules("required"),
-            }}
-          />
-        </div>
-        <div className="profile-index__portfolio-actions">
-          <Button
-            type="submit"
-            label={t("save")}
-            size="small"
-            isLoading={
-              formState.isSubmitting ||
-              addPortfolio.isLoading ||
-              editFilePortfolio.isLoading
-            }
-            disabled={
-              formState.isSubmitting ||
-              addPortfolio.isLoading ||
-              editFilePortfolio.isLoading
-            }
-          />
-          <Button
-            isTransparent
-            label={t("cancel")}
-            size="small"
-            onClick={onCancel}
-            disabled={
-              formState.isSubmitting ||
-              addPortfolio.isLoading ||
-              editFilePortfolio.isLoading
-            }
-          />
-        </div>
-      </form>
+        <form
+          onSubmit={handleSubmit(onSubmitPortfolio)}
+          className="profile-index__portfolio"
+        >
+          <div className="profile-index__portfolio-filelds">
+            <Field
+              fullWidth
+              name="title"
+              control={control}
+              label={t("portfolio.title.title")}
+              placeholder={t("portfolio.title.press")}
+              readonly={
+                formState.isSubmitting ||
+                addPortfolio.isLoading ||
+                editFilePortfolio.isLoading
+              }
+              rules={{
+                required: tRules("required"),
+                pattern: {
+                  value: RegExp.portfolio_title,
+                  message: tRules("pattern_portfolio_title"),
+                },
+              }}
+            />
+            <Field
+              fullWidth
+              name="description"
+              control={control}
+              label={t("portfolio.description.title")}
+              placeholder={t("portfolio.description.press")}
+              readonly={
+                formState.isSubmitting ||
+                addPortfolio.isLoading ||
+                editFilePortfolio.isLoading
+              }
+              rules={{
+                required: tRules("required"),
+                pattern: {
+                  value: RegExp.portfolio_description,
+                  message: tRules("pattern_portfolio_description"),
+                },
+              }}
+            />
+            <Field
+              fullWidth
+              name="file"
+              control={control}
+              label={t("portfolio.file.title")}
+              placeholder={t("portfolio.file.press")}
+              readonly={
+                formState.isSubmitting ||
+                addPortfolio.isLoading ||
+                editFilePortfolio.isLoading
+              }
+              type="file"
+              innerRef={fileInputRef}
+              onClick={triggerFileInput}
+              rules={{
+                required: tRules("required"),
+              }}
+            />
+          </div>
+          <div className="profile-index__portfolio-actions">
+            <Button
+              type="submit"
+              label={t("save")}
+              fullWidth
+              isLoading={
+                formState.isSubmitting ||
+                addPortfolio.isLoading ||
+                editFilePortfolio.isLoading
+              }
+              disabled={
+                formState.isSubmitting ||
+                addPortfolio.isLoading ||
+                editFilePortfolio.isLoading
+              }
+            />
+            <Button
+              fullWidth
+              isTransparent
+              label={t("cancel")}
+              onClick={onCancel}
+              disabled={
+                formState.isSubmitting ||
+                addPortfolio.isLoading ||
+                editFilePortfolio.isLoading
+              }
+            />
+          </div>
+        </form>
+      </Modal>
     );
   }
 
