@@ -61,7 +61,9 @@ export default function ProfileIndexPage() {
 
   const { requestConfirm } = useConfirm();
   const { user: myProfile } = useSelector(user_selector);
-  const { data: user, isLoading } = useUserProfile(params.profileId);
+  const { data: user, isLoading } = useUserProfile(params.profileId, {
+    enabled: !!params.profileId,
+  });
 
   const isMyProfile = myProfile?.slug == user?.slug;
 
