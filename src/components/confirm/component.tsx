@@ -1,9 +1,9 @@
+import cn from "classnames";
 import Modal from "components/modal";
 import React from "react";
 
 import Button from "../button";
 import "./styles.scss";
-import cn from "classnames";
 
 interface Props {
   message: string;
@@ -24,7 +24,7 @@ export default function ConfirmComponent(props: Props) {
     >
       <p
         className={cn("confirm__msg", {
-          "question": props.isQuestion,
+          question: props.isQuestion,
         })}
       >
         {props.message}
