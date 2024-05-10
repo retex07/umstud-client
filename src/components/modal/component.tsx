@@ -23,6 +23,10 @@ const Modal: React.FC<Props> = ({
   const [isClosing, setIsClosing] = useState(false);
 
   useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "auto";
+  }, [isOpen]);
+
+  useEffect(() => {
     const modalRoot = document.getElementById("modal-root") || document.body;
     const el = modalRef.current;
 
