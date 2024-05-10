@@ -65,7 +65,7 @@ export default function ProfileIndexPage() {
     enabled: !!params.profileId,
   });
 
-  const isMyProfile = myProfile?.slug == user?.slug;
+  const isMyProfile = myProfile?.slug === params.profileId;
 
   const addPortfolio = useAddPortfolio();
   const editFilePortfolio = useEditFilePortfolio();
@@ -75,16 +75,6 @@ export default function ProfileIndexPage() {
     useForm<PortfolioItem_RequestBody>({
       mode: "onSubmit",
     });
-
-  function renderAvatar() {
-    switch (true) {
-      case user && !!user.photo: {
-        return <img src={user?.photo || ""} alt={user?.username} />;
-      }
-      default:
-        return <ExampleAvatarSvg />;
-    }
-  }
 
   function triggerFileInput() {
     if (fileInputRef && fileInputRef.current) {
@@ -230,12 +220,16 @@ export default function ProfileIndexPage() {
       return (
         <>
           <p className="profile-index--text">{t("exampleTasks.nothing")}</p>
-          <Button
-            label={t("addWork")}
-            isLoading={formState.isSubmitting || removeFilePortfolio.isLoading}
-            size="small"
-            onClick={onChangeAdding}
-          />
+          {isMyProfile && (
+            <Button
+              label={t("addWork")}
+              isLoading={
+                formState.isSubmitting || removeFilePortfolio.isLoading
+              }
+              size="small"
+              onClick={onChangeAdding}
+            />
+          )}
         </>
       );
     }
@@ -292,12 +286,14 @@ export default function ProfileIndexPage() {
             </div>
           </div>
         ))}
-        <Button
-          label={t("addWork")}
-          isLoading={formState.isSubmitting || removeFilePortfolio.isLoading}
-          size="small"
-          onClick={onChangeAdding}
-        />
+        {isMyProfile && (
+          <Button
+            label={t("addWork")}
+            isLoading={formState.isSubmitting || removeFilePortfolio.isLoading}
+            size="small"
+            onClick={onChangeAdding}
+          />
+        )}
       </div>
     );
   }
@@ -416,6 +412,31 @@ export default function ProfileIndexPage() {
     return <PageLoader />;
   }
 
+  function getUser() {
+    switch (true) {
+      case myProfile?.slug === params.profileId:
+        return myProfile;
+      case myProfile?.slug !== params.profileId:
+        return user;
+      default:
+        return null;
+    }
+  }
+
+  const profileUser = getUser();
+
+  function renderAvatar() {
+    switch (true) {
+      case profileUser && !!profileUser.photo: {
+        return (
+          <img src={profileUser?.photo || ""} alt={profileUser?.username} />
+        );
+      }
+      default:
+        return <ExampleAvatarSvg />;
+    }
+  }
+
   return (
     <div id="page" className="page-container profile-index">
       <div className="container-bar">
@@ -432,11 +453,15 @@ export default function ProfileIndexPage() {
             <div className="profile-index--header-info">
               <div className="profile-index--user-info">
                 <h2 className="profile-index--header-info--title">
-                  {user && infoUser(user, true)}
+                  {profileUser && infoUser(profileUser, true)}
                 </h2>
-                <p className="profile-index--subtitle">{user?.username}</p>
+                <p className="profile-index--subtitle">
+                  {profileUser?.username}
+                </p>
               </div>
-              <div className="profile-index--user-email">{user?.email}</div>
+              <div className="profile-index--user-email">
+                {profileUser?.email}
+              </div>
               <div
                 className={cn("profile-index--change-action", {
                   "item-hidden": !isMyProfile,
@@ -454,53 +479,59 @@ export default function ProfileIndexPage() {
           <section className="profile-index--section">
             <h2 className="profile-index--subtitle">{t("rating")}</h2>
             <div className="profile-index__stars">
-              {[...Array(Math.round(user?.stars || 0))].map((_, index) => (
-                <div key={index} className="blue-star fill">
-                  <FillStarSvg />
-                </div>
-              ))}
-              {[...Array(5 - Math.round(user?.stars || 0))].map((_, index) => (
-                <div key={index} className="blue-star">
-                  <HollowStarSvg />
-                </div>
-              ))}
+              {[...Array(Math.round(profileUser?.stars || 0))].map(
+                (_, index) => (
+                  <div key={index} className="blue-star fill">
+                    <FillStarSvg />
+                  </div>
+                )
+              )}
+              {[...Array(5 - Math.round(profileUser?.stars || 0))].map(
+                (_, index) => (
+                  <div key={index} className="blue-star">
+                    <HollowStarSvg />
+                  </div>
+                )
+              )}
             </div>
           </section>
-          {(user?.phone ||
-            user?.place_study_work ||
-            user?.birth_date ||
-            (user?.skills && user.skills.length > 0)) && (
+          {(profileUser?.phone ||
+            profileUser?.place_study_work ||
+            profileUser?.birth_date ||
+            (profileUser?.skills && profileUser.skills.length > 0)) && (
             <section className="profile-index--section">
               <h2 className="profile-index--subtitle">{t("generalInfo")}</h2>
-              {user?.birth_date && (
+              {profileUser?.birth_date && (
                 <div className="profile-index--header-info--item">
                   <h3 className="profile-index--text">{t("birth")}</h3>
                   <p className="profile-index--text">
-                    {user.birth_date.toString()}
+                    {profileUser.birth_date.toString()}
                   </p>
                 </div>
               )}
-              {user?.phone && (
+              {profileUser?.phone && (
                 <div className="profile-index--header-info--item">
                   <h3 className="profile-index--text">{t("phone")}</h3>
                   <p className="profile-index--text">
-                    {formatPhoneNumber(user.phone)}
+                    {formatPhoneNumber(profileUser.phone)}
                   </p>
                 </div>
               )}
-              {user?.place_study_work && (
+              {profileUser?.place_study_work && (
                 <div className="profile-index--header-info--item">
                   <h3 className="profile-index--text">{t("workPlace")}</h3>
-                  <p className="profile-index--text">{user.place_study_work}</p>
+                  <p className="profile-index--text">
+                    {profileUser.place_study_work}
+                  </p>
                 </div>
               )}
             </section>
           )}
-          {user?.skills && user.skills.length > 0 && (
+          {profileUser?.skills && profileUser.skills.length > 0 && (
             <section className="profile-index--section">
               <h2 className="profile-index--subtitle">{t("skills")}</h2>
               <ul className="profile-index--ul">
-                {user.skills.map((skill, index) => (
+                {profileUser.skills.map((skill, index) => (
                   <li className="profile-index--text" key={index}>
                     {skill.name}
                   </li>
@@ -508,10 +539,10 @@ export default function ProfileIndexPage() {
               </ul>
             </section>
           )}
-          {user?.description && user.description.length > 0 && (
+          {profileUser?.description && profileUser.description.length > 0 && (
             <section className="profile-index--section">
               <h2 className="profile-index--subtitle">{t("about")}</h2>
-              <p className="profile-index--text">{user.description}</p>
+              <p className="profile-index--text">{profileUser.description}</p>
             </section>
           )}
           <section className="profile-index--section">
