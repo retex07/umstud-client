@@ -2,6 +2,7 @@
 @import "styles/css-variables.scss";
 @import "styles/fonts";
 @import "styles/typography";
+@import "react-image-crop/dist/ReactCrop.css";
 
 body {
   overflow-y: scroll;
@@ -28,9 +29,9 @@ button {
 
   font-style: normal;
 
-&:disabled {
-   cursor: not-allowed;
- }
+  &:disabled {
+    cursor: not-allowed;
+  }
 }
 
 h1,
@@ -107,13 +108,15 @@ input::-ms-clear {
 }
 
 .blue-star {
-  svg, path {
+  svg,
+  path {
     fill: none;
     stroke: var(--color-blue);
   }
 
   &.fill {
-    svg, path {
+    svg,
+    path {
       fill: var(--color-blue-dark);
     }
   }

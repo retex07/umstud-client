@@ -1,0 +1,10 @@
+{
+  "titleModal": "Edit Profile Photo",
+  "filePress": "Select a photo to upload",
+  "preview": "Preview",
+  "editCrop": "Edit Frame",
+  "save": "Save",
+  "cancel": "Cancel",
+  "infoSave": "To save a new photo, save your profile",
+  "errorSave": "To save it, you need to select a photo"
+}

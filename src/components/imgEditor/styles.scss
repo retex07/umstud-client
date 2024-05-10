@@ -1,0 +1,64 @@
+@use "styles/typography";
+
+.img-editor {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
+  @media screen and (max-width: 1220px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__first-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+    max-width: 300px;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    @media screen and (max-width: 1220px) {
+      display: none;
+    }
+  }
+  &__actions-mobile {
+    display: none;
+    @media screen and (max-width: 1220px) {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      gap: 12px;
+    }
+  }
+
+  &__preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+
+    &-img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+    }
+  }
+
+  &__crop {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__block-title {
+    @include typography.ordinary;
+    font-weight: 500;
+  }
+}

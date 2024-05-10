@@ -16,3 +16,15 @@ export function convertDataToFormData(form: Record<string, unknown>): FormData {
 
   return formData;
 }
+
+export function blobToFile(
+  blob: Blob,
+  fileName?: string,
+  type?: string,
+  lastModified = Date.now()
+) {
+  return new File([blob], fileName || lastModified.toString(), {
+    type: type || blob.type,
+    lastModified: lastModified,
+  });
+}
