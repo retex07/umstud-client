@@ -52,6 +52,11 @@
       width: 180px;
       height: 180px;
     }
+
+    &-actions {
+      display: inline-flex;
+      gap: 12px;
+    }
   }
 
   &__input {

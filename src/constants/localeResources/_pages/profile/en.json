@@ -94,6 +94,7 @@
     "save": "Save",
     "loadPhoto": "Upload Photo",
     "notification": "Profile successfully changed",
+    "infoSavePhoto": "To save a new photo, save your profile",
     "actions": {
       "firstname": {
         "title": "First Name",

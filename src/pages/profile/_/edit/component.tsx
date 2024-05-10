@@ -8,6 +8,7 @@ import Button from "components/button";
 import Field from "components/formElements/field";
 import SelectField from "components/formElements/selectField";
 import TextareaField from "components/formElements/textareaField";
+import ImgEditor from "components/imgEditor";
 import PageLoader from "components/loaders/pageLoader";
 import React, { ChangeEvent, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -39,7 +40,10 @@ export default function ProfileEdit() {
   const { user } = useSelector(user_selector);
 
   const [imagePreview, setImagePreview] = useState(user?.photo || "");
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isEditAvatar, setIsEditAvatar] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const imgInputRef = useRef<HTMLInputElement>(null);
+  const gifInputRef = useRef<HTMLInputElement>(null);
 
   type KeysOfEditProfile_RequestBody = keyof UserPut_FormBody;
   const keysEditProfileRequest: KeysOfEditProfile_RequestBody[] = [
@@ -79,8 +83,9 @@ export default function ProfileEdit() {
 
     const formData = convertDataToFormData(newData);
 
-    if (fileInputRef.current?.files && fileInputRef.current.files[0]) {
-      formData.append("photo", fileInputRef.current.files[0]);
+    console.log("selectedFile:", selectedFile);
+    if (selectedFile) {
+      formData.append("photo", selectedFile);
     }
     editProfile.mutate(
       { data: formData },
@@ -99,13 +104,20 @@ export default function ProfileEdit() {
     );
   }
 
-  function handleImageChange(event: ChangeEvent<HTMLInputElement>) {
+  function handleGifChange(event: ChangeEvent<HTMLInputElement>) {
     if (event.target.files) {
       const file = event.target.files[0];
+      setSelectedFile(file);
       if (file) {
         setImagePreview(URL.createObjectURL(file));
+        toast(t("infoSavePhoto"));
       }
     }
+  }
+
+  function handleImageChange(file: File) {
+    setSelectedFile(file);
+    setImagePreview(URL.createObjectURL(file));
   }
 
   function parseValueToSelect(value: Skill[]) {
@@ -119,10 +131,14 @@ export default function ProfileEdit() {
     return options;
   }
 
-  function triggerFileInput() {
-    if (fileInputRef && fileInputRef.current) {
-      fileInputRef.current.click();
+  function triggerGifInput() {
+    if (gifInputRef && gifInputRef.current) {
+      gifInputRef.current.click();
     }
+  }
+
+  function triggerImgInput() {
+    setIsEditAvatar(true);
   }
 
   function getRegExpOfKey(key: string) {
@@ -182,6 +198,12 @@ export default function ProfileEdit() {
 
   return (
     <div id="page" className="page-container profile-edit">
+      <ImgEditor
+        innerRef={imgInputRef}
+        handleChange={handleImageChange}
+        isOpen={isEditAvatar}
+        onClose={() => setIsEditAvatar(false)}
+      />
       <div className="profile-edit__wrapper">
         <header className="profile-edit__header">
           <h1 className="profile-edit__header-title">{t("title")}</h1>
@@ -194,19 +216,27 @@ export default function ProfileEdit() {
         </header>
         <div className="profile-edit__photo">
           {renderAvatar()}
-          <div>
+          <div className="profile-edit__photo-actions">
             <Button
               label={t("loadPhoto")}
               size="middle"
-              onClick={triggerFileInput}
+              onClick={triggerImgInput}
             />
-            <input
-              type="file"
-              ref={fileInputRef}
-              className="profile-edit__loadfile"
-              onChange={handleImageChange}
-            />
+            {(user?.is_staff || user?.is_superuser) && (
+              <Button
+                label="Загрузить gif"
+                size="middle"
+                onClick={triggerGifInput}
+              />
+            )}
           </div>
+          <input
+            type="file"
+            accept="image/gif"
+            ref={gifInputRef}
+            className="profile-edit__loadfile"
+            onChange={handleGifChange}
+          />
         </div>
         <form
           className="profile-edit__inputs"
