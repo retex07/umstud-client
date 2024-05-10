@@ -78,9 +78,13 @@ input::-ms-clear {
   max-width: 1040px;
   width: 100%;
   gap: 20px;
+
   @media screen and (max-width: 1220px) {
     flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
+    min-height: 70vh;
+    gap: 0;
   }
 }
 
@@ -100,6 +104,7 @@ input::-ms-clear {
 
   @media screen and (max-width: 1220px) {
     align-self: center;
+    margin: 20px 0;
   }
 }
 

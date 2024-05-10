@@ -21,6 +21,10 @@
     width: 100%;
 
     background-color: var(--color-white);
+
+    @media screen and (max-width: 1220px) {
+      margin: 20px 0;
+    }
   }
 
   &__header {
