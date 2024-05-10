@@ -24,6 +24,7 @@ interface Props<T extends FieldValues>
       | "classNames"
       | "value"
       | "innerRef"
+      | "textPosition"
       | "onClick"
     >,
     "name"

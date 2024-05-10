@@ -25,6 +25,7 @@ export interface Props {
   onClick?: () => void;
   onChange?(e: ChangeEvent<HTMLInputElement>): void;
   onBlur?: FocusEventHandler<HTMLInputElement>;
+  textPosition?: "start" | "center" | "end";
   icon?: ReactNode;
   hasError?: boolean;
   errorMessage?: string;
@@ -33,9 +34,11 @@ export interface Props {
   placeholder?: string;
   required?: boolean;
   value?: InputHTMLAttributes<HTMLInputElement>["value"];
+  accept?: InputHTMLAttributes<HTMLInputElement>["accept"];
 }
 
 export default function Input(props: Props) {
+  const { textPosition = "start" } = props;
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [fileName, setFileName] = useState(props.placeholder);
 
@@ -90,12 +93,25 @@ export default function Input(props: Props) {
           onBlur={props.onBlur}
           readOnly={props.readonly}
           placeholder={props.placeholder}
-          className="input__select-from"
+          className={cn("input__select-from", {
+            "input__text-start": textPosition === "start",
+            "input__text-center": textPosition === "center",
+            "input__text-end": textPosition === "end",
+          })}
           hidden={props.innerRef && typeInput === "file"}
+          accept={props.accept}
         />
         {props.innerRef && typeInput === "file" && (
-          <div className="input__select-from-file">
-            {fileName || props.placeholder}
+          <div
+            className={cn("input__select-from-file", {
+              "input__text-start": textPosition === "start",
+              "input__text-center": textPosition === "center",
+              "input__text-end": textPosition === "end",
+            })}
+          >
+            <p className="input__select-from-file description">
+              {fileName || props.placeholder}
+            </p>
           </div>
         )}
         {props.icon && props.type !== "password" && (
