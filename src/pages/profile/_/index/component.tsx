@@ -238,52 +238,61 @@ export default function ProfileIndexPage() {
       <div className="portfolio__wrapper">
         {(isMyProfile ? myProfile : user)?.portfolio_items.map((item) => (
           <div className="portfolio__item" key={item.id}>
-            <div className="portfolio__header">
-              <div className="portfolio__img">
-                <FileSvg />
-              </div>
+            <header className="portfolio__header">
               <div className="portfolio__item-info">
-                <h3 className="portfolio__title">{item.title}</h3>
-                <p className="portfolio__description" title={item.description}>
-                  {item.description}
-                </p>
-                <div className="portfolio__item-other">
-                  <label className="portfolio__item-signature content">
-                    {t("portfolio.dateToLoad")}
-                  </label>
-                  <label className="portfolio__item-signature">
-                    {getFullDate(item.uploaded_at)}
-                  </label>
+                <div className="portfolio__img">
+                  <FileSvg />
+                </div>
+                <div className="portfolio__item-descr">
+                  <h3 className="portfolio__title" title={item.title}>
+                    {item.title}
+                  </h3>
+                  <p
+                    className="portfolio__description"
+                    title={item.description}
+                  >
+                    {item.description}
+                  </p>
                 </div>
               </div>
-            </div>
-            <div className="portfolio__actions">
-              <a
-                rel="noreferrer"
-                className="portfolio__img"
-                title={t("portfolio.download")}
-                href={item.file}
-                target="_blank"
-              >
-                <DownloadSvg />
-              </a>
-              <button
-                hidden={!isMyProfile}
-                className="portfolio__img"
-                title={t("portfolio.edit")}
-                onClick={() => setValuePortfolio(item)}
-              >
-                <EditSvg />
-              </button>
-              <button
-                hidden={!isMyProfile}
-                className="portfolio__img"
-                title={t("portfolio.delete")}
-                onClick={() => handleRemoveFilePortfolio(item)}
-              >
-                <TrashSvg />
-              </button>
-            </div>
+              <div className="portfolio__actions">
+                <a
+                  rel="noreferrer"
+                  className="portfolio__img action"
+                  title={t("portfolio.download")}
+                  href={item.file}
+                  target="_blank"
+                >
+                  <DownloadSvg />
+                </a>
+                <button
+                  hidden={!isMyProfile}
+                  className="portfolio__img action"
+                  title={t("portfolio.edit")}
+                  onClick={() => setValuePortfolio(item)}
+                >
+                  <EditSvg />
+                </button>
+                <button
+                  hidden={!isMyProfile}
+                  className="portfolio__img action"
+                  title={t("portfolio.delete")}
+                  onClick={() => handleRemoveFilePortfolio(item)}
+                >
+                  <TrashSvg />
+                </button>
+              </div>
+            </header>
+            <footer className="portfolio__footer">
+              <div className="portfolio__item-other">
+                <label className="portfolio__item-signature content">
+                  {t("portfolio.dateToLoad")}
+                </label>
+                <label className="portfolio__item-signature">
+                  {getFullDate(item.uploaded_at)}
+                </label>
+              </div>
+            </footer>
           </div>
         ))}
         {isMyProfile && (
