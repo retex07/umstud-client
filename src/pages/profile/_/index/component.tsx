@@ -47,6 +47,7 @@ export default function ProfileIndexPage() {
     keyPrefix: "form.rules",
   });
 
+  const [openViewFileId, setOpenViewFileId] = useState<number | null>(null);
   const [addingWork, setAddingWork] = useState(false);
   const [editingProfile, setEditingProfile] = useState<{
     isEdit: boolean;
@@ -237,9 +238,44 @@ export default function ProfileIndexPage() {
     return (
       <div className="portfolio__wrapper">
         {(isMyProfile ? myProfile : user)?.portfolio_items.map((item) => (
-          <div className="portfolio__item" key={item.id}>
+          <article className="portfolio__item" key={item.id}>
+            <Modal
+              isOpen={openViewFileId === item.id}
+              onClose={() => setOpenViewFileId(null)}
+              title={t("portfolio.viewing", { title: item.title })}
+            >
+              <div className="portfolio__view">
+                <div className="portfolio__view-info">
+                  <h3 className="portfolio__view-title">
+                    {t("portfolio.title.title")}
+                  </h3>
+                  <p>{item.title}</p>
+                </div>
+                <div className="portfolio__view-info">
+                  <h3 className="portfolio__view-title">
+                    {t("portfolio.description.title")}
+                  </h3>
+                  <p>{item.description}</p>
+                </div>
+                <div className="portfolio__view-info">
+                  <h3 className="portfolio__view-title">
+                    {t("portfolio.dateToLoad")}
+                  </h3>
+                  <p>{getFullDate(item.uploaded_at)}</p>
+                </div>
+              </div>
+              <Button
+                label={t("cancel")}
+                onClick={() => setOpenViewFileId(null)}
+                isTransparent
+                fullWidth
+              />
+            </Modal>
             <header className="portfolio__header">
-              <div className="portfolio__item-info">
+              <div
+                onClick={() => setOpenViewFileId(item.id)}
+                className="portfolio__item-info"
+              >
                 <div className="portfolio__img">
                   <FileSvg />
                 </div>
@@ -293,7 +329,7 @@ export default function ProfileIndexPage() {
                 </label>
               </div>
             </footer>
-          </div>
+          </article>
         ))}
         {isMyProfile && (
           <Button

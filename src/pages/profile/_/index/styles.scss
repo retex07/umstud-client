@@ -142,6 +142,28 @@
 }
 
 .portfolio {
+  &__view {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 400px;
+
+    &-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    &-title {
+      @include typography.ordinary;
+      font-weight: 500;
+    }
+
+    &-description {
+      @include typography.ordinary_subtitle;
+    }
+  }
+
   &__wrapper {
     display: flex;
     flex-direction: column;
@@ -216,6 +238,7 @@
     gap: 2px;
 
     &-info {
+      cursor: pointer;
       display: inline-flex;
       gap: 4px;
       width: 80%;
