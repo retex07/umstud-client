@@ -224,7 +224,7 @@ export default function ProfileEdit() {
             />
             {(user?.is_staff || user?.is_superuser) && (
               <Button
-                label="Загрузить gif"
+                label={t("loadGif")}
                 size="middle"
                 onClick={triggerGifInput}
               />
