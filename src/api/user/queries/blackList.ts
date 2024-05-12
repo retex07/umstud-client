@@ -3,12 +3,12 @@ import http from "api/http";
 import { AxiosError } from "axios";
 import { QueryFunction, useQuery, UseQueryOptions } from "react-query";
 
-import { DetailUserProfile } from "../types";
+import { BlackList } from "../types";
 
 const url = ENDPOINTS_CONFIG.api.blackList;
 type QueryKey = typeof url;
 
-type Response = DetailUserProfile[];
+type Response = BlackList[];
 
 const getBlackList: QueryFunction<Response, QueryKey> = async () => {
   return (await http.get(url)).data;

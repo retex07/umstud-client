@@ -21,12 +21,12 @@ function index(
   idUser: number,
   cancelToken?: CancelToken
 ): PureResponse<RemoveUserBlackList_Response> {
-  return http.delete(ENDPOINTS_CONFIG.api.addToBlackList + idUser + "/", {
+  return http.delete(ENDPOINTS_CONFIG.api.removeOfBlackList + idUser + "/", {
     cancelToken,
   });
 }
 
-export function useAddToBlackList(
+export function useRemoveOfBlackList(
   options?: Omit<UseMutationOptions<Data, Error, Variables>, "mutationFn">
 ) {
   return useMutation<Data, Error, Variables>(

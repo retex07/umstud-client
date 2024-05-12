@@ -13,7 +13,17 @@ export type Skill = {
   name: string;
 };
 
+export type SimpleUserProfile = {
+  id: number;
+  slug: string;
+  first_name: string;
+  last_name: string;
+  patronymic: string;
+  photo: string;
+};
+
 export type DetailUserProfile = {
+  id: number;
   username: string;
   slug: string;
   is_superuser: boolean;
@@ -58,6 +68,11 @@ export type ChangePassword_ErrorBody = {
   new_password?: string[];
   new_password_confirm?: string[];
   non_field_errors?: string[];
+};
+
+export type BlackList = {
+  id: number;
+  blocked_user: SimpleUserProfile;
 };
 
 export type CreateBlackList_ErrorBody = {
