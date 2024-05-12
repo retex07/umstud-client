@@ -1,3 +1,6 @@
+import isFunction from "lodash/isFunction";
+import toast from "react-hot-toast";
+
 export function formatPhoneNumber(phone: string) {
   const digits = phone.replace(/\D/g, "");
   const cleanDigits = digits.startsWith("8") ? "7" + digits.slice(1) : digits;
@@ -47,4 +50,19 @@ export function getFullDate(date: Date) {
   const y = prevDate.getFullYear();
 
   return `${d}.${m}.${y}`;
+}
+
+export async function copyTextToClipboard(
+  text: string,
+  onCopied?: () => void
+): Promise<void> {
+  try {
+    if (!navigator.clipboard) {
+      throw new Error("Clipboard API not available");
+    }
+    await navigator.clipboard.writeText(text);
+    isFunction(onCopied) && onCopied();
+  } catch (error) {
+    toast.error("Failed to copy text: " + error);
+  }
 }

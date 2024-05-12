@@ -1,17 +1,27 @@
 import { adminSymbol } from "constants/config";
 
-import { DetailUserProfile } from "api/user/types";
-
-export function infoUser(user: DetailUserProfile, isFull = false): string {
+export function infoUser({
+  is_staff,
+  isFull,
+  last_name,
+  first_name,
+  patronymic,
+  is_superuser,
+}: {
+  is_staff?: boolean;
+  is_superuser?: boolean;
+  patronymic?: string | null;
+  last_name: string;
+  first_name: string;
+  isFull?: boolean;
+}): string {
   function addSymbol() {
-    return ((user.is_staff || user.is_superuser) && adminSymbol) || "";
+    return ((is_staff || is_superuser) && adminSymbol) || "";
   }
 
   if (isFull) {
-    return `${user.last_name || ""} ${user.first_name || ""} ${
-      user.patronymic || ""
-    } ${addSymbol()}`;
+    return `${last_name} ${first_name} ${patronymic || ""} ${addSymbol()}`;
   }
 
-  return `${user.first_name || ""} ${user.last_name || ""} ${addSymbol()}`;
+  return `${first_name || ""} ${last_name || ""} ${addSymbol()}`;
 }
