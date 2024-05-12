@@ -1,11 +1,10 @@
-import MenuUser from "components/menuUser";
-import SwitchLanguage from "components/switchLanguage";
+import MenuUser from "components/menus/menuUser";
+import SwitchLanguage from "components/menus/switchLanguage";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import { ReactComponent as CloseMenuSvg } from "static/images/exit.svg";
-import { ReactComponent as LanguageSvg } from "static/images/language.svg";
 import { ReactComponent as LogoSvg } from "static/images/logo.svg";
 import { ReactComponent as AlignMenuSvg } from "static/images/menu-align.svg";
 import { user as user_selector } from "store/user/user.selectors";
@@ -110,8 +109,10 @@ export default function Header() {
         <div className="navigation--wrapper">{renderNavigation()}</div>
         <div className="header--change-block">
           <div className="language-block" onClick={changeOpenSwitcher}>
-            <LanguageSvg />
-            {isOpenSwitcher && <SwitchLanguage onClose={changeOpenSwitcher} />}
+            <SwitchLanguage
+              isOpen={isOpenSwitcher}
+              onHide={changeOpenSwitcher}
+            />
           </div>
           {!user && (
             <Link to="/auth/sign-in" className="log-in">

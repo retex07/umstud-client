@@ -122,21 +122,10 @@
 }
 
 .language-block {
-  position: relative;
-
   display: flex;
   align-items: center;
 
   cursor: pointer;
-
-  path {
-    stroke: var(--color-white);
-  }
-
-  > svg {
-    max-width: 24px;
-    max-height: 24px;
-  }
 
   @media screen and (max-width: 1220px) {
     display: none;

@@ -1,4 +1,3 @@
-import { DetailUserProfile } from "api/user/types";
 import { baseUrl as baseUrlProfile } from "pages/profile/routes";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -6,15 +5,25 @@ import { ReactComponent as ExampleAvatarSvg } from "static/images/example-avatar
 import { infoUser } from "utils/user.utils";
 import "./styles.scss";
 
-export default function InlineUser(user: DetailUserProfile) {
+interface Props {
+  is_staff?: boolean;
+  is_superuser?: boolean;
+  patronymic?: string | null;
+  slug: string;
+  last_name: string;
+  first_name: string;
+  photo: string;
+}
+
+export default function InlineUser(props: Props) {
   function renderAvatar() {
     switch (true) {
-      case user && !!user.photo: {
+      case !!props.photo: {
         return (
           <img
             className="inline-user__img"
-            src={user?.photo || ""}
-            alt={user?.username}
+            src={props.photo}
+            alt={props.slug}
           />
         );
       }
@@ -28,9 +37,17 @@ export default function InlineUser(user: DetailUserProfile) {
   }
 
   return (
-    <Link className="inline-user" to={baseUrlProfile + "/user/" + user.slug}>
+    <Link className="inline-user" to={baseUrlProfile + "/user/" + props.slug}>
       <picture>{renderAvatar()}</picture>
-      <span className="inline-user__whois">{infoUser(user)}</span>
+      <span className="inline-user__whois">
+        {infoUser({
+          first_name: props.first_name,
+          last_name: props.last_name,
+          patronymic: props.patronymic,
+          is_staff: props.is_staff,
+          is_superuser: props.is_superuser,
+        })}
+      </span>
     </Link>
   );
 }

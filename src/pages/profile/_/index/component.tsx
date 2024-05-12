@@ -9,6 +9,7 @@ import cn from "classnames";
 import Button from "components/button";
 import Field from "components/formElements/field";
 import PageLoader from "components/loaders/pageLoader";
+import ProfileActions from "components/menus/profileActions";
 import Modal from "components/modal";
 import { useConfirm } from "contexts/confirm/hooks";
 import NavigationMenu from "pages/profile/components/navigationMenu";
@@ -498,7 +499,7 @@ export default function ProfileIndexPage() {
             <div className="profile-index--header-info">
               <div className="profile-index--user-info">
                 <h2 className="profile-index--header-info--title">
-                  {profileUser && infoUser(profileUser, true)}
+                  {profileUser && infoUser({ ...profileUser, isFull: true })}
                 </h2>
                 <p className="profile-index--subtitle">
                   {profileUser?.username}
@@ -507,17 +508,20 @@ export default function ProfileIndexPage() {
               <div className="profile-index--user-email">
                 {profileUser?.email}
               </div>
-              <div
-                className={cn("profile-index--change-action", {
-                  "item-hidden": !isMyProfile,
-                })}
-              >
-                <Button
-                  size="small"
-                  label={t("actions.edit")}
-                  color="blue-dark"
-                  onClick={() => history.push(baseProfileUrl + "/edit")}
-                />
+              <div className="profile-index__header-actions">
+                {isMyProfile && (
+                  <div>
+                    <Button
+                      size="small"
+                      label={t("actions.edit")}
+                      color="blue-dark"
+                      onClick={() => history.push(baseProfileUrl + "/edit")}
+                    />
+                  </div>
+                )}
+                {user?.id && (
+                  <ProfileActions userId={user?.id} isMyProfile={isMyProfile} />
+                )}
               </div>
             </div>
           </header>

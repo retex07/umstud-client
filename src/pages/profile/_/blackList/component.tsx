@@ -1,11 +1,11 @@
-import { useUserList } from "api/user/queries/userList";
+import { useRemoveOfBlackList } from "api/user/mutations/removeUserBlackList";
+import { useBlackList } from "api/user/queries/blackList";
 import InlineUser from "components/inlineUser";
 import PageLoader from "components/loaders/pageLoader";
 import MobileNavigationMenu from "pages/profile/components/mobileNavigationMenu";
 import React from "react";
+import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
-import { user as user_selector } from "store/user/user.selectors";
 import { isMobileVersion } from "utils/constant.utils";
 
 import NavigationMenu from "../../components/navigationMenu";
@@ -15,8 +15,26 @@ import "./styles.scss";
 export default function ProfileBlackListPage() {
   const { t } = useTranslation("p_profile", { keyPrefix: "blackList" });
 
-  const { data: users, isLoading } = useUserList();
-  const { user: userProfile } = useSelector(user_selector);
+  const { data: blackList, isLoading, refetch } = useBlackList();
+  const removeOfBlackList = useRemoveOfBlackList();
+
+  function handleRemoveOfBlackList(idUser: number) {
+    removeOfBlackList.mutate(
+      { idUser },
+      {
+        onSuccess: () => {
+          refetch().then(() => {
+            toast.success(t("successRemove"));
+          });
+        },
+        onError: (err) => {
+          if (err.response?.data?.detail) {
+            toast.error(err.response.data.detail);
+          }
+        },
+      }
+    );
+  }
 
   if (isLoading) {
     return <PageLoader />;
@@ -31,19 +49,22 @@ export default function ProfileBlackListPage() {
         <div className="page-content-wrapper">
           <header className="page-content-title">{t("title")}</header>
           <section>
-            {users?.map(
-              (user) =>
-                userProfile?.slug !== user.slug && (
-                  <div className="black-list" key={user.slug}>
-                    <div className="black-list__user-actions">
-                      <InlineUser {...user} />
-                      <button className="black-list__user-remove">
-                        {t("removeUser")}
-                      </button>
-                    </div>
-                  </div>
-                )
-            )}
+            {blackList && !blackList.length && <p>{t("emptyList")}</p>}
+            {blackList?.map((user) => (
+              <div className="black-list" key={user.id}>
+                <div className="black-list__user-actions">
+                  <InlineUser {...user.blocked_user} />
+                  <button
+                    className="black-list__user-remove"
+                    onClick={() =>
+                      handleRemoveOfBlackList(user.blocked_user.id)
+                    }
+                  >
+                    {t("removeUser")}
+                  </button>
+                </div>
+              </div>
+            ))}
           </section>
         </div>
         <NavigationMenu />

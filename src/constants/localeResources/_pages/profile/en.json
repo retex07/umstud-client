@@ -80,7 +80,9 @@
   },
   "blackList": {
     "title": "Black list",
-    "removeUser": "Remove from the list"
+    "removeUser": "Remove from the list",
+    "successRemove": "User removed from blacklist",
+    "emptyList": "Blacklist is empty"
   },
   "orders": {
     "title": "My orders"
