@@ -1,124 +1,70 @@
 @use "src/styles/typography";
 
+$button-border-width: 2px;
+$transition-fast: 0.2s;
+$transition-slow: 0.3s;
+
 .button {
   display: flex;
   align-self: flex-start;
-
   align-items: center;
   justify-content: center;
-
   box-sizing: border-box;
   border-radius: 10px;
+  transition: $transition-fast;
 
-  &--full-width {
+  &__full-width {
     width: 100%;
   }
 
-  &--loading-icon {
+  &__loading-icon {
     display: inline-flex;
-
     align-items: center;
-
     margin-right: 0.5em;
   }
 
-  &--small {
-    @include typography.button_small;
-
+  &__very-small,
+  &__small,
+  &__middle,
+  &__big {
     box-sizing: border-box;
+  }
+
+  &__very-small {
+    @include typography.button-small;
+    padding: 8px 12px;
+  }
+  &__small {
+    @include typography.button-small;
     padding: 10px 12px;
   }
-  &--middle {
-    @include typography.button_middle;
-
-    box-sizing: border-box;
+  &__middle {
+    @include typography.button-middle;
     padding: 12px 14px;
   }
-  &--big {
-    @include typography.button_big;
-
-    box-sizing: border-box;
+  &__big {
+    @include typography.button-big;
     padding: 14px 16px;
   }
 
-  &--blue {
-    background: var(--color-blue);
-    color: var(--color-white);
-    border: 2px solid var(--color-blue);
-    transition: 0.2s;
+  $colors: blue, blue-dark, green, red, yellow;
+  @each $color in $colors {
+    &__#{$color} {
+      background: var(--color-#{$color});
+      color: var(--color-white);
+      border: $button-border-width solid var(--color-#{$color});
+      transition: $transition-fast;
 
-    &--is-transparent {
-      background: transparent;
-      color: var(--color-blue);
-      border: 2px solid var(--color-blue);
-      transition: 0.3s;
-    }
-    &:hover {
-      @extend .button--blue--is-transparent;
-    }
-  }
-  &--blue-dark {
-    background: var(--color-blue-dark);
-    color: var(--color-white);
-    border: 2px solid var(--color-blue-dark);
-    transition: 0.2s;
-
-    &--is-transparent {
-      background: transparent;
-      color: var(--color-blue-dark);
-      transition: 0.3s;
-    }
-    &:hover {
-      @extend .button--blue-dark--is-transparent;
-    }
-  }
-  &--green {
-    background: var(--color-green);
-    color: var(--color-white);
-    border: 2px solid var(--color-green);
-    transition: 0.2s;
-
-    &--is-transparent {
-      background: transparent;
-      color: var(--color-green);
-      transition: 0.3s;
-    }
-    &:hover {
-      @extend .button--green--is-transparent;
-    }
-  }
-  &--red {
-    background: var(--color-red);
-    color: var(--color-white);
-    border: 2px solid var(--color-red);
-    transition: 0.2s;
-
-    &--is-transparent {
-      background: transparent;
-      color: var(--color-red);
-      transition: 0.3s;
-    }
-    &:hover {
-      @extend .button--red--is-transparent;
-    }
-  }
-  &--yellow {
-    background: var(--color-yellow-dark);
-    color: var(--color-white);
-    border: 2px solid var(--color-yellow-dark);
-    transition: 0.2s;
-
-    &--is-transparent {
-      background: transparent;
-      color: var(--color-yellow-dark);
-      transition: 0.3s;
-    }
-    &:hover {
-      @extend .button--yellow--is-transparent;
+      &:hover, &.is-transparent {
+        background: transparent;
+        color: var(--color-#{$color});
+        border-color: var(--color-#{$color});
+        transition: $transition-slow;
+      }
     }
   }
 
-  &--disabled {
+  &__disabled {
     background-color: var(--color-blue);
     color: var(--color-white);
     &:hover {
