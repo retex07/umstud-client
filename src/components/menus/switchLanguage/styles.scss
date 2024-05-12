@@ -1,0 +1,20 @@
+@use "../../../styles/typography";
+
+.switcher {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+
+  path {
+    stroke: var(--color-white);
+  }
+
+  > svg {
+    max-width: 24px;
+    max-height: 24px;
+  }
+
+  &__menu {
+    top: 30px;
+  }
+}

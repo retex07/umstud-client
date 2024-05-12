@@ -1,0 +1,20 @@
+{
+  "menuUser": {
+    "profile": {
+      "index": "Профиль",
+      "security": "Безопасность"
+    },
+    "logout": "Выйти"
+  },
+  "profileActions": {
+    "actions": "Действия",
+    "copyLinkSuccess": "Ссылка скопирована в буфер обмена",
+    "copyLinkToClipboard": "Скопировать ссылку на профиль",
+    "removeOfBlackList": "Удалить из черного списка",
+    "addToBlackList": "Добавить в черный список",
+    "blackList": {
+      "removeSuccess": "Пользователь удален из черного списка",
+      "addSuccess": "Пользователь добавлен в черный список"
+    }
+  }
+}

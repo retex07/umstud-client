@@ -1,0 +1,46 @@
+.menu-builder {
+  position: absolute;
+  top: 40px;
+  left: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border-radius: 6px;
+
+  box-shadow: 0 4px 4px 0 var(--color-gray-box-shadow);
+  background: var(--color-white);
+
+  @media screen and (max-width: 1220px) {
+    right: 0;
+    left: auto;
+  }
+
+  &__item {
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: 6px;
+    color: var(--color-dark-text);
+
+    &.red {
+      color: var(--color-red);
+    }
+
+    &.active {
+      background-color: var(--color-gray-box-shadow);
+      cursor: not-allowed;
+      &:hover {
+        background-color: var(--color-gray-box-shadow);
+      }
+    }
+
+    &:hover {
+      background-color: var(--color-gray-light);
+    }
+  }
+}

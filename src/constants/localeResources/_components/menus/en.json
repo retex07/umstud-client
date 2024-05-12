@@ -1,0 +1,20 @@
+{
+  "menuUser": {
+    "profile": {
+      "index": "Profile",
+      "security": "Security"
+    },
+    "logout": "Log Out"
+  },
+  "profileActions": {
+    "actions": "Actions",
+    "copyLinkSuccess": "Link copied to clipboard",
+    "copyLinkToClipboard": "Copy profile link",
+    "removeOfBlackList": "Remove from blacklist",
+    "addToBlackList": "Add to blacklist",
+    "blackList": {
+      "removeSuccess": "User removed from blacklist",
+      "addSuccess": "User added to blacklist"
+    }
+  }
+}
