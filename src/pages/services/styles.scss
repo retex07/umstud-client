@@ -39,7 +39,8 @@
   gap: 12px;
 
   &__item {
-    display: inline-flex;
+    display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
 
@@ -48,14 +49,25 @@
     padding: 16px 20px;
     border-radius: 10px;
 
+    @media screen and (max-width: 1220px) {
+      flex-direction: column;
+      gap: 12px;
+    }
+
     &-title {
       @include typography.page_subtitle;
     }
 
     &-info {
-      display: inline-flex;
+      display: flex;
+      flex-direction: row;
       align-items: center;
       gap: 20px;
+
+      @media screen and (max-width: 1220px) {
+        flex-direction: column;
+        gap: 6px;
+      }
 
       &.small {
         gap: 6px;
