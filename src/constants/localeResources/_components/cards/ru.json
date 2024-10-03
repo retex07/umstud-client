@@ -1,0 +1,11 @@
+{
+  "cardTask": {
+    "executor": "Исполнитель",
+    "choose": "Выбрать"
+  },
+  "cardStatus": {
+    "open": "Открыто",
+    "closed": "Закрыто",
+    "inProgress": "В процессе"
+  }
+}

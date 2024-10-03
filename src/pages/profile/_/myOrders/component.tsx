@@ -21,15 +21,7 @@ export default function ProfileMyOrderPage() {
         <div className="page-content-wrapper">
           <header className="page-content-title">{t("title")}</header>
           {myWorkMock.map((workCard) => (
-            <CardTask
-              key={workCard.id}
-              isClosed={workCard.isClosed}
-              title={workCard.title}
-              deadlineStartAt={workCard.deadlineStartAt}
-              deadlineEndAt={workCard.deadlineEndAt}
-              description={workCard.description}
-              user={workCard.user}
-            />
+            <CardTask key={workCard.id} {...workCard} />
           ))}
         </div>
         <NavigationMenu />
