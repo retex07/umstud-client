@@ -46,7 +46,7 @@ export function getFullDate(date: Date) {
   const m =
     (prevDate.getMonth() + 1).toString().length == 1
       ? "0" + (prevDate.getMonth() + 1).toString()
-      : prevDate.getMonth();
+      : prevDate.getMonth() + 1;
   const y = prevDate.getFullYear();
 
   return `${d}.${m}.${y}`;

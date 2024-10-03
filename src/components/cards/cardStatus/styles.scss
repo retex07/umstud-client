@@ -28,4 +28,11 @@
     }
     background: var(--color-red);
   }
+  &.progress {
+    > svg, path {
+      max-width: 16px;
+      max-height: 16px;
+    }
+    background: var(--color-green);
+  }
 }
