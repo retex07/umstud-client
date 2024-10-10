@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import { Route } from "services/router/types";
+import urls from "services/router/urls";
 
 const EditPage = lazy(() => import("./_/edit"));
 const IndexPage = lazy(() => import("./_/index"));
@@ -10,10 +11,9 @@ const ReadyTasksPage = lazy(() => import("./_/readyTasks"));
 const MyOrdersPage = lazy(() => import("./_/myOrders"));
 const MyWorksPage = lazy(() => import("./_/myWorks"));
 
-export const baseUrl = "/profile";
 export const Routes: Route[] = [
   {
-    path: "/",
+    path: urls.index,
     component: IndexPage,
     settings: {
       exact: true,
@@ -21,7 +21,7 @@ export const Routes: Route[] = [
     layoutSettings: {},
   },
   {
-    path: "/user/:profileId",
+    path: urls.profile.item,
     component: IndexPage,
     settings: {
       exact: false,
@@ -29,7 +29,7 @@ export const Routes: Route[] = [
     layoutSettings: {},
   },
   {
-    path: "/security",
+    path: urls.profile.security,
     component: SecurityPage,
     settings: {
       exact: false,
@@ -37,7 +37,7 @@ export const Routes: Route[] = [
     layoutSettings: {},
   },
   {
-    path: "/messages",
+    path: urls.profile.messages.index,
     component: MessagesPage,
     settings: {
       exact: false,
@@ -45,7 +45,7 @@ export const Routes: Route[] = [
     layoutSettings: {},
   },
   {
-    path: "/edit",
+    path: urls.profile.edit,
     component: EditPage,
     settings: {
       exact: false,
@@ -53,7 +53,7 @@ export const Routes: Route[] = [
     layoutSettings: {},
   },
   {
-    path: "/ready-tasks",
+    path: urls.profile.readyTask,
     component: ReadyTasksPage,
     settings: {
       exact: false,
@@ -61,7 +61,7 @@ export const Routes: Route[] = [
     layoutSettings: {},
   },
   {
-    path: "/black-list",
+    path: urls.profile.blackList,
     component: BlackListPage,
     settings: {
       exact: false,
@@ -69,7 +69,7 @@ export const Routes: Route[] = [
     layoutSettings: {},
   },
   {
-    path: "/orders",
+    path: urls.profile.myOrders,
     component: MyOrdersPage,
     settings: {
       exact: false,
@@ -77,7 +77,7 @@ export const Routes: Route[] = [
     layoutSettings: {},
   },
   {
-    path: "/works",
+    path: urls.profile.myWork,
     component: MyWorksPage,
     settings: {
       exact: false,

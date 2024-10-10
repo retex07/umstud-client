@@ -1,6 +1,7 @@
 import { lazy } from "react";
 
 import { Route } from "./types";
+import urls from "./urls";
 
 const IndexPageResolver = lazy(() => import("pages/index"));
 const RatingPageResolver = lazy(() => import("pages/rating"));
@@ -14,7 +15,7 @@ const ActivateAccountPageResolver = lazy(() => import("pages/activateAccount"));
 
 const Routes: Route[] = [
   {
-    path: "/",
+    path: urls.index,
     component: IndexPageResolver,
     settings: {
       exact: true,
@@ -22,7 +23,7 @@ const Routes: Route[] = [
     layoutSettings: {},
   },
   {
-    path: "/activate",
+    path: urls.activate,
     component: ActivateAccountPageResolver,
     settings: {
       exact: false,
@@ -30,7 +31,7 @@ const Routes: Route[] = [
     layoutSettings: {},
   },
   {
-    path: "/profile",
+    path: urls.profile.index,
     component: ProfilePageResolver,
     settings: {
       exact: false,
@@ -41,7 +42,7 @@ const Routes: Route[] = [
     },
   },
   {
-    path: "/services",
+    path: urls.services,
     component: ServicesPageResolver,
     settings: {
       exact: false,
@@ -49,7 +50,7 @@ const Routes: Route[] = [
     layoutSettings: {},
   },
   {
-    path: "/contacts",
+    path: urls.contacts,
     component: ContactsPageResolver,
     settings: {
       exact: false,
@@ -57,7 +58,7 @@ const Routes: Route[] = [
     layoutSettings: {},
   },
   {
-    path: "/rating",
+    path: urls.rating.index,
     component: RatingPageResolver,
     settings: {
       exact: false,
@@ -65,7 +66,7 @@ const Routes: Route[] = [
     layoutSettings: {},
   },
   {
-    path: "/orders",
+    path: urls.orders.index,
     component: OrdersPageResolver,
     settings: {
       exact: false,
@@ -76,7 +77,7 @@ const Routes: Route[] = [
     },
   },
   {
-    path: "/forum",
+    path: urls.forum.index,
     component: ForumPageResolver,
     settings: {
       exact: false,
@@ -84,7 +85,7 @@ const Routes: Route[] = [
     layoutSettings: {},
   },
   {
-    path: "/auth",
+    path: urls.auth.index,
     component: AuthorizationPageResolver,
     settings: {
       exact: false,

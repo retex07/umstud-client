@@ -1,9 +1,9 @@
 import MenuBuilder from "components/menus/builder";
-import { baseUrl } from "pages/profile/routes";
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import urls from "services/router/urls";
 import { ReactComponent as ExampleAvatarSvg } from "static/images/example-avatar.svg";
 import { actions as userActions } from "store/user";
 import { user as user_selector } from "store/user/user.selectors";
@@ -59,7 +59,7 @@ export default function MenuUser(props: Props) {
       {isOpen && (
         <MenuBuilder
           items={items}
-          handleClickItem={(i) => history.push(baseUrl + i.route)}
+          handleClickItem={(i) => history.push(urls.profile.index + i.route)}
         >
           <label
             className="menu-builder__item red"

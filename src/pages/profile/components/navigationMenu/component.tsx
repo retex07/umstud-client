@@ -3,9 +3,8 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
+import urls from "services/router/urls";
 import { user as user_selector } from "store/user/user.selectors";
-
-import { baseUrl as baseUrlProfile } from "../../routes";
 import "./styles.scss";
 
 export default function NavigationMenu() {
@@ -52,11 +51,11 @@ export default function NavigationMenu() {
           <label
             className={cn("navigation-menu__item-route", {
               "navigation-menu__item-route-active":
-                location.pathname == baseUrlProfile + item.route ||
-                (location.pathname == baseUrlProfile && item.route == "/"),
+                location.pathname == urls.profile.index + item.route ||
+                (location.pathname == urls.profile.index && item.route == "/"),
             })}
             key={index}
-            onClick={() => history.push(baseUrlProfile + item.route)}
+            onClick={() => history.push(urls.profile.index + item.route)}
           >
             {item.title}
           </label>

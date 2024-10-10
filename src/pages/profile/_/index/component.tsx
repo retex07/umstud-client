@@ -19,6 +19,7 @@ import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useLocation, useParams } from "react-router-dom";
+import urls from "services/router/urls";
 import { ReactComponent as DownloadSvg } from "static/images/download-cloud.svg";
 import { ReactComponent as EditSvg } from "static/images/edit.svg";
 import { ReactComponent as ExampleAvatarSvg } from "static/images/example-avatar.svg";
@@ -38,7 +39,6 @@ import { convertDataToFormData } from "utils/formdata.utils";
 import { infoUser } from "utils/user.utils";
 
 import MobileNavigationMenu from "../../components/mobileNavigationMenu";
-import { baseUrl as baseProfileUrl } from "../../routes";
 import "../../styles.scss";
 import "./styles.scss";
 
@@ -515,7 +515,7 @@ export default function ProfileIndexPage() {
                       size="small"
                       label={t("actions.edit")}
                       color="blue-dark"
-                      onClick={() => history.push(baseProfileUrl + "/edit")}
+                      onClick={() => history.push(urls.profile.index + "/edit")}
                     />
                   </div>
                 )}
