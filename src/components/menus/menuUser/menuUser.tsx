@@ -61,13 +61,7 @@ export default function MenuUser(props: Props) {
           items={items}
           handleClickItem={(i) => history.push(urls.profile.index + i.route)}
         >
-          <label
-            className="menu-builder__item red"
-            onClick={(e) => {
-              e.stopPropagation();
-              onLogout();
-            }}
-          >
+          <label className="menu-builder__item red" onClick={onLogout}>
             {t("logout")}
           </label>
         </MenuBuilder>
