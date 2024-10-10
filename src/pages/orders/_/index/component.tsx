@@ -2,7 +2,7 @@ import CardTask from "components/cards/cardTask";
 import { orders } from "mocks/orderMock";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import "./styles.scss";
+import "../../styles.scss";
 
 export default function OrdersPage() {
   const { t } = useTranslation("p_orders");

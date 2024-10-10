@@ -60,6 +60,7 @@ function App() {
       if (
         (!accessToken || !userProfile) &&
         !location.pathname.includes("auth") &&
+        !location.pathname.includes("orders") &&
         !location.pathname.includes("activate") &&
         !location.pathname.includes("/profile/user")
       ) {
