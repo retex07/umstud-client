@@ -2,6 +2,7 @@ import { useRemoveOfBlackList } from "api/user/mutations/removeUserBlackList";
 import { useBlackList } from "api/user/queries/blackList";
 import InlineUser from "components/inlineUser";
 import PageLoader from "components/loaders/pageLoader";
+import NoDataComponent from "components/noData";
 import MobileNavigationMenu from "pages/profile/components/mobileNavigationMenu";
 import React from "react";
 import toast from "react-hot-toast";
@@ -49,7 +50,7 @@ export default function ProfileBlackListPage() {
         <div className="page-content-wrapper">
           <header className="page-content-title">{t("title")}</header>
           <section>
-            {blackList && !blackList.length && <p>{t("emptyList")}</p>}
+            {blackList && !blackList.length && <NoDataComponent />}
             {blackList?.map((user) => (
               <div className="black-list" key={user.id}>
                 <div className="black-list__user-actions">

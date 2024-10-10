@@ -116,8 +116,8 @@ export const myWorkMock = [
   {
     id: 0,
     description: "Контрольная работа | Программирование | Моделирование",
-    deadlineEndAt: "24.03.2023",
-    deadlineStartAt: "24.05.2023",
+    deadlineEndAt: new Date().toISOString(),
+    deadlineStartAt: new Date().toISOString(),
     isClosed: false,
     status: <CardStatusTypes>"open",
     title:
@@ -134,8 +134,8 @@ export const myWorkMock = [
   {
     id: 1,
     description: "Программирование",
-    deadlineEndAt: "20.03.2023",
-    deadlineStartAt: "20.05.2023",
+    deadlineEndAt: new Date().toISOString(),
+    deadlineStartAt: new Date().toISOString(),
     status: <CardStatusTypes>"open",
     isClosed: true,
     title: "Разработка клиентской части фриланс-биржи",
@@ -151,8 +151,8 @@ export const myWorkMock = [
   {
     id: 2,
     description: "Математика | Самостоятельная работа",
-    deadlineEndAt: "22.03.2024",
-    deadlineStartAt: "19.05.2023",
+    deadlineEndAt: new Date().toISOString(),
+    deadlineStartAt: new Date().toISOString(),
     status: <CardStatusTypes>"open",
     isClosed: false,
     title:
@@ -169,8 +169,8 @@ export const myWorkMock = [
   {
     id: 3,
     description: "История | Доклад",
-    deadlineEndAt: "20.03.2023",
-    deadlineStartAt: "20.05.2023",
+    deadlineEndAt: new Date().toISOString(),
+    deadlineStartAt: new Date().toISOString(),
     status: <CardStatusTypes>"open",
     isClosed: false,
     title: "Влияние Реформации на политические структуры Европы в XVI веке",
@@ -186,8 +186,8 @@ export const myWorkMock = [
   {
     id: 4,
     description: "Программирование",
-    deadlineEndAt: "20.03.2023",
-    deadlineStartAt: "20.05.2023",
+    deadlineEndAt: new Date().toISOString(),
+    deadlineStartAt: new Date().toISOString(),
     status: <CardStatusTypes>"open",
     isClosed: true,
     title: "Разработка клиентской части фриланс-биржи",
@@ -203,8 +203,8 @@ export const myWorkMock = [
   {
     id: 5,
     description: "Программирование",
-    deadlineEndAt: "20.03.2023",
-    deadlineStartAt: "20.05.2023",
+    deadlineEndAt: new Date().toISOString(),
+    deadlineStartAt: new Date().toISOString(),
     status: <CardStatusTypes>"open",
     isClosed: true,
     title: "Разработка клиентской части фриланс-биржи",
@@ -220,8 +220,8 @@ export const myWorkMock = [
   {
     id: 6,
     description: "Программирование",
-    deadlineEndAt: "20.03.2023",
-    deadlineStartAt: "20.05.2023",
+    deadlineEndAt: new Date().toISOString(),
+    deadlineStartAt: new Date().toISOString(),
     status: <CardStatusTypes>"open",
     isClosed: true,
     title: "Разработка клиентской части фриланс-биржи",
@@ -237,8 +237,8 @@ export const myWorkMock = [
   {
     id: 7,
     description: "Программирование",
-    deadlineEndAt: "20.03.2023",
-    deadlineStartAt: "20.05.2023",
+    deadlineEndAt: new Date().toISOString(),
+    deadlineStartAt: new Date().toISOString(),
     status: <CardStatusTypes>"open",
     isClosed: true,
     title: "Разработка клиентской части фриланс-биржи",
