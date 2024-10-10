@@ -1,5 +1,5 @@
-import { User } from "../types/user";
-import { CardStatusTypes } from "../components/cards/cardStatus/component";
+import { CardStatusTypes } from "components/cards/cardStatus/component";
+import { User } from "types/user";
 
 export const ProfileMock = {
   id: 0,
