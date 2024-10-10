@@ -8,6 +8,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import Routes from "services/router/config";
+import urls from "services/router/urls";
 import { Dispatch } from "store/types";
 import { actions as userActions } from "store/user";
 import { user as user_selector } from "store/user/user.selectors";
@@ -58,19 +59,11 @@ function App() {
   const checkAuth = () => {
     if (!isLoadingUserProfile) {
       if (
-        (!accessToken || !userProfile) &&
-        !location.pathname.includes("auth") &&
-        !location.pathname.includes("orders") &&
-        !location.pathname.includes("activate") &&
-        !location.pathname.includes("/profile/user")
-      ) {
-        history.push("/auth/sign-in");
-      } else if (
         userProfile &&
         accessToken &&
-        location.pathname.includes("auth")
+        location.pathname.includes(urls.auth.index)
       ) {
-        history.push("/profile");
+        history.push(urls.profile.index);
       }
     }
   };
@@ -81,7 +74,7 @@ function App() {
 
   return (
     <Switch>
-      <Route path="/" exact={false}>
+      <Route path={urls.index} exact={false}>
         {() => (
           <Switch>
             {Routes.map((route) => (
