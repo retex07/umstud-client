@@ -1,0 +1,52 @@
+@use "styles/typography";
+
+.chats-page {
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 740px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    align-items: center;
+
+    &-item {
+      display: flex;
+      flex-direction: row;
+
+      gap: 20px;
+      width: 100%;
+      padding: 12px 18px;
+
+      border: 1px solid var(--color-gray);
+      border-radius: 10px;
+      box-sizing: border-box;
+      cursor: pointer;
+
+      &:hover {
+        border: 1px solid var(--color-blue);
+      }
+
+      &_avatar > img {
+        width: 62px;
+        height: 62px;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  &__block-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    &_head {
+      @include typography.ordinary_subtitle;
+    }
+
+    &_last-msg {
+      @include typography.description;
+      color: var(--color-gray-text);
+    }
+  }
+}

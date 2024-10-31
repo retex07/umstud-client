@@ -12,7 +12,7 @@ const urls = {
     myWork: "/works",
     messages: {
       index: "/messages",
-      item: "/:messageId",
+      item: "/messages/:messageId",
     },
   },
   services: "/services",
