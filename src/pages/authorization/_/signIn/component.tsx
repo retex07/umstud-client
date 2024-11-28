@@ -50,13 +50,13 @@ export default function SignInPage() {
           dispatch(userActions.login({ ...res.data.tokens }));
         },
         onError: (err) => {
-          const errors = err.response?.data.errors;
+          const errors = err.response?.data;
           if (errors) {
             setError("login_or_email", {
-              message: errors[0].error,
+              message: errors["login_or_email"]?.[0],
             });
             setError("password", {
-              message: errors[0].error,
+              message: errors["password"]?.[0],
             });
           }
         },

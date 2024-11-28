@@ -1,3 +1,6 @@
 {
-  "title": "Заказы"
+  "title": "Заказы",
+  "actions": {
+    "create-no-data": "Сделать заказ"
+  }
 }

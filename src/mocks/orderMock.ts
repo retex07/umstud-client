@@ -1,4 +1,4 @@
-import { CardStatusTypes } from "../components/cards/cardStatus/component";
+import { CardStatusTypes } from "api/ads/types";
 
 export const orders = [
   {
@@ -6,7 +6,13 @@ export const orders = [
     title:
       "РАСЧЕТ монолитной ж/б безбалочной ПЛИТЫ перекрытия и расчет монолитной ж/б КОЛОННЫ прямоугольного сечения",
     type: "Контрольная работа",
-    category: ["Программирование", "Моделирование"],
+    category: [
+      "Программирование",
+      "Моделирование",
+      "Математика",
+      "История",
+      "Иностарный",
+    ],
     status: <CardStatusTypes>"in_progress",
     deadlineStartAt: new Date().toISOString(),
     deadlineEndAt: new Date().toISOString(),

@@ -1,11 +1,10 @@
+import { CardStatusTypes } from "api/ads/types";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { ReactComponent as CheckSvg } from "static/images/check.svg";
 import { ReactComponent as ClockSvg } from "static/images/clock.svg";
 import { ReactComponent as ExitSvg } from "static/images/exit.svg";
 import "./styles.scss";
-
-export type CardStatusTypes = "open" | "closed" | "in_progress";
 
 interface Props {
   type: CardStatusTypes;

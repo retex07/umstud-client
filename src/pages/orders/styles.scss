@@ -1,7 +1,51 @@
+@use "styles/typography";
+
 .page-orders {
   &__list {
     display: flex;
     flex-direction: column;
     gap: 12px;
+  }
+
+  &__no-data {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+
+    &_logo {
+      min-height: 250px;
+    }
+  }
+
+  &__order {
+    &_header {
+      display: flex;
+      flex-direction: column;
+
+      &-info {
+        display: inline-flex;
+        gap: 6px;
+
+        &_link {
+          @include typography.description;
+          color: var(--color-blue);
+          cursor: pointer;
+        }
+
+        &_sub-title {
+          @include typography.description;
+
+          width: 100%;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+
+          &::before {
+            content: "-";
+            margin-right: 6px;
+          }
+        }
+      }
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { CardStatusTypes } from "components/cards/cardStatus/component";
+import { CardStatusTypes } from "api/ads/types";
 import { User } from "types/user";
 
 export const ProfileMock = {

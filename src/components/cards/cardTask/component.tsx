@@ -1,21 +1,23 @@
-import { SimpleUserProfile } from "api/user/types";
+import { CardStatusTypes, UserResponse } from "api/ads/types";
 import DateBuilder from "components/dateBuilder";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
+import Urls from "services/router/urls";
 import { getFullDate } from "utils/constant.utils";
 import { infoUser } from "utils/user.utils";
 
 import CardStatus from "../cardStatus";
-import { CardStatusTypes } from "../cardStatus/component";
 import "./styles.scss";
 
 interface Props {
+  id: number;
   title: string;
-  deadlineStartAt: string;
-  deadlineEndAt: string;
+  deadlineStartAt?: string;
+  deadlineEndAt?: string;
   category?: string[];
-  type?: string;
-  user: SimpleUserProfile | null;
+  type?: string[];
+  user: UserResponse;
   isOrder?: boolean;
   status: CardStatusTypes;
 }
@@ -23,22 +25,24 @@ interface Props {
 export default function CardTask(props: Props) {
   const { t } = useTranslation("c_cards");
 
+  const history = useHistory();
+  const categories = props.category?.join(", ") || "";
+
   return (
     <article className={props.isOrder ? "card-task--order" : "card-task"}>
-      <header className="card-task__header">
+      <header
+        className="card-task__header"
+        onClick={() => history.push(Urls.orders.index + "/" + props.id)}
+      >
         <h2 className="card-task__title">{props.title}</h2>
       </header>
       <div className="card-task__order-info">
-        {props.type && (
-          <span className="card-task__order-type">{props.type}</span>
+        {props.type && props.type.length && (
+          <span className="card-task__order-type">{props.type.join(", ")}</span>
         )}
         {props.category && (
-          <div className="card-task__order-category-list">
-            {props.category.map((category, index) => (
-              <span className="card-task__order-category" key={index}>
-                {category}
-              </span>
-            ))}
+          <div className="card-task__order-categories" title={categories}>
+            {categories}
           </div>
         )}
       </div>
@@ -55,8 +59,8 @@ export default function CardTask(props: Props) {
         )}
         <DateBuilder
           isClosed={props.status === "closed"}
-          dateStartAt={getFullDate(new Date(props.deadlineStartAt))}
-          dateEndAt={getFullDate(new Date(props.deadlineEndAt))}
+          dateStartAt={getFullDate(new Date(props.deadlineStartAt || ""))}
+          dateEndAt={getFullDate(new Date(props.deadlineEndAt || ""))}
         />
         {props.isOrder ? (
           <CardStatus type={props.status} />

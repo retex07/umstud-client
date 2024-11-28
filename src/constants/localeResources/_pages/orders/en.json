@@ -1,3 +1,6 @@
 {
-  "title": "Orders"
+  "title": "Orders",
+  "actions": {
+    "create-no-data": "Make an order"
+  }
 }

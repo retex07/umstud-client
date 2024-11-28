@@ -41,29 +41,19 @@
   }
 
   &__order {
-    &-category {
+    &-categories {
       @include typography.ordinary;
       color: var(--color-gray-text);
 
-      display: inline-flex;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      line-clamp: 1;
+      -webkit-box-orient: vertical;
 
-      &:not(:last-child):after {
-        content: ",";
-      }
-
-      &-list {
-        width: 100%;
-        display: flex;
-        justify-content: flex-end;
-        gap: 4px;
-
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-
-        @media screen and (max-width: 1220px) {
-          justify-content: flex-start;
-        }
+      @media screen and (max-width: 1220px) {
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
       }
     }
 
@@ -74,7 +64,7 @@
     &-type {
       @include typography.ordinary;
       text-wrap: nowrap;
-      margin-right: 10px;
+      margin-right: 20px;
       color: var(--color-gray-text);
     }
 

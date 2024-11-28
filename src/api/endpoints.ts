@@ -18,5 +18,8 @@ export const ENDPOINTS_CONFIG = {
     chats: {
       list: "/chats/",
     },
+    ad: {
+      ads: "/ad/ads/",
+    },
   },
 };

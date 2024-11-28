@@ -13,8 +13,5 @@ export interface Login_Response {
 }
 
 export interface Login_ErrorResponse {
-  errors: Array<{
-    error: string;
-    type: string;
-  }>;
+  [key: string]: string[];
 }
