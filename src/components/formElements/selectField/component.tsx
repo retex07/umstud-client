@@ -31,6 +31,7 @@ interface Props<T extends FieldValues>
   control: Control<T>;
   rules?: UseControllerProps["rules"];
   defaultValue?: UnpackNestedValue<PathValue<T, Path<T>>>;
+  readOnly?: boolean;
 }
 
 export default function SelectField<FormField extends FieldValues>(

@@ -16,6 +16,7 @@ import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import urls from "services/router/urls";
 import { ReactComponent as ExampleAvatarSvg } from "static/images/example-avatar.svg";
 import { Dispatch } from "store/types";
 import { actions as userActions } from "store/user";
@@ -23,6 +24,7 @@ import { user as user_selector } from "store/user/user.selectors";
 import { SelectOption } from "types/components";
 import { convertDate, splitKey } from "utils/constant.utils";
 import { convertDataToFormData } from "utils/formdata.utils";
+
 import "./styles.scss";
 
 export default function ProfileEdit() {
@@ -83,7 +85,6 @@ export default function ProfileEdit() {
 
     const formData = convertDataToFormData(newData);
 
-    console.log("selectedFile:", selectedFile);
     if (selectedFile) {
       formData.append("photo", selectedFile);
     }
@@ -92,7 +93,7 @@ export default function ProfileEdit() {
       {
         onSuccess: () => {
           toast.success(t("notification"), { duration: 5000 });
-          history.push("/profile");
+          history.push(urls.profile.index);
           refetchUserProfile().then((res) =>
             dispatch(userActions.updateUser(res.data || null))
           );

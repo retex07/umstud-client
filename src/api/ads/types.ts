@@ -1,3 +1,5 @@
+import { SelectOption } from "types/components";
+
 export type CardStatusTypes = "open" | "closed" | "in_progress";
 
 export interface UserResponse {
@@ -23,4 +25,25 @@ export interface AdGet {
   description: string;
   author: UserResponse;
   files?: number[];
+}
+
+export interface AdCreate {
+  title: string;
+  type: number[];
+  category: number[];
+  deadlineEndAt: string;
+  budget: number;
+  description: string;
+}
+
+export type AdCreate_FormBody = Omit<AdCreate, "category" | "type"> & {
+  category: SelectOption[];
+  type: SelectOption[];
+};
+
+export type ValidKeysCreate = keyof AdCreate;
+
+export interface OptionSelect {
+  id: number;
+  name: string;
 }

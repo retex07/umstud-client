@@ -19,7 +19,10 @@ export const ENDPOINTS_CONFIG = {
       list: "/chats/",
     },
     ad: {
+      ad: "/ad/ads/",
       ads: "/ad/ads/",
+      categories: "/ad/categories_change/",
+      types: "/ad/types_change/",
     },
   },
 };

@@ -3,7 +3,7 @@ import DateBuilder from "components/dateBuilder";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
-import Urls from "services/router/urls";
+import urls from "services/router/urls";
 import { getFullDate } from "utils/constant.utils";
 import { infoUser } from "utils/user.utils";
 
@@ -28,11 +28,23 @@ export default function CardTask(props: Props) {
   const history = useHistory();
   const categories = props.category?.join(", ") || "";
 
+  function openUserProfile() {
+    history.push(
+      urls.profile.index +
+        urls.profile.item.replace(":profileId", props.user.slug)
+    );
+  }
+
   return (
     <article className={props.isOrder ? "card-task--order" : "card-task"}>
       <header
         className="card-task__header"
-        onClick={() => history.push(Urls.orders.index + "/" + props.id)}
+        onClick={() =>
+          history.push(
+            urls.orders.index +
+              urls.orders.item.replace(":orderId", props.id.toString())
+          )
+        }
       >
         <h2 className="card-task__title">{props.title}</h2>
       </header>
@@ -46,22 +58,31 @@ export default function CardTask(props: Props) {
           </div>
         )}
       </div>
-      <div className="card-task--states">
+      <div className="card-task__states">
         {props.isOrder && props.user ? (
-          <div>
-            <img src={props.user.photo} alt={props.user.slug} />
-            <span className="card-task__order-author-full-name">
+          <div className="card-task__states-user">
+            <img
+              className="card-task__states-user_img"
+              src={props.user.photo}
+              alt={props.user.slug}
+            />
+            <span
+              className="card-task__order-author-full-name"
+              onClick={openUserProfile}
+            >
               {infoUser({ ...props.user })}
             </span>
           </div>
         ) : (
           <CardStatus type={props.status} />
         )}
-        <DateBuilder
-          isClosed={props.status === "closed"}
-          dateStartAt={getFullDate(new Date(props.deadlineStartAt || ""))}
-          dateEndAt={getFullDate(new Date(props.deadlineEndAt || ""))}
-        />
+        {props.deadlineStartAt && props.deadlineEndAt && (
+          <DateBuilder
+            isClosed={props.status === "closed"}
+            dateStartAt={getFullDate(new Date(props.deadlineStartAt))}
+            dateEndAt={getFullDate(new Date(props.deadlineEndAt))}
+          />
+        )}
         {props.isOrder ? (
           <CardStatus type={props.status} />
         ) : (

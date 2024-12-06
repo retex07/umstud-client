@@ -1,5 +1,8 @@
 import { adminSymbol } from "constants/config";
 
+import { History } from "history";
+import urls from "services/router/urls";
+
 export function infoUser({
   is_staff,
   isFull,
@@ -24,4 +27,10 @@ export function infoUser({
   }
 
   return `${first_name || ""} ${last_name || ""} ${addSymbol()}`;
+}
+
+export function checkToken(token: string | null = "", history: History) {
+  if (!token) {
+    history.push(urls.auth.index + urls.auth.signIn);
+  }
 }

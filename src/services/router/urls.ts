@@ -22,7 +22,8 @@ const urls = {
   },
   orders: {
     index: "/orders",
-    item: "/:orderId",
+    create: "/create",
+    item: "/item/:orderId",
   },
   forum: {
     index: "/forum",

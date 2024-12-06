@@ -1,12 +1,21 @@
-import { orderItem } from "mocks/orderMock";
+import { useAdsItem } from "api/ads/queries/ad";
+import PageLoader from "components/loaders/pageLoader";
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import urls from "services/router/urls";
 import "../../styles.scss";
 
 export default function OrderItemPage() {
-  const order = orderItem;
+  const params = useParams<{ orderId: string }>();
+  const { data: dataOrderItem, isLoading: isLoadingOrderItem } = useAdsItem(
+    params.orderId
+  );
+
   const history = useHistory();
+
+  if (isLoadingOrderItem) {
+    return <PageLoader />;
+  }
 
   return (
     <div id="page" className="page-container">
@@ -20,10 +29,10 @@ export default function OrderItemPage() {
               Заказы
             </span>
             <span className="page-orders__order_header-info_sub-title">
-              {order.title}
+              {dataOrderItem?.title}
             </span>
           </div>
-          <h2 className="page-content-title">{order.title}</h2>
+          <h2 className="page-content-title">{dataOrderItem?.title}</h2>
         </header>
         <div className="page-orders__list">order item</div>
       </div>
