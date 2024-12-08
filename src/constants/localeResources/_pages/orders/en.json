@@ -1,6 +1,82 @@
 {
   "title": "Orders",
   "actions": {
-    "create-no-data": "Make an order"
+    "create-no-data": "Place an order"
+  },
+  "pages": {
+    "index": {
+      "panels": {
+        "create": {
+          "title": "Are you a student in urgent need of help?",
+          "description": "Speed and quality are our goals"
+        }
+      }
+    },
+    "edit": {
+      "title": "Edit Order",
+      "actions": {
+        "cancel": "Cancel",
+        "submit": "Save",
+        "success": "Changes have been successfully saved!"
+      }
+    },
+    "create": {
+      "title": "Place an Order",
+      "actions": {
+        "cancel": "Cancel",
+        "submit": "Place"
+      },
+      "notifications": {
+        "success": "Order successfully created"
+      },
+      "fields": {
+        "title": {
+          "title": "Topic Title",
+          "press": "Enter the topic title"
+        },
+        "type": {
+          "title": "Type of Work",
+          "press": "Select the type of work"
+        },
+        "description": {
+          "title": "Work Description",
+          "press": "Describe the list of required tasks"
+        },
+        "category": {
+          "title": "Type of Work",
+          "press": "Select the type of work"
+        },
+        "budget": {
+          "title": "Order Cost",
+          "press": "Enter the desired order cost"
+        },
+        "deadlineEndAt": {
+          "title": "Submission Date"
+        }
+      }
+    },
+    "item": {
+      "table": {
+        "orderNumber": "Order Number",
+        "type": "Type of Work",
+        "category": "Type of Work",
+        "budget": "Price (RUB)",
+        "deadlineEndAt": "Due Date",
+        "respondersLen": "Responses"
+      },
+      "sections": {
+        "description": {
+          "title": "Work Description",
+          "noText": "There's nothing here yet."
+        }
+      },
+      "actions": {
+        "respond": "Respond",
+        "responded": "Response already sent",
+        "respondedSuccess": "Response sent!",
+        "loading": "Loading",
+        "edit": "Edit"
+      }
+    }
   }
 }

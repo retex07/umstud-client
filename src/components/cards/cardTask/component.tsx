@@ -28,24 +28,28 @@ export default function CardTask(props: Props) {
   const history = useHistory();
   const categories = props.category?.join(", ") || "";
 
-  function openUserProfile() {
+  function openUserProfile(event: React.MouseEvent<HTMLSpanElement>) {
+    event.stopPropagation();
+
     history.push(
       urls.profile.index +
         urls.profile.item.replace(":profileId", props.user.slug)
     );
   }
 
+  function goToItemOrder() {
+    history.push(
+      urls.orders.index +
+        urls.orders.item.replace(":orderId", props.id.toString())
+    );
+  }
+
   return (
-    <article className={props.isOrder ? "card-task--order" : "card-task"}>
-      <header
-        className="card-task__header"
-        onClick={() =>
-          history.push(
-            urls.orders.index +
-              urls.orders.item.replace(":orderId", props.id.toString())
-          )
-        }
-      >
+    <article
+      className={props.isOrder ? "card-task--order" : "card-task"}
+      onClick={goToItemOrder}
+    >
+      <header className="card-task__header">
         <h2 className="card-task__title">{props.title}</h2>
       </header>
       <div className="card-task__order-info">

@@ -31,4 +31,12 @@ export const Routes: Route[] = [
     },
     layoutSettings: {},
   },
+  {
+    path: urls.orders.edit,
+    component: OrderCreatePage,
+    settings: {
+      exact: false,
+    },
+    layoutSettings: {},
+  },
 ];

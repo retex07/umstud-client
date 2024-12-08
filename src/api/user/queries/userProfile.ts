@@ -6,7 +6,7 @@ import { QueryFunction, useQuery, UseQueryOptions } from "react-query";
 import { DetailUserProfile } from "../types";
 
 const url = ENDPOINTS_CONFIG.api.userProfile;
-type QueryKey = [typeof url, string];
+type QueryKey = [typeof url, string | undefined];
 
 type Response = DetailUserProfile;
 
@@ -17,7 +17,7 @@ const getUserProfile: QueryFunction<Response, QueryKey> = async ({
 };
 
 export const useUserProfile = <TData = Response>(
-  slug: string,
+  slug?: string,
   options?: Omit<
     UseQueryOptions<Response, AxiosError, TData, QueryKey>,
     "queryKey" | "queryFn"

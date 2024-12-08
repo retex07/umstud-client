@@ -12,5 +12,23 @@
       "pattern_placestudywork": "Allowed are upper and lower case letters of supported languages, as well as the symbols - ` ,",
       "pattern_portfolio_description": "Allowed are upper and lower case letters of supported languages, as well as the symbols - ` ,"
     }
+  },
+  "utils": {
+    "dates": {
+      "months": {
+        "1": "January",
+        "2": "February",
+        "3": "March",
+        "4": "April",
+        "5": "May",
+        "6": "June",
+        "7": "July",
+        "8": "August",
+        "9": "September",
+        "10": "October",
+        "11": "November",
+        "12": "December"
+      }
+    }
   }
 }

@@ -23,6 +23,7 @@ const urls = {
   orders: {
     index: "/orders",
     create: "/create",
+    edit: "/edit/:orderId",
     item: "/item/:orderId",
   },
   forum: {

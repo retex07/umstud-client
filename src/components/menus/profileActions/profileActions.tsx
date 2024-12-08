@@ -3,7 +3,6 @@ import { useRemoveOfBlackList } from "api/user/mutations/removeUserBlackList";
 import { useBlackList } from "api/user/queries/blackList";
 import cn from "classnames";
 import Button from "components/button";
-import PageLoader from "components/loaders/pageLoader";
 import MenuBuilder from "components/menus/builder";
 import isFunction from "lodash/isFunction";
 import React, { useEffect, useRef, useState } from "react";
@@ -112,7 +111,7 @@ export default function ProfileActions(props: Props) {
   }
 
   if (isLoading) {
-    return <PageLoader />;
+    return null;
   }
 
   return (

@@ -1,22 +1,23 @@
 import { useAds } from "api/ads/queries/ads";
 import Button from "components/button";
 import CardTask from "components/cards/cardTask";
+import PageLoader from "components/loaders/pageLoader";
 import NoDataComponent from "components/noData";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import urls from "services/router/urls";
-import { user } from "store/user/user.selectors";
+import { user as userSelector } from "store/user/user.selectors";
 import { checkToken } from "utils/user.utils";
 import "../../styles.scss";
 
 export default function OrdersPage() {
   const { t } = useTranslation("p_orders");
-  const { data: orders } = useAds();
+  const { data: orders, isLoading: isLoadingOrders } = useAds();
   const history = useHistory();
 
-  const { accessToken } = useSelector(user);
+  const { accessToken, user } = useSelector(userSelector);
 
   function handleCreateOrder() {
     if (!accessToken) {
@@ -35,18 +36,21 @@ export default function OrdersPage() {
       <div className="page-content-wrapper">
         <header className="page-orders__header">
           <h1 className="page-content-title">{t("title")}</h1>
-          <Button
-            classNames="page-orders__header_btn"
-            size="very-small"
-            color="green"
-            label="+"
-            onClick={goToCreateOrder}
-          />
+          {user && accessToken && (
+            <Button
+              classNames="page-orders__header_btn"
+              size="very-small"
+              color="green"
+              label="+"
+              onClick={goToCreateOrder}
+            />
+          )}
         </header>
         <div className="page-orders__list">
           {orders?.map(
             (order) =>
               order &&
+              order.status !== "closed" &&
               order.author && (
                 <CardTask
                   isOrder
@@ -56,7 +60,8 @@ export default function OrdersPage() {
                 />
               )
           )}
-          {!orders?.length && (
+          {isLoadingOrders && <PageLoader />}
+          {!isLoadingOrders && !orders?.length && (
             <div className="page-orders__no-data">
               <NoDataComponent className="page-orders__no-data_logo" />
               <Button

@@ -54,7 +54,7 @@ function App() {
       dispatch(userActions.logout());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accessToken, userProfile]);
+  }, [accessToken, userProfile, errorCodeProfile]);
 
   const checkAuth = () => {
     if (!isLoadingUserProfile) {
