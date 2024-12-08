@@ -16,6 +16,7 @@
     @extend .card-task;
     border-radius: 10px;
     border-top: 1px solid var(--color-gray-text);
+    cursor: pointer;
   }
 
   &__header {

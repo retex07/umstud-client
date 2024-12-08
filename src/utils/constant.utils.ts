@@ -1,3 +1,5 @@
+import i18next from "i18next";
+import { isString } from "lodash";
 import isFunction from "lodash/isFunction";
 import toast from "react-hot-toast";
 
@@ -36,16 +38,36 @@ export function convertDate(
   }
 }
 
-export function getFullDate(date: Date) {
+export function dateWithMonthWord(
+  dateString: string | undefined,
+  separator = "."
+) {
+  if (!dateString) {
+    return "";
+  }
+
+  const [day, month, year] = dateString.split(separator);
+
+  if (/^(1[0-2]|[1-9])$/.test(month)) {
+    return `${day} ${t("translation", {
+      keyPrefix: `utils.dates.months.${month}`,
+    })} ${year}`;
+  }
+
+  return `${day}.${month}.${year}`;
+}
+
+export function getFullDate(date: Date, withoutZero = false) {
   const prevDate = new Date(date);
+  const symbolZero = withoutZero ? "" : "0";
 
   const d =
     prevDate.getDate().toString().length == 1
-      ? "0" + prevDate.getDate().toString()
+      ? symbolZero + prevDate.getDate().toString()
       : prevDate.getDate();
   const m =
     (prevDate.getMonth() + 1).toString().length == 1
-      ? "0" + (prevDate.getMonth() + 1).toString()
+      ? symbolZero + (prevDate.getMonth() + 1).toString()
       : prevDate.getMonth() + 1;
   const y = prevDate.getFullYear();
 
@@ -65,4 +87,20 @@ export async function copyTextToClipboard(
   } catch (error) {
     toast.error("Failed to copy text: " + error);
   }
+}
+
+export function t(path: string, { keyPrefix = "" }: { keyPrefix?: string }) {
+  if (!path) {
+    return "";
+  }
+
+  if (!isString(path)) {
+    return path;
+  }
+
+  if (i18next.exists(keyPrefix)) {
+    return i18next.t(keyPrefix, { ns: path });
+  }
+
+  return path;
 }

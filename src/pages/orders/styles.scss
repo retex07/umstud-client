@@ -68,8 +68,39 @@
 
   &__order {
     &_header {
-      display: flex;
-      flex-direction: column;
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+
+      &-block {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
+
+      &-action {
+        $action: &;
+        width: 28px;
+        height: 28px;
+        cursor: pointer;
+
+        &:hover path {
+          stroke: var(--color-blue);
+        }
+
+        &_btn {
+          display: none;
+
+          @media screen and (max-width: 1220px) {
+            display: block;
+          }
+        }
+
+        @media screen and (max-width: 1220px) {
+          display: none;
+        }
+      }
 
       &-info {
         display: inline-flex;
@@ -100,6 +131,76 @@
         }
       }
     }
+
+    &-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+
+      &-section {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+
+        &_head {
+          @include typography.page_subtitle;
+        }
+
+        &_descr {
+          @include typography.ordinary;
+        }
+      }
+
+      &_table {
+        max-width: 350px;
+        width: 100%;
+
+        table-layout: fixed;
+
+        border-collapse: collapse;
+
+        tr:nth-child(even) {
+          background-color: var(--color-gray-light);
+        }
+
+        td {
+          @include typography.ordinary;
+          white-space: nowrap;
+
+          @media screen and (max-width: 1220px) {
+            @include typography.description;
+          }
+        }
+
+        td:nth-child(odd) {
+          width: 35%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          @media screen and (max-width: 1220px) {
+            width: 40%;
+          }
+
+          &:after {
+            content: ":";
+          }
+        }
+
+        td:nth-child(even) {
+          width: 55%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        td, th {
+          padding: 6px 10px;
+        }
+      }
+    }
   }
 
   &__order-create {
@@ -117,8 +218,18 @@
       gap: 12px;
       justify-content: space-between;
 
+      @media screen and (max-width: 1220px) {
+        flex-direction: column;
+        flex-wrap: nowrap;
+      }
+
       &_field {
         width: calc(50% - 6px);
+
+        @media screen and (max-width: 1220px) {
+          width: 100%;
+          max-width: 100%;
+        }
 
         & .input__container {
           width: 100%;
@@ -134,10 +245,33 @@
   }
 
   &__actions {
+    &-list {
+      display: inline-flex;
+      gap: 12px;
+    }
+
+    &_btn {
+      @media screen and (max-width: 1220px) {
+        flex: 1;
+      }
+    }
+
     &_cancel {
       @include typography.page_subtitle;
       color: var(--color-red);
       cursor: pointer;
+
+      @media screen and (max-width: 1220px) {
+        display: none;
+      }
+
+      &_btn {
+        display: none;
+
+        @media screen and (max-width: 1220px) {
+          display: block;
+        }
+      }
     }
   }
 }

@@ -4,28 +4,28 @@ import { PureResponse } from "api/types";
 import { AxiosError, AxiosResponse, CancelToken } from "axios";
 import { useMutation, UseMutationOptions } from "react-query";
 
-import { AdCreate, AdCreateResponse, ValidKeysCreate } from "../types";
+import { Respond } from "../types";
 
-type Data = AxiosResponse<AdCreateResponse>;
+type Data = AxiosResponse<Respond>;
 
-type Error = AxiosError<{ [key in ValidKeysCreate]: string[] }>;
+type Error = AxiosError<{ [key in keyof Respond]: string[] }>;
 
 interface Variables {
-  data: AdCreate;
+  data: Respond;
 }
 
-function adCreate(
-  data: AdCreate,
+function adRespond(
+  data: Respond,
   cancelToken?: CancelToken
-): PureResponse<AdCreateResponse> {
-  return http.post(ENDPOINTS_CONFIG.api.ad.ads, data, { cancelToken });
+): PureResponse<Respond> {
+  return http.post(ENDPOINTS_CONFIG.api.ad.respond, data, { cancelToken });
 }
 
-export default function useCreateAd(
+export default function useRespondAd(
   options?: Omit<UseMutationOptions<Data, Error, Variables>, "mutationFn">
 ) {
   return useMutation<Data, Error, Variables>(
-    (variables) => adCreate(variables.data),
+    (variables) => adRespond(variables.data),
     options
   );
 }

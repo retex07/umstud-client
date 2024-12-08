@@ -64,8 +64,10 @@ $transition-slow: 0.3s;
     }
   }
 
-  &__disabled {
-    background-color: var(--color-blue);
+  &__disabled,
+  &__disabled:hover {
+    background-color: var(--color-gray) !important;
+    border-color: var(--color-gray) !important;
     color: var(--color-white);
     &:hover {
       background: var(--color-blue);

@@ -36,6 +36,15 @@ export interface AdCreate {
   description: string;
 }
 
+export interface AdCreateResponse extends AdCreate {
+  id: number;
+}
+
+export interface Respond {
+  ad_id: number;
+  comment?: string;
+}
+
 export type AdCreate_FormBody = Omit<AdCreate, "category" | "type"> & {
   category: SelectOption[];
   type: SelectOption[];

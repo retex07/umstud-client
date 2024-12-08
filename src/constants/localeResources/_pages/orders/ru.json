@@ -12,11 +12,19 @@
         }
       }
     },
+    "edit": {
+      "title": "Редактировать заказ",
+      "actions": {
+        "cancel": "Отменить",
+        "submit": "Сохранить",
+        "success": "Изменения успешно сохранены!"
+      }
+    },
     "create": {
       "title": "Разместить заказ",
       "actions": {
         "cancel": "Отменить",
-        "submit": "Разместить заказ"
+        "submit": "Разместить"
       },
       "notifications": {
         "success": "Заказ успешно создан"
@@ -45,6 +53,29 @@
         "deadlineEndAt": {
           "title": "Дата сдачи"
         }
+      }
+    },
+    "item": {
+      "table": {
+        "orderNumber": "Номер заказа",
+        "type": "Тип работы",
+        "category": "Вид работы",
+        "budget": "Цена (руб.)",
+        "deadlineEndAt": "Срок сдачи",
+        "respondersLen": "Откликов"
+      },
+      "sections": {
+        "description": {
+          "title": "Описание работы",
+          "noText": "Здесь пока ничего нет."
+        }
+      },
+      "actions": {
+        "respond": "Откликнуться",
+        "responded": "Отклик уже отправлен",
+        "respondedSuccess": "Отклик отправлен!",
+        "loading": "Загрузка",
+        "edit": "Редактировать"
       }
     }
   }

@@ -26,11 +26,19 @@ export function infoUser({
     return `${last_name} ${first_name} ${patronymic || ""} ${addSymbol()}`;
   }
 
-  return `${first_name || ""} ${last_name || ""} ${addSymbol()}`;
+  return `${last_name || ""} ${first_name || ""} ${addSymbol()}`;
 }
 
 export function checkToken(token: string | null = "", history: History) {
   if (!token) {
     history.push(urls.auth.index + urls.auth.signIn);
+  }
+}
+
+export function goToUserProfile(slug: string, history: History) {
+  if (!!slug && history) {
+    history.push(
+      urls.profile.index + urls.profile.item.replace(":profileId", slug)
+    );
   }
 }

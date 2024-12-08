@@ -21,6 +21,7 @@ export const ENDPOINTS_CONFIG = {
     ad: {
       ad: "/ad/ads/",
       ads: "/ad/ads/",
+      respond: "/ad/ads/response/",
       categories: "/ad/categories_change/",
       types: "/ad/types_change/",
     },
