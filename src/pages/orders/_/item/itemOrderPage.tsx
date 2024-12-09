@@ -111,14 +111,16 @@ export default function OrderItemPage() {
           )}
         </header>
         <div className="page-orders__order-info">
-          <Button
-            onClick={goToEditOrder}
-            classNames="page-orders__order_header-action_btn"
-            fullWidth
-            size="small"
-            color="green"
-            label={t("pages.item.actions.edit")}
-          />
+          {isMyOrder && (
+            <Button
+              onClick={goToEditOrder}
+              classNames="page-orders__order_header-action_btn"
+              fullWidth
+              size="small"
+              color="green"
+              label={t("pages.item.actions.edit")}
+            />
+          )}
           {dataAuthor && (
             <InfoUser
               slug={dataAuthor.slug}
