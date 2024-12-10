@@ -105,7 +105,7 @@ export default function CreateOrderPage() {
   }, [dataOrderItem?.category, dataCategoriesAds, setValue]);
 
   function backToOrders() {
-    history.push(urls.orders.index);
+    history.goBack();
   }
 
   function onValidSubmit(data: AdCreate_FormBody) {

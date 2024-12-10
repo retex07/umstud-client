@@ -10,9 +10,138 @@
 
     &_btn {
       display: none;
+
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+
+      width: 34px;
+      height: 34px;
+
+      > svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      path {
+        stroke: var(--color-white);
+      }
+
+      &:hover path {
+        stroke: var(--color-green);
+      }
+
       @media screen and (max-width: 1220px) {
         display: block;
       }
+    }
+
+    &_btn-list {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+
+  &__panels {
+    position: relative;
+
+    &-container {
+      position: fixed;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
+  }
+
+  &__filters {
+    @media screen and (max-width: 1540px) {
+      display: none;
+    }
+
+    position: relative;
+
+    &_btn {
+      display: none;
+
+      @media screen and (max-width: 1540px) {
+        display: flex;
+      }
+
+      &:hover path {
+        stroke: var(--color-blue);
+      }
+    }
+
+    &_field {
+      width: 100%;
+    }
+
+    &-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    &_head {
+      @include typography.page_subtitle;
+      text-align: center;
+    }
+
+    &_descr {
+      @include typography.ordinary;
+      color: var(--color-gray-text);
+      text-align: center;
+      line-height: 1;
+    }
+
+    &-container {
+      position: fixed;
+      width: 318px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      background-color: var(--color-white);
+      border-radius: 26px;
+      padding: 10px 12px;
+      gap: 12px;
+
+      transform: translateX(-100%);
+    }
+  }
+
+  &__service {
+    display: inline-flex;
+    align-items: center;
+    text-align: start;
+
+    gap: 8px;
+    padding: 10px 12px;
+    width: 100%;
+
+    > svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    &-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 0;
+    }
+
+    &_head {
+      @include typography.description;
+    }
+
+    &_descr {
+      @include typography.signature;
+      color: var(--color-gray-text);
     }
   }
 

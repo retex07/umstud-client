@@ -5,7 +5,31 @@
   },
   "pages": {
     "index": {
+      "filters": {
+        "title": "Filters",
+        "description": "Select the required parameters for orders",
+        "fields": {
+          "words": {
+            "label": "Keywords",
+            "placeholder": "Enter part of the desired title"
+          },
+          "type": {
+            "label": "Order Type",
+            "placeholder": "Select a type"
+          },
+          "category": {
+            "label": "Order Category",
+            "placeholder": "Select a category"
+          }
+        },
+        "action": "Search"
+      },
       "panels": {
+        "services": {
+          "title": "Popular Works",
+          "description": "“Each work is a unique form of art”",
+          "action": "View All Types of Works"
+        },
         "create": {
           "title": "Are you a student in urgent need of help?",
           "description": "Speed and quality are our goals"

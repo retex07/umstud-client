@@ -3,11 +3,17 @@ import Swiper from "components/swiper";
 import { services, servicesPremium } from "mocks/servicesMock";
 import React from "react";
 import { useTranslation } from "react-i18next";
-
+import { useHistory } from "react-router-dom";
+import urls from "services/router/urls";
 import "./styles.scss";
 
 export default function ServicesPage() {
   const { t } = useTranslation("p_services");
+  const history = useHistory();
+
+  function goToCreateOrder() {
+    history.push(urls.orders.index + urls.orders.create);
+  }
 
   return (
     <div id="page" className="page-container">
@@ -51,7 +57,9 @@ export default function ServicesPage() {
                     {service.price}
                   </p>
                 </div>
-                <Button size="small">{t("order")}</Button>
+                <Button onClick={goToCreateOrder} size="small">
+                  {t("order")}
+                </Button>
               </div>
             </div>
           ))}
