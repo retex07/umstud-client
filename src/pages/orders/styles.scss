@@ -46,6 +46,10 @@
   &__panels {
     position: relative;
 
+    @media screen and (max-width: 1220px) {
+      display: none;
+    }
+
     &-container {
       position: fixed;
       display: flex;
