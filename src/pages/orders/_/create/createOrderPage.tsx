@@ -51,10 +51,9 @@ export default function CreateOrderPage() {
     { enabled: isEditingOrder }
   );
 
-  const { data: dataTypesAds, isLoading: isLoadingTypesAds } =
-    useCategoriesAds();
+  const { data: dataTypesAds, isLoading: isLoadingTypesAds } = useTypesAds();
   const { data: dataCategoriesAds, isLoading: isLoadingCategoriesAds } =
-    useTypesAds();
+    useCategoriesAds();
 
   const { control, handleSubmit, formState, setError, setValue } =
     useForm<AdCreate_FormBody>({

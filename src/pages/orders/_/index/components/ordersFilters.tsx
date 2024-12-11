@@ -26,8 +26,8 @@ export function OrdersFilters(props: Props) {
     keyPrefix: "pages.index.filters",
   });
 
-  const { data: dataTypesAds } = useCategoriesAds();
-  const { data: dataCategoriesAds } = useTypesAds();
+  const { data: dataTypesAds } = useTypesAds();
+  const { data: dataCategoriesAds } = useCategoriesAds();
 
   const { control, handleSubmit, formState } = useForm<OrdersFilters_FormData>({
     mode: "onSubmit",
