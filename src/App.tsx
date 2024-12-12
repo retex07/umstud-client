@@ -34,6 +34,17 @@ function App() {
   const errorCodeProfile = errorGetProfile?.response?.data.code || null;
 
   useEffect(() => {
+    if (!accessToken || !userProfile) {
+      if (
+        location.pathname.includes(urls.profile.index) &&
+        !location.pathname.includes(urls.profile.item.replace(":profileId", ""))
+      ) {
+        history.push(urls.auth.index + urls.auth.signIn);
+      }
+    }
+  }, [accessToken, userProfile, location, history]);
+
+  useEffect(() => {
     checkAuth();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userProfile]);
