@@ -35,10 +35,6 @@ export default function MobileNavigationMenu() {
       title: t("messages.title"),
     },
     {
-      route: "/ready-tasks",
-      title: t("readyTasks.title"),
-    },
-    {
       route: "/black-list",
       title: t("blackList.title"),
     },

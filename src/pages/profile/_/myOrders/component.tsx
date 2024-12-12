@@ -1,5 +1,7 @@
+import { useMyOrders } from "api/ads/queries/myOrders";
 import CardTask from "components/cards/cardTask";
-import { myWorkMock } from "mocks/profileMock";
+import PageLoader from "components/loaders/pageLoader";
+import NoDataComponent from "components/noData";
 import NavigationMenu from "pages/profile/components/navigationMenu";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -11,6 +13,7 @@ import "./styles.scss";
 
 export default function ProfileMyOrderPage() {
   const { t } = useTranslation("p_profile", { keyPrefix: "orders" });
+  const { data: dataMyOrders, isLoading: isLoadingMyOrders } = useMyOrders();
 
   return (
     <div id="page" className="page-container">
@@ -20,9 +23,12 @@ export default function ProfileMyOrderPage() {
         </div>
         <div className="page-content-wrapper">
           <header className="page-content-title">{t("title")}</header>
-          {myWorkMock.map((workCard) => (
-            <CardTask key={workCard.id} {...workCard} />
-          ))}
+          {isLoadingMyOrders && <PageLoader />}
+          {!isLoadingMyOrders && !dataMyOrders?.length && <NoDataComponent />}
+          {dataMyOrders &&
+            dataMyOrders.map((workCard) => (
+              <CardTask key={workCard.id} {...workCard} />
+            ))}
         </div>
         <NavigationMenu />
       </div>

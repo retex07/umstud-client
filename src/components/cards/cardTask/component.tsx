@@ -17,7 +17,7 @@ interface Props {
   deadlineEndAt?: string;
   category?: string[];
   type?: string[];
-  user: UserResponse;
+  user?: UserResponse;
   isOrder?: boolean;
   status: CardStatusTypes;
 }
@@ -31,10 +31,12 @@ export default function CardTask(props: Props) {
   function openUserProfile(event: React.MouseEvent<HTMLSpanElement>) {
     event.stopPropagation();
 
-    history.push(
-      urls.profile.index +
-        urls.profile.item.replace(":profileId", props.user.slug)
-    );
+    if (props.user) {
+      history.push(
+        urls.profile.index +
+          urls.profile.item.replace(":profileId", props.user.slug)
+      );
+    }
   }
 
   function goToItemOrder() {

@@ -8,7 +8,9 @@ import isFunction from "lodash/isFunction";
 import React, { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import { ReactComponent as DropDownSvg } from "static/images/chevron-down.svg";
+import { user as user_selector } from "store/user/user.selectors";
 import { copyTextToClipboard } from "utils/constant.utils";
 import { menuListener } from "utils/listener.utils";
 import "./styles.scss";
@@ -29,7 +31,10 @@ export default function ProfileActions(props: Props) {
   ]);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  const { data: blackList, isLoading } = useBlackList();
+  const { user: myProfile, accessToken } = useSelector(user_selector);
+  const { data: blackList, isLoading } = useBlackList({
+    enabled: !!myProfile && !!accessToken,
+  });
 
   const addUserToBlackList = useAddToBlackList();
   const removeOfBlackList = useRemoveOfBlackList();

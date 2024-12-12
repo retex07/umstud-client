@@ -14,6 +14,7 @@ export interface UserResponse {
 export interface AdGet {
   id: number;
   orderNumber?: number;
+  executor?: UserResponse;
   responders?: UserResponse[];
   title: string;
   type: string[];
@@ -28,6 +29,7 @@ export interface AdGet {
 }
 
 export interface AdCreate {
+  id: number;
   title: string;
   type: number[];
   category: number[];

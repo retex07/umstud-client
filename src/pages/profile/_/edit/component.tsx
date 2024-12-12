@@ -33,6 +33,7 @@ export default function ProfileEdit() {
     keyPrefix: "form.rules",
   });
 
+  const dateInputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch<Dispatch>();
   const history = useHistory();
   const editProfile = useEditProfile();
@@ -103,6 +104,19 @@ export default function ProfileEdit() {
         },
       }
     );
+  }
+
+  function blockPrevDate() {
+    if (dateInputRef.current) {
+      dateInputRef.current.max = new Date().toISOString().split("T")[0];
+      dateInputRef.current.min = new Date(
+        new Date().getFullYear() - 120,
+        1,
+        -29
+      )
+        .toISOString()
+        .split("T")[0];
+    }
   }
 
   function handleGifChange(event: ChangeEvent<HTMLInputElement>) {
@@ -247,13 +261,21 @@ export default function ProfileEdit() {
             {keysEditProfileRequest.map((key) => (
               <Field
                 classNames="profile-edit__input"
+                innerRef={
+                  key === "birth_date" ? dateInputRef : React.createRef()
+                }
                 key={key}
                 name={key}
                 control={control}
+                onClick={() => key === "birth_date" && blockPrevDate()}
                 type={key === "birth_date" ? "date" : "text"}
                 label={t(`actions.${splitKey(key)}.title`)}
                 placeholder={t(`actions.${splitKey(key)}.press`)}
-                readonly={formState.isSubmitting || editProfile.isLoading}
+                readonly={
+                  formState.isSubmitting ||
+                  editProfile.isLoading ||
+                  key === "email"
+                }
                 rules={{
                   required: checkRequired(key) ? tRules("required") : false,
                   pattern: {

@@ -8,7 +8,6 @@ const SecurityPage = lazy(() => import("./_/security"));
 const BlackListPage = lazy(() => import("./_/blackList"));
 const MessagesPage = lazy(() => import("./_/messages"));
 const ChatRoomPage = lazy(() => import("./_/messages/_/room"));
-const ReadyTasksPage = lazy(() => import("./_/readyTasks"));
 const MyOrdersPage = lazy(() => import("./_/myOrders"));
 const MyWorksPage = lazy(() => import("./_/myWorks"));
 
@@ -56,14 +55,6 @@ export const Routes: Route[] = [
   {
     path: urls.profile.edit,
     component: EditPage,
-    settings: {
-      exact: false,
-    },
-    layoutSettings: {},
-  },
-  {
-    path: urls.profile.readyTask,
-    component: ReadyTasksPage,
     settings: {
       exact: false,
     },
