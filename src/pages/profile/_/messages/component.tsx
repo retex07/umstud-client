@@ -1,6 +1,7 @@
 import { useChats } from "api/chat/queries/chats";
 import { CustomUser } from "api/chat/types";
 import PageLoader from "components/loaders/pageLoader";
+import NoDataComponent from "components/noData";
 import NavigationMenu from "pages/profile/components/navigationMenu";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -20,7 +21,7 @@ export default function ProfileMessagesPage() {
   const history = useHistory();
   const location = useLocation();
 
-  const { data: chats, isLoading: isLoadingChats } = useChats();
+  const { data: dataChats, isLoading: isLoadingChats } = useChats();
   const { user: userProfile } = useSelector(user_selector);
 
   function getRoomUsers(participants: CustomUser[]) {
@@ -51,8 +52,10 @@ export default function ProfileMessagesPage() {
           <header className="page-content-title">{t("title")}</header>
           <div className="chats-page__list">
             {isLoadingChats && <PageLoader />}
+            {!isLoadingChats && !dataChats?.length && <NoDataComponent />}
             {!isLoadingChats &&
-              (chats || []).map((chat) => (
+              !!dataChats?.length &&
+              dataChats.map((chat) => (
                 <div
                   onClick={() =>
                     history.push(`${location.pathname}/${chat.id}`)

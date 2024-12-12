@@ -24,3 +24,8 @@ export type Message = {
   updated_at?: string;
   is_read?: boolean;
 };
+
+export type ChatSendMessageWS = {
+  senderId: number;
+  message: string;
+};
