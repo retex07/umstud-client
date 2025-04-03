@@ -1,1 +1,1 @@
-export { default } from "./createOrderPage";
+export { default } from "./CreateOrderPage";

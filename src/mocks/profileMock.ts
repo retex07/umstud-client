@@ -1,5 +1,5 @@
-import { CardStatusTypes } from "api/ads/types";
-import { User } from "types/user";
+import { CardStatusTypes } from "@/api/ads/types";
+import { User } from "@/types/user";
 
 export const ProfileMock = {
   id: 0,

@@ -1,0 +1,87 @@
+@use "@/styles/typography";
+
+.textarea {
+  $this: &;
+  display: block;
+
+  &__label {
+    @include typography.ordinary;
+  }
+
+  &__label-block {
+    margin-bottom: 4px;
+  }
+
+  &__container {
+    @include typography.ordinary_subtitle;
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+
+    border: 1px solid var(--color-gray);
+    border-radius: 10px;
+
+    background-color: var(--color-white);
+
+    #{$this}:hover & {
+      border: 1px solid var(--color-blue);
+      cursor: text;
+    }
+    #{$this}:focus-within & {
+      border: 1px solid var(--color-blue);
+    }
+  }
+
+  &__no-resize {
+    resize: none;
+  }
+
+  &__full-width {
+    width: 100%;
+  }
+
+  &__container-warning {
+    border: 1px solid var(--color-red);
+  }
+
+  &__field {
+    @include typography.ordinary_subtitle;
+    width: 100%;
+    min-width: 100%;
+    resize: vertical;
+    height: 100%;
+    min-height: 132px;
+    box-sizing: border-box;
+
+    border: 0;
+    outline: none;
+
+    padding: 16px;
+    border-radius: inherit;
+  }
+
+  &__warning {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    margin: 4px 0 0 2px;
+    gap: 4px;
+
+    width: 100%;
+
+    > svg {
+      max-width: 16px;
+      max-height: 16px;
+    }
+    > svg, path {
+      fill: var(--color-red);
+    }
+  }
+
+  &__label-warning {
+    @include typography.signature;
+    color: var(--color-red);
+  }
+}

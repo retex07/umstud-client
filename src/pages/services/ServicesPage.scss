@@ -1,0 +1,90 @@
+@use "@/styles/typography";
+
+.extra-services {
+  display: flex;
+  justify-content: center;
+
+  &__card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    border: 1px solid #ccc;
+    padding: 20px 24px;
+    border-radius: 10px;
+    min-width: 200px;
+    gap: 12px;
+
+    &-info {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    &-title {
+      @include typography.page_subtitle;
+    }
+
+    &-description {
+      @include typography.ordinary;
+    }
+  }
+}
+
+.services-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  &__item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    border-top: 1px solid var(--color-blue);
+    border-bottom: 1px solid var(--color-blue);
+    padding: 16px 20px;
+    border-radius: 10px;
+
+    @media screen and (max-width: 1220px) {
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    &-title {
+      @include typography.page_subtitle;
+    }
+
+    &-info {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 20px;
+
+      @media screen and (max-width: 1220px) {
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      &.small {
+        gap: 6px;
+      }
+
+      &-title {
+        @include typography.ordinary;
+
+        &::after {
+          content: ":";
+        }
+      }
+
+      &-description {
+        @include typography.ordinary_subtitle;
+        color: var(--color-gray-text);
+      }
+    }
+  }
+}

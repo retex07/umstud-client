@@ -1,7 +1,7 @@
 @import "~@csstools/normalize.css";
-@import "styles/css-variables.scss";
-@import "styles/fonts";
-@import "styles/typography";
+@import "@/styles/css-variables.scss";
+@import "@/styles/fonts";
+@import "@/styles/typography";
 @import "react-image-crop/dist/ReactCrop.css";
 
 body {

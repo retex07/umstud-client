@@ -1,2 +1,1 @@
-export { default } from "./component";
-export type { Props } from "./component";
+export { default, type Props } from "./Input";

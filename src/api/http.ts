@@ -1,7 +1,7 @@
-import { codeTokenNoValid } from "constants/config";
-
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-import { NotificationError } from "utils/error.utils";
+
+import { codeTokenNoValid } from "@/constants/config";
+import { NotificationError } from "@/utils/error";
 
 export const RequestConfig: AxiosRequestConfig = {
   baseURL: process.env.REACT_APP_SERVER_URL,

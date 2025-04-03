@@ -1,10 +1,11 @@
-import { DetailUserProfile } from "api/user/types";
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { infoUser, goToUserProfile } from "utils/user.utils";
+
+import { DetailUserProfile } from "@/api/user/types";
+import { infoUser, goToUserProfile } from "@/utils/user";
 
 import AvatarUser from "../avatarUser";
-import "./styles.scss";
+import "./InfoUser.scss";
 
 export default function InfoUser(
   props: Pick<

@@ -1,0 +1,410 @@
+@use "@/styles/typography";
+
+.page-orders {
+  gap: 20px;
+
+  &__header {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &_btn {
+      display: none;
+
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+
+      width: 34px;
+      height: 34px;
+
+      > svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      path {
+        stroke: var(--color-white);
+      }
+
+      &:hover path {
+        stroke: var(--color-green);
+      }
+
+      @media screen and (max-width: 1220px) {
+        display: block;
+      }
+    }
+
+    &_btn-list {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+
+  &__panels {
+    position: relative;
+
+    @media screen and (max-width: 1220px) {
+      display: none;
+    }
+
+    &-container {
+      position: fixed;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
+  }
+
+  &__filters {
+    @media screen and (max-width: 1540px) {
+      display: none;
+    }
+
+    position: relative;
+
+    &_btn {
+      display: none;
+
+      @media screen and (max-width: 1540px) {
+        display: flex;
+      }
+
+      &:hover path {
+        stroke: var(--color-blue);
+      }
+    }
+
+    &_field {
+      width: 100%;
+    }
+
+    &-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    &_head {
+      @include typography.page_subtitle;
+      text-align: center;
+    }
+
+    &_descr {
+      @include typography.ordinary;
+      color: var(--color-gray-text);
+      text-align: center;
+      line-height: 1;
+    }
+
+    &-container {
+      position: fixed;
+      width: 318px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      background-color: var(--color-white);
+      border-radius: 26px;
+      padding: 10px 12px;
+      gap: 12px;
+
+      transform: translateX(-100%);
+    }
+  }
+
+  &__service {
+    display: inline-flex;
+    align-items: center;
+    text-align: start;
+
+    gap: 8px;
+    padding: 10px 12px;
+    width: 100%;
+
+    > svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    &-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 0;
+    }
+
+    &_head {
+      @include typography.description;
+    }
+
+    &_descr {
+      @include typography.signature;
+      color: var(--color-gray-text);
+    }
+  }
+
+  &__panel {
+    @media screen and (max-width: 1220px) {
+      display: none;
+    }
+
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    align-items: center;
+    text-align: center;
+
+    gap: 10px;
+    padding: 12px;
+    border-radius: 26px;
+    height: auto;
+
+    max-width: 233px;
+    background: var(--color-white);
+
+    &_btn {
+      align-self: center;
+    }
+
+    &_head {
+      @include typography.page_subtitle;
+    }
+
+    &_descr {
+      @include typography.ordinary;
+      color: var(--color-gray-text);
+      line-height: 1;
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__no-data {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+
+    &_logo {
+      min-height: 250px;
+    }
+  }
+
+  &__order {
+    &_header {
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+
+      &-block {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
+
+      &-action {
+        $action: &;
+        width: 28px;
+        height: 28px;
+        cursor: pointer;
+
+        &:hover path {
+          stroke: var(--color-blue);
+        }
+
+        &_btn {
+          display: none;
+
+          @media screen and (max-width: 1220px) {
+            display: block;
+          }
+        }
+
+        @media screen and (max-width: 1220px) {
+          display: none;
+        }
+      }
+
+      &-info {
+        display: inline-flex;
+        gap: 6px;
+
+        &_link {
+          @include typography.description;
+          color: var(--color-blue);
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+
+        &_sub-title {
+          @include typography.description;
+
+          width: 100%;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+
+          &::before {
+            content: "-";
+            margin-right: 6px;
+          }
+        }
+      }
+    }
+
+    &-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+
+      &-section {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+
+        &_head {
+          @include typography.page_subtitle;
+        }
+
+        &_descr {
+          @include typography.ordinary;
+        }
+      }
+
+      &_table {
+        max-width: 350px;
+        width: 100%;
+
+        table-layout: fixed;
+
+        border-collapse: collapse;
+
+        tr:nth-child(even) {
+          background-color: var(--color-gray-light);
+        }
+
+        td {
+          @include typography.ordinary;
+          white-space: nowrap;
+
+          @media screen and (max-width: 1220px) {
+            @include typography.description;
+          }
+        }
+
+        td:nth-child(odd) {
+          width: 35%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          @media screen and (max-width: 1220px) {
+            width: 40%;
+          }
+
+          &:after {
+            content: ":";
+          }
+        }
+
+        td:nth-child(even) {
+          width: 55%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        td, th {
+          padding: 6px 10px;
+        }
+      }
+    }
+  }
+
+  &__order-create {
+    &_header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    &_sub-fields {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between;
+
+      @media screen and (max-width: 1220px) {
+        flex-direction: column;
+        flex-wrap: nowrap;
+      }
+
+      &_field {
+        width: calc(50% - 6px);
+
+        @media screen and (max-width: 1220px) {
+          width: 100%;
+          max-width: 100%;
+        }
+
+        & .input__container {
+          width: 100%;
+        }
+      }
+    }
+
+    &_form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+
+  &__actions {
+    &-list {
+      display: inline-flex;
+      gap: 12px;
+    }
+
+    &_btn {
+      @media screen and (max-width: 1220px) {
+        flex: 1;
+      }
+    }
+
+    &_cancel {
+      @include typography.page_subtitle;
+      color: var(--color-red);
+      cursor: pointer;
+
+      @media screen and (max-width: 1220px) {
+        display: none;
+      }
+
+      &_btn {
+        display: none;
+
+        @media screen and (max-width: 1220px) {
+          display: block;
+        }
+      }
+    }
+  }
+}

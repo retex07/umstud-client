@@ -1,6 +1,7 @@
 import { lazy } from "react";
-import { Route } from "services/router/types";
-import urls from "services/router/urls";
+
+import { Route } from "@/services/router/types";
+import urls from "@/services/router/urls";
 
 const EditPage = lazy(() => import("./_/edit"));
 const IndexPage = lazy(() => import("./_/index"));

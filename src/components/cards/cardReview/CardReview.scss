@@ -1,0 +1,59 @@
+@use "@/styles/typography";
+
+.card-review {
+  display: flex;
+  flex-direction: column;
+
+  padding: 22px 18px;
+  gap: 22px;
+  box-sizing: border-box;
+  max-width: 260px;
+  width: 100%;
+
+  background: var(--color-white);
+  border-radius: 10px;
+
+  &--header {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  &--heading {
+    @include typography.page_subtitle;
+
+    color: var(--color-dark-text);
+  }
+
+  &--comment-container {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+
+    span, p {
+      @include typography.ordinary;
+
+      color: var(--color-dark-text);
+    }
+  }
+
+  &--date {
+    @include typography.signature;
+
+    width: 100%;
+    text-align: end;
+
+    color: var(--color-gray-text);
+  }
+}
+
+.stars {
+  display: flex;
+  flex-direction: row;
+
+  gap: 2px;
+}

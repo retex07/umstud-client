@@ -1,0 +1,38 @@
+@use "@/styles/typography";
+
+.black-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  padding: 12px 20px;
+  box-sizing: border-box;
+  width: 100%;
+
+  @media screen and (max-width: 1220px) {
+    padding: 10px 0;
+  }
+
+  &:not(:first-child) {
+    border-top: 1px solid var(--color-gray-light);
+  }
+
+  &__user-actions {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+  }
+
+  &__user-remove {
+    @include typography.description;
+    border: none;
+    background: none;
+    color: var(--color-red);
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    text-align: end;
+  }
+}

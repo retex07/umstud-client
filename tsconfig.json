@@ -12,7 +12,9 @@
     "sourceMap": true,
     "removeComments": false,
     "resolveJsonModule": true,
-    "baseUrl": "./src/",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules"]

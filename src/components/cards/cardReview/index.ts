@@ -1,1 +1,1 @@
-export { default } from "./compoenent";
+export { default } from "./CardReview";

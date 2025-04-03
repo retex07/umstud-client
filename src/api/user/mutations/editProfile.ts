@@ -1,8 +1,9 @@
-import { ENDPOINTS_CONFIG } from "api/endpoints";
-import http from "api/http";
-import { PureResponse } from "api/types";
 import { AxiosError, AxiosResponse, CancelToken } from "axios";
 import { useMutation, UseMutationOptions } from "react-query";
+
+import { ENDPOINTS_CONFIG } from "@/api/endpoints";
+import http from "@/api/http";
+import { PureResponse } from "@/api/types";
 
 import { UserPut_ErrorBody, UserPut_Response } from "../types";
 

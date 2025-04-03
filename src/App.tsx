@@ -1,85 +1,47 @@
-import { codeTokenNoValid } from "constants/config";
-
-import { useMeProfile } from "api/user/queries/meProfile";
-import { DetailUserProfile } from "api/user/types";
-import LayoutBuilder from "components/layoutBuilder";
-import PageLoader from "components/loaders/pageLoader";
+import { History } from "history";
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
-import Routes from "services/router/config";
-import urls from "services/router/urls";
-import { Dispatch } from "store/types";
-import { actions as userActions } from "store/user";
-import { user as user_selector } from "store/user/user.selectors";
-import { initializeState } from "store/user/user.slice";
 
-function App() {
+import { DetailUserProfile } from "@/api/user/types";
+import LayoutBuilder from "@/components/layoutBuilder";
+import PageLoader from "@/components/loaders/pageLoader";
+import Routes from "@/services/router/config";
+import urls from "@/services/router/urls";
+import { initApp } from "@/store/actions/app";
+import { selectIsLoadingApp } from "@/store/selectors/app";
+import { selectAccessToken } from "@/store/selectors/auth";
+import { selectUserData } from "@/store/selectors/user";
+import { Dispatch, RootState } from "@/store/types";
+
+interface PropsApp {
+  initApp: (history: History) => void;
+  userProfile: DetailUserProfile | null;
+  accessToken: string | null;
+  isLoadingApp: boolean;
+}
+
+function App(props: PropsApp) {
+  const { initApp, accessToken, userProfile, isLoadingApp } = props;
+
   const history = useHistory();
   const location = useLocation();
-  const dispatch = useDispatch<Dispatch>();
 
   useEffect(() => {
-    initializeState();
+    initApp(history);
   }, []);
 
-  const { accessToken, user: userProfile } = useSelector(user_selector);
-
-  const {
-    isLoading: isLoadingUserProfile,
-    refetch: refetchUserProfile,
-    error: errorGetProfile,
-  } = useMeProfile<DetailUserProfile>({ enabled: !!accessToken });
-
-  const errorCodeProfile = errorGetProfile?.response?.data.code || null;
-
   useEffect(() => {
-    if (!accessToken || !userProfile) {
-      if (
-        location.pathname.includes(urls.profile.index) &&
-        !location.pathname.includes(urls.profile.item.replace(":profileId", ""))
-      ) {
-        history.push(urls.auth.index + urls.auth.signIn);
-      }
+    if (
+      userProfile &&
+      accessToken &&
+      location.pathname.includes(urls.auth.index)
+    ) {
+      history.push(urls.profile.index);
     }
-  }, [accessToken, userProfile, location, history]);
-
-  useEffect(() => {
-    checkAuth();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userProfile]);
 
-  useEffect(() => {
-    if (accessToken) {
-      if (errorCodeProfile && errorCodeProfile === codeTokenNoValid) {
-        dispatch(userActions.logout());
-      } else {
-        refetchUserProfile()
-          .then((res) => {
-            dispatch(userActions.updateUser(res.data || null));
-            checkAuth();
-          })
-          .catch(() => dispatch(userActions.logout()));
-      }
-    } else {
-      dispatch(userActions.logout());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accessToken, userProfile, errorCodeProfile]);
-
-  const checkAuth = () => {
-    if (!isLoadingUserProfile) {
-      if (
-        userProfile &&
-        accessToken &&
-        location.pathname.includes(urls.auth.index)
-      ) {
-        history.push(urls.profile.index);
-      }
-    }
-  };
-
-  if (accessToken && isLoadingUserProfile) {
+  if (isLoadingApp) {
     return <PageLoader />;
   }
 
@@ -111,4 +73,14 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = (state: RootState) => ({
+  accessToken: selectAccessToken(state),
+  userProfile: selectUserData(state),
+  isLoadingApp: selectIsLoadingApp(state),
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  initApp: (history: History) => dispatch(initApp({ history })),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

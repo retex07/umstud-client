@@ -1,5 +1,6 @@
-import ConfirmComponent from "components/confirm";
 import React, { ReactNode, useRef, useState } from "react";
+
+import ConfirmComponent from "@/components/confirm";
 
 import { Context } from "./confirm";
 

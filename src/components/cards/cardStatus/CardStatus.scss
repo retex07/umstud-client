@@ -1,0 +1,38 @@
+@use "@/styles/typography";
+
+.card-status {
+  @include typography.button_big;
+  color: var(--color-white);
+  display: inline-flex;
+  align-items: center;
+
+  padding: 6px 8px;
+  gap: 4px;
+
+  border-radius: 10px;
+
+  &.open {
+    background: var(--color-blue);
+    > svg, path {
+      stroke: var(--color-white);
+      max-width: 16px;
+      max-height: 16px;
+    }
+  }
+  &.close {
+    > svg, path {
+      fill: var(--color-white);
+      stroke: var(--color-white);
+      max-width: 16px;
+      max-height: 16px;
+    }
+    background: var(--color-red);
+  }
+  &.progress {
+    > svg, path {
+      max-width: 16px;
+      max-height: 16px;
+    }
+    background: var(--color-green);
+  }
+}

@@ -1,7 +1,8 @@
-import { ENDPOINTS_CONFIG } from "api/endpoints";
-import http from "api/http";
 import { AxiosError } from "axios";
 import { QueryFunction, useQuery, UseQueryOptions } from "react-query";
+
+import { ENDPOINTS_CONFIG } from "@/api/endpoints";
+import http from "@/api/http";
 
 import { DetailUserProfile } from "../types";
 

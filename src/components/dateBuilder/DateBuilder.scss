@@ -1,0 +1,27 @@
+@use "@/styles/typography";
+
+.date-builder {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+
+  svg {
+    max-width: 14px;
+    max-height: 14px;
+  }
+
+  &--item {
+    @include typography.signature;
+    display: inline-flex;
+    align-items: center;
+    margin-top: 2px;
+    gap: 4px;
+
+    &.start {
+      color: var(--color-blue);
+    }
+    &.end {
+      color: var(--color-red);
+    }
+  }
+}

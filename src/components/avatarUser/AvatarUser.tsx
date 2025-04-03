@@ -1,6 +1,7 @@
-import { DetailUserProfile } from "api/user/types";
 import React from "react";
-import { ReactComponent as ExampleAvatarSvg } from "static/images/example-avatar.svg";
+
+import { DetailUserProfile } from "@/api/user/types";
+import { ReactComponent as ExampleAvatarSvg } from "@/static/images/example-avatar.svg";
 
 export default function AvatarUser(
   props: Pick<DetailUserProfile, "photo" | "username">

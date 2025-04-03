@@ -1,1 +1,1 @@
-export { default } from "./profileActions";
+export { default } from "./ProfileActions";

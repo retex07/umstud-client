@@ -1,4 +1,4 @@
-import { SelectOption } from "types/components";
+import { SelectOption } from "@/types/components";
 
 export type CardStatusTypes = "open" | "closed" | "in_progress";
 

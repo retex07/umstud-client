@@ -1,0 +1,43 @@
+@use "@/styles/typography";
+
+.info-user-component {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  &__avatar-container {
+    $size-container: 64px;
+
+    width: $size-container;
+    min-width: $size-container;
+    height: $size-container;
+    min-height: $size-container;
+
+    & > img {
+      border-radius: 50%;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    &_head {
+      @include typography.ordinary;
+      cursor: default;
+    }
+
+    &_descr {
+      @include typography.description;
+      color: var(--color-blue);
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

@@ -1,0 +1,119 @@
+@use "@/styles/typography";
+
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+
+  animation: fadeIn 0.3s ease-out forwards;
+
+  &.fade-out {
+    animation: fadeOut 0.3s ease-out forwards;
+  }
+}
+
+.bg-closer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: -1;
+}
+
+.modal-card {
+  background-color: var(--color-white);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px var(--color-gray-box-shadow);
+  transform: translateY(-50px);
+  opacity: 0;
+  animation: slideIn 0.3s 0.3s ease-out forwards;
+
+  @media screen and (max-width: 1220px) {
+    max-height: 600px;
+    overflow: auto;
+  }
+
+  &.slide-out {
+    animation: slideOut 0.3s ease-out forwards;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__header {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  &__title {
+    @include typography.page_subtitle;
+  }
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    background: none;
+    margin: 0;
+    padding: 0;
+
+    > svg, path {
+      max-width: 24px;
+      max-height: 24px;
+    }
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    background-color: var(--color-gray-modal);
+  }
+  to {
+    background-color: var(--color-transparent);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    background-color: var(--color-transparent);
+  }
+  to {
+    background-color: var(--color-gray-modal);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
