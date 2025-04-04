@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
 import useRespondAd from "@/api/ads/mutations/respond";
-import { useAdsItem } from "@/api/ads/queries/ad";
 import { useUserProfile } from "@/api/user/queries/userProfile";
 import Button from "@/components/button";
 import CardStatus from "@/components/cards/cardStatus";
@@ -13,26 +12,39 @@ import InfoUser from "@/components/infoUser";
 import PageLoader from "@/components/loaders/pageLoader";
 import urls from "@/services/router/urls";
 import { ReactComponent as SvgEdit } from "@/static/images/edit.svg";
+import { getOrder } from "@/store/actions/order";
 import { selectAccessToken } from "@/store/selectors/auth";
+import {
+  selectIsLoadingOrderItem,
+  selectOrderItem,
+} from "@/store/selectors/order";
 import { selectUserData } from "@/store/selectors/user";
 
 import TableOrderInfo from "./components/tableOrderInfo";
+
 import "../styles.scss";
 
 export default function ItemOrderPage() {
   const { t } = useTranslation("p_orders");
 
+  const dispatch = useDispatch();
+  const params = useParams<{ orderId: string }>();
+
+  function fetchOrder() {
+    dispatch(getOrder(params.orderId));
+  }
+
+  useEffect(() => {
+    fetchOrder();
+  }, []);
+
   const user = useSelector(selectUserData);
   const accessToken = useSelector(selectAccessToken);
+  const dataOrderItem = useSelector(selectOrderItem);
+  const isLoadingOrderItem = useSelector(selectIsLoadingOrderItem);
+
   const { slug } = user || {};
 
-  const params = useParams<{ orderId: string }>();
-  const {
-    data: dataOrderItem,
-    isLoading: isLoadingOrderItem,
-    refetch,
-    isRefetching: isRefetchingOrderItem,
-  } = useAdsItem(params.orderId);
   const { data: dataAuthor, isLoading: isLoadingAuthor } = useUserProfile(
     dataOrderItem?.author.slug,
     { enabled: !!dataOrderItem }
@@ -71,7 +83,7 @@ export default function ItemOrderPage() {
         {
           onSuccess: () => {
             toast.success(t("pages.item.actions.respondedSuccess"));
-            refetch();
+            fetchOrder();
           },
         }
       );
@@ -153,11 +165,11 @@ export default function ItemOrderPage() {
           user &&
           accessToken && (
             <Button
-              isLoading={isRefetchingOrderItem}
+              isLoading={isLoadingOrderItem}
               onClick={onRespond}
-              disabled={isRespond || isRefetchingOrderItem}
+              disabled={isRespond || isLoadingOrderItem}
               label={
-                isRefetchingOrderItem
+                isLoadingOrderItem
                   ? t("pages.item.actions.loading")
                   : isRespond
                   ? t("pages.item.actions.responded")

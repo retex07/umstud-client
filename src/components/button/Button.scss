@@ -1,6 +1,6 @@
 @use "src/styles/typography";
 
-$button-border-width: 2px;
+$button-border-width: 1px;
 $transition-fast: 0.2s;
 $transition-slow: 0.3s;
 
@@ -37,14 +37,17 @@ $transition-slow: 0.3s;
   &__small {
     @include typography.button-small;
     padding: 10px 12px;
+    max-height: 34px;
   }
   &__middle {
     @include typography.button-middle;
     padding: 12px 14px;
+    max-height: 41px;
   }
   &__big {
     @include typography.button-big;
     padding: 14px 16px;
+    max-height: 47px;
   }
 
   $colors: blue, blue-dark, green, red, yellow;

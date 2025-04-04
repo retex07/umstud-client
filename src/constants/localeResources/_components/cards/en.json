@@ -1,11 +1,14 @@
 {
   "cardTask": {
     "executor": "Executor",
-    "choose": "Choose"
+    "choose": "Choose",
+    "selected": "Selected"
   },
   "cardStatus": {
     "open": "Opened",
     "closed": "Closed",
     "inProgress": "In progress"
-  }
+  },
+  "titleModalResponders": "Select a performer",
+  "noDataResponders": "There are no responding performers"
 }

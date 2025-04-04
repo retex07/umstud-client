@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import { useAds } from "@/api/ads/queries/ads";
 import { AdGet } from "@/api/ads/types";
 import Button from "@/components/button";
 import CardTask from "@/components/cards/cardTask";
@@ -15,7 +14,9 @@ import urls from "@/services/router/urls";
 import { ReactComponent as FileSvg } from "@/static/images/file.svg";
 import { ReactComponent as PlusSvg } from "@/static/images/plus.svg";
 import { ReactComponent as SettingsSvg } from "@/static/images/settings.svg";
+import { getOrders } from "@/store/actions/order";
 import { selectAccessToken } from "@/store/selectors/auth";
+import { selectIsLoadingOrders, selectOrders } from "@/store/selectors/order";
 import { selectUserData } from "@/store/selectors/user";
 import { checkToken } from "@/utils/user";
 
@@ -29,11 +30,17 @@ export default function IndexOrderPage() {
   const [orders, setOrders] = useState<AdGet[]>([]);
 
   const { t } = useTranslation("p_orders");
-  const { data: dataOrders, isLoading: isLoadingOrders } = useAds();
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getOrders());
+  }, []);
 
   const user = useSelector(selectUserData);
   const accessToken = useSelector(selectAccessToken);
+  const dataOrders = useSelector(selectOrders);
+  const isLoadingOrders = useSelector(selectIsLoadingOrders);
 
   useEffect(() => {
     if (dataOrders) {

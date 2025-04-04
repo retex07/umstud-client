@@ -1,5 +1,5 @@
 export const CONFIG_SYSTEM = {
-  nameSystem: "©2023-2024 «УмСтуд»",
+  nameSystem: `©2023-${new Date().getFullYear()} «УмСтуд»`,
   phone: "+7(923)491-20-64",
   mail: "support@umstud.ru",
 };

@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
 
-import { useMyOrders } from "@/api/ads/queries/myOrders";
 import CardTask from "@/components/cards/cardTask";
 import PageLoader from "@/components/loaders/pageLoader";
 import NoDataComponent from "@/components/noData";
 import NavigationMenu from "@/pages/profile/components/navigationMenu";
+import { getMyOrders } from "@/store/actions/order";
+import {
+  selectIsLoadingMyOrders,
+  selectMyOrdersList,
+} from "@/store/selectors/order";
 import { isMobileVersion } from "@/utils/util";
 
 import MobileNavigationMenu from "../../components/mobileNavigationMenu";
@@ -14,7 +19,15 @@ import "../styles.scss";
 
 export default function MyOrdersProfilePage() {
   const { t } = useTranslation("p_profile", { keyPrefix: "orders" });
-  const { data: dataMyOrders, isLoading: isLoadingMyOrders } = useMyOrders();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getMyOrders());
+  }, []);
+
+  const myOrdersList = useSelector(selectMyOrdersList);
+  const isLoadingMyOrders = useSelector(selectIsLoadingMyOrders);
 
   return (
     <div id="page" className="page-container">
@@ -25,11 +38,14 @@ export default function MyOrdersProfilePage() {
         <div className="page-content-wrapper">
           <header className="page-content-title">{t("title")}</header>
           {isLoadingMyOrders && <PageLoader />}
-          {!isLoadingMyOrders && !dataMyOrders?.length && <NoDataComponent />}
-          {dataMyOrders &&
-            dataMyOrders.map((workCard) => (
-              <CardTask key={workCard.id} {...workCard} />
-            ))}
+          {!isLoadingMyOrders && !myOrdersList?.length && <NoDataComponent />}
+          {myOrdersList?.map((workCard) => (
+            <CardTask
+              {...workCard}
+              key={workCard.id}
+              user={workCard.executor}
+            />
+          ))}
         </div>
         <NavigationMenu />
       </div>

@@ -2,14 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 
 import useCreateAd from "@/api/ads/mutations/create";
 import useUpdateAd from "@/api/ads/mutations/edit";
-import { useAdsItem } from "@/api/ads/queries/ad";
-import { useCategoriesAds } from "@/api/ads/queries/categories";
-import { useTypesAds } from "@/api/ads/queries/types";
 import {
   AdCreate_FormBody,
   OptionSelect as OptionSelectAd,
@@ -22,7 +19,14 @@ import TextareaField from "@/components/formElements/textareaField";
 import PageLoader from "@/components/loaders/pageLoader";
 import { RegExp } from "@/constants/config";
 import urls from "@/services/router/urls";
+import { getCategoriesAndTypes, getOrder } from "@/store/actions/order";
 import { selectAccessToken } from "@/store/selectors/auth";
+import {
+  selectCategories,
+  selectIsLoadingOrderItem,
+  selectOrderItem,
+  selectTypes,
+} from "@/store/selectors/order";
 import { SelectOption } from "@/types/components";
 import { checkToken } from "@/utils/user";
 import { isMobileVersion } from "@/utils/util";
@@ -40,20 +44,25 @@ export default function CreateOrderPage() {
   const dateInputRef = useRef<HTMLInputElement>(null);
   const token = useSelector(selectAccessToken);
 
+  const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
 
   const createOrder = useCreateAd();
   const updateOrder = useUpdateAd();
 
-  const { data: dataOrderItem, isLoading: isLoadingOrderItem } = useAdsItem(
-    params.orderId,
-    { enabled: isEditingOrder }
-  );
+  useEffect(() => {
+    if (isEditingOrder) {
+      dispatch(getOrder(params.orderId));
+    }
 
-  const { data: dataTypesAds, isLoading: isLoadingTypesAds } = useTypesAds();
-  const { data: dataCategoriesAds, isLoading: isLoadingCategoriesAds } =
-    useCategoriesAds();
+    dispatch(getCategoriesAndTypes());
+  }, []);
+
+  const dataOrderItem = useSelector(selectOrderItem);
+  const isLoadingOrderItem = useSelector(selectIsLoadingOrderItem);
+  const dataCategoriesAds = useSelector(selectCategories);
+  const dataTypesAds = useSelector(selectTypes);
 
   const { control, handleSubmit, formState, setError, setValue } =
     useForm<AdCreate_FormBody>({
@@ -204,7 +213,7 @@ export default function CreateOrderPage() {
     checkToken(token, history);
   }
 
-  if (isLoadingTypesAds || isLoadingCategoriesAds || isLoadingOrderItem) {
+  if (isLoadingOrderItem) {
     return <PageLoader />;
   }
 

@@ -1,11 +1,14 @@
 {
   "cardTask": {
     "executor": "Исполнитель",
-    "choose": "Выбрать"
+    "choose": "Выбрать",
+    "selected": "Выбран"
   },
   "cardStatus": {
     "open": "Открыто",
     "closed": "Закрыто",
     "inProgress": "В процессе"
-  }
+  },
+  "titleModalResponders": "Выберите исполнителя",
+  "noDataResponders": "Нет откликнувшихся исполнителей"
 }

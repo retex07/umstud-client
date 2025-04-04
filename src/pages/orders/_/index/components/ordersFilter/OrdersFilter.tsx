@@ -1,14 +1,15 @@
 import isFunction from "lodash/isFunction";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
 
-import { useCategoriesAds } from "@/api/ads/queries/categories";
-import { useTypesAds } from "@/api/ads/queries/types";
 import { OptionSelect as OptionSelectAd } from "@/api/ads/types";
 import Button from "@/components/button";
 import Field from "@/components/formElements/field";
 import SelectField from "@/components/formElements/selectField";
+import { getCategoriesAndTypes } from "@/store/actions/order";
+import { selectCategories, selectTypes } from "@/store/selectors/order";
 import { SelectOption } from "@/types/components";
 import "../../../styles.scss";
 
@@ -27,8 +28,14 @@ export default function OrdersFilter(props: Props) {
     keyPrefix: "pages.index.filters",
   });
 
-  const { data: dataTypesAds } = useTypesAds();
-  const { data: dataCategoriesAds } = useCategoriesAds();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCategoriesAndTypes());
+  }, []);
+
+  const dataTypesAds = useSelector(selectTypes);
+  const dataCategoriesAds = useSelector(selectCategories);
 
   const { control, handleSubmit, formState } = useForm<OrdersFilters_FormData>({
     mode: "onSubmit",

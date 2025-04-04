@@ -4,13 +4,29 @@ import { DetailUserProfile } from "@/api/user/types";
 import { ReactComponent as ExampleAvatarSvg } from "@/static/images/example-avatar.svg";
 
 export default function AvatarUser(
-  props: Pick<DetailUserProfile, "photo" | "username">
+  props: Pick<DetailUserProfile, "photo" | "username"> & {
+    classNameImg?: string;
+    classNameWrapper?: string;
+  }
 ) {
+  let content;
+
   switch (true) {
     case !!props.photo: {
-      return <img src={props.photo || ""} alt={props.username} />;
+      content = (
+        <img
+          className={props.classNameImg}
+          src={props.photo || ""}
+          alt={props.username}
+        />
+      );
+      break;
     }
+
     default:
-      return <ExampleAvatarSvg />;
+      content = <ExampleAvatarSvg />;
+      break;
   }
+
+  return <div className={props.classNameWrapper}>{content}</div>;
 }
