@@ -1,4 +1,3 @@
-import { History } from "history";
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";

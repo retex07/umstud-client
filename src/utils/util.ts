@@ -1,5 +1,4 @@
 import i18next from "i18next";
-import { isString } from "lodash";
 import isFunction from "lodash/isFunction";
 import toast from "react-hot-toast";
 

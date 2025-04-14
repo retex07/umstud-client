@@ -3,7 +3,11 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import { CardStatusTypes, UserResponse } from "@/api/ads/types";
+import {
+  CardStatusTypes,
+  Respond,
+  UserResponse,
+} from "@/api/handlers/order/types";
 import AvatarUser from "@/components/avatarUser";
 import Button from "@/components/button";
 import DateBuilder from "@/components/dateBuilder";
@@ -27,7 +31,7 @@ interface Props {
   user?: UserResponse;
   isOrder?: boolean;
   status: CardStatusTypes;
-  responders?: UserResponse[];
+  responders?: Respond[];
 }
 
 export default function CardTask(props: Props) {
@@ -90,8 +94,8 @@ export default function CardTask(props: Props) {
         <div className="modal-responders">
           <div className="modal-responders__users">
             {!props.responders?.length && <span>{t("noDataResponders")}</span>}
-            {props.responders?.map((responder) => (
-              <div key={responder.id} className="modal-responders__user">
+            {props.responders?.map(({ responder, id: respondId }) => (
+              <div key={respondId} className="modal-responders__user">
                 <div className="modal-responders__user-info">
                   <AvatarUser
                     classNameImg="modal-responders__user_img"
@@ -105,17 +109,17 @@ export default function CardTask(props: Props) {
                 </div>
                 <div className="modal-responders__action">
                   <Button
-                    onClick={() => setSelectedResponder(responder.id)}
+                    onClick={() => setSelectedResponder(respondId)}
                     color="blue-dark"
                     size="small"
                     fullWidth
                     label={
-                      !!responder.id && selectedResponder === responder.id
+                      !!respondId && selectedResponder === respondId
                         ? t("cardTask.selected")
                         : t("cardTask.choose")
                     }
                     isTransparent={
-                      !!responder.id && selectedResponder === responder.id
+                      !!respondId && selectedResponder === respondId
                     }
                   />
                 </div>

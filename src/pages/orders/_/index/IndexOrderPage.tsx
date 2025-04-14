@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import { AdGet } from "@/api/ads/types";
+import { AdGet } from "@/api/handlers/order/types";
 import Button from "@/components/button";
 import CardTask from "@/components/cards/cardTask";
 import PageLoader from "@/components/loaders/pageLoader";

@@ -20,7 +20,7 @@ export interface AdGet {
   id: number;
   orderNumber?: number;
   executor?: UserResponse;
-  responders?: UserResponse[];
+  responders?: Respond[];
   title: string;
   type: string[];
   category: string[];
@@ -48,7 +48,8 @@ export interface AdCreateResponse extends AdCreate {
 }
 
 export interface Respond {
-  ad_id: number;
+  id: number;
+  responder: UserResponse;
   comment?: string;
 }
 

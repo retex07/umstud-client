@@ -64,7 +64,9 @@ export default function ItemOrderPage() {
     !isMyOrder &&
     dataAuthor &&
     (dataOrderItem?.responders?.length || 0) > 0 &&
-    !!dataOrderItem?.responders?.find((resp) => resp.slug === slug);
+    !!dataOrderItem?.responders?.find(
+      ({ responder }) => responder.slug === slug
+    );
 
   function onRespond() {
     if (

@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { AdGet } from "@/api/ads/types";
+import { AdGet } from "@/api/handlers/order/types";
 import { dateWithMonthWord, getFullDate } from "@/utils/util";
 import "../../../styles.scss";
 
