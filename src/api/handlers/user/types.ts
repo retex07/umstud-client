@@ -46,8 +46,16 @@ export type DetailUserProfile = {
 
 export type UserPut_RequestBody = Omit<
   DetailUserProfile,
-  "username" | "slug" | "language" | "views" | "rating" | "portfolio_items"
->;
+  | "username"
+  | "slug"
+  | "language"
+  | "views"
+  | "rating"
+  | "portfolio_items"
+  | "skills"
+> & {
+  skills: number[];
+};
 
 export type UserPut_FormBody = Omit<UserPut_RequestBody, "skills"> & {
   skills: SelectOption[];

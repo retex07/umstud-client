@@ -15,7 +15,7 @@ import { selectUserData } from "@/store/selectors/user";
 import { Dispatch, RootState } from "@/store/types";
 
 interface PropsApp {
-  initApp: (history: History) => void;
+  initApp: () => void;
   userProfile: DetailUserProfile | null;
   accessToken: string | null;
   isLoadingApp: boolean;
@@ -28,7 +28,7 @@ function App(props: PropsApp) {
   const location = useLocation();
 
   useEffect(() => {
-    initApp(history);
+    initApp();
   }, []);
 
   useEffect(() => {
@@ -40,6 +40,17 @@ function App(props: PropsApp) {
       history.push(urls.profile.index);
     }
   }, [userProfile]);
+
+  useEffect(() => {
+    if (!accessToken || !userProfile) {
+      if (
+        location.pathname.includes(urls.profile.index) &&
+        !location.pathname.includes(urls.profile.item.replace(":profileId", ""))
+      ) {
+        history.push(urls.auth.index + urls.auth.signIn);
+      }
+    }
+  }, [userProfile, accessToken]);
 
   if (isLoadingApp) {
     return <PageLoader />;
@@ -80,7 +91,7 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  initApp: (history: History) => dispatch(initApp({ history })),
+  initApp: () => dispatch(initApp()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

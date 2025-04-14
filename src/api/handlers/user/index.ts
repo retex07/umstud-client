@@ -15,7 +15,7 @@ import http from "../../http";
 import { PureResponse } from "../../types";
 
 interface QueryHandlers {
-  getMeProfile: () => Promise<DetailUserProfile>;
+  getMyProfile: () => Promise<DetailUserProfile>;
   getUserList: () => Promise<DetailUserProfile[]>;
   getBlackList: () => Promise<BlackList[]>;
   getSkills: () => Promise<Skill[]>;
@@ -57,7 +57,7 @@ export default function ApiUser(): ApiUserHandlers {
     return (await http.get(API.userProfile + slug + "/")).data;
   };
 
-  const getMeProfile = async () => {
+  const getMyProfile = async () => {
     return (await http.get(API.profile)).data;
   };
 
@@ -119,7 +119,7 @@ export default function ApiUser(): ApiUserHandlers {
     getUserProfile,
     activateAccount,
     getBlackList,
-    getMeProfile,
+    getMyProfile,
     getSkills,
     addPortfolioItem,
     addToBlackList,

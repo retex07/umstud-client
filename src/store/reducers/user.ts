@@ -3,12 +3,14 @@ import { handleActions } from "redux-actions";
 import {
   initedActivateAccount,
   setErrorActivateAccount,
+  setIsLoading,
   setUser,
 } from "../actions/user";
 import { UserState } from "../types/user";
 
 export const initialState: UserState = {
   user: null,
+  isLoading: false,
   activation: {
     isInitialized: false,
     isError: false,
@@ -18,11 +20,18 @@ export const initialState: UserState = {
 
 Object.freeze(initialState);
 
-const user = handleActions(
+const user = handleActions<UserState, any>(
   {
     [setUser.toString()]: (state, { payload }) => ({
       ...state,
       user: payload.user,
+    }),
+    [setIsLoading.toString()]: (
+      state,
+      { payload }: ReturnType<typeof setIsLoading>
+    ) => ({
+      ...state,
+      isLoading: payload,
     }),
     [initedActivateAccount.toString()]: (state, { payload }) => ({
       ...state,

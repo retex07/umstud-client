@@ -44,28 +44,30 @@ export default function ProfileActions(props: Props) {
   const removeOfBlackList = useRemoveOfBlackList();
 
   useEffect(() => {
-    if (blackList?.some((user) => user.blocked_user.id === props.userId)) {
-      setItemsAction([
-        {
-          title: t("copyLinkToClipboard"),
-          action: copyLinkToClipboard,
-        },
-        {
-          title: t("removeOfBlackList"),
-          action: handleRemoveOfBlackList,
-        },
-      ]);
-    } else if (!props.isMyProfile) {
-      setItemsAction([
-        {
-          title: t("copyLinkToClipboard"),
-          action: copyLinkToClipboard,
-        },
-        {
-          title: t("addToBlackList"),
-          action: handleAddToBlackList,
-        },
-      ]);
+    if (myProfile && accessToken) {
+      if (blackList?.some((user) => user.blocked_user.id === props.userId)) {
+        setItemsAction([
+          {
+            title: t("copyLinkToClipboard"),
+            action: copyLinkToClipboard,
+          },
+          {
+            title: t("removeOfBlackList"),
+            action: handleRemoveOfBlackList,
+          },
+        ]);
+      } else if (!props.isMyProfile) {
+        setItemsAction([
+          {
+            title: t("copyLinkToClipboard"),
+            action: copyLinkToClipboard,
+          },
+          {
+            title: t("addToBlackList"),
+            action: handleAddToBlackList,
+          },
+        ]);
+      }
     }
   }, [blackList]);
 

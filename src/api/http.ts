@@ -57,10 +57,12 @@ export function onRejectedResponse(error: AxiosError) {
       NotificationError(502);
       break;
     default:
-      NotificationError(
-        error.response?.status || 0,
-        error.response?.data.detail || null
-      );
+      if (error.response?.data.code !== 401) {
+        NotificationError(
+          error.response?.status || 0,
+          error.response?.data.detail || null
+        );
+      }
       break;
   }
   return Promise.reject(error);

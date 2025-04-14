@@ -44,7 +44,7 @@ function* loginSaga(
     localStorage.setItem("accessToken", access);
     localStorage.setItem("refreshToken", refresh);
 
-    const myProfileData: DetailUserProfile = yield call(api.user.getMeProfile);
+    const myProfileData: DetailUserProfile = yield call(api.user.getMyProfile);
     if (myProfileData) {
       yield put(setUser({ user: myProfileData }));
     } else {

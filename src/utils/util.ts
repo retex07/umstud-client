@@ -89,18 +89,19 @@ export async function copyTextToClipboard(
   }
 }
 
-export function t(path: string, { keyPrefix = "" }: { keyPrefix?: string }) {
-  if (!path) {
-    return "";
+export function t(
+  namespace: string,
+  { keyPrefix = "" }: { keyPrefix?: string }
+) {
+  if (!namespace) return "";
+
+  if (!i18next.hasResourceBundle(i18next.language, namespace)) {
+    i18next.loadNamespaces(namespace);
   }
 
-  if (!isString(path)) {
-    return path;
+  if (i18next.exists(keyPrefix, { ns: namespace })) {
+    return i18next.t(keyPrefix, { ns: namespace });
   }
 
-  if (i18next.exists(keyPrefix)) {
-    return i18next.t(keyPrefix, { ns: path });
-  }
-
-  return path;
+  return keyPrefix || namespace;
 }

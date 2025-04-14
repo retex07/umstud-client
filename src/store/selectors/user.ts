@@ -12,6 +12,9 @@ export const selectUser = (state: RootState) =>
 export const selectUserData = createSelector(selectUser, (state) =>
   get(state, "user")
 );
+export const selectIsLoading = createSelector(selectUser, (state) =>
+  get(state, "isLoading")
+);
 
 export const selectActivationAccount = createSelector(selectUser, (state) =>
   get(state, "activation")

@@ -5,10 +5,8 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import useEditProfile from "@/api/user/mutations/editProfile";
-import { useMeProfile } from "@/api/user/queries/meProfile";
 import { useSkills } from "@/api/user/queries/skills";
-import { DetailUserProfile, Skill, UserPut_FormBody } from "@/api/user/types";
+import { Skill, UserPut_FormBody } from "@/api/user/types";
 import Button from "@/components/button";
 import Field from "@/components/formElements/field";
 import SelectField from "@/components/formElements/selectField";
@@ -16,15 +14,13 @@ import TextareaField from "@/components/formElements/textareaField";
 import ImgEditor from "@/components/imgEditor";
 import PageLoader from "@/components/loaders/pageLoader";
 import { RegExp } from "@/constants/config";
-import urls from "@/services/router/urls";
 import { ReactComponent as ExampleAvatarSvg } from "@/static/images/example-avatar.svg";
-import * as userActions from "@/store/actions/user";
+import { changeMyProfile } from "@/store/actions/user";
 import { selectUser } from "@/store/selectors/user";
 import { Dispatch } from "@/store/types";
 import { SelectOption } from "@/types/components";
 import { convertDataToFormData } from "@/utils/formdata";
 import { convertDate, splitKey } from "@/utils/util";
-
 import "./EditProfilePage.scss";
 import "../styles.scss";
 
@@ -37,11 +33,9 @@ export default function EditProfilePage() {
   const dateInputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch<Dispatch>();
   const history = useHistory();
-  const editProfile = useEditProfile();
 
   const { data: dataSkills, isLoading: isLoadingSkills } = useSkills();
-  const { refetch: refetchUserProfile } = useMeProfile<DetailUserProfile>();
-  const { user } = useSelector(selectUser);
+  const { user, isLoading } = useSelector(selectUser);
 
   const [imagePreview, setImagePreview] = useState(user?.photo || "");
   const [isEditAvatar, setIsEditAvatar] = useState(false);
@@ -90,21 +84,8 @@ export default function EditProfilePage() {
     if (selectedFile) {
       formData.append("photo", selectedFile);
     }
-    editProfile.mutate(
-      { data: formData },
-      {
-        onSuccess: () => {
-          toast.success(t("notification"), { duration: 5000 });
-          history.push(urls.profile.index);
-          refetchUserProfile().then((res) =>
-            dispatch(userActions.updateUser(res.data || null))
-          );
-        },
-        onError: () => {
-          // Empty
-        },
-      }
-    );
+
+    dispatch(changeMyProfile(formData));
   }
 
   function blockPrevDate() {
@@ -217,7 +198,7 @@ export default function EditProfilePage() {
       <ImgEditor
         innerRef={imgInputRef}
         handleChange={handleImageChange}
-        isOpen={isEditAvatar}
+        isOpen={!isLoading && isEditAvatar}
         onClose={() => setIsEditAvatar(false)}
       />
       <div className="profile-edit__wrapper">
@@ -247,6 +228,7 @@ export default function EditProfilePage() {
             )}
           </div>
           <input
+            readOnly={formState.isSubmitting || isLoading}
             type="file"
             accept="image/gif"
             ref={gifInputRef}
@@ -273,9 +255,7 @@ export default function EditProfilePage() {
                 label={t(`actions.${splitKey(key)}.title`)}
                 placeholder={t(`actions.${splitKey(key)}.press`)}
                 readonly={
-                  formState.isSubmitting ||
-                  editProfile.isLoading ||
-                  key === "email"
+                  formState.isSubmitting || isLoading || key === "email"
                 }
                 rules={{
                   required: checkRequired(key) ? tRules("required") : false,
@@ -294,6 +274,7 @@ export default function EditProfilePage() {
               options={parseValueToSelect(dataSkills || [])}
               label={t(`actions.skills.title`)}
               placeholder={t(`actions.skills.press`)}
+              readOnly={formState.isSubmitting || isLoading}
               rules={{
                 required: tRules("required"),
               }}
@@ -305,7 +286,7 @@ export default function EditProfilePage() {
               control={control}
               label={t("actions.description.title")}
               placeholder={t("actions.description.press")}
-              readonly={formState.isSubmitting || editProfile.isLoading}
+              readonly={formState.isSubmitting || isLoading}
               fullWidth
             />
           </div>
@@ -314,14 +295,14 @@ export default function EditProfilePage() {
               size="big"
               label={t("save")}
               type="submit"
-              isLoading={editProfile.isLoading}
-              disabled={editProfile.isLoading}
+              isLoading={isLoading}
+              disabled={isLoading}
             />
             <Button
               size="big"
               label={t("toCancel")}
               isTransparent
-              disabled={editProfile.isLoading}
+              disabled={isLoading}
               onClick={() => history.goBack()}
             />
           </div>

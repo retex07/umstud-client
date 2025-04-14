@@ -9,4 +9,5 @@ type ActivationAccount = {
 export type UserState = {
   user: DetailUserProfile | null;
   activation: ActivationAccount;
+  isLoading: boolean;
 };

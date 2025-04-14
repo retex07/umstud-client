@@ -21,5 +21,5 @@ export const setToken = createAction<{
 
 export const setIsLoading = createAction<boolean>(prefix + "SET_IS_LOADING");
 
-export const clearToken = createAction(prefix + "CLEAR_TOKEN");
-export const logout = createAction(prefix + "LOGOUT");
+export const clearToken = createAction<void>(prefix + "CLEAR_TOKEN");
+export const logout = createAction<void>(prefix + "LOGOUT");

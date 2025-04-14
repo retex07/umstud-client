@@ -9,10 +9,7 @@ import { logout, setToken } from "../actions/auth";
 import { setUser } from "../actions/user";
 import { selectUserData } from "../selectors/user";
 
-function* initAppSaga(
-  { api }: ExtraArguments,
-  { payload }: ReturnType<typeof initApp>
-) {
+function* initAppSaga({ api, history }: ExtraArguments) {
   try {
     yield put(setIsLoadingApp(true));
 
@@ -31,7 +28,6 @@ function* initAppSaga(
       return;
     }
 
-    const { history } = payload;
     const location = window.location;
 
     if (!history) {
@@ -39,7 +35,7 @@ function* initAppSaga(
       return;
     }
 
-    const myProfileData: DetailUserProfile = yield call(api.user.getMeProfile);
+    const myProfileData: DetailUserProfile = yield call(api.user.getMyProfile);
     if (myProfileData) {
       yield put(setUser({ user: myProfileData }));
     } else {
