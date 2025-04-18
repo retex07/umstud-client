@@ -2,6 +2,7 @@ import React from "react";
 
 import { DetailUserProfile } from "@/api/user/types";
 import { ReactComponent as ExampleAvatarSvg } from "@/static/images/example-avatar.svg";
+import "./AvatarUser.scss";
 
 export default function AvatarUser(
   props: Pick<DetailUserProfile, "photo" | "username"> & {
@@ -28,5 +29,9 @@ export default function AvatarUser(
       break;
   }
 
-  return <div className={props.classNameWrapper}>{content}</div>;
+  if (props.classNameWrapper) {
+    return <div className={props.classNameWrapper}>{content}</div>;
+  }
+
+  return content;
 }
