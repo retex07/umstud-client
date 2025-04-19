@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
@@ -25,6 +26,7 @@ interface Props {
   id: number;
   title: string;
   deadlineStartAt?: string;
+  className?: string;
   deadlineEndAt?: string;
   category?: string[];
   type?: string[];
@@ -63,12 +65,13 @@ export default function CardTask(props: Props) {
     );
   }
 
-  function handleSubmit() {
+  function handleSelectResponderSubmit() {
     if (selectedResponder) {
       dispatch(
         setResponder({
           ad_id: props.id,
           response_id: selectedResponder,
+          callback: () => closeModalResponders(),
         })
       );
     }
@@ -126,35 +129,25 @@ export default function CardTask(props: Props) {
               </div>
             ))}
           </div>
-          {!!props.responders?.length && (
-            <div className="modal-responders__actions">
+          <div className="modal-responders__actions">
+            {props.status === "open" && !!props.responders?.length && (
               <Button
                 fullWidth
-                label="Подтвердить"
+                label={t("cardTask.action.confirm")}
                 size="middle"
                 disabled={!selectedResponder}
-                onClick={handleSubmit}
+                onClick={handleSelectResponderSubmit}
               />
-              <Button
-                label="Отменить"
-                onClick={closeModalResponders}
-                size="middle"
-                color="red"
-                isTransparent
-                fullWidth
-              />
-            </div>
-          )}
-          {!props.responders?.length && (
+            )}
             <Button
-              label="Отменить"
+              label={t("cardTask.action.cancel")}
               onClick={closeModalResponders}
               size="middle"
               color="red"
               isTransparent
               fullWidth
             />
-          )}
+          </div>
         </div>
       </Modal>
     );
@@ -180,7 +173,12 @@ export default function CardTask(props: Props) {
   }
 
   return (
-    <article className={props.isOrder ? "card-task--order" : "card-task"}>
+    <article
+      className={classNames(
+        props.isOrder ? "card-task--order" : "card-task",
+        props.className
+      )}
+    >
       <header className="card-task__header" onClick={goToItemOrder}>
         <h2 className="card-task__title">{props.title}</h2>
       </header>

@@ -2,7 +2,11 @@
   "cardTask": {
     "executor": "Исполнитель",
     "choose": "Выбрать",
-    "selected": "Выбран"
+    "selected": "Выбран",
+    "action": {
+      "confirm": "Подтвердить",
+      "cancel": "Отменить"
+    }
   },
   "cardStatus": {
     "open": "Открыто",

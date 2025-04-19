@@ -84,7 +84,9 @@ export default function ItemOrderPage() {
         },
         {
           onSuccess: () => {
-            toast.success(t("pages.item.actions.respondedSuccess"));
+            toast.success(t("pages.item.actions.respondedSuccess"), {
+              duration: 5000,
+            });
             fetchOrder();
           },
         }

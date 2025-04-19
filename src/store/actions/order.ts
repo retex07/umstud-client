@@ -4,9 +4,9 @@ import { AdGet, ExecutorBody, OptionSelect } from "@/api/handlers/order/types";
 
 const prefix = "order/";
 
-export const setResponder = createAction<ExecutorBody>(
-  prefix + "SET_RESPONDER"
-);
+export const setResponder = createAction<
+  ExecutorBody & { callback?: () => void }
+>(prefix + "SET_RESPONDER");
 
 export const getCategoriesAndTypes = createAction(
   prefix + "GET_CATEGORIES_AND_TYPES"

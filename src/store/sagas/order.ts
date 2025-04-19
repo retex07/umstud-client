@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 
-import { AdGet, ExecutorBody, OptionSelect } from "@/api/handlers/order/types";
+import { AdGet, OptionSelect } from "@/api/handlers/order/types";
 import { ExtraArguments } from "@/api/types";
 import {
   getCategoriesAndTypes,
@@ -23,8 +23,12 @@ function* setResponderSaga(
   { payload }: ReturnType<typeof setResponder>
 ) {
   try {
-    const res: ExecutorBody = yield call(api.order.setExecutor, payload);
-    console.log(res);
+    yield call(api.order.setExecutor, payload);
+    if (payload.callback) {
+      payload.callback();
+    }
+
+    yield put(getMyOrders());
   } catch (error) {
     console.error("[order setResponderSaga saga error]:", error);
   }

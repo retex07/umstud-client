@@ -38,14 +38,19 @@ export default function MyOrdersProfilePage() {
         <div className="page-content-wrapper">
           <header className="page-content-title">{t("title")}</header>
           {isLoadingMyOrders && <PageLoader />}
-          {!isLoadingMyOrders && !myOrdersList?.length && <NoDataComponent />}
-          {myOrdersList?.map((workCard) => (
-            <CardTask
-              {...workCard}
-              key={workCard.id}
-              user={workCard.executor}
-            />
-          ))}
+          {!isLoadingMyOrders && !myOrdersList.length && <NoDataComponent />}
+          {myOrdersList.length > 0 && (
+            <div className="order-card__list">
+              {myOrdersList.map((workCard) => (
+                <CardTask
+                  {...workCard}
+                  key={workCard.id}
+                  user={workCard.executor}
+                  className="order-card__item_my-order"
+                />
+              ))}
+            </div>
+          )}
         </div>
         <NavigationMenu />
       </div>

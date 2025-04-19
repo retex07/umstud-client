@@ -2,7 +2,11 @@
   "cardTask": {
     "executor": "Executor",
     "choose": "Choose",
-    "selected": "Selected"
+    "selected": "Selected",
+    "action": {
+      "confirm": "Confirm",
+      "cancel": "Cancel"
+    }
   },
   "cardStatus": {
     "open": "Opened",

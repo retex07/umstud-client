@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import { useChatRoom } from "@/api/chat/queries/room";
+import { webSocketService } from "@/api/ws";
 import PageLoader from "@/components/loaders/pageLoader";
 import { isMobileVersion } from "@/utils/util";
 
 import MobileNavigationMenu from "../../../../components/mobileNavigationMenu";
 import NavigationMenu from "../../../../components/navigationMenu";
+
 import "../../MessageProfilePage.scss";
 
 export default function RoomProfilePage() {
@@ -14,6 +16,11 @@ export default function RoomProfilePage() {
   const { data: chatRoom, isLoading: isLoadingChatRoom } = useChatRoom(
     params.messageId
   );
+
+  useEffect(() => {
+    const websocket = webSocketService;
+    websocket.connect(`/chat/${params.messageId}/`);
+  }, []);
 
   if (isLoadingChatRoom) {
     return <PageLoader />;
