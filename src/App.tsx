@@ -34,6 +34,7 @@ function App(props: PropsApp) {
     if (
       userProfile &&
       accessToken &&
+      !isLoadingApp &&
       location.pathname.includes(urls.auth.index)
     ) {
       history.push(urls.profile.index);
@@ -41,7 +42,7 @@ function App(props: PropsApp) {
   }, [userProfile]);
 
   useEffect(() => {
-    if (!accessToken || !userProfile) {
+    if ((!accessToken || !userProfile) && !isLoadingApp) {
       if (
         location.pathname.includes(urls.profile.index) &&
         !location.pathname.includes(urls.profile.item.replace(":profileId", ""))
@@ -49,7 +50,7 @@ function App(props: PropsApp) {
         history.push(urls.auth.index + urls.auth.signIn);
       }
     }
-  }, [userProfile, accessToken]);
+  }, [userProfile, accessToken, isLoadingApp]);
 
   if (isLoadingApp) {
     return <PageLoader />;

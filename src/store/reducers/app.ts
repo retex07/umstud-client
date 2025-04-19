@@ -5,7 +5,7 @@ import { AppState } from "../types/app";
 
 export const initialState: AppState = {
   isInitialized: false,
-  isLoading: false,
+  isLoading: true,
 };
 
 Object.freeze(initialState);
