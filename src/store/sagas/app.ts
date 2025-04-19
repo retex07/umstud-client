@@ -3,6 +3,7 @@ import { put, takeLatest, call, select } from "redux-saga/effects";
 import { DetailUserProfile } from "@/api/handlers/user/types";
 import { ExtraArguments } from "@/api/types";
 import urls from "@/services/router/urls";
+import { getAccessToken, getRefreshToken } from "@/utils/user";
 
 import { initApp, setIsInitializedApp, setIsLoadingApp } from "../actions/app";
 import { logout, setToken } from "../actions/auth";
@@ -13,8 +14,8 @@ function* initAppSaga({ api, history }: ExtraArguments) {
   try {
     yield put(setIsLoadingApp(true));
 
-    const accessToken = localStorage.getItem("accessToken");
-    const refreshToken = localStorage.getItem("refreshToken");
+    const accessToken = getAccessToken();
+    const refreshToken = getRefreshToken();
 
     if (accessToken && refreshToken) {
       yield put(

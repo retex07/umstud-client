@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 
 import { codeTokenNoValid } from "@/constants/config";
 import { NotificationError } from "@/utils/error";
+import { getAccessToken } from "@/utils/user";
 
 export const RequestConfig: AxiosRequestConfig = {
   baseURL: process.env.REACT_APP_SERVER_URL,
@@ -24,7 +25,7 @@ export const CancelToken = axios.CancelToken;
  */
 
 export function onFulfilledRequest(config: AxiosRequestConfig) {
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = getAccessToken();
 
   if (config.headers != null) {
     if (accessToken != null) {

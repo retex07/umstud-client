@@ -14,6 +14,14 @@
       "pattern_portfolio_description": "Допустимо использовать буквы верхнего и нижнего регистра языков, поддерживаемых системой, а также символы - ` ,"
     }
   },
+  "websocket": {
+    "onopen": "WebSocket соединение установлено.",
+    "onclose": "WebSocket соединение закрыто.",
+    "onerror": "WebSocket ошибка:",
+    "send": {
+      "error": "WebSocket не подключен или закрыт."
+    }
+  },
   "utils": {
     "dates": {
       "months": {

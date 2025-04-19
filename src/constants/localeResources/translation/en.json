@@ -13,6 +13,14 @@
       "pattern_portfolio_description": "Allowed are upper and lower case letters of supported languages, as well as the symbols - ` ,"
     }
   },
+  "websocket": {
+    "onopen": "WebSocket connection established.",
+    "onclose": "WebSocket connection closed.",
+    "onerror": "WebSocket error:",
+    "send": {
+      "error": "WebSocket is not connected or has been closed."
+    }
+  },
   "utils": {
     "dates": {
       "months": {
