@@ -73,9 +73,7 @@ export default function MobileNavigationMenu() {
               <label
                 className={cn("mobile-navigation-menu__item-route", {
                   "navigation-menu__item-route-active":
-                    location.pathname == urls.profile.index + item.route ||
-                    (location.pathname == urls.profile.index &&
-                      item.route == "/"),
+                    location.pathname.includes(item.route),
                 })}
                 key={index}
                 onClick={() => history.push(urls.profile.index + item.route)}

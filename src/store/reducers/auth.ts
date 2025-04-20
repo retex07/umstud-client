@@ -11,7 +11,7 @@ export const initialState: StateAuth = {
 
 Object.freeze(initialState);
 
-const user = handleActions(
+export default handleActions(
   {
     [clearToken.toString()]: (state) => ({
       ...state,
@@ -34,5 +34,3 @@ const user = handleActions(
   },
   initialState
 );
-
-export default user;

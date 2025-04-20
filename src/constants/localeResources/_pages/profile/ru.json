@@ -73,7 +73,20 @@
     "next": "Продолжить"
   },
   "messages": {
-    "title": "Сообщения"
+    "title": "Сообщения",
+    "room": {
+      "interlocutor": {
+        "header": "Диалог с {{interlocutor}}",
+        "noData": "Собеседник не найден"
+      },
+      "messages": {
+        "noData": "Напишите первое сообщение",
+        "input": {
+          "placeholder": "Введите сообщение...",
+          "send": "Отправить"
+        }
+      }
+    }
   },
   "readyTasks": {
     "title": "Выполненные работы"

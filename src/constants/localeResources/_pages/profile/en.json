@@ -73,7 +73,20 @@
     "next": "Continue"
   },
   "messages": {
-    "title": "Messages"
+    "title": "Messages",
+    "room": {
+      "interlocutor": {
+        "header": "Dialogue with {{interlocutor}}",
+        "noData": "Interlocutor not found"
+      },
+      "messages": {
+        "noData": "Write the first message",
+        "input": {
+          "placeholder": "Enter a message...",
+          "send": "Send"
+        }
+      }
+    }
   },
   "readyTasks": {
     "title": "Ready tasks"

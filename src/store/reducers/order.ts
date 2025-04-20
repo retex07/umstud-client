@@ -29,7 +29,7 @@ export const initialState: StateOrder = {
 
 Object.freeze(initialState);
 
-const order = handleActions<StateOrder, any>(
+export default handleActions<StateOrder, any>(
   {
     [setMyOrdersList.toString()]: (
       state,
@@ -102,5 +102,3 @@ const order = handleActions<StateOrder, any>(
   },
   initialState
 );
-
-export default order;

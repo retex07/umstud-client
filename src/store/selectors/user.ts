@@ -19,3 +19,6 @@ export const selectIsLoading = createSelector(selectUser, (state) =>
 export const selectActivationAccount = createSelector(selectUser, (state) =>
   get(state, "activation")
 );
+export const selectIsLoadingChats = createSelector(selectUser, (state) =>
+  get(state, "isLoadingChats")
+);

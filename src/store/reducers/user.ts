@@ -4,6 +4,7 @@ import {
   initedActivateAccount,
   setErrorActivateAccount,
   setIsLoading,
+  setIsLoadingChats,
   setUser,
 } from "../actions/user";
 import { UserState } from "../types/user";
@@ -11,6 +12,7 @@ import { UserState } from "../types/user";
 export const initialState: UserState = {
   user: null,
   isLoading: false,
+  isLoadingChats: false,
   activation: {
     isInitialized: false,
     isError: false,
@@ -20,11 +22,18 @@ export const initialState: UserState = {
 
 Object.freeze(initialState);
 
-const user = handleActions<UserState, any>(
+export default handleActions<UserState, any>(
   {
     [setUser.toString()]: (state, { payload }) => ({
       ...state,
       user: payload.user,
+    }),
+    [setIsLoadingChats.toString()]: (
+      state,
+      { payload }: ReturnType<typeof setIsLoadingChats>
+    ) => ({
+      ...state,
+      isLoadingChats: payload,
     }),
     [setIsLoading.toString()]: (
       state,
@@ -50,5 +59,3 @@ const user = handleActions<UserState, any>(
   },
   initialState
 );
-
-export default user;

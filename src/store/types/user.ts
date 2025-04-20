@@ -10,4 +10,5 @@ export type UserState = {
   user: DetailUserProfile | null;
   activation: ActivationAccount;
   isLoading: boolean;
+  isLoadingChats: boolean;
 };

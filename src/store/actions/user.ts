@@ -32,3 +32,7 @@ export const setErrorActivateAccount = createAction<boolean>(
 );
 
 export const setBlackList = createAction<BlackList>(prefix + "SET_BLACK_LIST");
+
+export const setIsLoadingChats = createAction<boolean>(
+  prefix + "SET_IS_LOADING_CHATS"
+);

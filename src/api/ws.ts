@@ -37,7 +37,7 @@ class WebSocketService {
     }
   }
 
-  send(message: any): void {
+  send<T>(message: T): void {
     if (this._socket && this._socket.readyState === WebSocket.OPEN) {
       this._socket.send(JSON.stringify(message));
     } else {

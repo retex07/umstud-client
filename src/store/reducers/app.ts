@@ -10,7 +10,7 @@ export const initialState: AppState = {
 
 Object.freeze(initialState);
 
-const app = handleActions(
+export default handleActions(
   {
     [setIsInitializedApp.toString()]: (state, { payload }) => ({
       ...state,
@@ -23,5 +23,3 @@ const app = handleActions(
   },
   initialState
 );
-
-export default app;

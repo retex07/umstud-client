@@ -47,9 +47,9 @@ export default function NavigationMenu() {
         {items.map((item, index) => (
           <label
             className={cn("navigation-menu__item-route", {
-              "navigation-menu__item-route-active":
-                location.pathname == urls.profile.index + item.route ||
-                (location.pathname == urls.profile.index && item.route == "/"),
+              "navigation-menu__item-route-active": location.pathname.includes(
+                item.route
+              ),
             })}
             key={index}
             onClick={() => history.push(urls.profile.index + item.route)}
