@@ -74,6 +74,7 @@
   },
   "messages": {
     "title": "Сообщения",
+    "draft": "Черновик:",
     "room": {
       "interlocutor": {
         "header": "Диалог с {{interlocutor}}",

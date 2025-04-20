@@ -3,15 +3,26 @@ export type CustomUser = {
   username: string;
   first_name: string;
   last_name: string;
+  slug: string;
   photo: string;
 };
 
 export type ChatRoom = {
   id: number;
   participants: CustomUser[];
-  created_at: string;
+  interlocutor: CustomUser;
+  created_at: string | null;
+  created_chat_at: string;
+  is_closed: boolean;
   messages: Message[];
   last_message: Message;
+  ad: {
+    author: number;
+    budget: number;
+    id: number;
+    orderNumber: number;
+    title: string;
+  } | null;
 };
 
 export type Message = {

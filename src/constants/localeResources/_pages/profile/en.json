@@ -74,6 +74,7 @@
   },
   "messages": {
     "title": "Messages",
+    "draft": "Draft:",
     "room": {
       "interlocutor": {
         "header": "Dialogue with {{interlocutor}}",

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams, useRouteMatch } from "react-router-dom";
@@ -14,6 +14,7 @@ import { getChat } from "@/store/actions/chat";
 import { selectChat } from "@/store/selectors/chat";
 import { selectUserData } from "@/store/selectors/user";
 import { RootState } from "@/store/types";
+import { getDraftStorageKey } from "@/utils/chat";
 import { getBasePath } from "@/utils/router";
 import { isMobileVersion } from "@/utils/util";
 
@@ -28,12 +29,28 @@ export default function RoomProfilePage() {
   const websocket = webSocketService;
   const params = useParams<{ roomId: string }>();
   const [inputMessage, setInputMessage] = useState("");
+  const inputMessageRef = useRef(inputMessage);
 
   const { path } = useRouteMatch();
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const myProfileData = useSelector(selectUserData);
+  const storageKey = getDraftStorageKey(
+    myProfileData?.slug || "",
+    params.roomId
+  );
+  const inputDraft = localStorage.getItem(storageKey)?.trim();
+
   useEffect(() => {
+    inputMessageRef.current = inputMessage;
+  }, [inputMessage]);
+
+  useEffect(() => {
+    if (!!inputDraft) {
+      setInputMessage(inputDraft);
+    }
+
     websocket.connect(urls.chat.room.replace(":roomId", params.roomId));
     websocket.onMessage((event) => {
       const dataEvent = JSON.parse(event.data);
@@ -42,10 +59,15 @@ export default function RoomProfilePage() {
 
     dispatch(getChat(params.roomId));
 
-    return () => websocket.close();
+    return () => {
+      if (!!inputMessageRef.current.trim()) {
+        localStorage.setItem(storageKey, inputMessageRef.current);
+      }
+
+      websocket.close();
+    };
   }, []);
 
-  const myProfileData = useSelector(selectUserData);
   const { isLoading, meta: chatRoom } = useSelector((state: RootState) =>
     selectChat(state, params.roomId)
   );
@@ -66,12 +88,12 @@ export default function RoomProfilePage() {
   };
 
   const openUserProfile = () => {
-    /*if (interlocutor.slug) { //TODO: Убрать коммент, когда поменяется тип для interlocutor
+    if (interlocutor.slug) {
       history.push(
         urls.profile.index +
           urls.profile.item.replace(":profileId", interlocutor.slug)
       );
-    }*/
+    }
   };
 
   const sendMessage = () => {

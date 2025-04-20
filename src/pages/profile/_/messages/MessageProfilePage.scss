@@ -58,12 +58,23 @@
     gap: 8px;
 
     &_head {
-      @include typography.ordinary_subtitle;
+      @include typography.ordinary;
     }
 
+    &_draft {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    &_text,
     &_last-msg {
       @include typography.description;
       color: var(--color-gray-text);
+
+      &.draft {
+        color: var(--color-red);
+      }
     }
   }
 }

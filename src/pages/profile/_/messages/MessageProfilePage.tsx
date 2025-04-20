@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 
-import { ChatRoom, CustomUser } from "@/api/handlers/chat/types";
+import { ChatRoom } from "@/api/handlers/chat/types";
 import PageLoader from "@/components/loaders/pageLoader";
 import NoDataComponent from "@/components/noData";
 import NavigationMenu from "@/pages/profile/components/navigationMenu";
@@ -11,9 +11,11 @@ import { ReactComponent as ExampleAvatarSvg } from "@/static/images/example-avat
 import { getChats } from "@/store/actions/chat";
 import { selectChats } from "@/store/selectors/chat";
 import { selectIsLoadingChats, selectUserData } from "@/store/selectors/user";
+import { getDraftStorageKey } from "@/utils/chat";
 import { isMobileVersion } from "@/utils/util";
 
 import MobileNavigationMenu from "../../components/mobileNavigationMenu";
+
 import "./MessageProfilePage.scss";
 import "../styles.scss";
 
@@ -31,10 +33,6 @@ export default function MessageProfilePage() {
   const userProfile = useSelector(selectUserData);
   const dataChats = Object.values(useSelector(selectChats));
   const isLoadingChats = useSelector(selectIsLoadingChats) && !dataChats.length;
-
-  function getRoomUsers(participants: CustomUser[]) {
-    return participants.filter((p) => p.username !== userProfile?.username);
-  }
 
   function renderAvatar(photo?: string, slug?: string) {
     switch (true) {
@@ -59,6 +57,12 @@ export default function MessageProfilePage() {
 
   function renderChatRoom(chat: ChatRoom) {
     const interlocutor = getInterlocutor(chat);
+    const storageKey = getDraftStorageKey(
+      userProfile?.slug || "",
+      chat.id.toString()
+    );
+
+    const inputDraft = localStorage.getItem(storageKey)?.trim();
 
     return (
       <div
@@ -70,16 +74,23 @@ export default function MessageProfilePage() {
           {renderAvatar(interlocutor.photo, interlocutor.username)}
         </div>
         <div className="chats-page__block-info">
-          {getRoomUsers(chat.participants || []).map((user) => (
-            <h3 className="chats-page__block-info_head" key={user.id}>
-              {user.username}
-            </h3>
-          ))}
-          {chat.last_message && chat.last_message.content && (
+          <h3 className="chats-page__block-info_head">{chat.ad?.title}</h3>
+          {(inputDraft || !chat.last_message?.content) && (
+            <div className="chats-page__block-info_draft">
+              <span className="chats-page__block-info_text draft">
+                {t("draft")}
+              </span>
+              <span className="chats-page__block-info_text">{inputDraft}</span>
+            </div>
+          )}
+          {!inputDraft && chat.last_message?.content && (
             <p className="chats-page__block-info_last-msg">
               {chat.last_message.content}
             </p>
           )}
+          <p className="chats-page__block-info_last-msg">
+            {chat.interlocutor.slug}
+          </p>
         </div>
       </div>
     );
