@@ -60,7 +60,7 @@ export default function RoomProfilePage() {
     dispatch(getChat(params.roomId));
 
     return () => {
-      if (!!inputMessageRef.current.trim()) {
+      if (!!inputMessageRef.current.trim() || !!inputDraft) {
         localStorage.setItem(storageKey, inputMessageRef.current);
       }
 
