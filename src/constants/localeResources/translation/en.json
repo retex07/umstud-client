@@ -23,6 +23,8 @@
   },
   "utils": {
     "dates": {
+      "today": "Today",
+      "yesterday": "Yesterday",
       "months": {
         "1": "January",
         "2": "February",
@@ -37,6 +39,17 @@
         "11": "November",
         "12": "December"
       }
+    },
+    "short": {
+      "time": {
+        "second": "sec",
+        "minute": "m",
+        "hour": "h",
+        "day": "d",
+        "month": "mo",
+        "year": "y"
+      }
     }
+
   }
 }

@@ -1,4 +1,8 @@
 import classNames from "classnames";
+import { format, isToday, isYesterday, Locale, parseISO } from "date-fns";
+import { ru } from "date-fns/locale";
+import { enUS } from "date-fns/locale/en-US";
+import i18next from "i18next";
 import React, { useEffect, useRef, useState } from "react";
 import { Scrollbars } from "react-custom-scrollbars";
 import { useTranslation } from "react-i18next";
@@ -8,6 +12,7 @@ import { useHistory, useParams, useRouteMatch } from "react-router-dom";
 import {
   ChatSendMessageWS,
   ChatSocketEventData,
+  Message,
 } from "@/api/handlers/chat/types";
 import { webSocketService } from "@/api/ws";
 import AvatarUser from "@/components/avatarUser";
@@ -21,7 +26,7 @@ import { selectUserData } from "@/store/selectors/user";
 import { RootState } from "@/store/types";
 import { getDraftStorageKey } from "@/utils/chat";
 import { getBasePath } from "@/utils/router";
-import { isMobileVersion } from "@/utils/util";
+import { isMobileVersion, t } from "@/utils/util";
 
 import MessageItem from "./Message";
 import MobileNavigationMenu from "../../../../components/mobileNavigationMenu";
@@ -29,9 +34,58 @@ import NavigationMenu from "../../../../components/navigationMenu";
 import "../../MessageProfilePage.scss";
 import "../../../styles.scss";
 
+function getFormattedDateLabel(dateString: string): string {
+  const date = parseISO(dateString);
+
+  if (isToday(date))
+    return t("translation", {
+      keyPrefix: `utils.dates.today`,
+    });
+  if (isYesterday(date))
+    return t("translation", {
+      keyPrefix: `utils.dates.yesterday`,
+    });
+
+  const now = new Date();
+  const formatStr =
+    date.getFullYear() === now.getFullYear() ? "d MMMM" : "d MMMM yyyy";
+
+  const currentLocale = i18next.language;
+
+  const localeMap: Record<string, Locale> = {
+    ru: ru,
+    en: enUS,
+  };
+
+  const dateFnsLocale = localeMap[currentLocale] || enUS;
+
+  return format(date, formatStr, { locale: dateFnsLocale });
+}
+
+type MessageWithDateHeader = Message | { type: "date"; label: string };
+
+function groupMessagesWithDateHeaders(
+  messages: Message[]
+): MessageWithDateHeader[] {
+  const result: MessageWithDateHeader[] = [];
+  let lastDateLabel = "";
+
+  for (const message of messages) {
+    const label = getFormattedDateLabel(message.created_at);
+
+    if (label !== lastDateLabel) {
+      result.push({ type: "date", label });
+      lastDateLabel = label;
+    }
+
+    result.push(message);
+  }
+
+  return result;
+}
+
 export default function RoomProfilePage() {
   const { t } = useTranslation("p_profile", { keyPrefix: "messages" });
-
   const websocket = webSocketService;
   const scrollRef = useRef<Scrollbars>(null);
   const params = useParams<{ roomId: string }>();
@@ -58,6 +112,10 @@ export default function RoomProfilePage() {
   }, [inputMessage]);
 
   useEffect(() => {
+    if (!!inputDraft) {
+      setInputMessage(inputDraft);
+    }
+
     if (!chatConnected) {
       websocket.connect(
         websocketChatUrl,
@@ -65,18 +123,7 @@ export default function RoomProfilePage() {
         () => setChatConnected(false)
       );
     }
-  }, [chatConnected]);
 
-  useEffect(() => {
-    if (!!inputDraft) {
-      setInputMessage(inputDraft);
-    }
-
-    websocket.connect(
-      websocketChatUrl,
-      () => setChatConnected(true),
-      () => setChatConnected(false)
-    );
     websocket.onMessage((event) => {
       const data: ChatSocketEventData = JSON.parse(event.data);
       console.info("JSON.parse socket dataEvent:", data);
@@ -187,6 +234,8 @@ export default function RoomProfilePage() {
     );
   };
 
+  const messagesWithHeaders = groupMessagesWithDateHeaders(messages);
+
   return (
     <div id="page" className="page-container chats-page">
       <div className="container-bar">
@@ -225,9 +274,21 @@ export default function RoomProfilePage() {
             className="chat-room-page__messages"
           >
             {!messages.length && renderEmptyMessages()}
-            {messages.map((message, idx) => (
-              <MessageItem key={idx} {...message} />
-            ))}
+            {messagesWithHeaders.map((item, idx) => {
+              if ("type" in item && item.type === "date") {
+                return (
+                  <div
+                    key={`date-${idx}`}
+                    className="chat-room-page__date-header"
+                  >
+                    {item.label}
+                  </div>
+                );
+              }
+
+              // @ts-ignore
+              return <MessageItem key={idx} {...item} />;
+            })}
           </Scrollbars>
           <div className="chat-room-page__send-message">
             <Input

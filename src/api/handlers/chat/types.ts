@@ -31,7 +31,7 @@ export type Message = {
   sender: CustomUser;
   content: string;
   file?: string;
-  created_at?: string;
+  created_at: string;
   updated_at?: string;
   is_read?: boolean;
 };

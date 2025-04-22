@@ -73,6 +73,20 @@ export function getFullDate(date: Date, withoutZero = false) {
   return `${d}.${m}.${y}`;
 }
 
+export function getFullTime(date: Date): string {
+  let hours = date.getHours().toString();
+  let minutes = date.getMinutes().toString();
+
+  if (hours.length === 1) {
+    hours = "0" + hours;
+  }
+  if (minutes.length === 1) {
+    minutes = "0" + minutes;
+  }
+
+  return `${hours}:${minutes}`;
+}
+
 export async function copyTextToClipboard(
   text: string,
   onCopied?: () => void
@@ -103,4 +117,32 @@ export function t(
   }
 
   return keyPrefix || namespace;
+}
+
+export function getShortPassedTime(timestamp: string): string {
+  const now = new Date();
+  const past = new Date(timestamp);
+  const diffMs = now.getTime() - past.getTime();
+
+  const timeUnits = [
+    { label: "year", ms: 1000 * 60 * 60 * 24 * 365 },
+    { label: "month", ms: 1000 * 60 * 60 * 24 * 30 },
+    { label: "day", ms: 1000 * 60 * 60 * 24 },
+    { label: "hour", ms: 1000 * 60 * 60 },
+    { label: "minute", ms: 1000 * 60 },
+    { label: "second", ms: 1000 },
+  ];
+
+  for (const unit of timeUnits) {
+    const value = Math.floor(diffMs / unit.ms);
+    if (value >= 1) {
+      return `${value}${t("translation", {
+        keyPrefix: `utils.short.time.${unit.label}`,
+      })}`;
+    }
+  }
+
+  return `0${t("translation", {
+    keyPrefix: `utils.short.time.second`,
+  })}`;
 }

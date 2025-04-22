@@ -6,13 +6,14 @@ import { useHistory, useLocation } from "react-router-dom";
 import { ChatRoom } from "@/api/handlers/chat/types";
 import PageLoader from "@/components/loaders/pageLoader";
 import NoDataComponent from "@/components/noData";
+import CheckRead from "@/pages/profile/components/checkRead";
 import NavigationMenu from "@/pages/profile/components/navigationMenu";
 import { ReactComponent as ExampleAvatarSvg } from "@/static/images/example-avatar.svg";
 import { getChats } from "@/store/actions/chat";
 import { selectChats } from "@/store/selectors/chat";
 import { selectIsLoadingChats, selectUserData } from "@/store/selectors/user";
 import { getDraftStorageKey } from "@/utils/chat";
-import { isMobileVersion } from "@/utils/util";
+import { getShortPassedTime, isMobileVersion } from "@/utils/util";
 
 import MobileNavigationMenu from "../../components/mobileNavigationMenu";
 
@@ -88,21 +89,35 @@ export default function MessageProfilePage() {
               </span>
             </div>
           </header>
-          {(inputDraft || !chat.last_message?.content) && (
-            <div className="chats-page__block-info_draft">
-              <span className="chats-page__block-info_text draft">
-                {t("draft")}
-              </span>
-              <span className="chats-page__block-info_text">{inputDraft}</span>
-            </div>
-          )}
-          {!inputDraft && chat.last_message?.content && (
-            <p className="chats-page__block-info_last-msg">
-              {chat.last_message.sender.slug === userProfile?.slug &&
-                `${t("you")}: `}
-              {chat.last_message.content}
-            </p>
-          )}
+          <div className="chats-page__content">
+            {(inputDraft || !chat.last_message?.content) && (
+              <div className="chats-page__block-info_draft">
+                <span className="chats-page__block-info_text_draft">
+                  {t("draft")}
+                </span>
+                <span className="chats-page__block-info_text">
+                  {inputDraft}
+                </span>
+              </div>
+            )}
+            {!inputDraft && chat.last_message?.content && (
+              <div className="chats-page__last-message">
+                <p className="chats-page__last-message_text">
+                  {chat.last_message.sender.slug === userProfile?.slug &&
+                    `${t("you")}: `}
+                </p>
+                <p className="chats-page__last-message_text">
+                  {chat.last_message.content}
+                </p>
+                <p className="chats-page__last-message_text">
+                  {getShortPassedTime(
+                    chat.last_message.updated_at || chat.last_message.created_at
+                  )}
+                </p>
+              </div>
+            )}
+            {!inputDraft && <CheckRead isRead={chat.last_message.is_read} />}
+          </div>
         </div>
       </div>
     );

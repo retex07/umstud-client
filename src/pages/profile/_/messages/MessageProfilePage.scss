@@ -1,6 +1,32 @@
 @use "@/styles/typography";
 
 .chats-page {
+  &__last-message {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    overflow: hidden;
+
+    &_text {
+      @include typography.description;
+      color: var(--color-gray-text);
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 96%;
+
+      &:last-child {
+        color: var(--color-gray);
+
+        &::before {
+          margin-right: 4px;
+          content: "•";
+        }
+      }
+    }
+  }
+
   &__wrapper {
     padding: 12px;
 
@@ -64,10 +90,19 @@
     }
   }
 
+  &__content {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
   &__block-info {
     display: flex;
     flex-direction: column;
+    width: 100%;
     gap: 8px;
+    overflow: hidden;
 
     &-header {
       display: inline-flex;
@@ -90,24 +125,35 @@
         color: var(--color-gray-text);
 
         &::after {
-          content: "*";
+          content: "•";
           margin-left: 4px;
         }
       }
     }
 
     &_draft {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       gap: 4px;
+
+      overflow: hidden;
+      max-width: 100%;
     }
 
-    &_text,
-    &_last-msg {
+    &_text {
       @include typography.description;
       color: var(--color-gray-text);
 
-      &.draft {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 96%;
+
+      &_draft {
+        @include typography.description;
+
+        white-space: nowrap;
+        flex-shrink: 0;
         color: var(--color-red);
       }
     }
@@ -138,6 +184,14 @@
       align-items: center;
       gap: 6px;
     }
+  }
+
+  &__date-header {
+    @include typography.description;
+    color: var(--color-gray-text);
+    text-align: center;
+
+    padding: 4px 8px;
   }
 
   &__messages {
@@ -240,11 +294,19 @@
   }
 
   &__info {
+    position: relative;
+
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
     width: 100%;
+
+    & .message__views {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
 
     &_head {
       @include typography.description;
@@ -258,6 +320,16 @@
 
     &_content {
       @include typography.description;
+    }
+  }
+
+  &__views {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    &_time {
+      @include typography.signature;
     }
   }
 }

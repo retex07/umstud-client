@@ -1,0 +1,24 @@
+.check-read {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & > svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  &.one {
+    margin-top: 2px;
+
+    & > svg > path {
+      stroke: var(--color-blue);
+    }
+  }
+
+  &.double {
+    & > svg > path {
+      fill: var(--color-blue);
+    }
+  }
+}
