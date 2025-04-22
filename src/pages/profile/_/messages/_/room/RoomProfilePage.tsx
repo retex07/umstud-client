@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import React, { useEffect, useRef, useState } from "react";
+import { Scrollbars } from "react-custom-scrollbars";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams, useRouteMatch } from "react-router-dom";
@@ -32,8 +33,13 @@ export default function RoomProfilePage() {
   const { t } = useTranslation("p_profile", { keyPrefix: "messages" });
 
   const websocket = webSocketService;
+  const scrollRef = useRef<Scrollbars>(null);
   const params = useParams<{ roomId: string }>();
+  const websocketChatUrl = urls.chat.room.replace(":roomId", params.roomId);
+
   const [inputMessage, setInputMessage] = useState("");
+  const [chatConnected, setChatConnected] = useState(false);
+
   const inputMessageRef = useRef(inputMessage);
 
   const { path } = useRouteMatch();
@@ -52,11 +58,25 @@ export default function RoomProfilePage() {
   }, [inputMessage]);
 
   useEffect(() => {
+    if (!chatConnected) {
+      websocket.connect(
+        websocketChatUrl,
+        () => setChatConnected(true),
+        () => setChatConnected(false)
+      );
+    }
+  }, [chatConnected]);
+
+  useEffect(() => {
     if (!!inputDraft) {
       setInputMessage(inputDraft);
     }
 
-    websocket.connect(urls.chat.room.replace(":roomId", params.roomId));
+    websocket.connect(
+      websocketChatUrl,
+      () => setChatConnected(true),
+      () => setChatConnected(false)
+    );
     websocket.onMessage((event) => {
       const data: ChatSocketEventData = JSON.parse(event.data);
       console.info("JSON.parse socket dataEvent:", data);
@@ -83,6 +103,10 @@ export default function RoomProfilePage() {
     meta: chatRoom,
     messages,
   } = useSelector((state: RootState) => selectChat(state, params.roomId));
+
+  useEffect(() => {
+    scrollRef.current?.scrollToBottom();
+  }, [messages]);
 
   const interlocutor = chatRoom?.interlocutor;
   const isLoadingChatRoom = isLoading && !chatRoom;
@@ -195,14 +219,19 @@ export default function RoomProfilePage() {
                 })}
             </h3>
           </header>
-          <div className="chat-room-page__messages">
+          <Scrollbars
+            ref={scrollRef}
+            autoHide
+            className="chat-room-page__messages"
+          >
             {!messages.length && renderEmptyMessages()}
             {messages.map((message, idx) => (
               <MessageItem key={idx} {...message} />
             ))}
-          </div>
+          </Scrollbars>
           <div className="chat-room-page__send-message">
             <Input
+              disabled={!chatConnected}
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               fullWidth

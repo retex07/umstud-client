@@ -7,16 +7,24 @@ type ErrorHandler = (event: Event) => void;
 class WebSocketService {
   private _socket: WebSocket | null = null;
 
-  connect(url: string): void {
+  connect(url: string, onOpen?: () => void, onClose?: () => void): void {
     const baseUrl = `${process.env.REACT_APP_WEBSOCKET_URL}${url}`;
     const fullUrl = `${baseUrl}?token=${getAccessToken()}`;
     this._socket = new WebSocket(fullUrl);
 
-    this._socket.onopen = () =>
+    this._socket.onopen = () => {
       console.log(t("translation", { keyPrefix: "websocket.onopen" }));
+      if (onOpen) {
+        onOpen();
+      }
+    };
 
-    this._socket.onclose = () =>
+    this._socket.onclose = () => {
       console.log(t("translation", { keyPrefix: "websocket.onclose" }));
+      if (onClose) {
+        onClose();
+      }
+    };
 
     this._socket.onerror = (error) =>
       console.error(

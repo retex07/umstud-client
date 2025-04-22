@@ -2,7 +2,11 @@
 
 .chats-page {
   &__wrapper {
-    min-height: 60vh;
+    padding: 12px;
+
+    & .page-content-title {
+      margin: 8px 20px 0 20px;
+    }
   }
 
   &__room {
@@ -15,6 +19,10 @@
 
       min-height: 80vh;
       height: 100%;
+
+      @media screen and (max-width: 1220px) {
+        padding: 16px;
+      }
     }
   }
 
@@ -30,23 +38,27 @@
     &-item {
       display: flex;
       flex-direction: row;
+      align-items: center;
 
-      gap: 20px;
+      gap: 12px;
       width: 100%;
-      padding: 12px 18px;
+      padding: 8px 12px;
 
-      border: 1px solid var(--color-gray);
-      border-radius: 10px;
+      @media screen and (max-width: 1220px) {
+        padding: 4px 8px;
+      }
+
+      border-radius: 12px;
       box-sizing: border-box;
       cursor: pointer;
 
       &:hover {
-        border: 1px solid var(--color-blue);
+        background-color: var(--color-gray-transparent);
       }
 
       &_avatar > img {
-        width: 62px;
-        height: 62px;
+        width: 48px;
+        height: 48px;
         border-radius: 50%;
       }
     }
@@ -57,8 +69,31 @@
     flex-direction: column;
     gap: 8px;
 
+    &-header {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+
+      &_title-block {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        width: 100%;
+      }
+    }
+
     &_head {
-      @include typography.ordinary;
+      @include typography.description;
+
+      &.dark {
+        color: var(--color-gray-text);
+
+        &::after {
+          content: "*";
+          margin-left: 4px;
+        }
+      }
     }
 
     &_draft {
@@ -108,13 +143,10 @@
   &__messages {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
 
     width: 100%;
     height: 100%;
     padding: 12px 0;
-
-    overflow-y: auto;
 
     border-top: 1px solid var(--color-blue);
     border-bottom: 1px solid var(--color-blue);
@@ -192,6 +224,10 @@
 
   width: 100%;
 
+  @media screen and (max-width: 1220px) {
+    padding: 6px 8px;
+  }
+
   &:hover {
     background-color: var(--color-gray-light);
   }
@@ -211,7 +247,7 @@
     width: 100%;
 
     &_head {
-      @include typography.ordinary_subtitle;
+      @include typography.description;
       color: var(--color-blue);
       cursor: pointer;
 
@@ -221,7 +257,7 @@
     }
 
     &_content {
-      @include typography.ordinary_subtitle;
+      @include typography.description;
     }
   }
 }

@@ -78,7 +78,16 @@ export default function MessageProfilePage() {
           {renderAvatar(interlocutor.photo, interlocutor.username)}
         </div>
         <div className="chats-page__block-info">
-          <h3 className="chats-page__block-info_head">{chat.ad?.title}</h3>
+          <header className="chats-page__block-info-header">
+            <div className="chats-page__block-info-header_title-block">
+              <span className="chats-page__block-info_head dark">
+                {interlocutor.last_name} {interlocutor.first_name}
+              </span>
+              <span className="chats-page__block-info_head">
+                {chat.ad?.title}
+              </span>
+            </div>
+          </header>
           {(inputDraft || !chat.last_message?.content) && (
             <div className="chats-page__block-info_draft">
               <span className="chats-page__block-info_text draft">
@@ -94,9 +103,6 @@ export default function MessageProfilePage() {
               {chat.last_message.content}
             </p>
           )}
-          <p className="chats-page__block-info_last-msg">
-            {chat.interlocutor.slug}
-          </p>
         </div>
       </div>
     );
