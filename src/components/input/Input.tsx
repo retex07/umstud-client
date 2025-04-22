@@ -4,6 +4,7 @@ import React, {
   FocusEventHandler,
   HTMLInputTypeAttribute,
   InputHTMLAttributes,
+  KeyboardEvent,
   ReactNode,
   RefCallback,
   RefObject,
@@ -25,6 +26,7 @@ export interface Props {
   label?: string;
   onClick?: () => void;
   onChange?(e: ChangeEvent<HTMLInputElement>): void;
+  onKeyDown?(e: KeyboardEvent<HTMLInputElement>): void;
   onBlur?: FocusEventHandler<HTMLInputElement>;
   textPosition?: "start" | "center" | "end";
   icon?: ReactNode;
@@ -94,6 +96,7 @@ export default function Input(props: Props) {
           onBlur={props.onBlur}
           readOnly={props.readonly}
           placeholder={props.placeholder}
+          onKeyDown={props.onKeyDown}
           className={cn("input__select-from", {
             "input__text-start": textPosition === "start",
             "input__text-center": textPosition === "center",

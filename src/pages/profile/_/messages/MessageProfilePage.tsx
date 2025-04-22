@@ -64,6 +64,10 @@ export default function MessageProfilePage() {
 
     const inputDraft = localStorage.getItem(storageKey)?.trim();
 
+    if (!inputDraft && !chat.last_message?.content) {
+      return null;
+    }
+
     return (
       <div
         onClick={() => history.push(`${location.pathname}/${chat.id}`)}
@@ -85,6 +89,8 @@ export default function MessageProfilePage() {
           )}
           {!inputDraft && chat.last_message?.content && (
             <p className="chats-page__block-info_last-msg">
+              {chat.last_message.sender.slug === userProfile?.slug &&
+                `${t("you")}: `}
               {chat.last_message.content}
             </p>
           )}

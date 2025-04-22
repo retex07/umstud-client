@@ -110,6 +110,14 @@ input::-ms-clear {
 
 .page-content-title {
   @include page_head;
+
+  &.hovered {
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .blue-star {

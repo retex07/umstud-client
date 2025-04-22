@@ -22,6 +22,7 @@ function* sagaGetChats({ api }: ExtraArguments) {
     yield put(setIsLoadingChats(false));
   }
 }
+
 function* sagaGetChat(
   { api }: ExtraArguments,
   { payload }: ReturnType<typeof getChat>

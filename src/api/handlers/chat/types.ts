@@ -40,3 +40,12 @@ export type ChatSendMessageWS = {
   senderId: number;
   message: string;
 };
+
+export type ChatSocketEventData = Pick<
+  Message,
+  "file" | "sender" | "is_read"
+> & {
+  message: Message["content"];
+  messageId: Message["id"];
+  timestamp: string;
+};

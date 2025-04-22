@@ -1,16 +1,20 @@
+import classNames from "classnames";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams, useRouteMatch } from "react-router-dom";
 
-import { ChatSendMessageWS } from "@/api/handlers/chat/types";
+import {
+  ChatSendMessageWS,
+  ChatSocketEventData,
+} from "@/api/handlers/chat/types";
 import { webSocketService } from "@/api/ws";
 import AvatarUser from "@/components/avatarUser";
 import Input from "@/components/input";
 import PageLoader from "@/components/loaders/pageLoader";
 import urls from "@/services/router/urls";
 import { ReactComponent as SendSvg } from "@/static/images/send.svg";
-import { getChat } from "@/store/actions/chat";
+import { addSocketMessage, getChat } from "@/store/actions/chat";
 import { selectChat } from "@/store/selectors/chat";
 import { selectUserData } from "@/store/selectors/user";
 import { RootState } from "@/store/types";
@@ -18,6 +22,7 @@ import { getDraftStorageKey } from "@/utils/chat";
 import { getBasePath } from "@/utils/router";
 import { isMobileVersion } from "@/utils/util";
 
+import MessageItem from "./Message";
 import MobileNavigationMenu from "../../../../components/mobileNavigationMenu";
 import NavigationMenu from "../../../../components/navigationMenu";
 import "../../MessageProfilePage.scss";
@@ -53,8 +58,13 @@ export default function RoomProfilePage() {
 
     websocket.connect(urls.chat.room.replace(":roomId", params.roomId));
     websocket.onMessage((event) => {
-      const dataEvent = JSON.parse(event.data);
-      console.info("JSON.parse socket dataEvent:", dataEvent);
+      const data: ChatSocketEventData = JSON.parse(event.data);
+      console.info("JSON.parse socket dataEvent:", data);
+      if (Number(params.roomId)) {
+        dispatch(addSocketMessage({ data, roomId: Number(params.roomId) }));
+      } else {
+        console.error("The specified room does not exist");
+      }
     });
 
     dispatch(getChat(params.roomId));
@@ -68,15 +78,13 @@ export default function RoomProfilePage() {
     };
   }, []);
 
-  const { isLoading, meta: chatRoom } = useSelector((state: RootState) =>
-    selectChat(state, params.roomId)
-  );
+  const {
+    isLoading,
+    meta: chatRoom,
+    messages,
+  } = useSelector((state: RootState) => selectChat(state, params.roomId));
 
-  const participants =
-    chatRoom?.participants.filter((p) => p.id !== myProfileData?.id) || [];
-
-  const interlocutor = participants[0] ?? null;
-
+  const interlocutor = chatRoom?.interlocutor;
   const isLoadingChatRoom = isLoading && !chatRoom;
 
   if (isLoadingChatRoom) {
@@ -88,21 +96,34 @@ export default function RoomProfilePage() {
   };
 
   const openUserProfile = () => {
-    if (interlocutor.slug) {
+    if (interlocutor?.slug) {
       history.push(
         urls.profile.index +
-          urls.profile.item.replace(":profileId", interlocutor.slug)
+          urls.profile.item.replace(":profileId", interlocutor?.slug)
       );
     }
   };
 
   const sendMessage = () => {
+    if (!inputMessage) {
+      return;
+    }
+
     if (myProfileData) {
       websocket.send<ChatSendMessageWS>({
         message: inputMessage,
         senderId: myProfileData.id,
       });
       setInputMessage("");
+    }
+  };
+
+  const openOrder = () => {
+    if (chatRoom?.ad?.id) {
+      history.push(
+        urls.orders.index +
+          urls.orders.item.replace(":orderId", chatRoom?.ad?.id.toString())
+      );
     }
   };
 
@@ -162,20 +183,35 @@ export default function RoomProfilePage() {
                 {interlocutor?.username || chatRoom?.id}
               </span>
             </div>
-            <h3 className="page-content-title">
-              {t("room.interlocutor.header", {
-                interlocutor: interlocutor?.username || chatRoom?.id,
+            <h3
+              className={classNames("page-content-title", {
+                hovered: !!chatRoom?.ad?.id,
               })}
+              onClick={openOrder}
+            >
+              {chatRoom?.ad?.title ||
+                t("room.interlocutor.header", {
+                  interlocutor: interlocutor?.username || chatRoom?.id,
+                })}
             </h3>
           </header>
           <div className="chat-room-page__messages">
-            {!chatRoom?.messages.length && renderEmptyMessages()}
+            {!messages.length && renderEmptyMessages()}
+            {messages.map((message, idx) => (
+              <MessageItem key={idx} {...message} />
+            ))}
           </div>
           <div className="chat-room-page__send-message">
             <Input
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               fullWidth
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  sendMessage();
+                }
+              }}
               name="send-message"
               placeholder={t("room.messages.input.placeholder")}
             />
