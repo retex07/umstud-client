@@ -2,6 +2,9 @@
   "name": "umstud-client",
   "version": "0.1.0",
   "private": true,
+  "resolutions": {
+    "@types/react": "18.2.0"
+  },
   "dependencies": {
     "axios": "~0.24.0",
     "classnames": "^2.3.2",
@@ -41,7 +44,7 @@
     "@babel/preset-react": "^7.18.6",
     "@types/lodash": "^4.17.16",
     "@types/node": "^16.11.65",
-    "@types/react": "^18.0.21",
+    "@types/react": "18.2.0",
     "@types/react-calendar": "^3.9.0",
     "@types/react-custom-scrollbars": "^4.0.13",
     "@types/react-dom": "^18.0.6",

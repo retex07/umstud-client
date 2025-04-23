@@ -15,13 +15,11 @@ interface Props<T extends FieldValues>
   extends Omit<
     Pick<
       SelectProps,
-      | "value"
       | "name"
       | "fullWidth"
       | "label"
       | "placeholder"
       | "classNames"
-      | "required"
       | "isMulti"
       | "options"
       | "closeMenuOnSelect"

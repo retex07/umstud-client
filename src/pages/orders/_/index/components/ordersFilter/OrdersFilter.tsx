@@ -80,6 +80,7 @@ export default function OrdersFilter(props: Props) {
         placeholder={t("fields.type.placeholder")}
         isMulti
         readOnly={formState.isSubmitting}
+        closeMenuOnSelect={false}
       />
       <SelectField
         classNames="page-page-orders__filters_field"
@@ -90,6 +91,7 @@ export default function OrdersFilter(props: Props) {
         placeholder={t("fields.category.placeholder")}
         isMulti
         readOnly={formState.isSubmitting}
+        closeMenuOnSelect={false}
       />
       <Button
         classNames="page-orders__panel_btn"
