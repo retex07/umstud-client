@@ -10,10 +10,10 @@ import {
 } from "@/api/handlers/auth/types";
 import { DetailUserProfile } from "@/api/handlers/user/types";
 import { ExtraArguments } from "@/api/types";
+import { clearState, setIsLoadingApp } from "@/store/actions/app";
 
 import {
   logout,
-  clearToken,
   login,
   setToken,
   setIsLoading,
@@ -162,8 +162,8 @@ function* resetSaga(
 
 function* logoutSaga() {
   try {
-    yield put(clearToken());
-    yield put(setUser({ user: null }));
+    yield put(clearState());
+    yield put(setIsLoadingApp(false));
     localStorage.clear();
   } catch (error) {
     console.error("[auth logoutSaga saga error]:", error);

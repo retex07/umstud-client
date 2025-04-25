@@ -7,6 +7,17 @@ export type CustomUser = {
   photo: string;
 };
 
+export type ChatCreate = {
+  participant_id: number;
+  ad_id: number;
+};
+export type ChatCreateResponse = {
+  ad_id: ChatCreate["ad_id"];
+  chat: number;
+  is_closed: boolean;
+  participants: string[];
+};
+
 export type ChatRoom = {
   id: number;
   participants: CustomUser[];

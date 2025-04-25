@@ -1,23 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 
 import MenuUser from "@/components/menus/menuUser";
 import SwitchLanguage from "@/components/menus/switchLanguage";
+import urls from "@/services/router/urls";
 import { ReactComponent as CloseMenuSvg } from "@/static/images/exit.svg";
 import { ReactComponent as LogoSvg } from "@/static/images/logo.svg";
 import { ReactComponent as AlignMenuSvg } from "@/static/images/menu-align.svg";
+import { ReactComponent as MessagesSvg } from "@/static/images/message-circle.svg";
+import { countNotReadChats } from "@/store/selectors/chat";
 import { selectUserData } from "@/store/selectors/user";
-
+import { isMobileVersion } from "@/utils/util";
 import "./Header.scss";
 
 export default function Header() {
   const { t } = useTranslation("b_header");
   const user = useSelector(selectUserData);
+  const selectCountNotReadChats = useSelector(countNotReadChats);
   const [isOpenSideBar, setIsOpenSideBar] = useState(false);
   const [isOpenSwitcher, setIsOpenSwitcher] = useState(false);
   const [isOpenMenuUser, setIsOpenMenuUser] = useState(false);
+  const history = useHistory();
+  const isMobile = isMobileVersion();
 
   useEffect(() => {
     document.body.style.overflow = isOpenSideBar ? "hidden" : "auto";
@@ -48,6 +54,10 @@ export default function Header() {
     setIsOpenMenuUser(!isOpenMenuUser);
     setIsOpenSideBar(false);
     setIsOpenSwitcher(false);
+  }
+
+  function openMessages() {
+    history.push(urls.profile.index + urls.profile.messages.index);
   }
 
   function renderNavigation() {
@@ -103,13 +113,30 @@ export default function Header() {
           <label htmlFor="sidebar-checkbox" className="mobile-menu-icon">
             {isOpenSideBar ? <CloseMenuSvg /> : <AlignMenuSvg />}
           </label>
+          {isMobile && (
+            <Link to="/">
+              <LogoSvg />
+            </Link>
+          )}
         </div>
-        <Link to="/">
-          <LogoSvg />
-        </Link>
+        {!isMobile && (
+          <Link to="/">
+            <LogoSvg />
+          </Link>
+        )}
         <div className="navigation--wrapper">{renderNavigation()}</div>
         <div className="header--change-block">
-          <div className="language-block" onClick={changeOpenSwitcher}>
+          {user && (
+            <div className="action-block messages" onClick={openMessages}>
+              <MessagesSvg />
+              {selectCountNotReadChats > 0 && (
+                <div className="action-block__counter">
+                  {selectCountNotReadChats}
+                </div>
+              )}
+            </div>
+          )}
+          <div className="action-block" onClick={changeOpenSwitcher}>
             <SwitchLanguage
               isOpen={isOpenSwitcher}
               onHide={changeOpenSwitcher}

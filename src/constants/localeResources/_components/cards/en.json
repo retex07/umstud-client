@@ -14,5 +14,11 @@
     "inProgress": "In progress"
   },
   "titleModalResponders": "Select a performer",
-  "noDataResponders": "There are no responding performers"
+  "noDataResponders": "There are no responding performers",
+  "goToChat": {
+    "title": "Go to chat with {{user}}",
+    "customer": "customer",
+    "executor": "contractor",
+    "getError": "Error receiving the chat"
+  }
 }

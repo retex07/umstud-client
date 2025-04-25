@@ -59,7 +59,8 @@ export default function CreateOrderPage() {
     dispatch(getCategoriesAndTypes());
   }, []);
 
-  const dataOrderItem = useSelector(selectOrderItem);
+  const dataOrderItemSelect = useSelector(selectOrderItem);
+  const dataOrderItem = isEditingOrder ? dataOrderItemSelect : null;
   const isLoadingOrderItem = useSelector(selectIsLoadingOrderItem);
   const dataCategoriesAds = useSelector(selectCategories);
   const dataTypesAds = useSelector(selectTypes);

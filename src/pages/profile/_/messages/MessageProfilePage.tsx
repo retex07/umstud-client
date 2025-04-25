@@ -12,11 +12,11 @@ import { ReactComponent as ExampleAvatarSvg } from "@/static/images/example-avat
 import { getChats } from "@/store/actions/chat";
 import { selectChats } from "@/store/selectors/chat";
 import { selectIsLoadingChats, selectUserData } from "@/store/selectors/user";
+import { StateChat } from "@/store/types/chat";
 import { getDraftStorageKey } from "@/utils/chat";
 import { getShortPassedTime, isMobileVersion } from "@/utils/util";
 
 import MobileNavigationMenu from "../../components/mobileNavigationMenu";
-
 import "./MessageProfilePage.scss";
 import "../styles.scss";
 
@@ -56,7 +56,10 @@ export default function MessageProfilePage() {
     return participants[0] ?? null;
   }
 
-  function renderChatRoom(chat: ChatRoom) {
+  function renderChatRoom(
+    chat: ChatRoom,
+    countNotReadMessages: StateChat["countNotReadMessages"]
+  ) {
     const interlocutor = getInterlocutor(chat);
     const storageKey = getDraftStorageKey(
       userProfile?.slug || "",
@@ -65,7 +68,10 @@ export default function MessageProfilePage() {
 
     const inputDraft = localStorage.getItem(storageKey)?.trim();
 
-    if (!inputDraft && !chat.last_message?.content) {
+    const isMyLastMessage =
+      chat.last_message?.sender?.slug === userProfile?.slug;
+
+    if (!inputDraft && !chat.last_message?.id) {
       return null;
     }
 
@@ -103,8 +109,7 @@ export default function MessageProfilePage() {
             {!inputDraft && chat.last_message?.content && (
               <div className="chats-page__last-message">
                 <p className="chats-page__last-message_text">
-                  {chat.last_message.sender.slug === userProfile?.slug &&
-                    `${t("you")}: `}
+                  {isMyLastMessage && `${t("you")}: `}
                 </p>
                 <p className="chats-page__last-message_text">
                   {chat.last_message.content}
@@ -116,7 +121,14 @@ export default function MessageProfilePage() {
                 </p>
               </div>
             )}
-            {!inputDraft && <CheckRead isRead={chat.last_message.is_read} />}
+            {!inputDraft && !countNotReadMessages && isMyLastMessage && (
+              <CheckRead isRead={chat.last_message.is_read} />
+            )}
+            {!!countNotReadMessages && (
+              <div className="count-not-read-messages">
+                {countNotReadMessages}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -136,7 +148,11 @@ export default function MessageProfilePage() {
             {!isLoadingChats && !dataChats?.length && <NoDataComponent />}
             {!isLoadingChats &&
               !!dataChats?.length &&
-              dataChats.map((chat) => chat.meta && renderChatRoom(chat.meta))}
+              dataChats.map(
+                (chat) =>
+                  chat.meta &&
+                  renderChatRoom(chat.meta, chat.countNotReadMessages)
+              )}
           </div>
         </div>
         <NavigationMenu />

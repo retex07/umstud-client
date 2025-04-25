@@ -4,6 +4,7 @@ export type StateChat = {
   isLoading: boolean;
   meta: ChatRoom | null;
   messages: ChatRoom["messages"];
+  countNotReadMessages: number;
 };
 
 export type StateChats = {

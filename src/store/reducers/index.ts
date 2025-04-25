@@ -1,4 +1,6 @@
-import { combineReducers } from "redux";
+import { combineReducers, Action } from "redux";
+
+import { clearState } from "@/store/actions/app";
 
 import appReducer from "./app";
 import authReducer from "./auth";
@@ -6,12 +8,24 @@ import chatReducer from "./chat";
 import orderReducer from "./order";
 import userReducer from "./user";
 
-const rootReducer = combineReducers({
+const appReducers = combineReducers({
   auth: authReducer,
   user: userReducer,
   app: appReducer,
   order: orderReducer,
   chat: chatReducer,
 });
+
+const rootReducer = (
+  state: ReturnType<typeof appReducers> | undefined,
+  action: Action<any>
+): ReturnType<typeof appReducers> => {
+  if (action.type === clearState.toString()) {
+    state = undefined;
+  }
+
+  // @ts-ignore
+  return appReducers(state, action);
+};
 
 export default rootReducer;

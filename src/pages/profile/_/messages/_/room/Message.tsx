@@ -24,6 +24,8 @@ export default function MessageItem(props: Message) {
     );
   }
 
+  const isMyMessage = props.sender.slug === myProfileData?.slug;
+
   return (
     <div className="message">
       <AvatarUser
@@ -34,10 +36,10 @@ export default function MessageItem(props: Message) {
       <div className="message__info">
         <h4 className="message__info_head" onClick={openUserProfile}>
           {props.sender.last_name} {props.sender.first_name}{" "}
-          {props.sender.slug === myProfileData?.slug && `(${t("you")})`}
+          {isMyMessage && `(${t("you")})`}
         </h4>
         <div className="message__views">
-          <CheckRead isRead={props.is_read} />
+          {isMyMessage && <CheckRead isRead={props.is_read} />}
           <span className="message__views_time">
             {getFullTime(createdDate)}
           </span>

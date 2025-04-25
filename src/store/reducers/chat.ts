@@ -14,6 +14,7 @@ export const defaultState: StateChat = {
   isLoading: false,
   meta: null,
   messages: [],
+  countNotReadMessages: 0,
 };
 
 Object.freeze(initialState);
@@ -27,6 +28,7 @@ export default handleActions<StateChats, any>(
     ) => ({
       ...state,
       [payload.stateId]: {
+        ...defaultState,
         ...state[payload.stateId],
         isLoading: payload.isLoading,
       },
@@ -38,7 +40,12 @@ export default handleActions<StateChats, any>(
       return {
         ...state,
         [payload.roomId]: {
+          ...defaultState,
           ...state[payload.roomId],
+          countNotReadMessages:
+            !payload.isMyMessage && !payload.data.is_read
+              ? (state[payload.roomId]?.countNotReadMessages || 0) + 1
+              : state[payload.roomId]?.countNotReadMessages || 0,
           messages: [
             ...(state[payload.roomId]?.messages || []),
             {
@@ -51,6 +58,18 @@ export default handleActions<StateChats, any>(
               is_read: payload.data.is_read,
             },
           ],
+          meta: {
+            ...state[payload.roomId]?.meta,
+            last_message: {
+              id: payload.data.messageId,
+              room: payload.roomId,
+              sender: payload.data.sender,
+              content: payload.data.message,
+              file: payload.data.file,
+              created_at: payload.data.timestamp,
+              is_read: payload.data.is_read,
+            },
+          },
         },
       };
     },
@@ -59,10 +78,21 @@ export default handleActions<StateChats, any>(
       { payload }: ReturnType<typeof setChatMeta>
     ) => ({
       ...state,
-      [payload.id]: {
-        ...state[payload.id],
-        meta: payload,
-        messages: payload.messages,
+      [payload.chat.id]: {
+        ...defaultState,
+        ...state[payload.chat.id],
+        meta: payload.chat,
+        messages: payload.chat.messages,
+        countNotReadMessages: payload.chat.messages.reduce((acc, message) => {
+          if (
+            message.sender.slug !== payload.slugMyProfile &&
+            !message.is_read
+          ) {
+            return acc + 1;
+          }
+
+          return acc;
+        }, 0),
       },
     }),
     [setChats.toString()]: (
@@ -71,14 +101,25 @@ export default handleActions<StateChats, any>(
     ) => {
       return {
         ...state,
-        ...payload.reduce(
+        ...payload.chats.reduce(
           (acc, chat) => ({
             ...acc,
             [chat.id]: {
+              ...defaultState,
               ...state[chat.id],
               isLoading: state[chat.id]?.isLoading || false,
               messages: chat.messages ?? [],
               meta: chat,
+              countNotReadMessages: chat.messages.reduce((acc, message) => {
+                if (
+                  message.sender.slug !== payload.slugMyProfile &&
+                  !message.is_read
+                ) {
+                  return acc + 1;
+                }
+
+                return acc;
+              }, 0),
             },
           }),
           {}

@@ -17,6 +17,7 @@ import {
 import { webSocketService } from "@/api/ws";
 import AvatarUser from "@/components/avatarUser";
 import Input from "@/components/input";
+import InlineLoader from "@/components/loaders/inlineLoader";
 import PageLoader from "@/components/loaders/pageLoader";
 import urls from "@/services/router/urls";
 import { ReactComponent as SendSvg } from "@/static/images/send.svg";
@@ -128,7 +129,13 @@ export default function RoomProfilePage() {
       const data: ChatSocketEventData = JSON.parse(event.data);
       console.info("JSON.parse socket dataEvent:", data);
       if (Number(params.roomId)) {
-        dispatch(addSocketMessage({ data, roomId: Number(params.roomId) }));
+        dispatch(
+          addSocketMessage({
+            data,
+            roomId: Number(params.roomId),
+            isMyMessage: data.sender.slug === myProfileData?.slug,
+          })
+        );
       } else {
         console.error("The specified room does not exist");
       }
@@ -305,13 +312,16 @@ export default function RoomProfilePage() {
               name="send-message"
               placeholder={t("room.messages.input.placeholder")}
             />
-            <button
-              className="chat-room-page__send-message_btn"
-              title={t("room.messages.input.send")}
-              onClick={sendMessage}
-            >
-              <SendSvg />
-            </button>
+            {chatConnected && (
+              <button
+                className="chat-room-page__send-message_btn"
+                title={t("room.messages.input.send")}
+                onClick={sendMessage}
+              >
+                <SendSvg />
+              </button>
+            )}
+            {!chatConnected && <InlineLoader />}
           </div>
         </div>
         <NavigationMenu />

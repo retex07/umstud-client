@@ -10,3 +10,5 @@ export const setIsInitializedApp = createAction<boolean>(
 export const setIsLoadingApp = createAction<boolean>(
   prefix + "SET_IS_LOADING_APP"
 );
+
+export const clearState = createAction<void>(prefix + "CLEAR_STATE");

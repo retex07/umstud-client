@@ -16,6 +16,7 @@ export const ENDPOINTS_CONFIG = {
     addToBlackList: "/users/blacklist/add/",
     removeOfBlackList: "/users/blacklist/remove/",
     chats: {
+      create: "/chats/create/",
       list: "/chats/",
     },
     ad: {

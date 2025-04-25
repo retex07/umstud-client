@@ -14,5 +14,11 @@
     "inProgress": "В процессе"
   },
   "titleModalResponders": "Выберите исполнителя",
-  "noDataResponders": "Нет откликнувшихся исполнителей"
+  "noDataResponders": "Нет откликнувшихся исполнителей",
+  "goToChat": {
+    "title": "Перейти в чат с {{user}}",
+    "customer": "заказчиком",
+    "executor": "исполнителем",
+    "getError": "Ошибка при получении чата"
+  }
 }

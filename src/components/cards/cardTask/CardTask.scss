@@ -120,6 +120,13 @@
     }
   }
 
+  &__action_chat {
+    @include typography.description;
+    cursor: pointer;
+    color: var(--color-blue);
+    text-decoration: underline;
+  }
+
   &--person {
     display: inline-flex;
     align-items: center;

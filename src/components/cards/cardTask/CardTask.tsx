@@ -1,20 +1,20 @@
 import classNames from "classnames";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import {
-  CardStatusTypes,
-  Respond,
-  UserResponse,
-} from "@/api/handlers/order/types";
+import { AdGet, UserResponse } from "@/api/handlers/order/types";
 import AvatarUser from "@/components/avatarUser";
 import Button from "@/components/button";
 import DateBuilder from "@/components/dateBuilder";
 import Modal from "@/components/modal";
 import urls from "@/services/router/urls";
+import { createChat, getChats } from "@/store/actions/chat";
 import { setResponder } from "@/store/actions/order";
+import { selectChats } from "@/store/selectors/chat";
+import { selectUserData } from "@/store/selectors/user";
 import { infoUser } from "@/utils/user";
 import { getFullDate } from "@/utils/util";
 
@@ -22,18 +22,22 @@ import CardStatus from "../cardStatus";
 
 import "./CardTask.scss";
 
-interface Props {
-  id: number;
-  title: string;
-  deadlineStartAt?: string;
+interface Props
+  extends Pick<
+    AdGet,
+    | "executor"
+    | "id"
+    | "responders"
+    | "status"
+    | "title"
+    | "deadlineStartAt"
+    | "deadlineEndAt"
+  > {
   className?: string;
-  deadlineEndAt?: string;
   category?: string[];
   type?: string[];
   user?: UserResponse;
   isOrder?: boolean;
-  status: CardStatusTypes;
-  responders?: Respond[];
 }
 
 export default function CardTask(props: Props) {
@@ -45,7 +49,44 @@ export default function CardTask(props: Props) {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getChats());
+  }, []);
+
+  const chatsData = useSelector(selectChats);
+  const myProfileData = useSelector(selectUserData);
   const categories = props.category?.join(", ") || "";
+
+  function openChat() {
+    if (chatsData) {
+      const foundChat = Object.values(chatsData).find(
+        (chat) => chat.meta?.ad?.id === props.id
+      );
+
+      if (foundChat?.meta?.id) {
+        history.push(
+          urls.profile.index +
+            urls.profile.messages.item.replace(
+              ":roomId",
+              foundChat.meta.id.toString()
+            )
+        );
+
+        return;
+      } else if (props.executor?.id) {
+        dispatch(
+          createChat({
+            participant_id: props.executor.id,
+            ad_id: props.id,
+          })
+        );
+
+        return;
+      }
+    }
+
+    toast.error(t("goToChat.getError"));
+  }
 
   function openUserProfile(event?: React.MouseEvent<HTMLSpanElement>) {
     event?.stopPropagation();
@@ -77,14 +118,14 @@ export default function CardTask(props: Props) {
     }
   }
 
-  const closeModalResponders = () => {
+  function closeModalResponders() {
     setSelectedResponder(undefined);
     setIsClosingModal(true);
     setTimeout(() => {
       setIsClosingModal(false);
       setIsOpenRespondersModal(false);
     }, 300);
-  };
+  }
 
   function renderModalResponders() {
     return (
@@ -227,6 +268,16 @@ export default function CardTask(props: Props) {
           </div>
         )}
       </div>
+      {props.executor && (
+        <span className="card-task__action_chat" onClick={openChat}>
+          {t("goToChat.title", {
+            user:
+              myProfileData?.slug === props.executor.slug
+                ? t("goToChat.customer")
+                : t("goToChat.executor"),
+          })}
+        </span>
+      )}
     </article>
   );
 }
