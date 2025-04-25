@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 
+import { ChatSocketEventData } from "@/api/handlers/chat/types";
 import { DetailUserProfile } from "@/api/user/types";
+import { webSocketService } from "@/api/ws";
 import LayoutBuilder from "@/components/layoutBuilder";
 import PageLoader from "@/components/loaders/pageLoader";
 import Routes from "@/services/router/config";
@@ -22,13 +24,36 @@ interface PropsApp {
 
 function App(props: PropsApp) {
   const { initApp, accessToken, userProfile, isLoadingApp } = props;
+  const [isConnectedNotifications, setIsConnectedNotifications] =
+    useState(false);
 
+  const websocket = webSocketService;
   const history = useHistory();
   const location = useLocation();
 
   useEffect(() => {
     initApp();
   }, []);
+
+  useEffect(() => {
+    if (
+      !isLoadingApp &&
+      !isConnectedNotifications &&
+      userProfile &&
+      accessToken
+    ) {
+      websocket.connect(
+        urls.notification,
+        () => setIsConnectedNotifications(true),
+        () => setIsConnectedNotifications(false)
+      );
+
+      websocket.onMessage((event) => {
+        const data: ChatSocketEventData = JSON.parse(event.data);
+        console.info("JSON.parse socket dataEvent notification:", data);
+      });
+    }
+  }, [userProfile, accessToken, isLoadingApp]);
 
   useEffect(() => {
     if (

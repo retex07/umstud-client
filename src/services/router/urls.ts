@@ -39,6 +39,7 @@ const urls = {
   chat: {
     room: "/chat/:roomId/",
   },
+  notification: "/notification/",
 };
 
 export default urls;

@@ -13,14 +13,22 @@ class WebSocketService {
     this._socket = new WebSocket(fullUrl);
 
     this._socket.onopen = () => {
-      console.log(t("translation", { keyPrefix: "websocket.onopen" }));
+      console.log(
+        t("translation", { keyPrefix: "websocket.onopen" }),
+        "\nurl:",
+        url
+      );
       if (onOpen) {
         onOpen();
       }
     };
 
     this._socket.onclose = () => {
-      console.log(t("translation", { keyPrefix: "websocket.onclose" }));
+      console.log(
+        t("translation", { keyPrefix: "websocket.onclose" }),
+        "\nurl:",
+        url
+      );
       if (onClose) {
         onClose();
       }
@@ -29,7 +37,9 @@ class WebSocketService {
     this._socket.onerror = (error) =>
       console.error(
         t("translation", { keyPrefix: "websocket.onerror" }),
-        error
+        error,
+        "\nurl:",
+        url
       );
   }
 
