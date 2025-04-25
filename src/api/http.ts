@@ -58,7 +58,7 @@ export function onRejectedResponse(error: AxiosError) {
       NotificationError(502);
       break;
     default:
-      if (error.response?.data.code !== 401) {
+      if (error.response?.data.code !== codeTokenNoValid) {
         NotificationError(
           error.response?.status || 0,
           error.response?.data.detail || null
