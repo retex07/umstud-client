@@ -1,0 +1,381 @@
+@use "@/styles/typography";
+
+.page-forum {
+  flex-direction: row;
+  gap: 20px;
+
+  &_btn {
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+
+    width: 34px;
+    height: 34px;
+
+    > svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    path {
+      stroke: var(--color-white);
+    }
+
+    &:hover path {
+      stroke: var(--color-green);
+    }
+
+    @media screen and (max-width: 1220px) {
+      display: block;
+    }
+  }
+
+  &_btn-list {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    @media screen and (min-width: 1221px) {
+      display: none;
+    }
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+
+    overflow: hidden;
+    border-top: 1px solid var(--color-blue);
+
+    &_header {
+      @include typography.page_subtitle;
+      cursor: pointer;
+
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+
+      white-space: wrap;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &-status {
+      @include typography.button_big;
+      color: var(--color-white);
+      display: inline-flex;
+      align-items: center;
+
+      padding: 6px 8px;
+      gap: 4px;
+
+      border-radius: 10px;
+
+      &.close {
+        > svg, path {
+          stroke: var(--color-white);
+          max-width: 16px;
+          max-height: 16px;
+        }
+        background: var(--color-green);
+      }
+
+      &.open {
+        background: var(--color-blue);
+        > svg, path {
+          stroke: var(--color-white);
+          max-width: 16px;
+          max-height: 16px;
+        }
+      }
+    }
+
+    &-content {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+
+      width: 100%;
+      justify-content: space-between;
+
+      &-info {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      &_img {
+        border-radius: 50%;
+        width: 100%;
+        height: 100%;
+      }
+
+      &_wrapper-avatar {
+        width: 38px;
+        height: 38px;
+      }
+
+      &_text {
+        @include typography.signature;
+        cursor: pointer;
+
+        &:hover {
+          color: var(--color-blue);
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  &__panels {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    @media screen and (max-width: 1220px) {
+      display: none;
+    }
+  }
+
+  &__header {
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__no-data {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+
+    &_logo {
+      min-height: 250px;
+    }
+
+    margin-bottom: 40px;
+  }
+}
+
+.page-forum-create {
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    &-content {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    &-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+
+  &__actions {
+    &_cancel {
+      @include typography.page_subtitle;
+      cursor: pointer;
+      color: var(--color-red);
+    }
+  }
+
+  &__header {
+    display: inline-flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.page-forum-item {
+  overflow: hidden;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+
+    &_head {
+      @include typography.page_head;
+    }
+
+    &-navigation {
+      display: inline-flex;
+      align-items: flex-start;
+      gap: 6px;
+
+      &_text {
+        @include typography.signature;
+      }
+
+      &_link {
+        @include typography.signature;
+        color: var(--color-blue);
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  &__block-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    &_head {
+      @include typography.page_subtitle;
+    }
+
+    &_text {
+      @include typography.ordinary;
+    }
+  }
+
+  &__info {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    &-user {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+
+      &_img {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+      }
+
+      &_profile {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      &_text {
+        @include typography.description;
+
+        &.link {
+          color: var(--color-blue);
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  &__answers {
+    display: flex;
+    flex-direction: column;
+    min-height: 30vh;
+
+    border-top: 1px solid var(--color-blue);
+    border-bottom: 1px solid var(--color-blue);
+
+    &-comment {
+      display: inline-flex;
+      align-items: flex-start;
+      gap: 12px;
+      width: 100%;
+      box-sizing: border-box;
+
+      padding: 12px 20px;
+
+      &_img {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+      }
+
+      &_flex {
+        display: flex;
+        flex-direction: column;
+        gap: 8px
+      }
+
+      &_label {
+        @include typography.ordinary_subtitle;
+        color: var(--color-blue);
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      &_content {
+        @include typography.ordinary_subtitle;
+      }
+    }
+  }
+
+  &__send-answer {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    gap: 6px;
+
+    &_btn,
+    &_btn:hover {
+      outline: none;
+      border: none;
+      background: none;
+      margin: 0;
+      padding: 0;
+
+      & > svg {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    & .input__select-from {
+      @include typography.description;
+      padding: 12px;
+
+      @media screen and (max-width: 1220px) {
+        padding: 8px 10px;
+      }
+    }
+
+    & .inline-loader {
+      @media screen and (min-width: 1221px) {
+        width: 1.5em;
+        height: 1.5em;
+      }
+
+      div {
+        border-color: var(--color-gray) transparent transparent transparent;
+
+        @media screen and (min-width: 1221px) {
+          width: 1.5em;
+          height: 1.5em;
+        }
+      }
+    }
+  }
+}

@@ -28,6 +28,9 @@ const urls = {
   },
   forum: {
     index: "/forum",
+    create: "/create",
+    edit: "/edit/:discussionId",
+    item: "/item/:discussionId",
   },
   auth: {
     index: "/auth",

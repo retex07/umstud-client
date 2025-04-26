@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,9 +11,8 @@ import Button from "@/components/button";
 import DateBuilder from "@/components/dateBuilder";
 import Modal from "@/components/modal";
 import urls from "@/services/router/urls";
-import { createChat, getChats } from "@/store/actions/chat";
+import { createChat } from "@/store/actions/chat";
 import { setResponder } from "@/store/actions/order";
-import { selectChats } from "@/store/selectors/chat";
 import { selectUserData } from "@/store/selectors/user";
 import { infoUser } from "@/utils/user";
 import { getFullDate } from "@/utils/util";
@@ -26,6 +25,7 @@ interface Props
   extends Pick<
     AdGet,
     | "executor"
+    | "room_id"
     | "id"
     | "responders"
     | "status"
@@ -49,40 +49,26 @@ export default function CardTask(props: Props) {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getChats());
-  }, []);
-
-  const chatsData = useSelector(selectChats);
   const myProfileData = useSelector(selectUserData);
   const categories = props.category?.join(", ") || "";
 
   function openChat() {
-    if (chatsData) {
-      const foundChat = Object.values(chatsData).find(
-        (chat) => chat.meta?.ad?.id === props.id
+    if (!!props.room_id) {
+      history.push(
+        urls.profile.index +
+          urls.profile.messages.item.replace(":roomId", props.room_id)
       );
 
-      if (foundChat?.meta?.id) {
-        history.push(
-          urls.profile.index +
-            urls.profile.messages.item.replace(
-              ":roomId",
-              foundChat.meta.id.toString()
-            )
-        );
+      return;
+    } else if (props.executor?.id) {
+      dispatch(
+        createChat({
+          participant_id: props.executor.id,
+          ad_id: props.id,
+        })
+      );
 
-        return;
-      } else if (props.executor?.id) {
-        dispatch(
-          createChat({
-            participant_id: props.executor.id,
-            ad_id: props.id,
-          })
-        );
-
-        return;
-      }
+      return;
     }
 
     toast.error(t("goToChat.getError"));

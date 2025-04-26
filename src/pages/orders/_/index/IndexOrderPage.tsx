@@ -9,9 +9,9 @@ import CardTask from "@/components/cards/cardTask";
 import PageLoader from "@/components/loaders/pageLoader";
 import Modal from "@/components/modal";
 import NoDataComponent from "@/components/noData";
-import { services } from "@/mocks/servicesMock";
+import PanelOrderCreate from "@/components/panels/orderCreate";
+import PanelOrderServices from "@/components/panels/popularServices";
 import urls from "@/services/router/urls";
-import { ReactComponent as FileSvg } from "@/static/images/file.svg";
 import { ReactComponent as PlusSvg } from "@/static/images/plus.svg";
 import { ReactComponent as SettingsSvg } from "@/static/images/settings.svg";
 import { getOrders } from "@/store/actions/order";
@@ -102,10 +102,6 @@ export default function IndexOrderPage() {
     history.push(urls.orders.index + urls.orders.create);
   }
 
-  function goToServices() {
-    history.push(urls.services);
-  }
-
   return (
     <div id="page" className="page-container page-orders">
       <Modal
@@ -174,53 +170,8 @@ export default function IndexOrderPage() {
       </div>
       <div className="page-orders__panels">
         <div className="page-orders__panels-container">
-          <div className="page-orders__panel">
-            <h4 className="page-orders__panel_head">
-              {t("pages.index.panels.create.title")}
-            </h4>
-            <p className="page-orders__panel_descr">
-              {t("pages.index.panels.create.description")}
-            </p>
-            <Button
-              classNames="page-orders__panel_btn"
-              label={t("actions.create-no-data")}
-              fullWidth
-              onClick={goToCreateOrder}
-            />
-          </div>
-          <div className="page-orders__panel">
-            <h4 className="page-orders__panel_head">
-              {t("pages.index.panels.services.title")}
-            </h4>
-            <p className="page-orders__panel_descr">
-              {t("pages.index.panels.services.description")}
-            </p>
-            <div>
-              {services.map(
-                (service, index) =>
-                  index < 4 && (
-                    <div className="page-orders__service" key={service.id}>
-                      <FileSvg />
-                      <div className="page-orders__service-info">
-                        <h4 className="page-orders__service_head">
-                          {service.name}
-                        </h4>
-                        <p className="page-orders__service_descr">
-                          {service.price}
-                        </p>
-                      </div>
-                    </div>
-                  )
-              )}
-            </div>
-            <Button
-              classNames="page-orders__panel_btn"
-              label={t("pages.index.panels.services.action")}
-              color="blue-dark"
-              fullWidth
-              onClick={goToServices}
-            />
-          </div>
+          <PanelOrderCreate />
+          <PanelOrderServices />
         </div>
       </div>
     </div>

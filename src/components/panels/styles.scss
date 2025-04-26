@@ -1,0 +1,67 @@
+@use "../../styles/typography";
+
+.info-panel {
+  @media screen and (max-width: 1220px) {
+    display: none;
+  }
+
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  align-items: center;
+  text-align: center;
+
+  gap: 10px;
+  padding: 12px;
+  border-radius: 26px;
+  height: auto;
+
+  max-width: 233px;
+  background: var(--color-white);
+
+  &_btn {
+    align-self: center;
+  }
+
+  &_head {
+    @include typography.page_subtitle;
+  }
+
+  &_descr {
+    @include typography.ordinary;
+    color: var(--color-gray-text);
+    line-height: 1;
+  }
+
+  &__service {
+    display: inline-flex;
+    align-items: center;
+    text-align: start;
+
+    gap: 8px;
+    padding: 10px 12px;
+    width: 100%;
+
+    > svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    &-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 0;
+    }
+
+    &_head {
+      @include typography.description;
+    }
+
+    &_descr {
+      @include typography.signature;
+      color: var(--color-gray-text);
+    }
+  }
+}

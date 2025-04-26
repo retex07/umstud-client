@@ -1,4 +1,4 @@
-import { ApiUser, ApiAuth, ApiOrder, ApiChat } from "./handlers";
+import { ApiUser, ApiAuth, ApiOrder, ApiChat, ApiForum } from "./handlers";
 import { Api, ExtraArguments } from "./types";
 
 export function configureAPI(): Omit<ExtraArguments, "history"> {
@@ -7,6 +7,7 @@ export function configureAPI(): Omit<ExtraArguments, "history"> {
     auth: ApiAuth(),
     order: ApiOrder(),
     chat: ApiChat(),
+    forum: ApiForum(),
   };
 
   return { api };

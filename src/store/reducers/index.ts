@@ -5,6 +5,7 @@ import { clearState } from "@/store/actions/app";
 import appReducer from "./app";
 import authReducer from "./auth";
 import chatReducer from "./chat";
+import forumReducer from "./forum";
 import orderReducer from "./order";
 import userReducer from "./user";
 
@@ -14,6 +15,7 @@ const appReducers = combineReducers({
   app: appReducer,
   order: orderReducer,
   chat: chatReducer,
+  forum: forumReducer,
 });
 
 const rootReducer = (

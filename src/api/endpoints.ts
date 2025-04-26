@@ -28,5 +28,11 @@ export const ENDPOINTS_CONFIG = {
       myOrders: "/ad/users/ads/",
       executor: "/ad/ads/executor/",
     },
+    discussion: {
+      create: "/discussions/create/",
+      list: "/discussions/list/",
+      item: "/discussions/:itemId/",
+      createComment: "/discussions/:itemId/comments/create/",
+    },
   },
 };

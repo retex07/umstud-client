@@ -5,7 +5,7 @@ import urls from "./urls";
 
 const IndexPageResolver = lazy(() => import("@/pages/index"));
 const RatingPageResolver = lazy(() => import("@/pages/rating"));
-const ForumPageResolver = lazy(() => import("@/pages/forum"));
+const ForumPageResolver = lazy(() => import("@/pages/forum/resolver"));
 const OrdersPageResolver = lazy(() => import("@/pages/orders/resolver"));
 const ContactsPageResolver = lazy(() => import("@/pages/contacts"));
 const ServicesPageResolver = lazy(() => import("@/pages/services"));
@@ -86,7 +86,10 @@ const Routes: Route[] = [
     settings: {
       exact: false,
     },
-    layoutSettings: {},
+    layoutSettings: {
+      withFooter: false,
+      withHeader: false,
+    },
   },
   {
     path: urls.auth.index,

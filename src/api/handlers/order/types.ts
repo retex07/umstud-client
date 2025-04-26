@@ -29,6 +29,7 @@ export interface AdGet {
   deadlineEndAt?: string;
   budget: number;
   description: string;
+  room_id?: string;
   author: UserResponse;
   files?: number[];
 }

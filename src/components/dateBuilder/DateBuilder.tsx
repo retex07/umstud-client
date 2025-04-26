@@ -9,6 +9,7 @@ interface Props {
   dateStartAt?: string;
   dateEndAt?: string;
   isClosed?: boolean;
+  isNotViewEndDate?: boolean;
 }
 
 export default function DateBuilder(props: Props) {
@@ -24,16 +25,18 @@ export default function DateBuilder(props: Props) {
               {props.dateStartAt}
             </span>
           </div>
-          <ChevronRightSvg />
+          {!props.isNotViewEndDate && <ChevronRightSvg />}
         </>
       )}
       {props.isClosed && (
         <span className="card-task--closed">{t("closed")}</span>
       )}
-      <div className="date-builder--item">
-        <CalendarSvg />
-        <span className="date-builder--item end">{props.dateEndAt}</span>
-      </div>
+      {!props.isNotViewEndDate && (
+        <div className="date-builder--item">
+          <CalendarSvg />
+          <span className="date-builder--item end">{props.dateEndAt}</span>
+        </div>
+      )}
     </div>
   );
 }
