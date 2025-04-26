@@ -3,6 +3,7 @@ import { put, takeLatest, call, select } from "redux-saga/effects";
 import { DetailUserProfile } from "@/api/handlers/user/types";
 import { ExtraArguments } from "@/api/types";
 import urls from "@/services/router/urls";
+import { getChats } from "@/store/actions/chat";
 import { getAccessToken, getRefreshToken } from "@/utils/user";
 
 import { initApp, setIsInitializedApp, setIsLoadingApp } from "../actions/app";
@@ -39,6 +40,7 @@ function* initAppSaga({ api, history }: ExtraArguments) {
     const myProfileData: DetailUserProfile = yield call(api.user.getMyProfile);
     if (myProfileData) {
       yield put(setUser({ user: myProfileData }));
+      yield put(getChats());
     } else {
       throw new Error("Error when receiving profile data");
       return;
