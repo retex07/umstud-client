@@ -133,10 +133,12 @@ export default function ForumPage() {
         {!isLoadingDiscussions && !discussions?.length && (
           <div className="page-forum__no-data">
             <NoDataComponent className="page-forum__no-data_logo" />
-            <Button
-              label={t("actions.create-no-data")}
-              onClick={goToCreateDiscussion}
-            />
+            {myProfileData && (
+              <Button
+                label={t("actions.create-no-data")}
+                onClick={goToCreateDiscussion}
+              />
+            )}
           </div>
         )}
         {discussions.map((discussion) => renderCardDiscussion(discussion))}

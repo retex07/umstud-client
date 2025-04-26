@@ -20,6 +20,7 @@ import {
   selectDiscussion,
   selectIsLoadingForum,
 } from "@/store/selectors/forum";
+import { selectUserData } from "@/store/selectors/user";
 import { RootState } from "@/store/types";
 import { getFullDate } from "@/utils/util";
 
@@ -38,6 +39,7 @@ export default function ItemForumPage() {
   }, []);
 
   const isLoading = useSelector(selectIsLoadingForum);
+  const myProfileData = useSelector(selectUserData);
   const discussion: Discussion = useSelector((state: RootState) =>
     selectDiscussion(state, discussionId)
   );
@@ -168,22 +170,24 @@ export default function ItemForumPage() {
                 ))}
               </Scrollbars>
             )}
-            <div className="page-forum-item__send-answer">
-              <Input
-                fullWidth
-                value={sendAnswerText}
-                placeholder={t("input.answer")}
-                onChange={(e) => setSendAnswerText(e.target.value)}
-                name="send-answer"
-              />
-              <button
-                className="page-forum-item__send-answer_btn"
-                title={t("send")}
-                onClick={onSendAnswer}
-              >
-                <SendSvg />
-              </button>
-            </div>
+            {myProfileData && (
+              <div className="page-forum-item__send-answer">
+                <Input
+                  fullWidth
+                  value={sendAnswerText}
+                  placeholder={t("input.answer")}
+                  onChange={(e) => setSendAnswerText(e.target.value)}
+                  name="send-answer"
+                />
+                <button
+                  className="page-forum-item__send-answer_btn"
+                  title={t("send")}
+                  onClick={onSendAnswer}
+                >
+                  <SendSvg />
+                </button>
+              </div>
+            )}
           </>
         )}
       </div>
