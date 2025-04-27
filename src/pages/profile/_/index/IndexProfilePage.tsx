@@ -28,7 +28,7 @@ import { ReactComponent as FillStarSvg } from "@/static/images/fill-star.svg";
 import { ReactComponent as HollowStarSvg } from "@/static/images/hollow-star.svg";
 import { ReactComponent as TrashSvg } from "@/static/images/trash.svg";
 import * as userActions from "@/store/actions/user";
-import { selectUser } from "@/store/selectors/user";
+import { selectUserData } from "@/store/selectors/user";
 import { Dispatch } from "@/store/types";
 import { convertDataToFormData } from "@/utils/formdata";
 import { infoUser } from "@/utils/user";
@@ -58,12 +58,12 @@ export default function IndexProfilePage() {
   const params = useParams<{ profileId: string }>();
 
   const { requestConfirm } = useConfirm();
-  const { user: myProfile } = useSelector(selectUser);
+  const myProfileData = useSelector(selectUserData);
   const { data: user, isLoading } = useUserProfile(params.profileId, {
     enabled: !!params.profileId,
   });
 
-  const isMyProfile = myProfile?.slug === params.profileId;
+  const isMyProfile = myProfileData?.slug === params.profileId;
 
   const addPortfolio = useAddPortfolio();
   const editFilePortfolio = useEditFilePortfolio();
@@ -99,7 +99,11 @@ export default function IndexProfilePage() {
   }
 
   function onSubmitPortfolio(data: PortfolioItem_RequestBody) {
-    const newData = { title: data.title, description: data.description };
+    const newData = {
+      title: data.title,
+      description: data.description,
+      user: user?.id,
+    };
     const formData = convertDataToFormData(newData);
 
     if (fileInputRef.current?.files && fileInputRef.current.files[0]) {
@@ -213,7 +217,7 @@ export default function IndexProfilePage() {
   function renderPortfolio() {
     if (
       (!isMyProfile && !user?.portfolio_items.length) ||
-      (isMyProfile && !myProfile?.portfolio_items.length)
+      (isMyProfile && !myProfileData?.portfolio_items.length)
     ) {
       return (
         <>
@@ -234,7 +238,7 @@ export default function IndexProfilePage() {
 
     return (
       <div className="portfolio__wrapper">
-        {(isMyProfile ? myProfile : user)?.portfolio_items.map((item) => (
+        {(isMyProfile ? myProfileData : user)?.portfolio_items.map((item) => (
           <article className="portfolio__item" key={item.id}>
             <Modal
               isOpen={openViewFileId === item.id}
@@ -447,18 +451,18 @@ export default function IndexProfilePage() {
   }
 
   if (location.pathname === "/profile/" || location.pathname === "/profile") {
-    return <Redirect to={`/profile/user/${myProfile?.slug}`} />;
+    return <Redirect to={`/profile/user/${myProfileData?.slug}`} />;
   }
 
-  if (isLoading && myProfile?.slug !== params.profileId) {
+  if (isLoading && myProfileData?.slug !== params.profileId) {
     return <PageLoader />;
   }
 
   function getUser() {
     switch (true) {
-      case myProfile?.slug === params.profileId:
-        return myProfile;
-      case myProfile?.slug !== params.profileId:
+      case myProfileData?.slug === params.profileId:
+        return myProfileData;
+      case myProfileData?.slug !== params.profileId:
         return user;
       default:
         return null;
