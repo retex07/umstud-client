@@ -137,11 +137,6 @@ export default function Footer() {
               {t("other.guarantees")}
             </a>
           </dd>
-          <dd className="footer--definition-details">
-            <a className="footer--definition-details--description">
-              {t("other.reviews")}
-            </a>
-          </dd>
         </dl>
         <div className="footer--logo-mobile">
           <LogoSvg />

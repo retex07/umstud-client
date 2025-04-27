@@ -89,11 +89,6 @@ export default function Header() {
               {t("navigation.rating")}
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/contacts" className="navigation--item-link">
-              {t("navigation.contacts")}
-            </NavLink>
-          </li>
         </ul>
       </nav>
     );

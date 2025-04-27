@@ -16,7 +16,6 @@ const urls = {
     },
   },
   services: "/services",
-  contacts: "/contacts",
   rating: {
     index: "/rating",
   },

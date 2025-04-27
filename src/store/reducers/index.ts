@@ -3,7 +3,7 @@ import { combineReducers, Action } from "redux";
 import { clearState } from "@/store/actions/app";
 
 import appReducer from "./app";
-import authReducer from "./auth";
+import authReducer, { initialState as initialStateAuth } from "./auth";
 import chatReducer, { initialState as initialStateChat } from "./chat";
 import forumReducer from "./forum";
 import orderReducer from "./order";
@@ -26,6 +26,7 @@ const rootReducer = (
     if (state) {
       state = {
         ...state,
+        auth: initialStateAuth,
         chat: initialStateChat,
         user: initialStateUser,
       };
