@@ -37,7 +37,7 @@ export default function MyOrdersProfilePage() {
         </div>
         <div className="page-content-wrapper">
           <header className="page-content-title">{t("title")}</header>
-          {isLoadingMyOrders && <PageLoader />}
+          {isLoadingMyOrders && !myOrdersList && <PageLoader />}
           {!isLoadingMyOrders && !myOrdersList.length && <NoDataComponent />}
           {myOrdersList.length > 0 && (
             <div className="order-card__list">

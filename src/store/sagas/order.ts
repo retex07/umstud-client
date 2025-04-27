@@ -5,13 +5,16 @@ import { ExtraArguments } from "@/api/types";
 import {
   getCategoriesAndTypes,
   getMyOrders,
+  getMyWorks,
   getOrder,
   getOrders,
   setCategories,
   setIsLoadingMyOrders,
+  setIsLoadingMyWorks,
   setIsLoadingOrderItem,
   setIsLoadingOrders,
   setMyOrdersList,
+  setMyWorksList,
   setOrderItem,
   setOrders,
   setResponder,
@@ -43,6 +46,18 @@ function* getMyOrdersSaga({ api }: ExtraArguments) {
     console.error("[order getOrdersSaga saga error]:", error);
   } finally {
     yield put(setIsLoadingMyOrders(false));
+  }
+}
+
+function* sagaGetMyWorks({ api }: ExtraArguments) {
+  try {
+    yield put(setIsLoadingMyWorks(true));
+    const myWorks: AdGet[] = yield call(api.order.getMyWorks);
+    yield put(setMyWorksList(myWorks));
+  } catch (error) {
+    console.error("[order sagaGetMyWorks saga error]:", error);
+  } finally {
+    yield put(setIsLoadingMyWorks(false));
   }
 }
 
@@ -88,6 +103,7 @@ function* getCategoriesAndTypesSaga({ api }: ExtraArguments) {
 export default function* order(ea: ExtraArguments) {
   yield takeLatest(setResponder.toString(), setResponderSaga, ea);
   yield takeLatest(getMyOrders.toString(), getMyOrdersSaga, ea);
+  yield takeLatest(getMyWorks.toString(), sagaGetMyWorks, ea);
   yield takeLatest(getOrders.toString(), getOrdersSaga, ea);
   yield takeLatest(getOrder.toString(), getOrderSaga, ea);
   yield takeLatest(

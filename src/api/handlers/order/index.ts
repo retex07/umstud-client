@@ -6,6 +6,7 @@ import { ExecutorBody, AdGet, OptionSelect } from "./types";
 
 interface QueryHandlers {
   getMyOrders: () => PureResponse<AdGet[]>;
+  getMyWorks: () => PureResponse<AdGet[]>;
   getOrders: () => PureResponse<AdGet[]>;
   getOrder: (orderId: string) => PureResponse<AdGet>;
   getTypes: () => PureResponse<OptionSelect[]>;
@@ -27,6 +28,10 @@ export default function ApiOrder(): ApiOrderHandlers {
 
   const getMyOrders = async () => {
     return (await http.get(API.ad.myOrders)).data;
+  };
+
+  const getMyWorks = async () => {
+    return (await http.get(API.ad.myWorks)).data;
   };
 
   const getOrders = async () => {
@@ -52,5 +57,6 @@ export default function ApiOrder(): ApiOrderHandlers {
     getTypes,
     getCategories,
     getOrder,
+    getMyWorks,
   };
 }

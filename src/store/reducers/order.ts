@@ -3,9 +3,11 @@ import { handleActions } from "redux-actions";
 import {
   setCategories,
   setIsLoadingMyOrders,
+  setIsLoadingMyWorks,
   setIsLoadingOrderItem,
   setIsLoadingOrders,
   setMyOrdersList,
+  setMyWorksList,
   setOrderItem,
   setOrders,
   setTypes,
@@ -14,6 +16,10 @@ import { StateOrder } from "../types/order";
 
 export const initialState: StateOrder = {
   myOrders: {
+    isLoading: false,
+    list: [],
+  },
+  myWorks: {
     isLoading: false,
     list: [],
   },
@@ -41,6 +47,16 @@ export default handleActions<StateOrder, any>(
         list: payload,
       },
     }),
+    [setMyWorksList.toString()]: (
+      state,
+      { payload }: ReturnType<typeof setMyWorksList>
+    ) => ({
+      ...state,
+      myWorks: {
+        ...state.myWorks,
+        list: payload,
+      },
+    }),
     [setOrders.toString()]: (
       state,
       { payload }: ReturnType<typeof setOrders>
@@ -55,6 +71,16 @@ export default handleActions<StateOrder, any>(
       ...state,
       myOrders: {
         ...state.myOrders,
+        isLoading: payload,
+      },
+    }),
+    [setIsLoadingMyWorks.toString()]: (
+      state,
+      { payload }: ReturnType<typeof setIsLoadingMyWorks>
+    ) => ({
+      ...state,
+      myWorks: {
+        ...state.myWorks,
         isLoading: payload,
       },
     }),

@@ -12,6 +12,9 @@ export const selectOrder = (state: RootState) =>
 export const selectIsLoadingMyOrders = createSelector(selectOrder, (state) =>
   get(state, "myOrders.isLoading")
 );
+export const selectIsLoadingMyWorks = createSelector(selectOrder, (state) =>
+  get(state, "myWorks.isLoading")
+);
 export const selectIsLoadingOrderItem = createSelector(selectOrder, (state) =>
   get(state, "orderItem.isLoading")
 );
@@ -21,6 +24,9 @@ export const selectIsLoadingOrders = createSelector(selectOrder, (state) =>
 
 export const selectMyOrdersList = createSelector(selectOrder, (state) =>
   get(state, "myOrders.list")
+);
+export const selectMyWorksList = createSelector(selectOrder, (state) =>
+  get(state, "myWorks.list")
 );
 export const selectOrders = createSelector(selectOrder, (state) =>
   get(state, "orders")

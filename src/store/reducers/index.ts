@@ -4,10 +4,10 @@ import { clearState } from "@/store/actions/app";
 
 import appReducer from "./app";
 import authReducer from "./auth";
-import chatReducer from "./chat";
+import chatReducer, { initialState as initialStateChat } from "./chat";
 import forumReducer from "./forum";
 import orderReducer from "./order";
-import userReducer from "./user";
+import userReducer, { initialState as initialStateUser } from "./user";
 
 const appReducers = combineReducers({
   auth: authReducer,
@@ -23,7 +23,13 @@ const rootReducer = (
   action: Action<any>
 ): ReturnType<typeof appReducers> => {
   if (action.type === clearState.toString()) {
-    state = undefined;
+    if (state) {
+      state = {
+        ...state,
+        chat: initialStateChat,
+        user: initialStateUser,
+      };
+    }
   }
 
   // @ts-ignore

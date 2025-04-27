@@ -8,7 +8,7 @@ import { webSocketService } from "@/api/ws";
 import LayoutBuilder from "@/components/layoutBuilder";
 import PageLoader from "@/components/loaders/pageLoader";
 import Routes from "@/services/router/config";
-import urls from "@/services/router/urls";
+import urls, { PRIVATE_URLS } from "@/services/router/urls";
 import { initApp } from "@/store/actions/app";
 import { selectIsLoadingApp } from "@/store/selectors/app";
 import { selectAccessToken } from "@/store/selectors/auth";
@@ -68,14 +68,12 @@ function App(props: PropsApp) {
 
   useEffect(() => {
     if ((!accessToken || !userProfile) && !isLoadingApp) {
-      if (
-        location.pathname.includes(urls.profile.index) &&
-        !location.pathname.includes(urls.profile.item.replace(":profileId", ""))
-      ) {
+      const cleanPath = location.pathname.replace(/\/$/, "");
+      if (PRIVATE_URLS.includes(cleanPath)) {
         history.push(urls.auth.index + urls.auth.signIn);
       }
     }
-  }, [userProfile, accessToken, isLoadingApp]);
+  }, [userProfile, accessToken, isLoadingApp, window.location]);
 
   if (isLoadingApp) {
     return <PageLoader />;

@@ -45,4 +45,24 @@ const urls = {
   notification: "/notification/",
 };
 
+export const PRIVATE_URLS = [
+  // orders
+  urls.orders.index + urls.orders.create,
+  urls.orders.index + urls.orders.edit,
+
+  // forum
+  urls.forum.index + urls.forum.create,
+  urls.forum.index + urls.forum.edit,
+
+  // profile
+  urls.profile.index,
+  urls.profile.index + urls.profile.security,
+  urls.profile.index + urls.profile.edit,
+  urls.profile.index + urls.profile.readyTask,
+  urls.profile.index + urls.profile.blackList,
+  urls.profile.index + urls.profile.myOrders,
+  urls.profile.index + urls.profile.myWork,
+  urls.profile.index + urls.profile.messages.index,
+];
+
 export default urls;

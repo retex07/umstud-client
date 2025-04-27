@@ -5,6 +5,10 @@ export interface StateOrder {
     isLoading: boolean;
     list: AdGet[];
   };
+  myWorks: {
+    isLoading: boolean;
+    list: AdGet[];
+  };
   orders: AdGet[];
   isLoading: boolean;
   orderItem: {

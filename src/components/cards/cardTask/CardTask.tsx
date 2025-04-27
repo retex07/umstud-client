@@ -32,6 +32,7 @@ interface Props
     | "title"
     | "deadlineStartAt"
     | "deadlineEndAt"
+    | "author"
   > {
   className?: string;
   category?: string[];
@@ -51,6 +52,7 @@ export default function CardTask(props: Props) {
 
   const myProfileData = useSelector(selectUserData);
   const categories = props.category?.join(", ") || "";
+  const isMyWork = myProfileData?.slug === props.executor?.slug;
 
   function openChat() {
     if (!!props.room_id) {
@@ -74,13 +76,16 @@ export default function CardTask(props: Props) {
     toast.error(t("goToChat.getError"));
   }
 
-  function openUserProfile(event?: React.MouseEvent<HTMLSpanElement>) {
+  function openUserProfile(
+    event?: React.MouseEvent<HTMLSpanElement>,
+    slug?: string
+  ) {
     event?.stopPropagation();
 
     if (props.user) {
       history.push(
         urls.profile.index +
-          urls.profile.item.replace(":profileId", props.user.slug)
+          urls.profile.item.replace(":profileId", slug || props.user.slug)
       );
     }
   }
@@ -181,6 +186,17 @@ export default function CardTask(props: Props) {
   }
 
   function renderAction() {
+    if (isMyWork && props.author) {
+      return (
+        <button
+          className="card-task__link_btn"
+          onClick={(e) => openUserProfile(e, props.author.slug)}
+        >
+          {props.author.slug}
+        </button>
+      );
+    }
+
     if (props.user?.slug) {
       return (
         <button className="card-task__link_btn" onClick={openUserProfile}>
@@ -248,7 +264,9 @@ export default function CardTask(props: Props) {
           <CardStatus type={props.status} />
         ) : (
           <div className="card-task--person">
-            <span className="card-task--text">{t("cardTask.executor")}</span>
+            <span className="card-task--text">
+              {isMyWork ? t("cardTask.customer") : t("cardTask.executor")}
+            </span>
             {renderAction()}
             {renderModalResponders()}
           </div>
@@ -257,10 +275,7 @@ export default function CardTask(props: Props) {
       {props.executor && (
         <span className="card-task__action_chat" onClick={openChat}>
           {t("goToChat.title", {
-            user:
-              myProfileData?.slug === props.executor.slug
-                ? t("goToChat.customer")
-                : t("goToChat.executor"),
+            user: isMyWork ? t("goToChat.customer") : t("goToChat.executor"),
           })}
         </span>
       )}

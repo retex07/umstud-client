@@ -26,6 +26,7 @@ export const ENDPOINTS_CONFIG = {
       categories: "/ad/categories_change/",
       types: "/ad/types_change/",
       myOrders: "/ad/users/ads/",
+      myWorks: "/ad/my_work/",
       executor: "/ad/ads/executor/",
     },
     discussion: {

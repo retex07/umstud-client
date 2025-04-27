@@ -37,7 +37,7 @@ export default function IndexOrderPage() {
     dispatch(getOrders());
   }, []);
 
-  const user = useSelector(selectUserData);
+  const myProfileData = useSelector(selectUserData);
   const accessToken = useSelector(selectAccessToken);
   const dataOrders = useSelector(selectOrders);
   const isLoadingOrders = useSelector(selectIsLoadingOrders);
@@ -122,7 +122,7 @@ export default function IndexOrderPage() {
       <div className="page-content-wrapper">
         <header className="page-orders__header">
           <h1 className="page-content-title">{t("title")}</h1>
-          {user && accessToken && (
+          {myProfileData && accessToken && (
             <div className="page-orders__header_btn-list">
               <Button
                 classNames="page-orders__header_btn"
@@ -160,10 +160,12 @@ export default function IndexOrderPage() {
           {!isLoadingOrders && !orders?.length && (
             <div className="page-orders__no-data">
               <NoDataComponent className="page-orders__no-data_logo" />
-              <Button
-                label={t("actions.create-no-data")}
-                onClick={handleCreateOrder}
-              />
+              {myProfileData && (
+                <Button
+                  label={t("actions.create-no-data")}
+                  onClick={handleCreateOrder}
+                />
+              )}
             </div>
           )}
         </div>

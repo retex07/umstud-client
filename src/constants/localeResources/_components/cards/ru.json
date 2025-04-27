@@ -1,6 +1,7 @@
 {
   "cardTask": {
     "executor": "Исполнитель",
+    "customer": "Заказчик",
     "choose": "Выбрать",
     "selected": "Выбран",
     "action": {

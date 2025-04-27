@@ -1,6 +1,7 @@
 {
   "cardTask": {
     "executor": "Executor",
+    "customer": "Customer",
     "choose": "Choose",
     "selected": "Selected",
     "action": {
