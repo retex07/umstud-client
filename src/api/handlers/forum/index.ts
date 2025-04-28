@@ -1,19 +1,25 @@
 import { ENDPOINTS_CONFIG } from "@/api/endpoints";
 import http from "@/api/http";
-import { PureResponse } from "@/api/types";
+import { convertDataToFormData } from "@/utils/formdata";
 
-import { CreateComment, CreateDiscussion_Body, Discussion } from "./types";
+import {
+  CreateComment,
+  CreateDiscussion_Body,
+  Discussion,
+  FormDataUploadFile_Body,
+  FormDataUploadFile_Success,
+} from "./types";
 
 export type ApiForumHandlers = {
-  getDiscussions: () => PureResponse<Discussion[]>;
+  getDiscussions: () => Promise<Discussion[]>;
   createDiscussion: (
     data: CreateDiscussion_Body
-  ) => PureResponse<CreateDiscussion_Body>;
-  getDiscussion: (id: string) => PureResponse<Discussion>;
-  createComment: (
-    id: string,
-    body: CreateComment
-  ) => PureResponse<CreateComment>;
+  ) => Promise<CreateDiscussion_Body>;
+  getDiscussion: (id: string) => Promise<Discussion>;
+  createComment: (id: string, body: CreateComment) => Promise<CreateComment>;
+  uploadFile: (
+    data: FormDataUploadFile_Body
+  ) => Promise<FormDataUploadFile_Success>;
 };
 
 const API = ENDPOINTS_CONFIG.api;
@@ -39,5 +45,17 @@ export default function ApiForum(): ApiForumHandlers {
     ).data;
   };
 
-  return { getDiscussions, createDiscussion, getDiscussion, createComment };
+  const uploadFile: ApiForumHandlers["uploadFile"] = async (data) => {
+    return (
+      await http.post(API.discussion.uploadFile, convertDataToFormData(data))
+    ).data;
+  };
+
+  return {
+    getDiscussions,
+    createDiscussion,
+    getDiscussion,
+    createComment,
+    uploadFile,
+  };
 }

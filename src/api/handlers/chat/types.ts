@@ -50,6 +50,7 @@ export type Message = {
 export type ChatSendMessageWS = {
   senderId: number;
   message: string;
+  file?: string;
 };
 
 export type ChatSocketEventData = Pick<

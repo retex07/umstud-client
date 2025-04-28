@@ -3,18 +3,21 @@ import { format, isToday, isYesterday, Locale, parseISO } from "date-fns";
 import { ru } from "date-fns/locale";
 import { enUS } from "date-fns/locale/en-US";
 import i18next from "i18next";
-import React, { useEffect, useRef, useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Scrollbars } from "react-custom-scrollbars";
+import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams, useRouteMatch } from "react-router-dom";
 
+import { ApiForum } from "@/api/handlers";
 import {
   ChatSendMessageWS,
   ChatSocketEventData,
   Message,
 } from "@/api/handlers/chat/types";
 import { webSocketService } from "@/api/ws";
+import FileAdding from "@/components/FileAdding";
 import AvatarUser from "@/components/avatarUser";
 import Input from "@/components/input";
 import InlineLoader from "@/components/loaders/inlineLoader";
@@ -32,6 +35,7 @@ import { isMobileVersion, t } from "@/utils/util";
 import MessageItem from "./Message";
 import MobileNavigationMenu from "../../../../components/mobileNavigationMenu";
 import NavigationMenu from "../../../../components/navigationMenu";
+
 import "../../MessageProfilePage.scss";
 import "../../../styles.scss";
 
@@ -87,13 +91,17 @@ function groupMessagesWithDateHeaders(
 
 export default function RoomProfilePage() {
   const { t } = useTranslation("p_profile", { keyPrefix: "messages" });
-  const websocket = webSocketService;
+
   const scrollRef = useRef<Scrollbars>(null);
+
+  const websocket = webSocketService;
   const params = useParams<{ roomId: string }>();
   const websocketChatUrl = urls.chat.room.replace(":roomId", params.roomId);
 
   const [inputMessage, setInputMessage] = useState("");
   const [chatConnected, setChatConnected] = useState(false);
+  const [isLoadingFile, setIsLoadingFile] = useState(false);
+  const [filesUrls, setFilesUrls] = useState<string[]>([]);
 
   const inputMessageRef = useRef(inputMessage);
 
@@ -183,16 +191,23 @@ export default function RoomProfilePage() {
   };
 
   const sendMessage = () => {
-    if (!inputMessage) {
+    if (!inputMessage && !filesUrls.length) {
       return;
     }
 
     if (myProfileData) {
-      websocket.send<ChatSendMessageWS>({
+      const sendMessageObj: ChatSendMessageWS = {
         message: inputMessage,
         senderId: myProfileData.id,
-      });
+      };
+
+      if (filesUrls.length) {
+        sendMessageObj.file = filesUrls[0];
+      }
+
+      websocket.send<ChatSendMessageWS>(sendMessageObj);
       setInputMessage("");
+      setFilesUrls([]);
     }
   };
 
@@ -202,6 +217,26 @@ export default function RoomProfilePage() {
         urls.orders.index +
           urls.orders.item.replace(":orderId", chatRoom?.ad?.id.toString())
       );
+    }
+  };
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setIsLoadingFile(true);
+      const file = e.target.files[0];
+
+      ApiForum()
+        .uploadFile({ file, type: "chat" })
+        .then((res) => {
+          setFilesUrls((prevState) => [...prevState, res.file_url]);
+          setIsLoadingFile(false);
+          toast.success(t("upload.success"), { duration: 5000 });
+        })
+        .catch((error) => {
+          setIsLoadingFile(false);
+          console.error(error);
+          toast.error(t("upload.error"), { duration: 5000 });
+        });
     }
   };
 
@@ -298,6 +333,10 @@ export default function RoomProfilePage() {
             })}
           </Scrollbars>
           <div className="chat-room-page__send-message">
+            <FileAdding
+              onChange={handleFileChange}
+              countUploadedFiles={filesUrls.length}
+            />
             <Input
               disabled={!chatConnected}
               value={inputMessage}
@@ -312,7 +351,7 @@ export default function RoomProfilePage() {
               name="send-message"
               placeholder={t("room.messages.input.placeholder")}
             />
-            {chatConnected && (
+            {chatConnected && !isLoadingFile && (
               <button
                 className="chat-room-page__send-message_btn"
                 title={t("room.messages.input.send")}
@@ -321,7 +360,7 @@ export default function RoomProfilePage() {
                 <SendSvg />
               </button>
             )}
-            {!chatConnected && <InlineLoader />}
+            {(!chatConnected || isLoadingFile) && <InlineLoader />}
           </div>
         </div>
         <NavigationMenu />

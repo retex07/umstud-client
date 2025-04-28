@@ -34,6 +34,7 @@ export const ENDPOINTS_CONFIG = {
       list: "/discussions/list/",
       item: "/discussions/:itemId/",
       createComment: "/discussions/:itemId/comments/create/",
+      uploadFile: "/discussions/file/upload/",
     },
   },
 };

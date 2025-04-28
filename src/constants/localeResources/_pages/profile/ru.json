@@ -76,6 +76,10 @@
     "title": "Сообщения",
     "draft": "Черновик:",
     "you": "Вы",
+    "upload": {
+      "error": "Ошибка при загрузке файла",
+      "success": "Файл успешно загружен"
+    },
     "room": {
       "interlocutor": {
         "header": "Диалог с {{interlocutor}}",

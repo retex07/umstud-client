@@ -234,6 +234,10 @@
     align-items: center;
     gap: 6px;
 
+    &-files {
+
+    }
+
     & .input__select-from {
       @include typography.description;
       padding: 12px;

@@ -18,6 +18,17 @@ export type CreateDiscussion_Body = {
   title: string;
   description: string;
 };
+
+export type FormDataUploadFile_Body = {
+  file: File;
+  type: "chat" | "discussion";
+};
+
+export type FormDataUploadFile_Success = {
+  file_url: string;
+  status: string;
+};
+
 export type CreateDiscussion_Response = CreateDiscussion_Body & {
   id: number;
 };

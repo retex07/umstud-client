@@ -76,6 +76,10 @@
     "title": "Messages",
     "draft": "Draft:",
     "you": "You",
+    "upload": {
+      "error": "Error when uploading a file",
+      "success": "The file was uploaded successfully"
+    },
     "room": {
       "interlocutor": {
         "header": "Dialogue with {{interlocutor}}",
