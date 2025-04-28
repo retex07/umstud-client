@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { Scrollbars } from "react-custom-scrollbars";
+import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
-import { Discussion } from "@/api/handlers/forum/types";
+import { ApiForum } from "@/api/handlers";
+import { CreateComment, Discussion } from "@/api/handlers/forum/types";
+import FileAdding from "@/components/FileAdding";
 import AvatarUser from "@/components/avatarUser";
 import Input from "@/components/input";
+import InlineLoader from "@/components/loaders/inlineLoader";
 import PageLoader from "@/components/loaders/pageLoader";
 import PanelForumCreate from "@/components/panels/forumCreate";
 import PanelOrderCreate from "@/components/panels/orderCreate";
@@ -30,6 +34,8 @@ export default function ItemForumPage() {
   const { t } = useTranslation("p_forum");
   const { discussionId } = useParams<{ discussionId: string }>();
   const [sendAnswerText, setSendAnswerText] = useState("");
+  const [filesUrls, setFilesUrls] = useState<string[]>([]);
+  const [isLoadingFile, setIsLoadingFile] = useState(false);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -55,8 +61,36 @@ export default function ItemForumPage() {
   }
 
   function onSendAnswer() {
-    dispatch(sendAnswer({ discussionId, body: { content: sendAnswerText } }));
-    setSendAnswerText("");
+    if (!isLoadingFile) {
+      const sendObjectBoy: CreateComment = { content: sendAnswerText };
+      if (filesUrls.length) {
+        sendObjectBoy.file = filesUrls[0];
+      }
+
+      dispatch(sendAnswer({ discussionId, body: sendObjectBoy }));
+      setSendAnswerText("");
+      setFilesUrls([]);
+    }
+  }
+
+  function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
+    if (e.target.files) {
+      setIsLoadingFile(true);
+      const file = e.target.files[0];
+
+      ApiForum()
+        .uploadFile({ file, type: "discussion" })
+        .then((res) => {
+          setFilesUrls((prevState) => [...prevState, res.file_url]);
+          setIsLoadingFile(false);
+          toast.success(t("upload.success"), { duration: 5000 });
+        })
+        .catch((error) => {
+          setIsLoadingFile(false);
+          console.error(error);
+          toast.error(t("upload.error"), { duration: 5000 });
+        });
+    }
   }
 
   function renderDiscussionStatus() {
@@ -172,6 +206,10 @@ export default function ItemForumPage() {
             )}
             {myProfileData && (
               <div className="page-forum-item__send-answer">
+                <FileAdding
+                  onChange={handleFileChange}
+                  countUploadedFiles={filesUrls.length}
+                />
                 <Input
                   fullWidth
                   value={sendAnswerText}
@@ -179,13 +217,16 @@ export default function ItemForumPage() {
                   onChange={(e) => setSendAnswerText(e.target.value)}
                   name="send-answer"
                 />
-                <button
-                  className="page-forum-item__send-answer_btn"
-                  title={t("send")}
-                  onClick={onSendAnswer}
-                >
-                  <SendSvg />
-                </button>
+                {!isLoadingFile && (
+                  <button
+                    className="page-forum-item__send-answer_btn"
+                    title={t("send")}
+                    onClick={onSendAnswer}
+                  >
+                    <SendSvg />
+                  </button>
+                )}
+                {isLoadingFile && <InlineLoader />}
               </div>
             )}
           </>

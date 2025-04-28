@@ -12,6 +12,7 @@ export type Discussion = {
 
 export type CreateComment = {
   content: string;
+  file?: string;
 };
 
 export type CreateDiscussion_Body = {

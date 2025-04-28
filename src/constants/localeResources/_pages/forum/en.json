@@ -4,6 +4,10 @@
     "create-no-data": "Create Discussion",
     "cancel": "Cancel"
   },
+  "upload": {
+    "error": "Error when uploading a file",
+    "success": "The file was uploaded successfully"
+  },
   "create": {
     "title": "Create Discussion",
     "fields": {
