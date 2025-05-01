@@ -122,21 +122,6 @@ export default function Footer() {
               {t("other.userAgreement")}
             </a>
           </dd>
-          <dd className="footer--definition-details">
-            <a className="footer--definition-details--description">
-              {t("other.aboutPayment")}
-            </a>
-          </dd>
-          <dd className="footer--definition-details">
-            <a className="footer--definition-details--description">
-              {t("other.secureTransaction")}
-            </a>
-          </dd>
-          <dd className="footer--definition-details">
-            <a className="footer--definition-details--description">
-              {t("other.guarantees")}
-            </a>
-          </dd>
         </dl>
         <div className="footer--logo-mobile">
           <LogoSvg />
