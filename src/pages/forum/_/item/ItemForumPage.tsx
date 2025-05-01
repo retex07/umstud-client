@@ -46,7 +46,7 @@ export default function ItemForumPage() {
 
   const isLoading = useSelector(selectIsLoadingForum);
   const myProfileData = useSelector(selectUserData);
-  const discussion: Discussion = useSelector((state: RootState) =>
+  const discussion: Discussion | null = useSelector((state: RootState) =>
     selectDiscussion(state, discussionId)
   );
 
@@ -94,7 +94,7 @@ export default function ItemForumPage() {
   }
 
   function renderDiscussionStatus() {
-    switch (discussion.status) {
+    switch (discussion?.status) {
       case "open":
         return (
           <div className="page-forum__card-status open">
@@ -118,7 +118,7 @@ export default function ItemForumPage() {
     <div id="page" className="page-container page-forum">
       <PanelOrderServices />
       <div className="page-content-wrapper page-forum-item">
-        {isLoading && !discussion && <PageLoader />}
+        {isLoading && <PageLoader />}
         {!isLoading && discussion?.author && (
           <>
             <header className="page-forum-item__header">

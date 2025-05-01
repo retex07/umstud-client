@@ -1,5 +1,9 @@
 {
   "title": "Форум",
+  "panel": {
+    "active": "Активные обсуждения",
+    "discussion": "Обсуждения"
+  },
   "actions": {
     "create-no-data": "Создать обсуждение",
     "cancel": "Отменить"

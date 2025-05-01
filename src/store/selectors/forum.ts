@@ -10,7 +10,7 @@ export const selectForum = (state: RootState) =>
   get(state, prefix) || { ...initialState };
 
 export const selectDiscussion = (state: RootState, key: string) =>
-  get(state, [prefix, "discussions", key]) || {};
+  get(state, [prefix, "discussions", key]) || null;
 
 export const selectIsLoadingForum = createSelector(selectForum, (state) =>
   get(state, "isLoading")

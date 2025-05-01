@@ -1,5 +1,9 @@
 {
   "title": "Forum",
+  "panel": {
+    "active": "Active discussions",
+    "discussion": "Discussions"
+  },
   "actions": {
     "create-no-data": "Create Discussion",
     "cancel": "Cancel"
