@@ -314,7 +314,22 @@
       &_flex {
         display: flex;
         flex-direction: column;
-        gap: 8px
+        gap: 8px;
+        width: 100%;
+      }
+
+      &-info {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      &_date {
+        @include typography.signature;
+        color: var(--color-gray-text);
       }
 
       &_label {

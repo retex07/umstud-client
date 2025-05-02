@@ -33,6 +33,14 @@
       max-width: 16px;
       max-height: 16px;
     }
+    background: var(--color-yellow-dark);
+  }
+  &.completed {
+    > svg, path {
+      stroke: var(--color-white);
+      max-width: 16px;
+      max-height: 16px;
+    }
     background: var(--color-green);
   }
 }

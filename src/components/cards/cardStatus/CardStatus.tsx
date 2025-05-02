@@ -5,6 +5,7 @@ import { CardStatusTypes } from "@/api/handlers/order/types";
 import { ReactComponent as CheckSvg } from "@/static/images/check.svg";
 import { ReactComponent as ClockSvg } from "@/static/images/clock.svg";
 import { ReactComponent as ExitSvg } from "@/static/images/exit.svg";
+import { ReactComponent as LanguageSvg } from "@/static/images/language.svg";
 import "./CardStatus.scss";
 
 interface Props {
@@ -20,7 +21,7 @@ export default function CardStatus(props: Props) {
     case "open":
       return (
         <div className="card-status open">
-          <CheckSvg />
+          <LanguageSvg />
           {props.textOpen ?? t("open")}
         </div>
       );
@@ -36,6 +37,13 @@ export default function CardStatus(props: Props) {
         <div className="card-status progress">
           <ClockSvg />
           {props.textClose ?? t("inProgress")}
+        </div>
+      );
+    case "completed":
+      return (
+        <div className="card-status completed">
+          {props.textClose ?? t("completed")}
+          <CheckSvg />
         </div>
       );
     default:

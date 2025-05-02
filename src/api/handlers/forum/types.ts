@@ -38,7 +38,7 @@ type Comment = {
   id: number;
   content: string;
   author: ForumCustomUser;
-  created_at?: string;
+  created_at: string;
 };
 
 export type ForumCustomUser = {

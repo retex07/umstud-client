@@ -190,12 +190,17 @@ export default function ItemForumPage() {
                       username={comment.author.username}
                     />
                     <div className="page-forum-item__answers-comment_flex">
-                      <label
-                        className="page-forum-item__answers-comment_label"
-                        onClick={() => openUserProfile(comment.author.slug)}
-                      >
-                        {comment.author.last_name} {comment.author.first_name}
-                      </label>
+                      <div className="page-forum-item__answers-comment-info">
+                        <label
+                          className="page-forum-item__answers-comment_label"
+                          onClick={() => openUserProfile(comment.author.slug)}
+                        >
+                          {comment.author.last_name} {comment.author.first_name}
+                        </label>
+                        <span className="page-forum-item__answers-comment_date">
+                          {getFullDate(new Date(comment.created_at))}
+                        </span>
+                      </div>
                       <p className="page-forum-item__answers-comment_content">
                         {comment.content}
                       </p>

@@ -10,6 +10,7 @@ import Button from "@/components/button";
 import CardStatus from "@/components/cards/cardStatus";
 import InfoUser from "@/components/infoUser";
 import PageLoader from "@/components/loaders/pageLoader";
+import PanelOrderServices from "@/components/panels/popularServices";
 import urls from "@/services/router/urls";
 import { ReactComponent as SvgEdit } from "@/static/images/edit.svg";
 import { getOrder } from "@/store/actions/order";
@@ -104,84 +105,89 @@ export default function ItemOrderPage() {
 
   return (
     <div id="page" className="page-container">
-      <div className="page-content-wrapper">
-        <header className="page-orders__order_header">
-          <div className="page-orders__order_header-block">
-            <div className="page-orders__order_header-info">
-              <span
-                className="page-orders__order_header-info_link"
-                onClick={() => history.push(urls.orders.index)}
+      <div className="page-wrapper">
+        <PanelOrderServices />
+        <div className="page-content-wrapper">
+          <header className="page-orders__order_header">
+            <div className="page-orders__order_header-block">
+              <div className="page-orders__order_header-info">
+                <span
+                  className="page-orders__order_header-info_link"
+                  onClick={() => history.push(urls.orders.index)}
+                >
+                  {t("title")}
+                </span>
+                <span className="page-orders__order_header-info_sub-title">
+                  {dataOrderItem?.title}
+                </span>
+              </div>
+              <h2 className="page-content-title">{dataOrderItem?.title}</h2>
+            </div>
+            {isMyOrder && (
+              <div
+                className="page-orders__order_header-action"
+                onClick={goToEditOrder}
               >
-                {t("title")}
-              </span>
-              <span className="page-orders__order_header-info_sub-title">
-                {dataOrderItem?.title}
-              </span>
-            </div>
-            <h2 className="page-content-title">{dataOrderItem?.title}</h2>
+                <SvgEdit />
+              </div>
+            )}
+          </header>
+          <div className="page-orders__order-info">
+            {isMyOrder && (
+              <Button
+                onClick={goToEditOrder}
+                classNames="page-orders__order_header-action_btn"
+                fullWidth
+                size="small"
+                color="green"
+                label={t("pages.item.actions.edit")}
+              />
+            )}
+            {dataAuthor && (
+              <InfoUser
+                slug={dataAuthor.slug}
+                first_name={dataAuthor.first_name}
+                last_name={dataAuthor.last_name}
+                photo={dataAuthor.photo || ""}
+                username={dataAuthor.username}
+                is_staff={dataAuthor.is_staff}
+                is_superuser={dataAuthor.is_superuser}
+              />
+            )}
+            {dataOrderItem?.status && (
+              <CardStatus type={dataOrderItem.status} />
+            )}
+            {dataOrderItem && <TableOrderInfo {...dataOrderItem} />}
           </div>
-          {isMyOrder && (
-            <div
-              className="page-orders__order_header-action"
-              onClick={goToEditOrder}
-            >
-              <SvgEdit />
-            </div>
-          )}
-        </header>
-        <div className="page-orders__order-info">
-          {isMyOrder && (
-            <Button
-              onClick={goToEditOrder}
-              classNames="page-orders__order_header-action_btn"
-              fullWidth
-              size="small"
-              color="green"
-              label={t("pages.item.actions.edit")}
-            />
-          )}
-          {dataAuthor && (
-            <InfoUser
-              slug={dataAuthor.slug}
-              first_name={dataAuthor.first_name}
-              last_name={dataAuthor.last_name}
-              photo={dataAuthor.photo || ""}
-              username={dataAuthor.username}
-              is_staff={dataAuthor.is_staff}
-              is_superuser={dataAuthor.is_superuser}
-            />
-          )}
-          {dataOrderItem?.status && <CardStatus type={dataOrderItem.status} />}
-          {dataOrderItem && <TableOrderInfo {...dataOrderItem} />}
+          <section className="page-orders__order-info-section">
+            <h3 className="page-orders__order-info-section_head">
+              {t("pages.item.sections.description.title")}
+            </h3>
+            <p className="page-orders__order-info-section_descr">
+              {dataOrderItem?.description
+                ? dataOrderItem?.description
+                : t("pages.item.sections.description.noText")}
+            </p>
+          </section>
+          {!isMyOrder &&
+            dataOrderItem?.status !== "closed" &&
+            user &&
+            accessToken && (
+              <Button
+                isLoading={isLoadingOrderItem}
+                onClick={onRespond}
+                disabled={isRespond || isLoadingOrderItem}
+                label={
+                  isLoadingOrderItem
+                    ? t("pages.item.actions.loading")
+                    : isRespond
+                    ? t("pages.item.actions.responded")
+                    : t("pages.item.actions.respond")
+                }
+                color="green"
+              />
+            )}
         </div>
-        <section className="page-orders__order-info-section">
-          <h3 className="page-orders__order-info-section_head">
-            {t("pages.item.sections.description.title")}
-          </h3>
-          <p className="page-orders__order-info-section_descr">
-            {dataOrderItem?.description
-              ? dataOrderItem?.description
-              : t("pages.item.sections.description.noText")}
-          </p>
-        </section>
-        {!isMyOrder &&
-          dataOrderItem?.status !== "closed" &&
-          user &&
-          accessToken && (
-            <Button
-              isLoading={isLoadingOrderItem}
-              onClick={onRespond}
-              disabled={isRespond || isLoadingOrderItem}
-              label={
-                isLoadingOrderItem
-                  ? t("pages.item.actions.loading")
-                  : isRespond
-                  ? t("pages.item.actions.responded")
-                  : t("pages.item.actions.respond")
-              }
-              color="green"
-            />
-          )}
       </div>
     </div>
   );

@@ -12,7 +12,8 @@
   "cardStatus": {
     "open": "Открыто",
     "closed": "Закрыто",
-    "inProgress": "В процессе"
+    "inProgress": "В процессе",
+    "completed": "Выполнено"
   },
   "titleModalResponders": "Выберите исполнителя",
   "noDataResponders": "Нет откликнувшихся исполнителей",

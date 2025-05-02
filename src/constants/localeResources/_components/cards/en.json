@@ -12,7 +12,8 @@
   "cardStatus": {
     "open": "Opened",
     "closed": "Closed",
-    "inProgress": "In progress"
+    "inProgress": "In progress",
+    "completed": "Completed"
   },
   "titleModalResponders": "Select a performer",
   "noDataResponders": "There are no responding performers",
