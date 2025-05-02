@@ -7,6 +7,7 @@ import authReducer, { initialState as initialStateAuth } from "./auth";
 import chatReducer, { initialState as initialStateChat } from "./chat";
 import forumReducer from "./forum";
 import orderReducer from "./order";
+import ratingReducer from "./rating";
 import userReducer, { initialState as initialStateUser } from "./user";
 
 const appReducers = combineReducers({
@@ -16,6 +17,7 @@ const appReducers = combineReducers({
   order: orderReducer,
   chat: chatReducer,
   forum: forumReducer,
+  rating: ratingReducer,
 });
 
 const rootReducer = (

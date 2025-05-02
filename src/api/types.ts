@@ -7,6 +7,7 @@ import {
   ApiOrderHandlers,
   ApiChatHandlers,
   ApiForumHandlers,
+  ApiRatingHandlers,
 } from "./handlers";
 
 export type PureResponse<T = unknown> = Promise<AxiosResponse<T>>;
@@ -17,6 +18,7 @@ export interface Api {
   order: ApiOrderHandlers;
   chat: ApiChatHandlers;
   forum: ApiForumHandlers;
+  rating: ApiRatingHandlers;
 }
 
 export interface ExtraArguments {

@@ -7,6 +7,7 @@ import authSaga from "../sagas/auth";
 import chatSaga from "../sagas/chat";
 import forumSaga from "../sagas/forum";
 import orderSaga from "../sagas/order";
+import ratingSaga from "../sagas/rating";
 import userSaga from "../sagas/user";
 
 export default function* rootSaga(ea: ExtraArguments) {
@@ -17,5 +18,6 @@ export default function* rootSaga(ea: ExtraArguments) {
     orderSaga(ea),
     chatSaga(ea),
     forumSaga(ea),
+    ratingSaga(ea),
   ]);
 }

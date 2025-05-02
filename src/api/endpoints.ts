@@ -19,6 +19,9 @@ export const ENDPOINTS_CONFIG = {
       create: "/chats/create/",
       list: "/chats/",
     },
+    rating: {
+      list: "/stars/users-list-stats/",
+    },
     ad: {
       ad: "/ad/ads/",
       ads: "/ad/ads/",
