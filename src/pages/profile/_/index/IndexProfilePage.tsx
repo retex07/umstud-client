@@ -6,11 +6,15 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useLocation, useParams } from "react-router-dom";
 
+import {
+  PortfolioItem,
+  PortfolioItem_RequestBody,
+} from "@/api/handlers/user/types";
 import { useAddPortfolio } from "@/api/user/mutations/addPortfolio";
 import { useEditFilePortfolio } from "@/api/user/mutations/editFilePortfolio";
 import { useRemoveFilePortfolio } from "@/api/user/mutations/removeFilePortfolio";
 import { useUserProfile } from "@/api/user/queries/userProfile";
-import { PortfolioItem, PortfolioItem_RequestBody } from "@/api/user/types";
+import AvatarUser from "@/components/avatarUser";
 import Button from "@/components/button";
 import Field from "@/components/formElements/field";
 import PageLoader from "@/components/loaders/pageLoader";
@@ -35,6 +39,7 @@ import { infoUser } from "@/utils/user";
 import { formatPhoneNumber, getFullDate, isMobileVersion } from "@/utils/util";
 
 import MobileNavigationMenu from "../../components/mobileNavigationMenu";
+
 import "./IndexProfilePage.scss";
 import "../styles.scss";
 
@@ -96,6 +101,12 @@ export default function IndexProfilePage() {
     setEditingProfile({ isEdit: true, idFile: item.id });
     setValue("title", item.title);
     setValue("description", item.description);
+  }
+
+  function openUserProfile(slug: string) {
+    history.push(
+      urls.profile.index + urls.profile.item.replace(":profileId", slug)
+    );
   }
 
   function onSubmitPortfolio(data: PortfolioItem_RequestBody) {
@@ -493,114 +504,171 @@ export default function IndexProfilePage() {
         >
           {isMobileVersion() && <MobileNavigationMenu />}
         </div>
-        <div className="page-content-wrapper">
-          <header className="profile-index--header">
-            <div className="profile-index--user-avatar">{renderAvatar()}</div>
-            <div className="profile-index--header-info">
-              <div className="profile-index--user-info">
-                <h2 className="profile-index--header-info--title">
-                  {profileUser && infoUser({ ...profileUser, isFull: true })}
-                </h2>
-                <p className="profile-index--subtitle">
-                  {profileUser?.username}
-                </p>
-              </div>
-              <div className="profile-index--user-email">
-                {profileUser?.email}
-              </div>
-              <div className="profile-index__header-actions">
-                {isMyProfile && (
-                  <div>
-                    <Button
-                      size="small"
-                      label={t("actions.edit")}
-                      color="blue-dark"
-                      onClick={() => history.push(urls.profile.index + "/edit")}
+        <div className="page-contents-wrapper">
+          <div className="page-content-wrapper">
+            <header className="profile-index--header">
+              <div className="profile-index--user-avatar">{renderAvatar()}</div>
+              <div className="profile-index--header-info">
+                <div className="profile-index--user-info">
+                  <h2 className="profile-index--header-info--title">
+                    {profileUser && infoUser({ ...profileUser, isFull: true })}
+                  </h2>
+                  <p className="profile-index--subtitle">
+                    {profileUser?.username}
+                  </p>
+                </div>
+                <div className="profile-index--user-email">
+                  {profileUser?.email}
+                </div>
+                <div className="profile-index__header-actions">
+                  {isMyProfile && (
+                    <div>
+                      <Button
+                        size="small"
+                        label={t("actions.edit")}
+                        color="blue-dark"
+                        onClick={() =>
+                          history.push(urls.profile.index + "/edit")
+                        }
+                      />
+                    </div>
+                  )}
+                  {user?.id && (
+                    <ProfileActions
+                      userId={user?.id}
+                      isMyProfile={isMyProfile}
                     />
-                  </div>
+                  )}
+                </div>
+              </div>
+            </header>
+            <section className="profile-index--section">
+              <h2 className="profile-index--subtitle">{t("rating")}</h2>
+              <div className="profile-index__stars">
+                {[...Array(Math.round(profileUser?.stars || 0))].map(
+                  (_, index) => (
+                    <div key={index} className="blue-star fill">
+                      <FillStarSvg />
+                    </div>
+                  )
                 )}
-                {user?.id && (
-                  <ProfileActions userId={user?.id} isMyProfile={isMyProfile} />
+                {[...Array(5 - Math.round(profileUser?.stars || 0))].map(
+                  (_, index) => (
+                    <div key={index} className="blue-star">
+                      <HollowStarSvg />
+                    </div>
+                  )
                 )}
               </div>
-            </div>
-          </header>
-          <section className="profile-index--section">
-            <h2 className="profile-index--subtitle">{t("rating")}</h2>
-            <div className="profile-index__stars">
-              {[...Array(Math.round(profileUser?.stars || 0))].map(
-                (_, index) => (
-                  <div key={index} className="blue-star fill">
-                    <FillStarSvg />
-                  </div>
-                )
-              )}
-              {[...Array(5 - Math.round(profileUser?.stars || 0))].map(
-                (_, index) => (
-                  <div key={index} className="blue-star">
-                    <HollowStarSvg />
-                  </div>
-                )
-              )}
-            </div>
-          </section>
-          {(profileUser?.phone ||
-            profileUser?.place_study_work ||
-            profileUser?.birth_date ||
-            (profileUser?.skills && profileUser.skills.length > 0)) && (
-            <section className="profile-index--section">
-              <h2 className="profile-index--subtitle">{t("generalInfo")}</h2>
-              {profileUser?.birth_date && (
-                <div className="profile-index--header-info--item">
-                  <h3 className="profile-index--text">{t("birth")}</h3>
-                  <p className="profile-index--text">
-                    {profileUser.birth_date.toString()}
-                  </p>
-                </div>
-              )}
-              {profileUser?.phone && (
-                <div className="profile-index--header-info--item">
-                  <h3 className="profile-index--text">{t("phone")}</h3>
-                  <p className="profile-index--text">
-                    {formatPhoneNumber(profileUser.phone)}
-                  </p>
-                </div>
-              )}
-              {profileUser?.place_study_work && (
-                <div className="profile-index--header-info--item">
-                  <h3 className="profile-index--text">{t("workPlace")}</h3>
-                  <p className="profile-index--text">
-                    {profileUser.place_study_work}
-                  </p>
-                </div>
-              )}
             </section>
-          )}
-          {profileUser?.skills && profileUser.skills.length > 0 && (
+            {(profileUser?.phone ||
+              profileUser?.place_study_work ||
+              profileUser?.birth_date ||
+              (profileUser?.skills && profileUser.skills.length > 0)) && (
+              <section className="profile-index--section">
+                <h2 className="profile-index--subtitle">{t("generalInfo")}</h2>
+                {profileUser?.birth_date && (
+                  <div className="profile-index--header-info--item">
+                    <h3 className="profile-index--text">{t("birth")}</h3>
+                    <p className="profile-index--text">
+                      {profileUser.birth_date.toString()}
+                    </p>
+                  </div>
+                )}
+                {profileUser?.phone && (
+                  <div className="profile-index--header-info--item">
+                    <h3 className="profile-index--text">{t("phone")}</h3>
+                    <p className="profile-index--text">
+                      {formatPhoneNumber(profileUser.phone)}
+                    </p>
+                  </div>
+                )}
+                {profileUser?.place_study_work && (
+                  <div className="profile-index--header-info--item">
+                    <h3 className="profile-index--text">{t("workPlace")}</h3>
+                    <p className="profile-index--text">
+                      {profileUser.place_study_work}
+                    </p>
+                  </div>
+                )}
+              </section>
+            )}
+            {profileUser?.skills && profileUser.skills.length > 0 && (
+              <section className="profile-index--section">
+                <h2 className="profile-index--subtitle">{t("skills")}</h2>
+                <ul className="profile-index--ul">
+                  {profileUser.skills.map((skill, index) => (
+                    <li className="profile-index--text" key={index}>
+                      {skill.name}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+            {profileUser?.description && profileUser.description.length > 0 && (
+              <section className="profile-index--section">
+                <h2 className="profile-index--subtitle">{t("about")}</h2>
+                <p className="profile-index--text">{profileUser.description}</p>
+              </section>
+            )}
             <section className="profile-index--section">
-              <h2 className="profile-index--subtitle">{t("skills")}</h2>
-              <ul className="profile-index--ul">
-                {profileUser.skills.map((skill, index) => (
-                  <li className="profile-index--text" key={index}>
-                    {skill.name}
-                  </li>
+              <h2 className="profile-index--subtitle">
+                {t("exampleTasks.title")}
+              </h2>
+              {renderPortfolio()}
+              {renderAddingWork()}
+            </section>
+          </div>
+          {!!profileUser?.ratings.length && (
+            <div className="page-content-wrapper">
+              <header className="page-content-title">{t("reviews")}</header>
+              <div className="reviews-profile">
+                {profileUser?.ratings.map((rating) => (
+                  <div key={rating.id} className="reviews-profile__item">
+                    <div className="reviews-profile__item-info">
+                      <div className="reviews-profile__item-user">
+                        <AvatarUser
+                          classNameImg="reviews-profile__item-user_img"
+                          username={rating.author.username}
+                          photo={rating.author.photo || null}
+                        />
+                        <div className="reviews-profile__item-user-info">
+                          <h4
+                            className="reviews-profile__item-user_head"
+                            onClick={() => openUserProfile(rating.author.slug)}
+                          >
+                            {rating.author.username}
+                          </h4>
+                          <p className="reviews-profile__item-user_date">
+                            {getFullDate(new Date(rating.created_at))}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="profile-index__stars">
+                        {[...Array(Math.round(rating.count || 0))].map(
+                          (_, index) => (
+                            <div key={index} className="blue-star fill">
+                              <FillStarSvg />
+                            </div>
+                          )
+                        )}
+                        {[...Array(5 - Math.round(rating.count || 0))].map(
+                          (_, index) => (
+                            <div key={index} className="blue-star">
+                              <HollowStarSvg />
+                            </div>
+                          )
+                        )}
+                      </div>
+                    </div>
+                    <p className="reviews-profile__item-message">
+                      {rating.message}
+                    </p>
+                  </div>
                 ))}
-              </ul>
-            </section>
+              </div>
+            </div>
           )}
-          {profileUser?.description && profileUser.description.length > 0 && (
-            <section className="profile-index--section">
-              <h2 className="profile-index--subtitle">{t("about")}</h2>
-              <p className="profile-index--text">{profileUser.description}</p>
-            </section>
-          )}
-          <section className="profile-index--section">
-            <h2 className="profile-index--subtitle">
-              {t("exampleTasks.title")}
-            </h2>
-            {renderPortfolio()}
-            {renderAddingWork()}
-          </section>
         </div>
         {isMyProfile && <NavigationMenu />}
       </div>

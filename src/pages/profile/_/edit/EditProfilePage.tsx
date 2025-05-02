@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
+import { Skill, UserPut_FormBody } from "@/api/handlers/user/types";
 import { useSkills } from "@/api/user/queries/skills";
-import { Skill, UserPut_FormBody } from "@/api/user/types";
 import Button from "@/components/button";
 import Field from "@/components/formElements/field";
 import SelectField from "@/components/formElements/selectField";

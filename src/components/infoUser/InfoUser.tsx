@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-import { DetailUserProfile } from "@/api/user/types";
+import { DetailUserProfile } from "@/api/handlers/user/types";
 import { infoUser, goToUserProfile } from "@/utils/user";
 
 import AvatarUser from "../avatarUser";

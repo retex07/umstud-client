@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 
 import { ChatSocketEventData } from "@/api/handlers/chat/types";
-import { DetailUserProfile } from "@/api/user/types";
+import { DetailUserProfile } from "@/api/handlers/user/types";
 import { webSocketService } from "@/api/ws";
 import LayoutBuilder from "@/components/layoutBuilder";
 import PageLoader from "@/components/loaders/pageLoader";

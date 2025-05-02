@@ -1,4 +1,4 @@
-import { DetailUserProfile } from "@/api/user/types";
+import { DetailUserProfile } from "@/api/handlers/user/types";
 
 type ActivationAccount = {
   isInitialized: boolean;

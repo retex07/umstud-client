@@ -1,7 +1,6 @@
 import { createAction } from "redux-actions";
 
-import { BlackList } from "@/api/handlers/user/types";
-import { DetailUserProfile } from "@/api/user/types";
+import { BlackList, DetailUserProfile } from "@/api/handlers/user/types";
 
 const prefix = "user/";
 

@@ -5,7 +5,10 @@ import { ENDPOINTS_CONFIG } from "@/api/endpoints";
 import http from "@/api/http";
 import { PureResponse } from "@/api/types";
 
-import { PortfolioItem_ErrorBody, PortfolioItem_Response } from "../types";
+import {
+  PortfolioItem_ErrorBody,
+  PortfolioItem_Response,
+} from "../../handlers/user/types";
 
 type Data = AxiosResponse<PortfolioItem_Response>;
 

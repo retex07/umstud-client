@@ -8,7 +8,7 @@ import { PureResponse } from "@/api/types";
 import {
   RemoveUserBlackList_ErrorBody,
   RemoveUserBlackList_Response,
-} from "../types";
+} from "../../handlers/user/types";
 
 type Data = AxiosResponse<RemoveUserBlackList_Response>;
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { CardStatusTypes } from "@/api/ads/types";
+import { CardStatusTypes } from "@/api/handlers/order/types";
 import { ReactComponent as CheckSvg } from "@/static/images/check.svg";
 import { ReactComponent as ClockSvg } from "@/static/images/clock.svg";
 import { ReactComponent as ExitSvg } from "@/static/images/exit.svg";

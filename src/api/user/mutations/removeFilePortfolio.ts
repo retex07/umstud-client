@@ -8,7 +8,7 @@ import { PureResponse } from "@/api/types";
 import {
   RemovePortfolioItem_ErrorBody,
   RemovePortfolioItem_Response,
-} from "../types";
+} from "../../handlers/user/types";
 
 type Data = AxiosResponse<RemovePortfolioItem_Response>;
 

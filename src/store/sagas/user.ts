@@ -1,9 +1,11 @@
 import toast from "react-hot-toast";
 import { call, put, select, takeLatest } from "redux-saga/effects";
 
-import { UserPut_RequestBody } from "@/api/handlers/user/types";
+import {
+  UserPut_RequestBody,
+  DetailUserProfile,
+} from "@/api/handlers/user/types";
 import { ExtraArguments } from "@/api/types";
-import { DetailUserProfile } from "@/api/user/types";
 import urls from "@/services/router/urls";
 import { selectUserData } from "@/store/selectors/user";
 import { t } from "@/utils/util";

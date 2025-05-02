@@ -9,7 +9,7 @@ import {
   CreateBlackList_ErrorBody,
   CreateBlackList_RequestBody,
   CreateBlackList_Response,
-} from "../types";
+} from "../../handlers/user/types";
 
 type Data = AxiosResponse<CreateBlackList_Response>;
 

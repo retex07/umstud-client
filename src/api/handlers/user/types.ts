@@ -1,3 +1,4 @@
+import { CardStatusTypes } from "@/api/handlers/order/types";
 import { SelectOption } from "@/types/components";
 
 export type PortfolioItem = {
@@ -35,6 +36,7 @@ export type DetailUserProfile = {
   phone: string;
   place_study_work: string;
   skills: Skill[];
+  ratings: DetailUserRating[];
   birth_date: string;
   description?: string;
   language?: string;
@@ -42,6 +44,31 @@ export type DetailUserProfile = {
   views: number;
   stars: number | null;
   portfolio_items: PortfolioItem[];
+  completed_ads_count: number;
+};
+
+type UserRating = {
+  id: number;
+  slug: string;
+  username: string;
+  first_name: string;
+  last_name: string;
+  photo?: string;
+};
+
+export type DetailUserRating = {
+  id: number;
+  author: UserRating;
+  target: UserRating;
+  count: number;
+  message: string;
+  created_at: string;
+  ad: {
+    id: number;
+    title: string;
+    orderNumber: number;
+    status: CardStatusTypes;
+  };
 };
 
 export type UserPut_RequestBody = Omit<

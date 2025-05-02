@@ -11,7 +11,7 @@ import {
   AdCreate_FormBody,
   OptionSelect as OptionSelectAd,
   ValidKeysCreate,
-} from "@/api/ads/types";
+} from "@/api/handlers/order/types";
 import Button from "@/components/button";
 import Field from "@/components/formElements/field";
 import SelectField from "@/components/formElements/selectField";

@@ -5,7 +5,7 @@ export interface ExecutorBody {
   response_id: number;
 }
 
-export type CardStatusTypes = "open" | "closed" | "in_progress";
+export type CardStatusTypes = "open" | "closed" | "in_progress" | "completed";
 
 export interface UserResponse {
   id?: number;
@@ -51,6 +51,11 @@ export interface AdCreateResponse extends AdCreate {
 export interface Respond {
   id: number;
   responder: UserResponse;
+  comment?: string;
+}
+
+export interface RespondBody {
+  ad_id: number;
   comment?: string;
 }
 

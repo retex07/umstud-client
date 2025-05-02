@@ -9,7 +9,7 @@ import {
   ChangePassword_ErrorBody,
   ChangePassword_RequestBody,
   UserPut_Response,
-} from "../types";
+} from "../../handlers/user/types";
 
 type Data = AxiosResponse<UserPut_Response>;
 

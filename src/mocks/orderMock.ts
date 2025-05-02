@@ -1,4 +1,4 @@
-import { CardStatusTypes } from "@/api/ads/types";
+import { CardStatusTypes } from "@/api/handlers/order/types";
 
 export const orders = [
   {

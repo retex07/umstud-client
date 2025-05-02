@@ -3,11 +3,11 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
-import { useChangePass } from "@/api/user/mutations/changePassword";
 import {
   ChangePassword_ErrorBody,
   ChangePassword_RequestBody,
-} from "@/api/user/types";
+} from "@/api/handlers/user/types";
+import { useChangePass } from "@/api/user/mutations/changePassword";
 import Button from "@/components/button";
 import Field from "@/components/formElements/field";
 import { isMobileVersion } from "@/utils/util";

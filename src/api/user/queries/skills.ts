@@ -4,7 +4,7 @@ import { QueryFunction, useQuery, UseQueryOptions } from "react-query";
 import { ENDPOINTS_CONFIG } from "@/api/endpoints";
 import http from "@/api/http";
 
-import { Skill } from "../types";
+import { Skill } from "../../handlers/user/types";
 
 const url = ENDPOINTS_CONFIG.api.skills;
 type QueryKey = typeof url;

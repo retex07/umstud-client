@@ -5,7 +5,11 @@ import { ENDPOINTS_CONFIG } from "@/api/endpoints";
 import http from "@/api/http";
 import { PureResponse } from "@/api/types";
 
-import { AdCreate, AdCreateResponse, ValidKeysCreate } from "../types";
+import {
+  AdCreate,
+  AdCreateResponse,
+  ValidKeysCreate,
+} from "../../handlers/order/types";
 
 type Data = AxiosResponse<AdCreateResponse>;
 

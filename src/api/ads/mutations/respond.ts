@@ -5,20 +5,20 @@ import { ENDPOINTS_CONFIG } from "@/api/endpoints";
 import http from "@/api/http";
 import { PureResponse } from "@/api/types";
 
-import { Respond } from "../types";
+import { RespondBody } from "../../handlers/order/types";
 
-type Data = AxiosResponse<Respond>;
+type Data = AxiosResponse<RespondBody>;
 
-type Error = AxiosError<{ [key in keyof Respond]: string[] }>;
+type Error = AxiosError<{ [key in keyof RespondBody]: string[] }>;
 
 interface Variables {
-  data: Respond;
+  data: RespondBody;
 }
 
 function adRespond(
-  data: Respond,
+  data: RespondBody,
   cancelToken?: CancelToken
-): PureResponse<Respond> {
+): PureResponse<RespondBody> {
   return http.post(ENDPOINTS_CONFIG.api.ad.respond, data, { cancelToken });
 }
 

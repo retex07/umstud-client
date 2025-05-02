@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
-import { OptionSelect as OptionSelectAd } from "@/api/ads/types";
+import { OptionSelect as OptionSelectAd } from "@/api/handlers/order/types";
 import Button from "@/components/button";
 import Field from "@/components/formElements/field";
 import SelectField from "@/components/formElements/selectField";

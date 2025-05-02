@@ -5,7 +5,7 @@ import { ENDPOINTS_CONFIG } from "@/api/endpoints";
 import http from "@/api/http";
 import { PureResponse } from "@/api/types";
 
-import { UserPut_ErrorBody, UserPut_Response } from "../types";
+import { UserPut_ErrorBody, UserPut_Response } from "../../handlers/user/types";
 
 type Data = AxiosResponse<UserPut_Response>;
 

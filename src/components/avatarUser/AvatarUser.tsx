@@ -1,6 +1,6 @@
 import React from "react";
 
-import { DetailUserProfile } from "@/api/user/types";
+import { DetailUserProfile } from "@/api/handlers/user/types";
 import { ReactComponent as ExampleAvatarSvg } from "@/static/images/example-avatar.svg";
 import "./AvatarUser.scss";
 
