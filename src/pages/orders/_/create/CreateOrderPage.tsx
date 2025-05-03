@@ -52,7 +52,13 @@ export default function CreateOrderPage() {
   const updateOrder = useUpdateAd();
 
   useEffect(() => {
-    if (isEditingOrder) {
+    if (
+      !!params.orderId &&
+      location.pathname.includes(
+        urls.orders.index + urls.orders.edit.replace(":orderId", "")
+      )
+    ) {
+      setIsEditingOrder(true);
       dispatch(getOrder(params.orderId));
     }
 
@@ -69,17 +75,6 @@ export default function CreateOrderPage() {
     useForm<AdCreate_FormBody>({
       mode: "onSubmit",
     });
-
-  useEffect(() => {
-    if (
-      !!params.orderId &&
-      location.pathname.includes(
-        urls.orders.index + urls.orders.edit.replace(":orderId", "")
-      )
-    ) {
-      setIsEditingOrder(true);
-    }
-  }, [location.pathname, params.orderId]);
 
   useEffect(() => {
     if (dataOrderItem?.type.length && dataTypesAds?.length) {

@@ -620,7 +620,7 @@ export default function IndexProfilePage() {
             </section>
           </div>
           {!!profileUser?.ratings.length && (
-            <div className="page-content-wrapper">
+            <div className="page-content-wrapper reviews-profile__list">
               <header className="page-content-title">{t("reviews")}</header>
               <div className="reviews-profile">
                 {profileUser?.ratings.map((rating) => (
