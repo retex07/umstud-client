@@ -27,6 +27,9 @@ export type FormDataUploadFile_Body = {
 
 export type FormDataUploadFile_Success = {
   file_url: string;
+  file_path: string;
+  scan_id: number;
+  was_deleted: boolean;
   status: string;
 };
 

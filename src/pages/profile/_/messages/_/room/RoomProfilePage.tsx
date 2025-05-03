@@ -228,7 +228,7 @@ export default function RoomProfilePage() {
       ApiForum()
         .uploadFile({ file, type: "chat" })
         .then((res) => {
-          setFilesUrls((prevState) => [...prevState, res.file_url]);
+          setFilesUrls((prevState) => [...prevState, res.file_path]);
           setIsLoadingFile(false);
           toast.success(t("upload.success"), { duration: 5000 });
         })
