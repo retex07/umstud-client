@@ -41,21 +41,26 @@ export type Message = {
   room: number;
   sender: CustomUser;
   content: string;
+
   file?: string;
+  original_filename?: string;
+  mime_type?: string;
+
   created_at: string;
   updated_at?: string;
   is_read?: boolean;
 };
 
 export type ChatSendMessageWS = {
-  senderId: number;
   message: string;
   file?: string;
+  original_name?: string;
+  mime_type?: string;
 };
 
 export type ChatSocketEventData = Pick<
   Message,
-  "file" | "sender" | "is_read"
+  "file" | "sender" | "is_read" | "original_filename" | "mime_type"
 > & {
   message: Message["content"];
   messageId: Message["id"];

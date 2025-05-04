@@ -56,6 +56,8 @@ export default handleActions<StateChats, any>(
               file: payload.data.file,
               created_at: payload.data.timestamp,
               is_read: payload.data.is_read,
+              original_filename: payload.data.original_filename,
+              mime_type: payload.data.mime_type,
             },
           ],
           meta: {
@@ -68,6 +70,8 @@ export default handleActions<StateChats, any>(
               file: payload.data.file,
               created_at: payload.data.timestamp,
               is_read: payload.data.is_read,
+              original_filename: payload.data.original_filename,
+              mime_type: payload.data.mime_type,
             },
           },
         },

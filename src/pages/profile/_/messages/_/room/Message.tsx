@@ -26,6 +26,38 @@ export default function MessageItem(props: Message) {
 
   const isMyMessage = props.sender.slug === myProfileData?.slug;
 
+  function renderFileApplication() {
+    if (!props.file) {
+      return null;
+    }
+
+    if (props.mime_type?.includes("image")) {
+      return (
+        <img
+          className="message__contents-files_item-img"
+          src={props.file}
+          alt={props.original_filename}
+        />
+      );
+    }
+
+    return (
+      <a
+        href={props.file}
+        target="_blank"
+        className="message__contents-files_item"
+        rel="noreferrer"
+      >
+        <h4 className="message__contents-files_item_head">
+          {props.original_filename}
+        </h4>
+        <p className="message__contents-files_item_description">
+          {props.original_filename?.split(".").pop()}
+        </p>
+      </a>
+    );
+  }
+
   return (
     <div className="message">
       <AvatarUser
@@ -44,7 +76,14 @@ export default function MessageItem(props: Message) {
             {getFullTime(createdDate)}
           </span>
         </div>
-        <p className="message__info_content">{props.content}</p>
+        <div className="message__contents">
+          {props.file && (
+            <div className="message__contents-files">
+              {renderFileApplication()}
+            </div>
+          )}
+          <p className="message__info_content">{props.content}</p>
+        </div>
       </div>
     </div>
   );

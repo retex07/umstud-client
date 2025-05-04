@@ -341,6 +341,47 @@
     border-radius: 50%;
   }
 
+  &__contents {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    &-files {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+
+      &_item {
+        background-color: var(--color-gray-transparent);
+        padding: 12px 18px;
+        border-radius: 12px;
+        box-sizing: border-box;
+        text-decoration: none;
+
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        &_head {
+          @include typography.description;
+        }
+
+        &_description {
+          @include typography.signature ;
+          color: var(--color-gray-text);
+        }
+
+        &-img {
+          max-width: 500px;
+          width: 100%;
+          height: auto;
+
+          border-radius: 12px;
+        }
+      }
+    }
+  }
+
   &__info {
     position: relative;
 

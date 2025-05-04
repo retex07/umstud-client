@@ -16,6 +16,7 @@ import {
   ChatSocketEventData,
   Message,
 } from "@/api/handlers/chat/types";
+import { FormDataUploadFile_Success } from "@/api/handlers/forum/types";
 import { webSocketService } from "@/api/ws";
 import FileAdding from "@/components/FileAdding";
 import AvatarUser from "@/components/avatarUser";
@@ -101,7 +102,9 @@ export default function RoomProfilePage() {
   const [inputMessage, setInputMessage] = useState("");
   const [chatConnected, setChatConnected] = useState(false);
   const [isLoadingFile, setIsLoadingFile] = useState(false);
-  const [filesUrls, setFilesUrls] = useState<string[]>([]);
+  const [filesUploaded, setFilesUploaded] = useState<
+    FormDataUploadFile_Success[]
+  >([]);
 
   const inputMessageRef = useRef(inputMessage);
 
@@ -191,23 +194,24 @@ export default function RoomProfilePage() {
   };
 
   const sendMessage = () => {
-    if (!inputMessage && !filesUrls.length) {
+    if (!inputMessage && !filesUploaded.length) {
       return;
     }
 
     if (myProfileData) {
       const sendMessageObj: ChatSendMessageWS = {
         message: inputMessage,
-        senderId: myProfileData.id,
       };
 
-      if (filesUrls.length) {
-        sendMessageObj.file = filesUrls[0];
+      if (filesUploaded.length) {
+        sendMessageObj.file = filesUploaded[0].file_path;
+        sendMessageObj.original_name = filesUploaded[0].original_filename;
+        sendMessageObj.mime_type = filesUploaded[0].mime_type;
       }
 
       websocket.send<ChatSendMessageWS>(sendMessageObj);
       setInputMessage("");
-      setFilesUrls([]);
+      setFilesUploaded([]);
     }
   };
 
@@ -228,7 +232,7 @@ export default function RoomProfilePage() {
       ApiForum()
         .uploadFile({ file, type: "chat" })
         .then((res) => {
-          setFilesUrls((prevState) => [...prevState, res.file_path]);
+          setFilesUploaded((prevState) => [...prevState, res]);
           setIsLoadingFile(false);
           toast.success(t("upload.success"), { duration: 5000 });
         })
@@ -335,15 +339,14 @@ export default function RoomProfilePage() {
           <div className="chat-room-page__send-message">
             <FileAdding
               onChange={handleFileChange}
-              countUploadedFiles={filesUrls.length}
+              countUploadedFiles={filesUploaded.length}
             />
             <Input
-              disabled={!chatConnected}
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               fullWidth
               onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
+                if (e.key === "Enter" && !e.shiftKey && chatConnected) {
                   e.preventDefault();
                   sendMessage();
                 }
