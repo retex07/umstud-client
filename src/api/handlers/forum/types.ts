@@ -44,6 +44,9 @@ type Comment = {
   content: string;
   author: ForumCustomUser;
   created_at: string;
+  file?: string;
+  original_filename?: string;
+  mime_type?: string;
 };
 
 export type ForumCustomUser = {

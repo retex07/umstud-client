@@ -9,6 +9,7 @@ import { ApiForum } from "@/api/handlers";
 import { CreateComment, Discussion } from "@/api/handlers/forum/types";
 import FileAdding from "@/components/FileAdding";
 import AvatarUser from "@/components/avatarUser";
+import FileApplication from "@/components/fileApplication";
 import Input from "@/components/input";
 import InlineLoader from "@/components/loaders/inlineLoader";
 import PageLoader from "@/components/loaders/pageLoader";
@@ -61,12 +62,13 @@ export default function ItemForumPage() {
   }
 
   function onSendAnswer() {
-    if (!isLoadingFile) {
+    if (!isLoadingFile && !!sendAnswerText.trim()) {
       const sendObjectBoy: CreateComment = { content: sendAnswerText };
       if (filesUrls.length) {
         sendObjectBoy.file = filesUrls[0];
       }
 
+      console.log("sendObjectBoy:", sendObjectBoy);
       dispatch(sendAnswer({ discussionId, body: sendObjectBoy }));
       setSendAnswerText("");
       setFilesUrls([]);
@@ -81,7 +83,7 @@ export default function ItemForumPage() {
       ApiForum()
         .uploadFile({ file, type: "discussion" })
         .then((res) => {
-          setFilesUrls((prevState) => [...prevState, res.file_url]);
+          setFilesUrls((prevState) => [...prevState, res.file_path]);
           setIsLoadingFile(false);
           toast.success(t("upload.success"), { duration: 5000 });
         })
@@ -201,9 +203,20 @@ export default function ItemForumPage() {
                           {getFullDate(new Date(comment.created_at))}
                         </span>
                       </div>
-                      <p className="page-forum-item__answers-comment_content">
-                        {comment.content}
-                      </p>
+                      <div className="message__contents">
+                        {comment.file && (
+                          <div className="message__contents-files">
+                            <FileApplication
+                              file={comment.file}
+                              original_filename={comment.original_filename}
+                              mime_type={comment.mime_type}
+                            />
+                          </div>
+                        )}
+                        <p className="page-forum-item__answers-comment_content">
+                          {comment.content}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 ))}

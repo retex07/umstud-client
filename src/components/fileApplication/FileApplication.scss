@@ -1,0 +1,42 @@
+@use "@/styles/typography";
+
+.file-application {
+  background-color: var(--color-gray-transparent);
+  padding: 8px 14px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  text-decoration: none;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+
+  & > svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  &_content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &_head {
+    @include typography.description;
+  }
+
+  &_description {
+    @include typography.signature ;
+    color: var(--color-gray-text);
+  }
+
+  &-img {
+    max-width: 500px;
+    max-height: 300px;
+    width: auto;
+    height: auto;
+
+    border-radius: 12px;
+  }
+}

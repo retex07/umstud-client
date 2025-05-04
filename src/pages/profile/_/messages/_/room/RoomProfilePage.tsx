@@ -205,8 +205,6 @@ export default function RoomProfilePage() {
 
       if (filesUploaded.length) {
         sendMessageObj.file = filesUploaded[0].file_path;
-        sendMessageObj.original_name = filesUploaded[0].original_filename;
-        sendMessageObj.mime_type = filesUploaded[0].mime_type;
       }
 
       websocket.send<ChatSendMessageWS>(sendMessageObj);
