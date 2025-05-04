@@ -49,6 +49,7 @@ export default function MessageItem(props: Message) {
           {props.file && (
             <div className="message__contents-files">
               <FileApplication
+                formatted_file_size={props.formatted_file_size}
                 file={props.file}
                 original_filename={props.original_filename}
                 mime_type={props.mime_type}

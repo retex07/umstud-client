@@ -172,12 +172,17 @@
       text-overflow: ellipsis;
       max-width: 96%;
 
+      &_attachment,
       &_draft {
         @include typography.description;
 
         white-space: nowrap;
         flex-shrink: 0;
         color: var(--color-red);
+      }
+
+      &_attachment {
+        color: var(--color-blue);
       }
     }
   }

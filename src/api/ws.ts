@@ -4,10 +4,15 @@ import { t } from "@/utils/util";
 type MessageHandler = (event: MessageEvent) => void;
 type ErrorHandler = (event: Event) => void;
 
-class WebSocketService {
+export default class WebSocketService {
   private _socket: WebSocket | null = null;
 
-  connect(url: string, onOpen?: () => void, onClose?: () => void): void {
+  connect(
+    url: string,
+    onOpen?: () => void,
+    onClose?: () => void,
+    onError?: () => void
+  ): void {
     const baseUrl = `${process.env.REACT_APP_WEBSOCKET_URL}${url}`;
     const fullUrl = `${baseUrl}?token=${getAccessToken()}`;
     this._socket = new WebSocket(fullUrl);
@@ -34,13 +39,17 @@ class WebSocketService {
       }
     };
 
-    this._socket.onerror = (error) =>
+    this._socket.onerror = (error) => {
       console.error(
         t("translation", { keyPrefix: "websocket.onerror" }),
         error,
         "\nurl:",
         url
       );
+      if (onError) {
+        onError();
+      }
+    };
   }
 
   onMessage(handler: MessageHandler): void {
@@ -67,5 +76,3 @@ class WebSocketService {
     this._socket?.close();
   }
 }
-
-export const webSocketService = new WebSocketService();

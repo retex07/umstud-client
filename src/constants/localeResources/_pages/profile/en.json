@@ -76,6 +76,7 @@
   "messages": {
     "title": "Messages",
     "draft": "Draft:",
+    "attachment": "Attachment",
     "you": "You",
     "upload": {
       "error": "Error when uploading a file",

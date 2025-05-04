@@ -5,8 +5,14 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
+import { ENDPOINTS_CONFIG } from "@/api/endpoints";
 import { ApiForum } from "@/api/handlers";
-import { CreateComment, Discussion } from "@/api/handlers/forum/types";
+import {
+  CreateComment,
+  Discussion,
+  ScanResponse,
+} from "@/api/handlers/forum/types";
+import WebSocketService from "@/api/ws";
 import FileAdding from "@/components/FileAdding";
 import AvatarUser from "@/components/avatarUser";
 import FileApplication from "@/components/fileApplication";
@@ -68,7 +74,6 @@ export default function ItemForumPage() {
         sendObjectBoy.file = filesUrls[0];
       }
 
-      console.log("sendObjectBoy:", sendObjectBoy);
       dispatch(sendAnswer({ discussionId, body: sendObjectBoy }));
       setSendAnswerText("");
       setFilesUrls([]);
@@ -83,9 +88,52 @@ export default function ItemForumPage() {
       ApiForum()
         .uploadFile({ file, type: "discussion" })
         .then((res) => {
-          setFilesUrls((prevState) => [...prevState, res.file_path]);
-          setIsLoadingFile(false);
-          toast.success(t("upload.success"), { duration: 5000 });
+          if (res.scan_status === "pending") {
+            const websocket = new WebSocketService();
+
+            websocket.connect(
+              ENDPOINTS_CONFIG.api.scan.replace(
+                ":scanId",
+                res.scan_id.toString()
+              ),
+              () => null,
+              () => {
+                setIsLoadingFile(false);
+                toast.error(t("upload.error"), { duration: 5000 });
+                return;
+              }
+            );
+
+            websocket.onMessage((event) => {
+              const data: ScanResponse = JSON.parse(event.data);
+              websocket.close();
+
+              switch (data.status) {
+                case "safe":
+                  setFilesUrls((prevState) => [...prevState, res.file_path]);
+                  setIsLoadingFile(false);
+                  toast.success(t("upload.success"), { duration: 5000 });
+                  break;
+
+                case "dangerous":
+                  setIsLoadingFile(false);
+                  toast.error(t("upload.dangerous.error"), { duration: 5000 });
+                  return;
+
+                case "error":
+                  setIsLoadingFile(false);
+                  toast.error(t("upload.error"), { duration: 5000 });
+                  return;
+
+                default:
+                  return;
+              }
+            });
+          } else {
+            setFilesUrls((prevState) => [...prevState, res.file_path]);
+            setIsLoadingFile(false);
+            toast.success(t("upload.success"), { duration: 5000 });
+          }
         })
         .catch((error) => {
           setIsLoadingFile(false);
@@ -207,6 +255,7 @@ export default function ItemForumPage() {
                         {comment.file && (
                           <div className="message__contents-files">
                             <FileApplication
+                              formatted_file_size={comment.formatted_file_size}
                               file={comment.file}
                               original_filename={comment.original_filename}
                               mime_type={comment.mime_type}
@@ -234,6 +283,12 @@ export default function ItemForumPage() {
                   placeholder={t("input.answer")}
                   onChange={(e) => setSendAnswerText(e.target.value)}
                   name="send-answer"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey && !isLoadingFile) {
+                      e.preventDefault();
+                      onSendAnswer();
+                    }
+                  }}
                 />
                 {!isLoadingFile && (
                   <button

@@ -96,7 +96,7 @@ export default function MessageProfilePage() {
             </div>
           </header>
           <div className="chats-page__content">
-            {(inputDraft || !chat.last_message?.content) && (
+            {inputDraft && (
               <div className="chats-page__block-info_draft">
                 <span className="chats-page__block-info_text_draft">
                   {t("draft")}
@@ -106,6 +106,24 @@ export default function MessageProfilePage() {
                 </span>
               </div>
             )}
+            {!inputDraft &&
+              !chat.last_message?.content &&
+              chat.last_message.file && (
+                <div className="chats-page__last-message">
+                  <p className="chats-page__last-message_text">
+                    {isMyLastMessage && `${t("you")}: `}
+                  </p>
+                  <p className="chats-page__block-info_text_attachment">
+                    {t("attachment")}
+                  </p>
+                  <p className="chats-page__last-message_text">
+                    {getShortPassedTime(
+                      chat.last_message.updated_at ||
+                        chat.last_message.created_at
+                    )}
+                  </p>
+                </div>
+              )}
             {!inputDraft && chat.last_message?.content && (
               <div className="chats-page__last-message">
                 <p className="chats-page__last-message_text">

@@ -5,7 +5,10 @@ import { ReactComponent as FileSvg } from "@/static/images/file.svg";
 import "./FileApplication.scss";
 
 export default function FileApplication(
-  props: Pick<Message, "file" | "original_filename" | "mime_type">
+  props: Pick<
+    Message,
+    "file" | "original_filename" | "mime_type" | "formatted_file_size"
+  >
 ) {
   if (!props.file) {
     return null;
@@ -31,9 +34,19 @@ export default function FileApplication(
       <FileSvg />
       <div className="file-application_content">
         <h4 className="file-application_head">{props.original_filename}</h4>
-        <p className="file-application_description">
-          {props.original_filename?.split(".").pop()?.toUpperCase()}
-        </p>
+        <div className="file-application__info">
+          <p className="file-application_description">
+            {props.original_filename?.split(".").pop()?.toUpperCase()}
+          </p>
+          {!!props.formatted_file_size && (
+            <>
+              <span className="file-application_description">-</span>
+              <span className="file-application_description">
+                {props.formatted_file_size}
+              </span>
+            </>
+          )}
+        </div>
       </div>
     </a>
   );

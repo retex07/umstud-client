@@ -10,14 +10,18 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams, useRouteMatch } from "react-router-dom";
 
+import { ENDPOINTS_CONFIG } from "@/api/endpoints";
 import { ApiForum } from "@/api/handlers";
 import {
   ChatSendMessageWS,
   ChatSocketEventData,
   Message,
 } from "@/api/handlers/chat/types";
-import { FormDataUploadFile_Success } from "@/api/handlers/forum/types";
-import { webSocketService } from "@/api/ws";
+import {
+  FormDataUploadFile_Success,
+  ScanResponse,
+} from "@/api/handlers/forum/types";
+import WebSocketService from "@/api/ws";
 import FileAdding from "@/components/FileAdding";
 import AvatarUser from "@/components/avatarUser";
 import Input from "@/components/input";
@@ -95,7 +99,11 @@ export default function RoomProfilePage() {
 
   const scrollRef = useRef<Scrollbars>(null);
 
-  const websocket = webSocketService;
+  const websocketChatRef = useRef<WebSocketService>(new WebSocketService());
+  const websocketScanRef = useRef<WebSocketService>(new WebSocketService());
+  const websocketChat = websocketChatRef.current;
+  const scanWebsocket = websocketScanRef.current;
+
   const params = useParams<{ roomId: string }>();
   const websocketChatUrl = urls.chat.room.replace(":roomId", params.roomId);
 
@@ -129,14 +137,14 @@ export default function RoomProfilePage() {
     }
 
     if (!chatConnected) {
-      websocket.connect(
+      websocketChat.connect(
         websocketChatUrl,
         () => setChatConnected(true),
         () => setChatConnected(false)
       );
     }
 
-    websocket.onMessage((event) => {
+    websocketChat.onMessage((event) => {
       const data: ChatSocketEventData = JSON.parse(event.data);
       console.info("JSON.parse socket dataEvent:", data);
       if (Number(params.roomId)) {
@@ -159,7 +167,7 @@ export default function RoomProfilePage() {
         localStorage.setItem(storageKey, inputMessageRef.current);
       }
 
-      websocket.close();
+      websocketChat.close();
     };
   }, []);
 
@@ -207,7 +215,7 @@ export default function RoomProfilePage() {
         sendMessageObj.file = filesUploaded[0].file_path;
       }
 
-      websocket.send<ChatSendMessageWS>(sendMessageObj);
+      websocketChat.send<ChatSendMessageWS>(sendMessageObj);
       setInputMessage("");
       setFilesUploaded([]);
     }
@@ -230,9 +238,52 @@ export default function RoomProfilePage() {
       ApiForum()
         .uploadFile({ file, type: "chat" })
         .then((res) => {
-          setFilesUploaded((prevState) => [...prevState, res]);
-          setIsLoadingFile(false);
-          toast.success(t("upload.success"), { duration: 5000 });
+          if (res.scan_status === "pending") {
+            scanWebsocket.connect(
+              ENDPOINTS_CONFIG.api.scan.replace(
+                ":scanId",
+                res.scan_id.toString()
+              ),
+              () => null,
+              () => null,
+              () => {
+                setIsLoadingFile(false);
+                toast.error(t("upload.error"), { duration: 5000 });
+                return;
+              }
+            );
+
+            scanWebsocket.onMessage((event) => {
+              const data: ScanResponse = JSON.parse(event.data);
+              console.info("JSON.parse socket (scan) dataEvent:", data);
+              scanWebsocket.close();
+
+              switch (data.status) {
+                case "safe":
+                  setFilesUploaded((prevState) => [...prevState, res]);
+                  setIsLoadingFile(false);
+                  toast.success(t("upload.success"), { duration: 5000 });
+                  break;
+
+                case "dangerous":
+                  setIsLoadingFile(false);
+                  toast.error(t("upload.dangerous.error"), { duration: 5000 });
+                  return;
+
+                case "error":
+                  setIsLoadingFile(false);
+                  toast.error(t("upload.error"), { duration: 5000 });
+                  return;
+
+                default:
+                  return;
+              }
+            });
+          } else {
+            setFilesUploaded((prevState) => [...prevState, res]);
+            setIsLoadingFile(false);
+            toast.success(t("upload.success"), { duration: 5000 });
+          }
         })
         .catch((error) => {
           setIsLoadingFile(false);

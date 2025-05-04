@@ -10,6 +10,9 @@
   },
   "upload": {
     "error": "Error when uploading a file",
+    "dangerous": {
+      "error": "The uploaded file is infected. Try uploading another file"
+    },
     "success": "The file was uploaded successfully"
   },
   "create": {

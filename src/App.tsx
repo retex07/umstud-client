@@ -4,7 +4,7 @@ import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 
 import { ChatSocketEventData } from "@/api/handlers/chat/types";
 import { DetailUserProfile } from "@/api/handlers/user/types";
-import { webSocketService } from "@/api/ws";
+import WebSocketService from "@/api/ws";
 import LayoutBuilder from "@/components/layoutBuilder";
 import PageLoader from "@/components/loaders/pageLoader";
 import Routes from "@/services/router/config";
@@ -27,7 +27,7 @@ function App(props: PropsApp) {
   const [isConnectedNotifications, setIsConnectedNotifications] =
     useState(false);
 
-  const websocket = webSocketService;
+  const websocket = new WebSocketService();
   const history = useHistory();
   const location = useLocation();
 

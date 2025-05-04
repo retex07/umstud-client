@@ -1,3 +1,5 @@
+import { UploadFileStatus } from "@/api/handlers/forum/types";
+
 export type CustomUser = {
   id: number;
   username: string;
@@ -45,6 +47,8 @@ export type Message = {
   file?: string;
   original_filename?: string;
   mime_type?: string;
+  formatted_file_size?: string;
+  file_size?: number;
 
   created_at: string;
   updated_at?: string;
@@ -58,7 +62,13 @@ export type ChatSendMessageWS = {
 
 export type ChatSocketEventData = Pick<
   Message,
-  "file" | "sender" | "is_read" | "original_filename" | "mime_type"
+  | "file"
+  | "sender"
+  | "is_read"
+  | "original_filename"
+  | "mime_type"
+  | "file_size"
+  | "formatted_file_size"
 > & {
   message: Message["content"];
   messageId: Message["id"];

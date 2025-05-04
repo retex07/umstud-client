@@ -19,6 +19,7 @@ export const ENDPOINTS_CONFIG = {
       create: "/chats/create/",
       list: "/chats/",
     },
+    scan: "/scan/:scanId/",
     rating: {
       list: "/stars/users-list-stats/",
     },

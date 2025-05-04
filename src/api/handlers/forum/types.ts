@@ -32,8 +32,10 @@ export type FormDataUploadFile_Success = {
   mime_type: string;
   scan_id: number;
   was_deleted: boolean;
-  status: string;
+  scan_status: UploadFileStatus;
 };
+
+export type UploadFileStatus = "safe" | "pending" | "dangerous" | "error";
 
 export type CreateDiscussion_Response = CreateDiscussion_Body & {
   id: number;
@@ -45,6 +47,8 @@ type Comment = {
   author: ForumCustomUser;
   created_at: string;
   file?: string;
+  file_size?: number;
+  formatted_file_size?: string;
   original_filename?: string;
   mime_type?: string;
 };
@@ -57,5 +61,11 @@ export type ForumCustomUser = {
   slug: string;
   photo?: string;
 };
+
+export type ScanResponse = {
+  status: UploadFileStatus;
+  scan_id: number;
+  was_deleted: boolean;
+}
 
 export type DiscussionStatusTypes = "open" | "resolved";
