@@ -8,13 +8,10 @@ import Swiper from "@/components/swiper";
 import { CONFIG_SYSTEM } from "@/constants/config";
 import { ReviewsMock } from "@/mocks/reviewsMock";
 import { WorkTypesMock } from "@/mocks/workTypeMock";
+import { ReactComponent as CameraSvg } from "@/static/images/camera-to-take-photos.svg";
 import { ReactComponent as StarSvg } from "@/static/images/fill-star.svg";
 import { ReactComponent as ManSvg } from "@/static/images/index/man-with-board.svg";
-import { ReactComponent as PhoneOneSvg } from "@/static/images/index/phone-one.svg";
-import { ReactComponent as PhoneThreeSvg } from "@/static/images/index/phone-three.svg";
-import { ReactComponent as PhoneTwoSvg } from "@/static/images/index/phone-two.svg";
-import { ReactComponent as MoneySvg } from "@/static/images/money.svg";
-import { ReactComponent as WarnSvg } from "@/static/images/warn.svg";
+import { ReactComponent as MessageSvg } from "@/static/images/message-circle.svg";
 
 import CardTypeWork from "./components/cardTypeWork";
 import "./IndexPage.scss";
@@ -22,6 +19,10 @@ import "./IndexPage.scss";
 export default function IndexPage() {
   const { t } = useTranslation("p_index");
   const history = useHistory();
+  const systemRating = (
+    ReviewsMock.reduce((acc, value) => acc + value.countStars, 0) /
+    ReviewsMock.length
+  ).toFixed(1);
 
   return (
     <main id="page" className="index-page-container">
@@ -72,10 +73,10 @@ export default function IndexPage() {
       <section className="section-advantages section-advantages--wrapper">
         <h3 className="section-advantages--title">{t("advantages.title")}</h3>
         <div className="section-advantages--about">
-          <div className="section-advantages--info warn">
-            <WarnSvg />
+          <div className="section-advantages--info stroke">
+            <MessageSvg />
             <p className="section-advantages--subtitle">
-              {t("advantages.plagiarism")}
+              {t("advantages.forum")}
             </p>
           </div>
           <div className="section-advantages--info">
@@ -84,10 +85,10 @@ export default function IndexPage() {
               {t("advantages.rating")}
             </p>
           </div>
-          <div className="section-advantages--info">
-            <MoneySvg />
+          <div className="section-advantages--info fill">
+            <CameraSvg />
             <p className="section-advantages--subtitle">
-              {t("advantages.payment")}
+              {t("advantages.portfolio")}
             </p>
           </div>
         </div>
@@ -102,7 +103,6 @@ export default function IndexPage() {
                 {t("howWork.pointOne")}
               </p>
             </div>
-            <PhoneOneSvg />
           </div>
           <div className="section-how-work--block-point">
             <div className="section-how-work--point-info">
@@ -111,7 +111,6 @@ export default function IndexPage() {
                 {t("howWork.pointTwo")}
               </p>
             </div>
-            <PhoneTwoSvg />
           </div>
           <div className="section-how-work--block-point">
             <div className="section-how-work--point-info">
@@ -120,14 +119,15 @@ export default function IndexPage() {
                 {t("howWork.pointThree")}
               </p>
             </div>
-            <PhoneThreeSvg />
           </div>
         </div>
       </section>
       <section className="section-reviews section-reviews--wrapper">
         <header className="section-reviews--header">
           <h2 className="section-reviews--sub-heading">{t("reviews.title")}</h2>
-          <p className="section-reviews--description">{t("reviews.rating")}</p>
+          <p className="section-reviews--description">
+            {t("reviews.rating")} {systemRating}
+          </p>
         </header>
         <div className="section-reviews--cards">
           <Swiper>

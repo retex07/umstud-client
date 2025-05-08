@@ -18,7 +18,7 @@
             "placeholder": "Select a type"
           },
           "category": {
-            "label": "Order Category",
+            "label": "Categories",
             "placeholder": "Select a category"
           }
         },
@@ -67,8 +67,8 @@
           "press": "Describe the list of required tasks"
         },
         "category": {
-          "title": "Type of Work",
-          "press": "Select the type of work"
+          "title": "Category",
+          "press": "Select the category of work"
         },
         "budget": {
           "title": "Order Cost",
@@ -83,7 +83,7 @@
       "table": {
         "orderNumber": "Order Number",
         "type": "Type of Work",
-        "category": "Type of Work",
+        "category": "Category",
         "budget": "Price (RUB)",
         "deadlineEndAt": "Due Date",
         "respondersLen": "Responses"

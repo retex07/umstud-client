@@ -11,7 +11,7 @@
   "viewWorks": "View all the works",
   "reviews": {
     "title": "Feedback from our users",
-    "rating": "Overall Rating: 4.3"
+    "rating": "Overall Rating:"
   },
   "support": {
     "title": "FAQs",
@@ -20,6 +20,8 @@
   },
   "advantages": {
     "title": "Our Advantages",
+    "forum": "Thematic forum",
+    "portfolio": "Maintaining a personal profile",
     "plagiarism": "Plagiarism Checking",
     "rating": "Rating System",
     "payment": "Payment Not Only in Cash"

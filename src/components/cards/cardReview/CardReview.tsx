@@ -31,7 +31,6 @@ export default function CardReview(props: Props) {
         </div>
       </header>
       <div className="card-review--comment-container">
-        <span>Комментарий:</span>
         <p>{props.comment}</p>
       </div>
       <footer className="card-review--date">{props.date}</footer>

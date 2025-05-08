@@ -141,7 +141,9 @@ export default function ForumPage() {
             )}
           </div>
         )}
-        {discussions.map((discussion) => renderCardDiscussion(discussion))}
+        <div>
+          {discussions.map((discussion) => renderCardDiscussion(discussion))}
+        </div>
       </div>
       <div className="page-forum__panels">
         <PanelForumCreate />

@@ -121,6 +121,10 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+
+    & .card-task__action_chat {
+      display: none;
+    }
   }
 
   &__no-data {

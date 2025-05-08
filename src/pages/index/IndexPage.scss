@@ -165,6 +165,14 @@
     align-items: center;
     gap: 6px;
 
+    &.stroke > svg > path {
+      stroke: var(--color-white);
+    }
+
+    &.fill > svg > path {
+      fill: var(--color-white);
+    }
+
     > svg {
       max-width: 24px;
       max-height: 24px;
@@ -236,7 +244,7 @@
   }
 
   &--description {
-    @include typography.page_subtitle;
+    @include typography.ordinary_subtitle;
   }
 
   &--cards {
