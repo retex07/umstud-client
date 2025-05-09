@@ -69,7 +69,10 @@ function App(props: PropsApp) {
   useEffect(() => {
     if ((!accessToken || !userProfile) && !isLoadingApp) {
       const cleanPath = location.pathname.replace(/\/$/, "");
-      if (PRIVATE_URLS.includes(cleanPath)) {
+      if (
+        PRIVATE_URLS.includes(cleanPath) ||
+        PRIVATE_URLS.find((URL) => cleanPath.includes(URL))
+      ) {
         history.push(urls.auth.index + urls.auth.signIn);
       }
     }
