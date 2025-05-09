@@ -76,7 +76,6 @@ function* sagaChangeMyProfile(
       duration: 5000,
     });
 
-    console.log(myProfileData);
     history.replace(
       urls.profile.index +
         urls.profile.item.replace(":profileId", selectMyProfile.slug)
