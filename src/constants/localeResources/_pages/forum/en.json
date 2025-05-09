@@ -2,7 +2,7 @@
   "title": "Forum",
   "panel": {
     "active": "Active discussions",
-    "discussion": "Discussions"
+    "discussions": "Discussions"
   },
   "actions": {
     "create-no-data": "Create Discussion",

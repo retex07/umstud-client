@@ -2,7 +2,7 @@
   "title": "Форум",
   "panel": {
     "active": "Активные обсуждения",
-    "discussion": "Обсуждения"
+    "discussions": "Обсуждения"
   },
   "actions": {
     "create-no-data": "Создать обсуждение",
