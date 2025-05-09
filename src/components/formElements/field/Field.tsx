@@ -53,6 +53,7 @@ export default function Field<FormField extends FieldValues>(
       placeholder={props.placeholder}
       label={props.label}
       type={props.type}
+      required={!!props.rules?.required}
       name={field.name}
       id={props.id}
       fullWidth={props.fullWidth}

@@ -73,7 +73,9 @@ export default function Input(props: Props) {
     >
       {props.label && (
         <div className="input__label-block">
-          <label className="input__label">{props.label}</label>
+          <label className={cn("input__label", { require: props.required })}>
+            {props.label}
+          </label>
         </div>
       )}
       <div
@@ -85,7 +87,6 @@ export default function Input(props: Props) {
       >
         <input
           name={props.name}
-          required={props.required}
           value={props.type === "file" ? undefined : props.value || ""}
           ref={props.innerRef}
           id={props.id || props.name}

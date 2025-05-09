@@ -99,6 +99,12 @@
   &__label {
     @include typography.ordinary;
     color: var(--color-dark-text);
+
+    &.require::after {
+      content: '*';
+      color: var(--color-red);
+      margin-left: 2px;
+    }
   }
 
   &__warning {
