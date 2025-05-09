@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 
 import AvatarUser from "@/components/avatarUser";
 import PageLoader from "@/components/loaders/pageLoader";
+import NoDataComponent from "@/components/noData";
 import PanelForumList from "@/components/panels/activeDiscussions";
 import PanelForumCreate from "@/components/panels/forumCreate";
 import PanelOrderCreate from "@/components/panels/orderCreate";
@@ -61,6 +62,7 @@ export default function RatingPage() {
         </header>
         {isLoading && <PageLoader />}
         <div className="rating-page__list">
+          {!ratingList.length && <NoDataComponent />}
           {ratingList.map(
             (ratingUser, index) =>
               index < 7 && (
