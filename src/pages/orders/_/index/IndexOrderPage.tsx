@@ -11,6 +11,9 @@ import Modal from "@/components/modal";
 import NoDataComponent from "@/components/noData";
 import PanelOrderCreate from "@/components/panels/orderCreate";
 import PanelOrderServices from "@/components/panels/popularServices";
+import OrdersFilter, {
+  OrdersFilters_FormData,
+} from "@/pages/orders/components/ordersFilter/OrdersFilter";
 import urls from "@/services/router/urls";
 import { ReactComponent as PlusSvg } from "@/static/images/plus.svg";
 import { ReactComponent as SettingsSvg } from "@/static/images/settings.svg";
@@ -20,9 +23,6 @@ import { selectIsLoadingOrders, selectOrders } from "@/store/selectors/order";
 import { selectUserData } from "@/store/selectors/user";
 import { checkToken } from "@/utils/user";
 
-import OrdersFilter, {
-  OrdersFilters_FormData,
-} from "./components/ordersFilter/OrdersFilter";
 import "../styles.scss";
 
 export default function IndexOrderPage() {

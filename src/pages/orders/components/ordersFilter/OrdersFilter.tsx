@@ -11,7 +11,7 @@ import SelectField from "@/components/formElements/selectField";
 import { getCategoriesAndTypes } from "@/store/actions/order";
 import { selectCategories, selectTypes } from "@/store/selectors/order";
 import { SelectOption } from "@/types/components";
-import "../../../styles.scss";
+import "../../_/styles.scss";
 
 interface Props {
   callback?: (data: OrdersFilters_FormData) => void;

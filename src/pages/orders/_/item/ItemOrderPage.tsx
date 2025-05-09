@@ -21,7 +21,7 @@ import {
 } from "@/store/selectors/order";
 import { selectUserData } from "@/store/selectors/user";
 
-import TableOrderInfo from "./components/tableOrderInfo";
+import TableOrderInfo from "../../components/tableOrderInfo";
 
 import "../styles.scss";
 

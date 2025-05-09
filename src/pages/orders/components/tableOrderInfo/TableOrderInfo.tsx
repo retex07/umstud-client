@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { AdGet } from "@/api/handlers/order/types";
 import { dateWithMonthWord, getFullDate } from "@/utils/util";
-import "../../../styles.scss";
+import "../../_/styles.scss";
 
 export default function TableOrderInfo(dataOrderItem: AdGet) {
   const { t } = useTranslation("p_orders", { keyPrefix: "pages.item.table" });
