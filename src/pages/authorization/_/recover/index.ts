@@ -1,1 +1,1 @@
-export { default } from "./RecoverPage";
+export { default } from "./RecoverAccountPage";
