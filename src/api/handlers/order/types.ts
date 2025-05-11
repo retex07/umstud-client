@@ -60,8 +60,8 @@ export interface RespondBody {
 }
 
 export type AdCreate_FormBody = Omit<AdCreate, "category" | "type"> & {
-  category: SelectOption[];
-  type: SelectOption[];
+  category: SelectOption;
+  type: SelectOption;
 };
 
 export type ValidKeysCreate = keyof AdCreate;

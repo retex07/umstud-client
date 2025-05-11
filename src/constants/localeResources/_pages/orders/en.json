@@ -48,6 +48,7 @@
       "title": "Place an Order",
       "actions": {
         "cancel": "Cancel",
+        "addFile": "Attach a file",
         "submit": "Place"
       },
       "notifications": {

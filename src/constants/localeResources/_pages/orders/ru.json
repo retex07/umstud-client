@@ -48,6 +48,7 @@
       "title": "Разместить заказ",
       "actions": {
         "cancel": "Отменить",
+        "addFile": "Прикрепить файл",
         "submit": "Разместить"
       },
       "notifications": {

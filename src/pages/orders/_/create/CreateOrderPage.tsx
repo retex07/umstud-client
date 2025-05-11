@@ -88,7 +88,9 @@ export default function CreateOrderPage() {
         }
       });
 
-      setValue("type", defaultTypes);
+      if (defaultTypes && defaultTypes[0]) {
+        setValue("type", defaultTypes[0]);
+      }
     }
   }, [dataOrderItem?.type, dataTypesAds, setValue]);
 
@@ -104,7 +106,9 @@ export default function CreateOrderPage() {
         }
       });
 
-      setValue("category", defaultCategories);
+      if (defaultCategories && defaultCategories[0]) {
+        setValue("category", defaultCategories[0]);
+      }
     }
   }, [dataOrderItem?.category, dataCategoriesAds, setValue]);
 
@@ -113,8 +117,8 @@ export default function CreateOrderPage() {
   }
 
   function onValidSubmit(data: AdCreate_FormBody) {
-    const type = data.type.map((option) => option.value);
-    const category = data.category.map((option) => option.value);
+    const type = [data.type.value];
+    const category = [data.category.value];
 
     if (isEditingOrder) {
       updateOrder.mutate(
@@ -245,13 +249,13 @@ export default function CreateOrderPage() {
           <div className="page-orders__order-create_sub-fields">
             <SelectField
               classNames="page-orders__order-create_sub-fields_field"
-              closeMenuOnSelect={false}
+              closeMenuOnSelect
               name="type"
               control={control}
               options={parseValueToSelect(dataTypesAds || [])}
               label={t("create.fields.type.title")}
               placeholder={t("create.fields.type.press")}
-              isMulti
+              isMulti={false}
               readOnly={formState.isSubmitting || createOrder.isLoading}
               rules={{
                 required: tRules("required"),
@@ -259,13 +263,13 @@ export default function CreateOrderPage() {
             />
             <SelectField
               classNames="page-orders__order-create_sub-fields_field"
-              closeMenuOnSelect={false}
+              closeMenuOnSelect
               name="category"
               control={control}
               options={parseValueToSelect(dataCategoriesAds || [])}
               label={t("create.fields.category.title")}
               placeholder={t("create.fields.category.press")}
-              isMulti
+              isMulti={false}
               readOnly={formState.isSubmitting || createOrder.isLoading}
               rules={{
                 required: tRules("required"),
@@ -332,6 +336,11 @@ export default function CreateOrderPage() {
                   ? t("edit.actions.submit")
                   : t("create.actions.submit")
               }
+            />
+            <Button
+              classNames="page-orders__actions_btn"
+              fullWidth={isMobileVersion()}
+              label={t("create.actions.addFile")}
             />
             <Button
               color="red"
