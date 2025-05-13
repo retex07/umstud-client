@@ -64,7 +64,7 @@ export default function OrdersFilter(props: Props) {
       onSubmit={handleSubmit(onSubmitFilters)}
     >
       <Field
-        classNames="page-page-orders__filters_field"
+        classNames="page-orders__filters_field"
         control={control}
         name="words"
         label={t("fields.words.label")}
@@ -72,7 +72,7 @@ export default function OrdersFilter(props: Props) {
         readonly={formState.isSubmitting}
       />
       <SelectField
-        classNames="page-page-orders__filters_field"
+        classNames="page-orders__filters_field"
         name="type"
         control={control}
         options={parseValueToSelect(dataTypesAds || [])}
@@ -83,7 +83,7 @@ export default function OrdersFilter(props: Props) {
         closeMenuOnSelect={false}
       />
       <SelectField
-        classNames="page-page-orders__filters_field"
+        classNames="page-orders__filters_field"
         name="category"
         control={control}
         options={parseValueToSelect(dataCategoriesAds || [])}

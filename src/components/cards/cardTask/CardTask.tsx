@@ -33,6 +33,7 @@ interface Props
     | "deadlineStartAt"
     | "deadlineEndAt"
     | "author"
+    | "budget"
   > {
   className?: string;
   category?: string[];
@@ -225,15 +226,32 @@ export default function CardTask(props: Props) {
       <header className="card-task__header" onClick={goToItemOrder}>
         <h2 className="card-task__title">{props.title}</h2>
       </header>
-      <div className="card-task__order-info">
-        {props.type && props.type.length && (
-          <span className="card-task__order-type">{props.type.join(", ")}</span>
-        )}
-        {props.category && (
-          <div className="card-task__order-categories" title={categories}>
-            {categories}
-          </div>
-        )}
+      <div className="card-task__order_block">
+        <div className="card-task__order-info">
+          {props.type && props.type.length && (
+            <span className="card-task__order-type">
+              {props.type.join(", ")}
+            </span>
+          )}
+          {props.type && props.category && (
+            <span className="card-task__order-type">|</span>
+          )}
+          {props.category && (
+            <div className="card-task__order-categories" title={categories}>
+              {categories}
+            </div>
+          )}
+        </div>
+        <div className="card-task__order-budget">
+          <span className="card-task__order-budget_text">
+            {t("budget.placeholder")}
+          </span>
+          <span className="card-task__order-budget_text">
+            {props.budget
+              ? t("budget.currency", { budget: props.budget })
+              : t("budget.negotiated")}
+          </span>
+        </div>
       </div>
       <div className="card-task__states">
         {props.isOrder && props.user ? (

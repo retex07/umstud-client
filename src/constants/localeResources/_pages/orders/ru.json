@@ -82,6 +82,7 @@
     },
     "item": {
       "table": {
+        "contractual": "Договорная",
         "orderNumber": "Номер заказа",
         "type": "Тип работы",
         "category": "Категория",

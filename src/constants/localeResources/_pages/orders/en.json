@@ -82,6 +82,7 @@
     },
     "item": {
       "table": {
+        "contractual": "Negotiated",
         "orderNumber": "Order Number",
         "type": "Type of Work",
         "category": "Category",

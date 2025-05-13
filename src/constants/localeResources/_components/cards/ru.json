@@ -22,5 +22,10 @@
     "customer": "заказчиком",
     "executor": "исполнителем",
     "getError": "Ошибка при получении чата"
+  },
+  "budget": {
+    "placeholder": "Цена:",
+    "currency": "{{ budget }} руб.",
+    "negotiated": "Договорная"
   }
 }

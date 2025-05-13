@@ -25,5 +25,11 @@
 
   &__label {
     @include typography.ordinary;
+
+    &.require::after {
+      content: '*';
+      color: var(--color-red);
+      margin-left: 2px;
+    }
   }
 }

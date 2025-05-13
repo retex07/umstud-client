@@ -39,7 +39,9 @@ export default function Textarea(props: Props) {
     <div className={cn("textarea", props.classNames)}>
       {props.label && (
         <div className="textarea__label-block">
-          <label className="textarea__label">{props.label}</label>
+          <label className={cn("textarea__label", { require: props.required })}>
+            {props.label}
+          </label>
         </div>
       )}
       <div
@@ -60,7 +62,6 @@ export default function Textarea(props: Props) {
           onBlur={props.onBlur}
           readOnly={props.readonly}
           placeholder={props.placeholder}
-          required={props.required}
           value={props.value}
         />
       </div>

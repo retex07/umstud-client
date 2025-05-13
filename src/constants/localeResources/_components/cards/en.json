@@ -22,5 +22,10 @@
     "customer": "customer",
     "executor": "contractor",
     "getError": "Error receiving the chat"
+  },
+  "budget": {
+    "placeholder": "Price:",
+    "currency": "{{ budget }} rub.",
+    "negotiated": "Negotiable"
   }
 }

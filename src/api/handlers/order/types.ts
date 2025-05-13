@@ -27,7 +27,7 @@ export interface AdGet {
   status: CardStatusTypes;
   deadlineStartAt?: string;
   deadlineEndAt?: string;
-  budget: number;
+  budget?: number;
   description: string;
   room_id?: string;
   author: UserResponse;
@@ -40,7 +40,7 @@ export interface AdCreate {
   type: number[];
   category: number[];
   deadlineEndAt: string;
-  budget: number;
+  budget?: number;
   description: string;
 }
 

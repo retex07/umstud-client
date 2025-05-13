@@ -170,7 +170,7 @@ export default function ItemOrderPage() {
             </p>
           </section>
           {!isMyOrder &&
-            dataOrderItem?.status !== "closed" &&
+            dataOrderItem?.status === "open" &&
             user &&
             accessToken && (
               <Button

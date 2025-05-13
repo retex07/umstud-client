@@ -1,3 +1,4 @@
+import { isArray, isString } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -17,7 +18,7 @@ import Field from "@/components/formElements/field";
 import SelectField from "@/components/formElements/selectField";
 import TextareaField from "@/components/formElements/textareaField";
 import PageLoader from "@/components/loaders/pageLoader";
-import { RegExp } from "@/constants/config";
+import { MAX_ORDER_BUDGET, MIN_ORDER_BUDGET, RegExp } from "@/constants/config";
 import urls from "@/services/router/urls";
 import { getCategoriesAndTypes, getOrder } from "@/store/actions/order";
 import { selectAccessToken } from "@/store/selectors/auth";
@@ -71,6 +72,33 @@ export default function CreateOrderPage() {
   const dataCategoriesAds = useSelector(selectCategories);
   const dataTypesAds = useSelector(selectTypes);
 
+  type keysBodyCreateForm = keyof AdCreate_FormBody;
+  const fieldKeys: keysBodyCreateForm[] = [
+    "id",
+    "title",
+    "type",
+    "category",
+    "budget",
+    "description",
+  ];
+
+  useEffect(() => {
+    if (dataOrderItem && isEditingOrder) {
+      fieldKeys.forEach((key) => {
+        if (dataOrderItem[key] && !isArray(dataOrderItem[key])) {
+          setValue(key, dataOrderItem[key]);
+        }
+      });
+
+      if (!!dataOrderItem.deadlineEndAt) {
+        setValue(
+          "deadlineEndAt",
+          new Date(dataOrderItem?.deadlineEndAt).toISOString().split("T")[0]
+        );
+      }
+    }
+  }, [isEditingOrder]);
+
   const { control, handleSubmit, formState, setError, setValue } =
     useForm<AdCreate_FormBody>({
       mode: "onSubmit",
@@ -119,6 +147,10 @@ export default function CreateOrderPage() {
   function onValidSubmit(data: AdCreate_FormBody) {
     const type = [data.type.value];
     const category = [data.category.value];
+
+    if (isString(data.budget)) {
+      delete data.budget;
+    }
 
     if (isEditingOrder) {
       updateOrder.mutate(
@@ -238,7 +270,6 @@ export default function CreateOrderPage() {
             name="title"
             control={control}
             fullWidth
-            defaultValue={dataOrderItem?.title}
             label={t("create.fields.title.title")}
             placeholder={t("create.fields.title.press")}
             readonly={formState.isSubmitting || createOrder.isLoading}
@@ -283,13 +314,6 @@ export default function CreateOrderPage() {
               name="deadlineEndAt"
               label={t("create.fields.deadlineEndAt.title")}
               readonly={formState.isSubmitting || createOrder.isLoading}
-              defaultValue={
-                dataOrderItem?.deadlineEndAt
-                  ? new Date(dataOrderItem?.deadlineEndAt)
-                      .toISOString()
-                      .split("T")[0]
-                  : undefined
-              }
               onClick={blockPrevDate}
               rules={{
                 required: tRules("required"),
@@ -304,12 +328,18 @@ export default function CreateOrderPage() {
               control={control}
               type="number"
               name="budget"
-              defaultValue={dataOrderItem?.budget}
               label={t("create.fields.budget.title")}
               placeholder={t("create.fields.budget.press")}
               readonly={formState.isSubmitting || createOrder.isLoading}
               rules={{
-                required: tRules("required"),
+                min: {
+                  value: MIN_ORDER_BUDGET,
+                  message: tRules("min_count", { count: MIN_ORDER_BUDGET }),
+                },
+                max: {
+                  value: MAX_ORDER_BUDGET,
+                  message: tRules("max_count", { count: MAX_ORDER_BUDGET }),
+                },
               }}
             />
           </div>
@@ -320,7 +350,6 @@ export default function CreateOrderPage() {
             placeholder={t("create.fields.description.press")}
             readonly={formState.isSubmitting || createOrder.isLoading}
             fullWidth
-            defaultValue={dataOrderItem?.description}
             rules={{
               required: tRules("required"),
             }}
@@ -331,6 +360,12 @@ export default function CreateOrderPage() {
               type="submit"
               color="green"
               fullWidth={isMobileVersion()}
+              isLoading={
+                formState.isSubmitting ||
+                createOrder.isLoading ||
+                updateOrder.isLoading ||
+                isLoadingOrderItem
+              }
               label={
                 isEditingOrder
                   ? t("edit.actions.submit")

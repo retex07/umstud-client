@@ -194,6 +194,14 @@
     flex-direction: column;
     gap: 0;
 
+    &_h3 {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
     &_text {
       @include typography.signature;
 

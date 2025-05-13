@@ -22,6 +22,7 @@ export default function CustomSelect({
   fullWidth,
   label,
   classNames,
+  required,
   ...props
 }: Props) {
   const customStyles = {
@@ -49,7 +50,9 @@ export default function CustomSelect({
     >
       {label && (
         <div className="select__label-block">
-          <label className="select__label">{label}</label>
+          <label className={cn("select__label", { require: required })}>
+            {label}
+          </label>
         </div>
       )}
       <Select {...props} styles={customStyles} />

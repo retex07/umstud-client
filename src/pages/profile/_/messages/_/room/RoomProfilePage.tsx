@@ -352,9 +352,12 @@ export default function RoomProfilePage() {
               </span>
             </div>
             <h3
-              className={classNames("page-content-title", {
-                hovered: !!chatRoom?.ad?.id,
-              })}
+              className={classNames(
+                "page-content-title chat-room-page__header_h3",
+                {
+                  hovered: !!chatRoom?.ad?.id,
+                }
+              )}
               onClick={openOrder}
             >
               {chatRoom?.ad?.title ||

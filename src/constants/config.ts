@@ -24,3 +24,6 @@ export const RegExp = {
   phone: /^\+?[\s()0-9-]{5,}$/,
   birth_date: /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/,
 };
+
+export const MIN_ORDER_BUDGET = 1;
+export const MAX_ORDER_BUDGET = 100000000;

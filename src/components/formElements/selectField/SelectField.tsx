@@ -49,6 +49,7 @@ export default function SelectField<FormField extends FieldValues>(
     <CustomSelect
       {...field}
       {...rest}
+      required={!!rules?.required}
       hasError={fieldState.invalid}
       errorMessage={fieldState.error?.message}
     />

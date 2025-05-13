@@ -24,7 +24,7 @@ export default function TableOrderInfo(dataOrderItem: AdGet) {
         </tr>
         <tr>
           <td title={t("budget")}>{t("budget")}</td>
-          <td>{dataOrderItem.budget}</td>
+          <td>{dataOrderItem.budget || t("contractual")}</td>
         </tr>
         {dataOrderItem.deadlineEndAt && (
           <tr>
