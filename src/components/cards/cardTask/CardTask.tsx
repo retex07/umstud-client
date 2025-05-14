@@ -234,7 +234,7 @@ export default function CardTask(props: Props) {
             </span>
           )}
           {props.type && props.category && (
-            <span className="card-task__order-type">|</span>
+            <span className="card-task__order-type line">|</span>
           )}
           {props.category && (
             <div className="card-task__order-categories" title={categories}>

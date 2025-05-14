@@ -9,6 +9,7 @@
 
   display: inline-flex;
   align-items: center;
+  align-self: flex-start;
   gap: 4px;
 
   & > svg {
@@ -39,7 +40,7 @@
   &-img {
     max-width: 500px;
     max-height: 300px;
-    width: auto;
+    width: 100%;
     height: auto;
 
     border-radius: 12px;
