@@ -55,6 +55,7 @@ export const PRIVATE_URLS = [
 
   // profile
   urls.profile.index,
+  urls.profile.index + urls.profile.item.replace(":profileId", ""),
   urls.profile.index + urls.profile.security,
   urls.profile.index + urls.profile.edit,
   urls.profile.index + urls.profile.readyTask,

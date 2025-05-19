@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 
 import { ChatSocketEventData } from "@/api/handlers/chat/types";
@@ -10,8 +10,12 @@ import PageLoader from "@/components/loaders/pageLoader";
 import Routes from "@/services/router/config";
 import urls, { PRIVATE_URLS } from "@/services/router/urls";
 import { initApp } from "@/store/actions/app";
+import { setHistoryState } from "@/store/actions/auth";
 import { selectIsLoadingApp } from "@/store/selectors/app";
-import { selectAccessToken } from "@/store/selectors/auth";
+import {
+  selectAccessToken,
+  selectLastHistoryState,
+} from "@/store/selectors/auth";
 import { selectUserData } from "@/store/selectors/user";
 import { Dispatch, RootState } from "@/store/types";
 
@@ -28,12 +32,34 @@ function App(props: PropsApp) {
     useState(false);
 
   const websocket = new WebSocketService();
+  const lastHistoryState = useSelector(selectLastHistoryState);
+
+  const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
+
+  const prevLocationRef = React.useRef(location.pathname);
 
   useEffect(() => {
     initApp();
   }, []);
+
+  useEffect(() => {
+    const prevPath = prevLocationRef.current;
+    const currentPath = location.pathname;
+
+    const cleanPrevPath = prevPath.replace(/\/$/, "");
+
+    if (
+      currentPath.includes(urls.auth.index) &&
+      !prevPath.includes(urls.auth.index) &&
+      cleanPrevPath !== urls.auth.index
+    ) {
+      dispatch(setHistoryState(cleanPrevPath));
+    }
+
+    prevLocationRef.current = currentPath;
+  }, [location.pathname]);
 
   useEffect(() => {
     if (
@@ -62,7 +88,7 @@ function App(props: PropsApp) {
       !isLoadingApp &&
       location.pathname.includes(urls.auth.index)
     ) {
-      history.push(urls.profile.index);
+      history.push(lastHistoryState || urls.profile.index);
     }
   }, [userProfile]);
 
@@ -73,7 +99,9 @@ function App(props: PropsApp) {
         PRIVATE_URLS.includes(cleanPath) ||
         PRIVATE_URLS.find((URL) => cleanPath.includes(URL))
       ) {
-        history.push(urls.auth.index + urls.auth.signIn);
+        if (!cleanPath.includes(urls.auth.index)) {
+          history.push(urls.auth.index + urls.auth.signIn);
+        }
       }
     }
   }, [userProfile, accessToken, isLoadingApp, window.location]);

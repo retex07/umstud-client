@@ -15,3 +15,6 @@ export const selectAccessToken = createSelector(selectAuth, (state) =>
 export const selectIsLoading = createSelector(selectAuth, (state) =>
   get(state, "isLoading")
 );
+export const selectLastHistoryState = createSelector(selectAuth, (state) =>
+  get(state, "historyState")
+);

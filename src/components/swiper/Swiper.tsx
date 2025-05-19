@@ -80,7 +80,7 @@ export default function Swiper(props: Props) {
       breakpoints={{
         320: { slidesPerView: 1 },
         768: { slidesPerView: 3 },
-        1024: { slidesPerView: 4 },
+        1024: { slidesPerView: props.showSlides || 4 },
       }}
       onSwiper={(swiper) => {
         swiperRef.current = swiper;

@@ -19,6 +19,10 @@ export const setToken = createAction<{
   refreshToken: string | null;
 }>(prefix + "SET_TOKEN");
 
+export const setHistoryState = createAction<string | null>(
+  prefix + "SET_HISTORY_STATE"
+);
+
 export const setIsLoading = createAction<boolean>(prefix + "SET_IS_LOADING");
 
 export const clearToken = createAction<void>(prefix + "CLEAR_TOKEN");
