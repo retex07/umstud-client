@@ -15,6 +15,11 @@
     "inProgress": "В процессе",
     "completed": "Выполнено"
   },
+  "cardTypeWork": {
+    "cost": "Стоимость",
+    "duration": "Сроки",
+    "startDeadline": "от {{ deadline }} д."
+  },
   "titleModalResponders": "Выберите исполнителя",
   "noDataResponders": "Нет откликнувшихся исполнителей",
   "goToChat": {

@@ -1,68 +1,69 @@
-.swiper {
+.umstud-swiper {
   display: flex;
   flex-direction: column;
+  align-self: center;
   justify-content: center;
-  gap: 12px;
-  max-width: 1092px;
+  gap: 6px;
 
-  &__wrapper {
-    display: inline-flex;
-    align-items: center;
-    gap: 26px;
-    @media screen and (max-width: 1220px) {
-      gap: 6px;
+  max-width: 1024px;
+
+  @media screen and (max-width: 1220px) {
+    max-width: 768px;
+  }
+
+  @media screen and (max-width: 768px) {
+    max-width: 300px;
+
+    &__slide {
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
     }
   }
 
-  &__slider {
-    display: inline-flex;
-    gap: 12px;
-  }
+  &__carousel-continuous {
+    position: relative;
+    overflow: hidden;
 
-  &__action {
-    border: none;
-    background: none;
-    cursor: pointer;
-    > svg, path {
-      transition: 0.1s;
-      max-width: 28px;
-      max-height: 28px;
+    .swiper-wrapper {
+      transition-timing-function: linear !important;
     }
 
-    &:hover {
-      > svg, path {
-        stroke: var(--color-gray);
-        transition: 0.1s;
+    & .swiper-pagination {
+      position: initial;
+      bottom: 0;
+    }
+
+    & .swiper-button-prev,
+    & .swiper-button-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 32px;
+      height: 32px;
+      background: rgba(0, 0, 0, 0.5);
+      color: var(--color-white);
+      font-size: 20px;
+      line-height: 32px;
+      text-align: center;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 10;
+      user-select: none;
+
+      &::after {
+        content: none;
+      }
+
+      & > svg > path {
+        stroke: var(--color-white);
       }
     }
-  }
-
-  &__action-inactive {
-    > svg, path {
-      stroke: var(--color-gray);
-      transition: 0.1s;
+    & .swiper-button-prev {
+      left: 8px;
     }
-  }
-
-  &__dot {
-    border-radius: 50%;
-    background-color: var(--color-gray-text);
-    height: 6px;
-    width: 6px;
-    cursor: pointer;
-    &:hover {
-      background-color: var(--color-gray);
+    & .swiper-button-next {
+      right: 8px;
     }
-
-    &.active {
-      background-color: var(--color-gray);
-    }
-  }
-
-  &__dots {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
   }
 }

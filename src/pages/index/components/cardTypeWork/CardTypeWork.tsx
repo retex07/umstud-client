@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import { ReactComponent as FileSvg } from "@/static/images/file.svg";
 import "./CardTypeWork.scss";
@@ -10,6 +11,8 @@ interface Props {
 }
 
 export default function CardTypeWork(props: Props) {
+  const { t } = useTranslation("c_cards", { keyPrefix: "cardTypeWork" });
+
   return (
     <article className="card-type-work">
       <header className="card-type-work--header">
@@ -20,15 +23,15 @@ export default function CardTypeWork(props: Props) {
       </header>
       <footer className="card-type-work--footer">
         <div className="card-type-work--info-wrapper">
-          <span className="card-type-work--subtitle">Стоимость</span>
+          <span className="card-type-work--subtitle">{t("cost")}</span>
           <p className="card-type-work--description">
             от {props.startPrice} руб.
           </p>
         </div>
         <div className="card-type-work--info-wrapper">
-          <span className="card-type-work--subtitle">Сроки</span>
+          <span className="card-type-work--subtitle">{t("duration")}</span>
           <p className="card-type-work--description">
-            от {props.startDeadline} д.
+            {t("startDeadline", { deadline: props.startDeadline })}
           </p>
         </div>
       </footer>

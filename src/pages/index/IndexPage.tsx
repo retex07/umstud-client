@@ -47,7 +47,7 @@ export default function IndexPage() {
           <p className="description">{t("work.quality")}</p>
         </header>
         <div className="type-work--info-wrapper">
-          <Swiper showSlides={4}>
+          <Swiper autoplay>
             {WorkTypesMock.map((typeWork) => (
               <CardTypeWork
                 key={typeWork.id}
@@ -130,7 +130,7 @@ export default function IndexPage() {
           </p>
         </header>
         <div className="section-reviews--cards">
-          <Swiper>
+          <Swiper autoplay reverseForAutoplay>
             {ReviewsMock.map((item, index) => (
               <CardReview
                 key={index}

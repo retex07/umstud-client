@@ -15,6 +15,11 @@
     "inProgress": "In progress",
     "completed": "Completed"
   },
+  "cardTypeWork": {
+    "cost": "Cost",
+    "duration": "Duration",
+    "startDeadline": "from {{ deadline }} days"
+  },
   "titleModalResponders": "Select a performer",
   "noDataResponders": "There are no responding performers",
   "goToChat": {
