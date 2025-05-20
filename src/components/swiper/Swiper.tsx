@@ -22,17 +22,6 @@ export default function Swiper(props: Props) {
   const [isAutoplay, setIsAutoplay] = useState(!!props.autoplay);
   const swiperRef = React.useRef<SwiperClass>();
 
-  function stopAutoPlay() {
-    if (isAutoplay) {
-      swiperRef.current?.autoplay?.stop();
-    }
-  }
-  function startAutoPlay() {
-    if (isAutoplay) {
-      swiperRef.current?.autoplay?.start();
-    }
-  }
-
   function offAutoplay() {
     if (isAutoplay) {
       swiperRef.current?.autoplay?.stop();
@@ -91,8 +80,6 @@ export default function Swiper(props: Props) {
       onSwiper={(swiper) => {
         swiperRef.current = swiper;
       }}
-      onMouseEnter={stopAutoPlay}
-      onMouseLeave={startAutoPlay}
     >
       {React.Children.map(props.children, (child, index) => (
         <SwiperSlide className="umstud-swiper__slide" key={index}>
