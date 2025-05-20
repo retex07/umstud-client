@@ -32,7 +32,7 @@ export default function MessageProfilePage() {
   }, []);
 
   const userProfile = useSelector(selectUserData);
-  const dataChats = Object.values(useSelector(selectChats));
+  const dataChats = useSelector(selectChats);
   const isLoadingChats = useSelector(selectIsLoadingChats) && !dataChats.length;
 
   function renderAvatar(photo?: string, slug?: string) {
