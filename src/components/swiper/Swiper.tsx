@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import { Autoplay, FreeMode, Navigation, Pagination } from "swiper/modules";
 import { Swiper as ReactSwiper, SwiperClass, SwiperSlide } from "swiper/react";
 
@@ -19,9 +19,8 @@ interface Props {
 }
 
 export default function Swiper(props: Props) {
+  const [isAutoplay, setIsAutoplay] = useState(!!props.autoplay);
   const swiperRef = React.useRef<SwiperClass>();
-
-  const isAutoplay = props.autoplay === true;
 
   function stopAutoPlay() {
     if (isAutoplay) {
@@ -31,6 +30,13 @@ export default function Swiper(props: Props) {
   function startAutoPlay() {
     if (isAutoplay) {
       swiperRef.current?.autoplay?.start();
+    }
+  }
+
+  function offAutoplay() {
+    if (isAutoplay) {
+      swiperRef.current?.autoplay?.stop();
+      setIsAutoplay(false);
     }
   }
 
@@ -94,14 +100,14 @@ export default function Swiper(props: Props) {
         </SwiperSlide>
       ))}
 
-      <div className="swiper-button-prev" onClick={stopAutoPlay}>
+      <div className="swiper-button-prev" onClick={offAutoplay}>
         <ChevronLeftSvg />
       </div>
-      <div className="swiper-button-next" onClick={stopAutoPlay}>
+      <div className="swiper-button-next" onClick={offAutoplay}>
         <ChevronRightSvg />
       </div>
 
-      <div className="swiper-pagination" onClick={stopAutoPlay} />
+      <div className="swiper-pagination" onClick={offAutoplay} />
     </ReactSwiper>
   );
 }
