@@ -4,6 +4,7 @@ import {
   ChatCreate,
   ChatRoom,
   ChatSocketEventData,
+  NotificationChatSocketEventData,
 } from "@/api/handlers/chat/types";
 
 const prefix = "chat/";
@@ -15,6 +16,13 @@ export const addSocketMessage = createAction<{
   roomId: number;
   isMyMessage: boolean;
 }>(prefix + "ADD_SOCKET_MESSAGE");
+
+export const addSocketNotificationMessage = createAction<{
+  data: NotificationChatSocketEventData;
+  roomId: number;
+  isMyMessage: boolean;
+  callback?: () => void;
+}>(prefix + "ADD_SOCKET_NOTIFICATION_MESSAGE");
 
 export const setChats = createAction<{
   chats: ChatRoom[];

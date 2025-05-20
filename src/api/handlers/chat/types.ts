@@ -1,5 +1,3 @@
-import { UploadFileStatus } from "@/api/handlers/forum/types";
-
 export type CustomUser = {
   id: number;
   username: string;
@@ -73,4 +71,16 @@ export type ChatSocketEventData = Pick<
   message: Message["content"];
   messageId: Message["id"];
   timestamp: string;
+};
+
+export type NotificationChatSocketEventData = Pick<
+  Message,
+  "sender" | "is_read"
+> & {
+  chat_id: Message["id"];
+  messageId: Message["id"];
+  message_preview: Message["content"];
+  room_id: Message["id"];
+  timestamp: string;
+  type: string;
 };

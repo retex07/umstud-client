@@ -5,6 +5,8 @@ import { ChatCreateResponse, ChatRoom } from "@/api/handlers/chat/types";
 import { ExtraArguments } from "@/api/types";
 import urls from "@/services/router/urls";
 import {
+  addSocketMessage,
+  addSocketNotificationMessage,
   createChat,
   getChat,
   getChats,
@@ -72,8 +74,46 @@ function* sagaCreateChat(
   }
 }
 
+function* sagaAddSocketNotificationMessage(
+  {},
+  { payload }: ReturnType<typeof addSocketNotificationMessage>
+) {
+  try {
+    const { callback, ...props } = payload;
+    yield put(
+      addSocketMessage({
+        isMyMessage: false,
+        roomId: props.data.room_id,
+        data: {
+          sender: props.data.sender,
+          is_read: props.data.is_read,
+          message: props.data.message_preview,
+          messageId: props.data.messageId,
+          timestamp: props.data.timestamp,
+        },
+      })
+    );
+
+    if (
+      callback &&
+      !window.location.pathname.includes(
+        urls.profile.index + urls.profile.messages.index
+      )
+    ) {
+      yield call(callback);
+    }
+  } catch (error) {
+    console.error("[chat sagaAddSocketNotificationMessage saga error]:", error);
+  }
+}
+
 export default function* chat(ea: ExtraArguments) {
   yield takeLatest(getChats.toString(), sagaGetChats, ea);
   yield takeLatest(getChat.toString(), sagaGetChat, ea);
   yield takeLatest(createChat.toString(), sagaCreateChat, ea);
+  yield takeLatest(
+    addSocketNotificationMessage.toString(),
+    sagaAddSocketNotificationMessage,
+    ea
+  );
 }

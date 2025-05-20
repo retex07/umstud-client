@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import toast from "react-hot-toast";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 
-import { ChatSocketEventData } from "@/api/handlers/chat/types";
+import { NotificationChatSocketEventData } from "@/api/handlers/chat/types";
 import { DetailUserProfile } from "@/api/handlers/user/types";
 import WebSocketService from "@/api/ws";
 import LayoutBuilder from "@/components/layoutBuilder";
 import PageLoader from "@/components/loaders/pageLoader";
+import { ChatMessageToast } from "@/components/toast";
 import Routes from "@/services/router/config";
 import urls, { PRIVATE_URLS } from "@/services/router/urls";
 import { initApp } from "@/store/actions/app";
 import { setHistoryState } from "@/store/actions/auth";
+import { addSocketNotificationMessage } from "@/store/actions/chat";
 import { selectIsLoadingApp } from "@/store/selectors/app";
 import {
   selectAccessToken,
@@ -38,7 +41,9 @@ function App(props: PropsApp) {
   const history = useHistory();
   const location = useLocation();
 
-  const prevLocationRef = React.useRef(location.pathname);
+  const prevLocationRef = useRef(location.pathname);
+
+  const messageSoundRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     initApp();
@@ -75,7 +80,20 @@ function App(props: PropsApp) {
       );
 
       websocket.onMessage((event) => {
-        const data: ChatSocketEventData = JSON.parse(event.data);
+        const data: NotificationChatSocketEventData = JSON.parse(event.data);
+
+        dispatch(
+          addSocketNotificationMessage({
+            isMyMessage: false,
+            roomId: data.room_id,
+            data,
+            callback: () => {
+              messageSoundRef.current?.play().catch(console.warn);
+              toast.custom((t) => <ChatMessageToast t={t} message={data} />);
+            },
+          })
+        );
+
         console.info("JSON.parse socket dataEvent notification:", data);
       });
     }
@@ -114,24 +132,33 @@ function App(props: PropsApp) {
     <Switch>
       <Route path={urls.index} exact={false}>
         {() => (
-          <Switch>
-            {Routes.map((route) => (
-              <Route
-                key={route.path.toString()}
-                path={route.path}
-                exact={route.settings.exact}
-                strict={route.settings.strict}
-                sensitive={route.settings.sensitive}
-                render={() => (
-                  <LayoutBuilder
-                    component={route.component}
-                    renderFooter={route.layoutSettings.withFooter}
-                    renderHeader={route.layoutSettings.withHeader}
-                  />
-                )}
-              />
-            ))}
-          </Switch>
+          <>
+            <audio
+              ref={messageSoundRef}
+              src="/sounds/newMessage.mp3"
+              preload="auto"
+            />
+            <Switch>
+              {Routes.map((route) => (
+                <Route
+                  key={route.path.toString()}
+                  path={route.path}
+                  exact={route.settings.exact}
+                  strict={route.settings.strict}
+                  sensitive={route.settings.sensitive}
+                  render={() => (
+                    <>
+                      <LayoutBuilder
+                        component={route.component}
+                        renderFooter={route.layoutSettings.withFooter}
+                        renderHeader={route.layoutSettings.withHeader}
+                      />
+                    </>
+                  )}
+                />
+              ))}
+            </Switch>
+          </>
         )}
       </Route>
     </Switch>

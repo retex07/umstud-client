@@ -1,0 +1,42 @@
+@use "@/styles/typography";
+
+.umstud-custom-toast {
+  display: inline-flex;
+  max-width: 280px;
+  padding: 12px;
+  width: 100%;
+
+  overflow: hidden;
+  align-items: flex-start;
+  gap: 6px;
+
+  cursor: pointer;
+  border-radius: 12px;
+  background-color: var(--color-white);
+  box-shadow: 0 4px 6px var(--color-gray-box-shadow);
+  box-sizing: border-box;
+
+  &_img {
+    border-radius: 50%;
+    width: 46px;
+    height: 46px;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    &_head {
+      @include typography.ordinary_subtitle;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+      white-space: nowrap;
+    }
+
+    &_description {
+      @include typography.description;
+    }
+  }
+}
