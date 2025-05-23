@@ -23,6 +23,7 @@ import "../styles.scss";
 export default function MessageProfilePage() {
   const { t } = useTranslation("p_profile", { keyPrefix: "messages" });
 
+  const isMobile = isMobileVersion();
   const history = useHistory();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -87,9 +88,11 @@ export default function MessageProfilePage() {
         <div className="chats-page__block-info">
           <header className="chats-page__block-info-header">
             <div className="chats-page__block-info-header_title-block">
-              <span className="chats-page__block-info_head dark">
-                {interlocutor.last_name} {interlocutor.first_name}
-              </span>
+              {!isMobile && (
+                <span className="chats-page__block-info_head dark">
+                  {interlocutor.last_name} {interlocutor.first_name}
+                </span>
+              )}
               <span className="chats-page__block-info_head">
                 {chat.ad?.title}
               </span>
@@ -110,9 +113,11 @@ export default function MessageProfilePage() {
               !chat.last_message?.content &&
               chat.last_message.file && (
                 <div className="chats-page__last-message">
-                  <p className="chats-page__last-message_text">
-                    {isMyLastMessage && `${t("you")}: `}
-                  </p>
+                  {isMyLastMessage && (
+                    <p className="chats-page__last-message_text">
+                      {`${t("you")}: `}
+                    </p>
+                  )}
                   <p className="chats-page__block-info_text_attachment">
                     {t("attachment")}
                   </p>
@@ -126,9 +131,11 @@ export default function MessageProfilePage() {
               )}
             {!inputDraft && chat.last_message?.content && (
               <div className="chats-page__last-message">
-                <p className="chats-page__last-message_text">
-                  {isMyLastMessage && `${t("you")}: `}
-                </p>
+                {isMyLastMessage && (
+                  <p className="chats-page__last-message_text">
+                    {`${t("you")}: `}
+                  </p>
+                )}
                 <p className="chats-page__last-message_text">
                   {chat.last_message.content}
                 </p>
@@ -157,7 +164,7 @@ export default function MessageProfilePage() {
     <div id="page" className="page-container chats-page">
       <div className="container-bar">
         <div className="profile-tabs">
-          {isMobileVersion() && <MobileNavigationMenu />}
+          {isMobile && <MobileNavigationMenu />}
         </div>
         <div className="page-content-wrapper chats-page__wrapper">
           <header className="page-content-title">{t("title")}</header>

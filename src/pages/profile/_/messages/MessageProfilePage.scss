@@ -22,6 +22,7 @@
     align-items: center;
     gap: 4px;
     overflow: hidden;
+    width: 90%;
 
     &_text {
       @include typography.description;
@@ -30,10 +31,11 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 96%;
+      max-width: 90%;
 
       &:last-child {
         color: var(--color-gray);
+        width: 20%;
 
         &::before {
           margin-right: 4px;
