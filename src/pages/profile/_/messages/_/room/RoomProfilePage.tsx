@@ -23,11 +23,13 @@ import {
 } from "@/api/handlers/forum/types";
 import WebSocketService from "@/api/ws";
 import FileAdding from "@/components/FileAdding";
+import InputMessage from "@/components/InputMessage";
 import AvatarUser from "@/components/avatarUser";
-import Input from "@/components/input";
 import InlineLoader from "@/components/loaders/inlineLoader";
 import PageLoader from "@/components/loaders/pageLoader";
 import urls from "@/services/router/urls";
+import { ReactComponent as ExpandSvg } from "@/static/images/expand.svg";
+import { ReactComponent as RollupSvg } from "@/static/images/rollup.svg";
 import { ReactComponent as SendSvg } from "@/static/images/send.svg";
 import { addSocketMessage, getChat } from "@/store/actions/chat";
 import { selectChat } from "@/store/selectors/chat";
@@ -40,7 +42,6 @@ import { isMobileVersion, t } from "@/utils/util";
 import MessageItem from "./Message";
 import MobileNavigationMenu from "../../../../components/mobileNavigationMenu";
 import NavigationMenu from "../../../../components/navigationMenu";
-
 import "../../MessageProfilePage.scss";
 import "../../../styles.scss";
 
@@ -110,6 +111,7 @@ export default function RoomProfilePage() {
   const [inputMessage, setInputMessage] = useState("");
   const [chatConnected, setChatConnected] = useState(false);
   const [isLoadingFile, setIsLoadingFile] = useState(false);
+  const [isExpand, setIsExpand] = useState(false);
   const [filesUploaded, setFilesUploaded] = useState<
     FormDataUploadFile_Success[]
   >([]);
@@ -130,6 +132,18 @@ export default function RoomProfilePage() {
   useEffect(() => {
     inputMessageRef.current = inputMessage;
   }, [inputMessage]);
+
+  useEffect(() => {
+    if (isExpand) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isExpand]);
 
   useEffect(() => {
     if (!!inputDraft) {
@@ -293,6 +307,10 @@ export default function RoomProfilePage() {
     }
   };
 
+  const toggleIsExpand = () => {
+    setIsExpand(!isExpand);
+  };
+
   const renderEmptyMessages = () => {
     if (!interlocutor) {
       return (
@@ -337,7 +355,14 @@ export default function RoomProfilePage() {
         <div className="profile-tabs">
           {isMobileVersion() && <MobileNavigationMenu />}
         </div>
-        <div className="page-content-wrapper chats-page__room-wrapper">
+        <div
+          className={classNames(
+            "page-content-wrapper chats-page__room-wrapper",
+            {
+              expanded: isExpand,
+            }
+          )}
+        >
           <header className="chat-room-page__header">
             <div className="chat-room-page__header_link-block">
               <span
@@ -351,20 +376,28 @@ export default function RoomProfilePage() {
                 {interlocutor?.username || chatRoom?.id}
               </span>
             </div>
-            <h3
-              className={classNames(
-                "page-content-title chat-room-page__header_h3",
-                {
-                  hovered: !!chatRoom?.ad?.id,
-                }
-              )}
-              onClick={openOrder}
-            >
-              {chatRoom?.ad?.title ||
-                t("room.interlocutor.header", {
-                  interlocutor: interlocutor?.username || chatRoom?.id,
-                })}
-            </h3>
+            <div className="chat-room-page__header_link-block with-actions">
+              <h3
+                className={classNames(
+                  "page-content-title chat-room-page__header_h3",
+                  {
+                    hovered: !!chatRoom?.ad?.id,
+                  }
+                )}
+                onClick={openOrder}
+              >
+                {chatRoom?.ad?.title ||
+                  t("room.interlocutor.header", {
+                    interlocutor: interlocutor?.username || chatRoom?.id,
+                  })}
+              </h3>
+              <button
+                className="chat-room-page__header_action-btn expand"
+                onClick={toggleIsExpand}
+              >
+                {isExpand ? <RollupSvg /> : <ExpandSvg />}
+              </button>
+            </div>
           </header>
           <Scrollbars
             ref={scrollRef}
@@ -393,7 +426,7 @@ export default function RoomProfilePage() {
               onChange={handleFileChange}
               countUploadedFiles={filesUploaded.length}
             />
-            <Input
+            <InputMessage
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               fullWidth
@@ -403,6 +436,7 @@ export default function RoomProfilePage() {
                   sendMessage();
                 }
               }}
+              classNames="chat-room-page__send-message_textarea"
               name="send-message"
               placeholder={t("room.messages.input.placeholder")}
             />

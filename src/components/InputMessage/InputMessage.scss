@@ -1,0 +1,21 @@
+.umstud-input-message {
+  width: 100%;
+
+  & .textarea__field {
+    width: 100%;
+    min-height: 36px;
+    height: auto;
+    outline: 0;
+    margin: 0;
+    padding: 8px 14px;
+    font-size: 15px;
+    line-height: 20px;
+    border-radius: 18px;
+    border: 0;
+    resize: none;
+    max-height: 133px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    -webkit-tap-highlight-color: transparent;
+  }
+}

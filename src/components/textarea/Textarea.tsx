@@ -5,6 +5,7 @@ import React, {
   TextareaHTMLAttributes,
   RefCallback,
   RefObject,
+  KeyboardEvent,
 } from "react";
 
 import { ReactComponent as Warning } from "@/static/images/warn.svg";
@@ -27,7 +28,9 @@ export interface Props {
   placeholder?: string;
   required?: boolean;
   resize?: boolean;
+  rows?: number;
   value?: TextareaHTMLAttributes<HTMLTextAreaElement>["value"];
+  onKeyDown?(e: KeyboardEvent<HTMLTextAreaElement>): void;
 }
 
 Textarea.defaultProps = {
@@ -51,10 +54,12 @@ export default function Textarea(props: Props) {
         })}
       >
         <textarea
+          ref={props.innerRef}
           name={props.name}
           className={cn("textarea__field", {
             "textarea__no-resize": !props.resize,
           })}
+          rows={props.rows ?? 1}
           id={props.id}
           disabled={props.disabled}
           onClick={props.onClick}
