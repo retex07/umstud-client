@@ -15,7 +15,6 @@ export default function InputMessage(props: TextAreaProps) {
 
     ta.style.height = "auto";
 
-    console.log(props.value);
     const contentHeight = ta.scrollHeight;
 
     const min = 36;

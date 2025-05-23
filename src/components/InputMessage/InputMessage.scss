@@ -17,5 +17,14 @@
     box-sizing: border-box;
     overflow-y: auto;
     -webkit-tap-highlight-color: transparent;
+
+    @media screen and (min-width: 1221px) {
+      &::-webkit-scrollbar {
+        width: 0;
+      }
+
+      -ms-overflow-style: none;
+      overflow: -moz-scrollbars-none;
+    }
   }
 }

@@ -222,7 +222,7 @@ export default function RoomProfilePage() {
 
     if (myProfileData) {
       const sendMessageObj: ChatSendMessageWS = {
-        message: inputMessage,
+        message: inputMessage.replace(/\n{3,}/g, "\n\n"),
       };
 
       if (filesUploaded.length) {
@@ -431,6 +431,12 @@ export default function RoomProfilePage() {
               onChange={(e) => setInputMessage(e.target.value)}
               fullWidth
               onKeyDown={(e) => {
+                if (e.key === "Enter" && e.shiftKey) {
+                  e.preventDefault();
+                  setInputMessage((prev) => prev + "\n");
+                  return;
+                }
+
                 if (e.key === "Enter" && !e.shiftKey && chatConnected) {
                   e.preventDefault();
                   sendMessage();

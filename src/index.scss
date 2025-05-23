@@ -16,9 +16,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+
 input,
 button,
 select,
+pre,
 textarea {
   font-family: "Rubik", sans-serif;
 }
@@ -42,6 +49,7 @@ h5,
 h6,
 dl,
 ul,
+pre,
 p {
   margin: 0;
 

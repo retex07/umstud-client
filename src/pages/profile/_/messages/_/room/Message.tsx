@@ -56,7 +56,7 @@ export default function MessageItem(props: Message) {
               />
             </div>
           )}
-          <p className="message__info_content">{props.content}</p>
+          <pre className="message__info_content">{props.content}</pre>
         </div>
       </div>
     </div>
