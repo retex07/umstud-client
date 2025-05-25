@@ -1,6 +1,5 @@
-import cn from "classnames";
 import isFunction from "lodash/isFunction";
-import React, { useEffect, useRef, useState } from "react";
+import React, { CSSProperties, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -8,12 +7,9 @@ import { useSelector } from "react-redux";
 import { useAddToBlackList } from "@/api/user/mutations/addToBlackList";
 import { useRemoveOfBlackList } from "@/api/user/mutations/removeUserBlackList";
 import { useBlackList } from "@/api/user/queries/blackList";
-import Button from "@/components/button";
-import MenuBuilder from "@/components/menus/builder";
-import { ReactComponent as DropDownSvg } from "@/static/images/chevron-down.svg";
+import Dropdown from "@/components/Dropdown";
 import { selectAccessToken } from "@/store/selectors/auth";
 import { selectUserData } from "@/store/selectors/user";
-import { menuListener } from "@/utils/listener";
 import { copyTextToClipboard } from "@/utils/util";
 import "./ProfileActions.scss";
 
@@ -22,10 +18,15 @@ interface Props {
   userId: number;
 }
 
+interface ItemAction {
+  [key: string]: string | number | CSSProperties | (() => void);
+  title: string;
+  action: () => void;
+}
+
 export default function ProfileActions(props: Props) {
   const { t } = useTranslation("c_menus", { keyPrefix: "profileActions" });
-  const [isOpen, setIsOpen] = useState(false);
-  const [itemsAction, setItemsAction] = useState([
+  const [itemsAction, setItemsAction] = useState<ItemAction[]>([
     {
       title: t("copyLinkToClipboard"),
       action: copyLinkToClipboard,
@@ -71,17 +72,12 @@ export default function ProfileActions(props: Props) {
     }
   }, [blackList]);
 
-  useEffect(() => {
-    menuListener(menuRef, isOpen, () => setIsOpen(false));
-  }, [isOpen]);
-
   function handleRemoveOfBlackList() {
     removeOfBlackList.mutate(
       { idUser: props.userId },
       {
         onSuccess: () => {
           toast.success(t("blackList.removeSuccess"));
-          setIsOpen(false);
         },
         onError: (err) => {
           if (err.response?.data?.detail) {
@@ -98,7 +94,6 @@ export default function ProfileActions(props: Props) {
       {
         onSuccess: () => {
           toast.success(t("blackList.addSuccess"));
-          setIsOpen(false);
         },
         onError: (err) => {
           if (err.response?.data?.blocked_user?.length) {
@@ -112,12 +107,7 @@ export default function ProfileActions(props: Props) {
   function copyLinkToClipboard() {
     copyTextToClipboard(window.location.href).then(() => {
       toast.success(t("copyLinkSuccess"));
-      setIsOpen(false);
     });
-  }
-
-  function changeIsOpen() {
-    setIsOpen(!isOpen);
   }
 
   if (isLoading) {
@@ -126,25 +116,12 @@ export default function ProfileActions(props: Props) {
 
   return (
     <div ref={menuRef} className="profile-actions">
-      <Button
-        classNames={cn("profile-actions__btn", {
-          active: isOpen,
-        })}
-        isTransparent
-        size={props.isMyProfile ? "small" : "very-small"}
-        onClick={changeIsOpen}
-      >
-        <span>{t("actions")}</span>
-        <DropDownSvg />
-      </Button>
-      {isOpen && (
-        <MenuBuilder
-          items={itemsAction}
-          classNames="profile-actions__menu"
-          itemClassNames="profile-actions__action"
-          handleClickItem={(i) => isFunction(i.action) && i.action()}
-        />
-      )}
+      <Dropdown
+        sources={itemsAction}
+        fieldLabel="title"
+        label={t("actions") || ""}
+        onChange={(i) => isFunction(i.action) && i.action()}
+      />
     </div>
   );
 }

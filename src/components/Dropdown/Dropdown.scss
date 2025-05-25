@@ -1,0 +1,97 @@
+@use "@/styles/typography";
+
+.umstud-dropdown {
+  $border-radius: 6px;
+  position: relative;
+
+  &__menu {
+    position: initial !important;
+    pointer-events: initial !important;
+
+    &_btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+
+      max-width: 200px;
+      min-width: 120px;
+      max-height: 34px;
+
+      padding: 10px 12px;
+      box-sizing: border-box;
+      outline: none;
+      background-color: var(--color-white);
+      border-radius: 10px;
+      border: 1px solid var(--color-blue);
+
+      & > svg {
+        max-width: 16px;
+        max-height: 16px;
+        path {
+          stroke: var(--color-blue);
+        }
+      }
+
+      &_span {
+        @include typography.signature;
+        color: var(--color-blue);
+        font-weight: 500;
+        text-align: start;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 100%;
+      }
+    }
+  }
+
+  &__items {
+    position: absolute;
+
+    display: flex;
+    flex-direction: column;
+    border-radius: $border-radius;
+
+    box-shadow: 0 4px 4px 0 var(--color-gray-box-shadow);
+
+    z-index: 11;
+    top: 100%;
+    left: 0;
+
+    &--right {}
+  }
+
+  &__item {
+    @include typography.description;
+
+    padding: 8px 16px;
+    border: none;
+    outline: none;
+
+    white-space: nowrap;
+    text-align: start;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
+
+    background-color: var(--color-white);
+
+    &:hover {
+      background-color: var(--color-gray-light);
+    }
+
+    &:first-child {
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
+    }
+    &:last-child {
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+    }
+
+    &.active {
+      background-color: var(--color-gray);
+    }
+  }
+}

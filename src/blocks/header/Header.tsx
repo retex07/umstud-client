@@ -20,8 +20,6 @@ export default function Header() {
   const user = useSelector(selectUserData);
   const selectCountNotReadChats = useSelector(countNotReadChats);
   const [isOpenSideBar, setIsOpenSideBar] = useState(false);
-  const [isOpenSwitcher, setIsOpenSwitcher] = useState(false);
-  const [isOpenMenuUser, setIsOpenMenuUser] = useState(false);
   const history = useHistory();
   const isMobile = isMobileVersion();
 
@@ -42,18 +40,6 @@ export default function Header() {
 
   function changeOpenSideBar() {
     setIsOpenSideBar(!isOpenSideBar);
-    setIsOpenSwitcher(false);
-    setIsOpenMenuUser(false);
-  }
-  function changeOpenSwitcher() {
-    setIsOpenSwitcher(!isOpenSwitcher);
-    setIsOpenSideBar(false);
-    setIsOpenMenuUser(false);
-  }
-  function changeOpenMenuUser() {
-    setIsOpenMenuUser(!isOpenMenuUser);
-    setIsOpenSideBar(false);
-    setIsOpenSwitcher(false);
   }
 
   function openMessages() {
@@ -65,27 +51,27 @@ export default function Header() {
       <nav>
         <ul className="navigation--list">
           <li>
-            <NavLink to="/" className="navigation--item-link">
+            <NavLink to={urls.index} className="navigation--item-link">
               {t("navigation.index")}
             </NavLink>
           </li>
           <li>
-            <NavLink to="/services" className="navigation--item-link">
+            <NavLink to={urls.services} className="navigation--item-link">
               {t("navigation.services")}
             </NavLink>
           </li>
           <li>
-            <NavLink to="/orders" className="navigation--item-link">
+            <NavLink to={urls.orders.index} className="navigation--item-link">
               {t("navigation.orders")}
             </NavLink>
           </li>
           <li>
-            <NavLink to="/forum" className="navigation--item-link">
+            <NavLink to={urls.forum.index} className="navigation--item-link">
               {t("navigation.forum")}
             </NavLink>
           </li>
           <li>
-            <NavLink to="/rating" className="navigation--item-link">
+            <NavLink to={urls.rating.index} className="navigation--item-link">
               {t("navigation.rating")}
             </NavLink>
           </li>
@@ -131,20 +117,17 @@ export default function Header() {
               )}
             </div>
           )}
-          <div className="action-block" onClick={changeOpenSwitcher}>
-            <SwitchLanguage
-              isOpen={isOpenSwitcher}
-              onHide={changeOpenSwitcher}
-            />
+          <div className="action-block">
+            <SwitchLanguage />
           </div>
           {!user && (
-            <Link to="/auth/sign-in" className="log-in">
+            <Link to={urls.auth.index + urls.auth.signIn} className="log-in">
               {t("login")}
             </Link>
           )}
           {user && (
-            <div className="header--user" onClick={changeOpenMenuUser}>
-              <MenuUser isOpen={isOpenMenuUser} onHide={changeOpenMenuUser} />
+            <div className="header--user">
+              <MenuUser />
             </div>
           )}
         </div>

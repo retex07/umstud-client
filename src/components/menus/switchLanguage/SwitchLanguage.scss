@@ -9,9 +9,16 @@
     stroke: var(--color-white);
   }
 
-  > svg {
-    max-width: 24px;
-    max-height: 24px;
+  &__dropdown-menu {
+    $size: 24px;
+
+    max-width: $size;
+    max-height: $size;
+
+    & > svg {
+      max-width: $size;
+      max-height: $size;
+    }
   }
 
   &__menu {

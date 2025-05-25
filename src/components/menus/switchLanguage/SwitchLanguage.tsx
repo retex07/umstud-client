@@ -1,44 +1,45 @@
 import cn, { Argument as ClassNamesArgument } from "classnames";
+import get from "lodash/get";
+import isObject from "lodash/isObject";
 import isString from "lodash/isString";
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-import MenuBuilder from "@/components/menus/builder";
+import Dropdown from "@/components/Dropdown";
+import { OptionTypeDropdown } from "@/components/Dropdown/Dropdown";
 import { languages } from "@/constants/languages";
 import { ReactComponent as LanguageSvg } from "@/static/images/language.svg";
-import { menuListener } from "@/utils/listener";
 import "./SwitchLanguage.scss";
 
 interface Props {
   classNames?: ClassNamesArgument;
-  onHide: () => void;
-  isOpen: boolean;
 }
 
 export default function SwitchLanguage(props: Props) {
   const { i18n } = useTranslation();
-  const { isOpen = false, onHide, classNames } = props;
   const menuRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    menuListener(menuRef, isOpen, onHide);
-  }, [isOpen, onHide]);
-
   return (
-    <div ref={menuRef} className={cn("switcher", classNames)}>
-      <LanguageSvg />
-      {props.isOpen && (
-        <MenuBuilder
-          classNames="switcher__menu"
-          items={languages}
-          isActiveItem={(i) => i18n.language === i.id}
-          handleClickItem={(i) => {
-            if (i.id && isString(i.id)) {
-              i18n.changeLanguage(i.id).then(props.onHide);
+    <div ref={menuRef} className={cn("switcher", props.classNames)}>
+      <Dropdown
+        sources={languages}
+        fieldLabel="label"
+        DropdownMenuElement={<LanguageSvg />}
+        dropdownMenuProps={{ className: "switcher__dropdown-menu" }}
+        isActive={(i) =>
+          !!get(i, "value") && i18n.language === (i as OptionTypeDropdown).value
+        }
+        onChange={(item) => {
+          if (isObject(item)) {
+            const source = item as OptionTypeDropdown;
+            if (source.value && isString(source.value)) {
+              i18n
+                .changeLanguage(source.value)
+                .then(() => window.location.reload());
             }
-          }}
-        />
-      )}
+          }
+        }}
+      />
     </div>
   );
 }
