@@ -295,7 +295,7 @@
 
   &__send-message {
     display: inline-flex;
-    align-items: center;
+    align-items: flex-end;
     gap: 6px;
 
     &-files {

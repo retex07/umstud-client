@@ -190,10 +190,11 @@
         &_sub-title {
           @include typography.description;
 
-          width: 100%;
-          white-space: nowrap;
-          text-overflow: ellipsis;
           overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          line-clamp: 1;
+          -webkit-box-orient: vertical;
 
           &::before {
             content: "-";
