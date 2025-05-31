@@ -608,7 +608,9 @@ export default function IndexProfilePage() {
             {profileUser?.description && profileUser.description.length > 0 && (
               <section className="profile-index--section">
                 <h2 className="profile-index--subtitle">{t("about")}</h2>
-                <p className="profile-index--text">{profileUser.description}</p>
+                <pre className="profile-index--text">
+                  {profileUser.description}
+                </pre>
               </section>
             )}
             <section className="profile-index--section">

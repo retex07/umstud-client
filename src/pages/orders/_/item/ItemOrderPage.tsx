@@ -163,11 +163,11 @@ export default function ItemOrderPage() {
             <h3 className="page-orders__order-info-section_head">
               {t("pages.item.sections.description.title")}
             </h3>
-            <p className="page-orders__order-info-section_descr">
+            <pre className="page-orders__order-info-section_descr">
               {dataOrderItem?.description
                 ? dataOrderItem?.description
                 : t("pages.item.sections.description.noText")}
-            </p>
+            </pre>
           </section>
           {!isMyOrder &&
             dataOrderItem?.status === "open" &&

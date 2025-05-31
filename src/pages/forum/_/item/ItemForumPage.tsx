@@ -223,9 +223,9 @@ export default function ItemForumPage() {
               <h3 className="page-forum-item__block-info_head">
                 {t("item.problem")}
               </h3>
-              <p className="page-forum-item__block-info_text">
+              <pre className="page-forum-item__block-info_text">
                 {discussion.description}
-              </p>
+              </pre>
             </div>
             {discussion.comments.length > 0 && (
               <Scrollbars className="page-forum-item__answers">
@@ -262,9 +262,9 @@ export default function ItemForumPage() {
                             />
                           </div>
                         )}
-                        <p className="page-forum-item__answers-comment_content">
+                        <pre className="page-forum-item__answers-comment_content">
                           {comment.content}
-                        </p>
+                        </pre>
                       </div>
                     </div>
                   </div>
