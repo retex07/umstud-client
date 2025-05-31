@@ -27,3 +27,5 @@ export const RegExp = {
 
 export const MIN_ORDER_BUDGET = 1;
 export const MAX_ORDER_BUDGET = 100000000;
+
+export const MIN_COMPLETED_ADS_RATING = 3;

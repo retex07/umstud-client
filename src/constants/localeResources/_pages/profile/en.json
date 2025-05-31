@@ -13,6 +13,8 @@
       "nothing": "There's nothing here yet"
     },
     "rating": "Personal rating",
+    "completedOrders": "Completed orders: {{ count }}",
+    "notRating": "No rating. The user has completed fewer than {{ count }} orders",
     "generalInfo": "General information",
     "addWork": "Add a job",
     "actions": {

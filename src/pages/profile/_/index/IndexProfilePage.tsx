@@ -14,7 +14,6 @@ import { useAddPortfolio } from "@/api/user/mutations/addPortfolio";
 import { useEditFilePortfolio } from "@/api/user/mutations/editFilePortfolio";
 import { useRemoveFilePortfolio } from "@/api/user/mutations/removeFilePortfolio";
 import { useUserProfile } from "@/api/user/queries/userProfile";
-import AvatarUser from "@/components/avatarUser";
 import Button from "@/components/button";
 import Field from "@/components/formElements/field";
 import PageLoader from "@/components/loaders/pageLoader";
@@ -23,13 +22,12 @@ import Modal from "@/components/modal";
 import { RegExp } from "@/constants/config";
 import { useConfirm } from "@/contexts/confirm/hooks";
 import NavigationMenu from "@/pages/profile/components/navigationMenu";
+import PersonalRating from "@/pages/profile/components/personalRating";
 import urls from "@/services/router/urls";
 import { ReactComponent as DownloadSvg } from "@/static/images/download-cloud.svg";
 import { ReactComponent as EditSvg } from "@/static/images/edit.svg";
 import { ReactComponent as ExampleAvatarSvg } from "@/static/images/example-avatar.svg";
 import { ReactComponent as FileSvg } from "@/static/images/file.svg";
-import { ReactComponent as FillStarSvg } from "@/static/images/fill-star.svg";
-import { ReactComponent as HollowStarSvg } from "@/static/images/hollow-star.svg";
 import { ReactComponent as TrashSvg } from "@/static/images/trash.svg";
 import * as userActions from "@/store/actions/user";
 import { selectUserData } from "@/store/selectors/user";
@@ -101,12 +99,6 @@ export default function IndexProfilePage() {
     setEditingProfile({ isEdit: true, idFile: item.id });
     setValue("title", item.title);
     setValue("description", item.description);
-  }
-
-  function openUserProfile(slug: string) {
-    history.push(
-      urls.profile.index + urls.profile.item.replace(":profileId", slug)
-    );
   }
 
   function onSubmitPortfolio(data: PortfolioItem_RequestBody) {
@@ -542,25 +534,6 @@ export default function IndexProfilePage() {
                 </div>
               </div>
             </header>
-            <section className="profile-index--section">
-              <h2 className="profile-index--subtitle">{t("rating")}</h2>
-              <div className="profile-index__stars">
-                {[...Array(Math.round(profileUser?.stars || 0))].map(
-                  (_, index) => (
-                    <div key={index} className="blue-star fill">
-                      <FillStarSvg />
-                    </div>
-                  )
-                )}
-                {[...Array(5 - Math.round(profileUser?.stars || 0))].map(
-                  (_, index) => (
-                    <div key={index} className="blue-star">
-                      <HollowStarSvg />
-                    </div>
-                  )
-                )}
-              </div>
-            </section>
             {(profileUser?.phone ||
               profileUser?.place_study_work ||
               profileUser?.birth_date ||
@@ -621,58 +594,15 @@ export default function IndexProfilePage() {
               {renderAddingWork()}
             </section>
           </div>
-          {!!profileUser?.ratings.length && (
-            <div className="page-content-wrapper reviews-profile__list">
-              <header className="page-content-title">{t("reviews")}</header>
-              <div className="reviews-profile">
-                {profileUser?.ratings.map((rating) => (
-                  <div key={rating.id} className="reviews-profile__item">
-                    <div className="reviews-profile__item-info">
-                      <div className="reviews-profile__item-user">
-                        <AvatarUser
-                          classNameImg="reviews-profile__item-user_img"
-                          username={rating.author.username}
-                          photo={rating.author.photo || null}
-                        />
-                        <div className="reviews-profile__item-user-info">
-                          <h4
-                            className="reviews-profile__item-user_head"
-                            onClick={() => openUserProfile(rating.author.slug)}
-                          >
-                            {rating.author.username}
-                          </h4>
-                          <p className="reviews-profile__item-user_date">
-                            {getFullDate(new Date(rating.created_at))}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="profile-index__stars">
-                        {[...Array(Math.round(rating.count || 0))].map(
-                          (_, index) => (
-                            <div key={index} className="blue-star fill">
-                              <FillStarSvg />
-                            </div>
-                          )
-                        )}
-                        {[...Array(5 - Math.round(rating.count || 0))].map(
-                          (_, index) => (
-                            <div key={index} className="blue-star">
-                              <HollowStarSvg />
-                            </div>
-                          )
-                        )}
-                      </div>
-                    </div>
-                    <p className="reviews-profile__item-message">
-                      {rating.message}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
-        {isMyProfile && <NavigationMenu />}
+        <div className="profile-index__panels">
+          {isMyProfile && <NavigationMenu />}
+          <PersonalRating
+            ratings={profileUser?.ratings || []}
+            countStars={profileUser?.stars || 0}
+            countCompletedOrders={profileUser?.completed_ads_count || 0}
+          />
+        </div>
       </div>
     </div>
   );

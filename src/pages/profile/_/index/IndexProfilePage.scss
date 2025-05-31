@@ -138,6 +138,17 @@
       gap: 10px;
     }
   }
+
+  &__panels {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 740px;
+
+    @media screen and (max-width: 1220px) {
+      width: 100%;
+    }
+  }
 }
 
 .portfolio {
