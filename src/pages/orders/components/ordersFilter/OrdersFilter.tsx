@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { OptionSelect as OptionSelectAd } from "@/api/handlers/order/types";
 import Button from "@/components/button";
+import CheckboxField from "@/components/formElements/checkboxField";
 import Field from "@/components/formElements/field";
 import SelectField from "@/components/formElements/selectField";
 import { getCategoriesAndTypes } from "@/store/actions/order";
@@ -21,6 +22,7 @@ export interface OrdersFilters_FormData {
   words?: string;
   type?: SelectOption[];
   category?: SelectOption[];
+  isViewOpenOnly?: boolean;
 }
 
 export default function OrdersFilter(props: Props) {
@@ -92,6 +94,12 @@ export default function OrdersFilter(props: Props) {
         isMulti
         readOnly={formState.isSubmitting}
         closeMenuOnSelect={false}
+      />
+      <CheckboxField
+        control={control}
+        label={t("fields.isViewOpenOnly")}
+        defaultValue={true}
+        name="isViewOpenOnly"
       />
       <Button
         classNames="page-orders__panel_btn"

@@ -45,6 +45,7 @@ export default function IndexOrderPage() {
   useEffect(() => {
     if (dataOrders) {
       setOrders(dataOrders);
+      callbackFilters({ isViewOpenOnly: true });
     }
   }, [dataOrders]);
 
@@ -57,12 +58,15 @@ export default function IndexOrderPage() {
   }
 
   function callbackFilters(data: OrdersFilters_FormData) {
-    setIsOpenModalFilters(false);
+    if (isOpenModalFilters) {
+      setIsOpenModalFilters(false);
+    }
 
     if (!dataOrders) {
       return;
     }
 
+    const isOnlyOpenCards = data.isViewOpenOnly;
     const dataWords = data.words;
     const dataTypes = data.type?.map((type) => type.label);
     const dataCategories = data.category?.map((category) => category.label);
@@ -72,6 +76,7 @@ export default function IndexOrderPage() {
         let wordsMatch = true;
         let typeMatch = true;
         let categoryMatch = true;
+        let isViewOfStatus = true;
 
         if (dataWords && dataWords.trim() !== "") {
           wordsMatch = order.title.includes(dataWords);
@@ -89,7 +94,11 @@ export default function IndexOrderPage() {
           );
         }
 
-        return wordsMatch && typeMatch && categoryMatch;
+        if (isOnlyOpenCards) {
+          isViewOfStatus = order.status === "open";
+        }
+
+        return wordsMatch && typeMatch && categoryMatch && isViewOfStatus;
       })
     );
   }

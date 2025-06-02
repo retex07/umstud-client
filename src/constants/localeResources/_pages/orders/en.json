@@ -20,7 +20,8 @@
           "category": {
             "label": "Categories",
             "placeholder": "Select a category"
-          }
+          },
+          "isViewOpenOnly": "Show only open ones"
         },
         "action": "Search"
       },
