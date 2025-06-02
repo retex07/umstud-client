@@ -53,7 +53,7 @@
   "comment": {
     "mark": "Choose the best answer",
     "confirmMark": "Are you sure you want to choose the best comment «{{ title }}»",
-    "marked": "Cancellations comment as crucial",
+    "marked": "The comment is marked as decisive",
     "api": {
       "marked": "Successfully marked the best answer: «{{ comment }}»",
       "error": "An error occurred while selecting the best answer"
