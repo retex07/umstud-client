@@ -9,6 +9,7 @@
 
   &__msg {
     @include typography.ordinary_subtitle;
+    max-width: 520px;
 
     &.question {
       &::after {

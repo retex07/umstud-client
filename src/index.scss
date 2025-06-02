@@ -168,3 +168,14 @@ input::-ms-clear {
 .toaster {
   margin-top: 50px;
 }
+
+.tooltip {
+  background-color: var(--color-white);
+  box-shadow: 4px 4px 4px 0 var(--color-gray-box-shadow);
+  padding: 12px 16px;
+  border-radius: 8px;
+
+  & .tooltip-inner {
+    color: var(--color-gray-text);
+  }
+}

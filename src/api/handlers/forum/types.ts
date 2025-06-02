@@ -20,6 +20,10 @@ export type CreateDiscussion_Body = {
   description: string;
 };
 
+export type MarkCommentPut_Body = {
+  comment_id: number;
+};
+
 export type FormDataUploadFile_Body = {
   file: File;
   type: "chat" | "discussion";
@@ -41,7 +45,7 @@ export type CreateDiscussion_Response = CreateDiscussion_Body & {
   id: number;
 };
 
-type Comment = {
+export type Comment = {
   id: number;
   content: string;
   author: ForumCustomUser;
@@ -66,6 +70,6 @@ export type ScanResponse = {
   status: UploadFileStatus;
   scan_id: number;
   was_deleted: boolean;
-}
+};
 
 export type DiscussionStatusTypes = "open" | "resolved";

@@ -1,9 +1,11 @@
+import classNames from "classnames";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { Scrollbars } from "react-custom-scrollbars";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
+import { Tooltip } from "reactstrap";
 
 import { ENDPOINTS_CONFIG } from "@/api/endpoints";
 import { ApiForum } from "@/api/handlers";
@@ -11,6 +13,7 @@ import {
   CreateComment,
   Discussion,
   ScanResponse,
+  Comment,
 } from "@/api/handlers/forum/types";
 import WebSocketService from "@/api/ws";
 import FileAdding from "@/components/FileAdding";
@@ -22,6 +25,7 @@ import PageLoader from "@/components/loaders/pageLoader";
 import PanelForumCreate from "@/components/panels/forumCreate";
 import PanelOrderCreate from "@/components/panels/orderCreate";
 import PanelOrderServices from "@/components/panels/popularServices";
+import { useConfirm } from "@/contexts/confirm/hooks";
 import urls from "@/services/router/urls";
 import { ReactComponent as CheckSvg } from "@/static/images/check.svg";
 import { ReactComponent as LockSvg } from "@/static/images/lock.svg";
@@ -33,7 +37,7 @@ import {
 } from "@/store/selectors/forum";
 import { selectUserData } from "@/store/selectors/user";
 import { RootState } from "@/store/types";
-import { getFullDate } from "@/utils/util";
+import { dateWithMonthWord, getFullDate, getFullTime } from "@/utils/util";
 
 import "../styles.scss";
 
@@ -43,9 +47,14 @@ export default function ItemForumPage() {
   const [sendAnswerText, setSendAnswerText] = useState("");
   const [filesUrls, setFilesUrls] = useState<string[]>([]);
   const [isLoadingFile, setIsLoadingFile] = useState(false);
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+
+  const toggleTooltip = () => setTooltipOpen((prev) => !prev);
+  const tooltipId = `resolved-comment`;
 
   const dispatch = useDispatch();
   const history = useHistory();
+  const { requestConfirm } = useConfirm();
 
   useEffect(() => {
     dispatch(getDiscussion(discussionId));
@@ -56,6 +65,15 @@ export default function ItemForumPage() {
   const discussion: Discussion | null = useSelector((state: RootState) =>
     selectDiscussion(state, discussionId)
   );
+
+  const resolvedComment = discussion?.resolved_comment;
+  const comments: Comment[] = [
+    ...(discussion?.comments || []).filter(
+      (comment) => !resolvedComment || resolvedComment.id !== comment.id
+    ),
+  ];
+  const isMyDiscussion = discussion?.author.slug === myProfileData?.slug;
+  const isReadyDiscussion = discussion?.status === "resolved";
 
   function openUserProfile(slug: string) {
     history.push(
@@ -143,6 +161,30 @@ export default function ItemForumPage() {
     }
   }
 
+  async function handleConfirmMarkComment(comment: Comment) {
+    const substringComment = comment.content.substring(0, 18) + "...";
+
+    const confirm = await requestConfirm(
+      t("comment.confirmMark", {
+        title: substringComment,
+      }),
+      true
+    );
+
+    if (confirm) {
+      ApiForum()
+        .markComment(discussionId, { comment_id: comment.id })
+        .then(() => {
+          dispatch(getDiscussion(discussionId));
+          toast.success(t("comment.api.marked", { comment: substringComment }));
+        })
+        .catch((e) => {
+          toast.error(t("comment.api.error"));
+          console.error(e);
+        });
+    }
+  }
+
   function renderDiscussionStatus() {
     switch (discussion?.status) {
       case "open":
@@ -212,60 +254,105 @@ export default function ItemForumPage() {
               {renderDiscussionStatus()}
             </div>
             <div className="page-forum-item__block-info">
-              <h3 className="page-forum-item__block-info_head">
-                {t("item.posted")}
-              </h3>
-              <p className="page-forum-item__block-info_text">
-                {getFullDate(new Date(discussion.created_at || ""))}
-              </p>
-            </div>
-            <div className="page-forum-item__block-info">
-              <h3 className="page-forum-item__block-info_head">
-                {t("item.problem")}
-              </h3>
               <pre className="page-forum-item__block-info_text">
                 {discussion.description}
               </pre>
+              <p className="page-forum-item__block-info_date">
+                {dateWithMonthWord(
+                  getFullDate(new Date(discussion.created_at || ""), false)
+                )}
+              </p>
             </div>
-            {discussion.comments.length > 0 && (
+            {(comments.length > 0 || resolvedComment) && (
               <Scrollbars className="page-forum-item__answers">
-                {discussion.comments.map((comment) => (
+                {(resolvedComment
+                  ? [resolvedComment, ...comments]
+                  : comments
+                ).map((comment) => (
                   <div
                     key={comment.id}
-                    className="page-forum-item__answers-comment"
+                    className={classNames("page-forum-item__answers-comment", {
+                      "not-ready":
+                        !isReadyDiscussion &&
+                        isMyDiscussion &&
+                        comment.author.slug !== myProfileData?.slug,
+                    })}
                   >
-                    <AvatarUser
-                      classNameImg="page-forum-item__answers-comment_img"
-                      photo={comment.author.photo || null}
-                      username={comment.author.username}
-                    />
-                    <div className="page-forum-item__answers-comment_flex">
-                      <div className="page-forum-item__answers-comment-info">
-                        <label
-                          className="page-forum-item__answers-comment_label"
-                          onClick={() => openUserProfile(comment.author.slug)}
-                        >
-                          {comment.author.last_name} {comment.author.first_name}
-                        </label>
-                        <span className="page-forum-item__answers-comment_date">
-                          {getFullDate(new Date(comment.created_at))}
-                        </span>
-                      </div>
-                      <div className="message__contents">
-                        {comment.file && (
-                          <div className="message__contents-files">
-                            <FileApplication
-                              formatted_file_size={comment.formatted_file_size}
-                              file={comment.file}
-                              original_filename={comment.original_filename}
-                              mime_type={comment.mime_type}
-                            />
+                    <div className="comment-wrapper">
+                      <div className="comment-content">
+                        <AvatarUser
+                          classNameImg="page-forum-item__answers-comment_img"
+                          photo={comment.author.photo || null}
+                          username={comment.author.username}
+                        />
+                        <div className="page-forum-item__answers-comment_flex">
+                          <div className="page-forum-item__answers-comment-info">
+                            <label
+                              className="page-forum-item__answers-comment_label"
+                              onClick={() =>
+                                openUserProfile(comment.author.slug)
+                              }
+                            >
+                              {comment.author.last_name}{" "}
+                              {comment.author.first_name}
+                            </label>
+                            <span className="page-forum-item__answers-comment_date">
+                              {dateWithMonthWord(
+                                getFullDate(new Date(comment.created_at), false)
+                              )}{" "}
+                              {getFullTime(new Date(comment.created_at))}
+                            </span>
                           </div>
-                        )}
-                        <pre className="page-forum-item__answers-comment_content">
-                          {comment.content}
-                        </pre>
+                          <div className="message__contents">
+                            {comment.file && (
+                              <div className="message__contents-files">
+                                <FileApplication
+                                  formatted_file_size={
+                                    comment.formatted_file_size
+                                  }
+                                  file={comment.file}
+                                  original_filename={comment.original_filename}
+                                  mime_type={comment.mime_type}
+                                />
+                              </div>
+                            )}
+                            <pre className="page-forum-item__answers-comment_content">
+                              {comment.content}
+                            </pre>
+                          </div>
+                        </div>
+                        {resolvedComment &&
+                          resolvedComment.id === comment.id && (
+                            <div
+                              id={tooltipId}
+                              className="page-forum-item__answers-comment_resolved"
+                            >
+                              <CheckSvg />
+                            </div>
+                          )}
+
+                        {resolvedComment &&
+                          resolvedComment.id === comment.id && (
+                            <Tooltip
+                              placement="top"
+                              isOpen={tooltipOpen}
+                              target={tooltipId}
+                              toggle={toggleTooltip}
+                            >
+                              {t("comment.marked")}
+                            </Tooltip>
+                          )}
                       </div>
+                      {!isReadyDiscussion &&
+                        isMyDiscussion &&
+                        comment.author.slug !== myProfileData?.slug && (
+                          <button
+                            className="select-best-btn"
+                            onClick={() => handleConfirmMarkComment(comment)}
+                          >
+                            {t("comment.mark")}
+                          </button>
+                        )}
                     </div>
                   </div>
                 ))}

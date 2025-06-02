@@ -248,6 +248,12 @@
     &_text {
       @include typography.ordinary;
     }
+
+    &_date {
+      @include typography.description;
+      color: var(--color-gray-text);
+      text-align: end;
+    }
   }
 
   &__info {
@@ -305,6 +311,59 @@
 
       padding: 12px 20px;
 
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+
+      & .comment-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      & .comment-content {
+        display: inline-flex;
+        align-items: flex-start;
+        gap: 12px;
+        width: 100%;
+
+        transition: filter 0.3s ease;
+      }
+
+      &.not-ready {
+        & .select-best-btn {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          padding: 8px 12px;
+          font-size: 14px;
+          font-weight: bold;
+          background-color: var(--color-blue);
+          color: var(--color-white);
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+
+          opacity: 0;
+          transition: opacity 0.3s ease;
+          z-index: 2;
+        }
+
+        & .select-best-btn:hover {
+          background-color:var(--color-blue)
+        }
+
+        &:hover {
+          & .comment-content {
+            filter: blur(4px);
+          }
+          & .select-best-btn {
+            opacity: 1;
+          }
+        }
+      }
+
       &_img {
         width: 38px;
         height: 38px;
@@ -314,7 +373,7 @@
       &_flex {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 2px;
         width: 100%;
       }
 
@@ -344,6 +403,12 @@
 
       &_content {
         @include typography.ordinary_subtitle;
+      }
+
+      &_resolved {
+        & > svg > path {
+          stroke: var(--color-green);
+        }
       }
     }
   }

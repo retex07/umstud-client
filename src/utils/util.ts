@@ -56,9 +56,9 @@ export function dateWithMonthWord(
   return `${day}.${month}.${year}`;
 }
 
-export function getFullDate(date: Date, withoutZero = false) {
+export function getFullDate(date: Date, withoutZero = true) {
   const prevDate = new Date(date);
-  const symbolZero = withoutZero ? "" : "0";
+  const symbolZero = withoutZero ? "0" : "";
 
   const d =
     prevDate.getDate().toString().length == 1

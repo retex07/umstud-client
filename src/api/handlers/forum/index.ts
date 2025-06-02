@@ -8,6 +8,7 @@ import {
   Discussion,
   FormDataUploadFile_Body,
   FormDataUploadFile_Success,
+  MarkCommentPut_Body,
 } from "./types";
 
 export type ApiForumHandlers = {
@@ -20,6 +21,10 @@ export type ApiForumHandlers = {
   uploadFile: (
     data: FormDataUploadFile_Body
   ) => Promise<FormDataUploadFile_Success>;
+  markComment: (
+    discussionId: string,
+    data: MarkCommentPut_Body
+  ) => Promise<MarkCommentPut_Body>;
 };
 
 const API = ENDPOINTS_CONFIG.api;
@@ -51,11 +56,24 @@ export default function ApiForum(): ApiForumHandlers {
     ).data;
   };
 
+  const markComment: ApiForumHandlers["markComment"] = async (
+    discussionId,
+    data
+  ) => {
+    return (
+      await http.put(
+        API.discussion.markComment.replace(":discussionId", discussionId),
+        data
+      )
+    ).data;
+  };
+
   return {
     getDiscussions,
     createDiscussion,
     getDiscussion,
     createComment,
     uploadFile,
+    markComment,
   };
 }

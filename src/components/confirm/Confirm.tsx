@@ -1,5 +1,6 @@
 import cn from "classnames";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import Modal from "@/components/modal";
 
@@ -16,9 +17,11 @@ interface Props {
 }
 
 export default function ConfirmComponent(props: Props) {
+  const { t } = useTranslation("c_confirm");
+
   return (
     <Modal
-      title="Подтверждение действия"
+      title={t("title")}
       isOpen={props.isOpen}
       isClosing={props.isClosing}
       onClose={props.handleCancel}
@@ -31,16 +34,16 @@ export default function ConfirmComponent(props: Props) {
         {props.message}
       </p>
       <div className="confirm__actions">
-        <Button size="small" fullWidth onClick={props.handleCancel}>
-          Отменить
-        </Button>
         <Button
           size="small"
+          isTransparent
           fullWidth
-          color="red"
-          onClick={props.handleConfirm}
+          onClick={props.handleCancel}
         >
-          Удалить
+          {t("cancel")}
+        </Button>
+        <Button size="small" fullWidth onClick={props.handleConfirm}>
+          {t("submit")}
         </Button>
       </div>
     </Modal>
