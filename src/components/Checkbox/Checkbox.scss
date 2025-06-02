@@ -1,0 +1,54 @@
+@use "../../styles/typography";
+
+.umstud-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  &_hidden {
+    display: none;
+  }
+
+  &__field {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 24px;
+    height: 24px;
+
+    border-radius: 2px;
+    box-sizing: border-box;
+    border: 2px solid var(--color-blue);
+    cursor: pointer;
+    opacity: 0.5;
+
+    &:hover,
+    &.active {
+      opacity: 1;
+    }
+
+    &.disabled {
+      cursor: not-allowed;
+      $color: var(--color-gray-text);
+      border: 2px solid $color;
+
+      & > svg > path {
+        stroke: $color;
+      }
+    }
+
+    & > svg {
+      max-width: 20px;
+      max-height: 20px;
+
+      & > path {
+        stroke: var(--color-blue);
+      }
+    }
+  }
+
+  &_span {
+    @include typography.ordinary_subtitle;
+  }
+}
