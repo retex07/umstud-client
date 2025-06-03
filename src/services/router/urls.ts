@@ -47,7 +47,6 @@ const urls = {
 export const PRIVATE_URLS = [
   // orders
   urls.orders.index + urls.orders.create,
-  urls.orders.index + urls.orders.item.replace(":orderId", ""),
   urls.orders.index + urls.orders.edit,
 
   // forum
