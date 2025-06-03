@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
 import useRespondAd from "@/api/ads/mutations/respond";
-import { useUserProfile } from "@/api/user/queries/userProfile";
 import Button from "@/components/button";
 import CardStatus from "@/components/cards/cardStatus";
 import InfoUser from "@/components/infoUser";
@@ -45,16 +44,12 @@ export default function ItemOrderPage() {
   const isLoadingOrderItem = useSelector(selectIsLoadingOrderItem);
 
   const { slug } = user || {};
-
-  const { data: dataAuthor, isLoading: isLoadingAuthor } = useUserProfile(
-    dataOrderItem?.author.slug,
-    { enabled: !!dataOrderItem }
-  );
+  const dataAuthor = dataOrderItem?.author;
 
   const onRespondAd = useRespondAd();
   const history = useHistory();
 
-  if (isLoadingOrderItem || isLoadingAuthor) {
+  if (isLoadingOrderItem) {
     return <PageLoader />;
   }
 
@@ -149,9 +144,9 @@ export default function ItemOrderPage() {
                 first_name={dataAuthor.first_name}
                 last_name={dataAuthor.last_name}
                 photo={dataAuthor.photo || ""}
-                username={dataAuthor.username}
-                is_staff={dataAuthor.is_staff}
-                is_superuser={dataAuthor.is_superuser}
+                username={dataAuthor.slug}
+                is_staff={false}
+                is_superuser={false}
               />
             )}
             {dataOrderItem?.status && (
