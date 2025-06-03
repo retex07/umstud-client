@@ -10,6 +10,7 @@ import {
   createChat,
   getChat,
   getChats,
+  sendRequestAdmin,
   setChatIsLoading,
   setChatMeta,
   setChats,
@@ -74,6 +75,28 @@ function* sagaCreateChat(
   }
 }
 
+function* sagaSendRequestAdmin(
+  { api }: ExtraArguments,
+  { payload }: ReturnType<typeof sendRequestAdmin>
+) {
+  try {
+    yield put(
+      setChatIsLoading({ isLoading: true, stateId: payload.toString() })
+    );
+    yield call(api.chat.requestAdmin, payload);
+    yield put(getChat(payload.toString()));
+    toast.success(
+      t("p_profile", { keyPrefix: "messages.room.actions.successInvitedAdmin" })
+    );
+  } catch (error) {
+    console.error("[chat sagaSendRequestAdmin saga error]:", error);
+  } finally {
+    yield put(
+      setChatIsLoading({ isLoading: false, stateId: payload.toString() })
+    );
+  }
+}
+
 function* sagaAddSocketNotificationMessage(
   {},
   { payload }: ReturnType<typeof addSocketNotificationMessage>
@@ -111,6 +134,7 @@ export default function* chat(ea: ExtraArguments) {
   yield takeLatest(getChats.toString(), sagaGetChats, ea);
   yield takeLatest(getChat.toString(), sagaGetChat, ea);
   yield takeLatest(createChat.toString(), sagaCreateChat, ea);
+  yield takeLatest(sendRequestAdmin.toString(), sagaSendRequestAdmin, ea);
   yield takeLatest(
     addSocketNotificationMessage.toString(),
     sagaAddSocketNotificationMessage,

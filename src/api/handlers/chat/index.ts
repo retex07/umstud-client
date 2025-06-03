@@ -8,6 +8,7 @@ export type ApiChatHandlers = {
   getChatRoom: (chatId: string) => PureResponse<ChatRoom>;
   getChats: () => PureResponse<ChatRoom[]>;
   createChat: (body: ChatCreate) => PureResponse<ChatRoom[]>;
+  requestAdmin: (chatRoomId: ChatRoom["id"]) => PureResponse<string[]>;
 };
 
 const API = ENDPOINTS_CONFIG.api;
@@ -25,5 +26,14 @@ export default function ApiChat(): ApiChatHandlers {
     return (await http.post(API.chats.create, body)).data;
   };
 
-  return { getChats, getChatRoom, createChat };
+  const requestAdmin: ApiChatHandlers["requestAdmin"] = async (chatRoomId) => {
+    return (
+      await http.put(
+        API.chats.requestAdmin.replace(":roomId", chatRoomId.toString()),
+        {}
+      )
+    ).data;
+  };
+
+  return { getChats, getChatRoom, createChat, requestAdmin };
 }

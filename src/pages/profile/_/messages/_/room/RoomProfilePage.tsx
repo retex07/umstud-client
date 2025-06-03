@@ -3,6 +3,7 @@ import { format, isToday, isYesterday, Locale, parseISO } from "date-fns";
 import { ru } from "date-fns/locale";
 import { enUS } from "date-fns/locale/en-US";
 import i18next from "i18next";
+import { isNumber } from "lodash";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Scrollbars } from "react-custom-scrollbars";
 import toast from "react-hot-toast";
@@ -25,13 +26,19 @@ import WebSocketService from "@/api/ws";
 import FileAdding from "@/components/FileAdding";
 import InputMessage from "@/components/InputMessage";
 import AvatarUser from "@/components/avatarUser";
+import Button from "@/components/button";
+import CardStatus from "@/components/cards/cardStatus";
 import InlineLoader from "@/components/loaders/inlineLoader";
 import PageLoader from "@/components/loaders/pageLoader";
 import urls from "@/services/router/urls";
 import { ReactComponent as ExpandSvg } from "@/static/images/expand.svg";
 import { ReactComponent as RollupSvg } from "@/static/images/rollup.svg";
 import { ReactComponent as SendSvg } from "@/static/images/send.svg";
-import { addSocketMessage, getChat } from "@/store/actions/chat";
+import {
+  addSocketMessage,
+  getChat,
+  sendRequestAdmin,
+} from "@/store/actions/chat";
 import { selectChat } from "@/store/selectors/chat";
 import { selectUserData } from "@/store/selectors/user";
 import { RootState } from "@/store/types";
@@ -39,9 +46,11 @@ import { getDraftStorageKey } from "@/utils/chat";
 import { getBasePath } from "@/utils/router";
 import { isMobileVersion, t } from "@/utils/util";
 
+import ConfirmOrderModal from "./ConfirmOrderModal";
 import MessageItem from "./Message";
 import MobileNavigationMenu from "../../../../components/mobileNavigationMenu";
 import NavigationMenu from "../../../../components/navigationMenu";
+
 import "../../MessageProfilePage.scss";
 import "../../../styles.scss";
 
@@ -111,6 +120,7 @@ export default function RoomProfilePage() {
   const [inputMessage, setInputMessage] = useState("");
   const [chatConnected, setChatConnected] = useState(false);
   const [isLoadingFile, setIsLoadingFile] = useState(false);
+  const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
   const [isExpand, setIsExpand] = useState(false);
   const [filesUploaded, setFilesUploaded] = useState<
     FormDataUploadFile_Success[]
@@ -161,6 +171,11 @@ export default function RoomProfilePage() {
     websocketChat.onMessage((event) => {
       const data: ChatSocketEventData = JSON.parse(event.data);
       console.info("JSON.parse socket dataEvent:", data);
+
+      if (data.type === "admin_requested") {
+        return;
+      }
+
       if (Number(params.roomId)) {
         dispatch(
           addSocketMessage({
@@ -190,6 +205,7 @@ export default function RoomProfilePage() {
     meta: chatRoom,
     messages,
   } = useSelector((state: RootState) => selectChat(state, params.roomId));
+  const isMyOrder = chatRoom?.ad?.author === myProfileData?.id;
 
   useEffect(() => {
     scrollRef.current?.scrollToBottom();
@@ -307,6 +323,16 @@ export default function RoomProfilePage() {
     }
   };
 
+  const requestAdmin = () => {
+    if (chatRoom?.id && !chatRoom?.admin_requested) {
+      dispatch(sendRequestAdmin(chatRoom.id));
+    }
+  };
+
+  const toggleConfirmOrder = () => {
+    setIsOpenConfirmModal(!isOpenConfirmModal);
+  };
+
   const toggleIsExpand = () => {
     setIsExpand(!isExpand);
   };
@@ -351,6 +377,16 @@ export default function RoomProfilePage() {
 
   return (
     <div id="page" className="page-container chats-page">
+      {isNumber(chatRoom?.ad?.id) && (
+        <ConfirmOrderModal
+          isLoading={isLoading}
+          isOpen={isOpenConfirmModal}
+          onClose={toggleConfirmOrder}
+          orderId={chatRoom.ad.id.toString()}
+          chatRoomId={chatRoom?.id}
+        />
+      )}
+
       <div className="container-bar">
         <div className="profile-tabs">
           {isMobileVersion() && <MobileNavigationMenu />}
@@ -427,6 +463,7 @@ export default function RoomProfilePage() {
               countUploadedFiles={filesUploaded.length}
             />
             <InputMessage
+              disabled={chatRoom?.is_closed}
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               fullWidth
@@ -458,7 +495,51 @@ export default function RoomProfilePage() {
             {(!chatConnected || isLoadingFile) && <InlineLoader />}
           </div>
         </div>
-        <NavigationMenu />
+        <div className="chat-room-page__panels">
+          <NavigationMenu />
+          <div className="umstud-manage-order">
+            <div className="umstud-manage-order__status">
+              <h3 className="umstud-manage-order__status_head">
+                {t("room.status")}
+              </h3>
+              {chatRoom?.is_closed ? (
+                <CardStatus type="completed" />
+              ) : (
+                <CardStatus type="in_progress" />
+              )}
+            </div>
+            <p className="umstud-manage-order__status_description">
+              {t("room.be")}{" "}
+              {isMyOrder ? t("room.requester") : t("room.performer")}
+            </p>
+            <div className="umstud-manage-order__actions">
+              {!chatRoom?.is_closed && isMyOrder && (
+                <Button
+                  isLoading={isLoading}
+                  onClick={toggleConfirmOrder}
+                  label={t("room.actions.submit")}
+                  size="very-small"
+                  fullWidth
+                />
+              )}
+              {!chatRoom?.is_closed && (
+                <Button
+                  fullWidth
+                  label={
+                    chatRoom?.admin_requested
+                      ? t("room.actions.invitedAdmin")
+                      : t("room.actions.inviteAdmin")
+                  }
+                  size="very-small"
+                  color="blue-dark"
+                  isLoading={isLoading}
+                  onClick={requestAdmin}
+                  isTransparent={chatRoom?.admin_requested}
+                />
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

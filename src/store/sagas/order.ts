@@ -2,12 +2,14 @@ import { call, put, takeLatest } from "redux-saga/effects";
 
 import { AdGet, OptionSelect } from "@/api/handlers/order/types";
 import { ExtraArguments } from "@/api/types";
+import { getChat, setChatIsLoading } from "@/store/actions/chat";
 import {
   getCategoriesAndTypes,
   getMyOrders,
   getMyWorks,
   getOrder,
   getOrders,
+  requestConfirmOrderReady,
   setCategories,
   setIsLoadingMyOrders,
   setIsLoadingMyWorks,
@@ -100,12 +102,49 @@ function* getCategoriesAndTypesSaga({ api }: ExtraArguments) {
   }
 }
 
+function* sagaRequestConfirmOrderReady(
+  { api }: ExtraArguments,
+  { payload }: ReturnType<typeof requestConfirmOrderReady>
+) {
+  try {
+    const { orderId, data, chatRoomId, callback } = payload;
+
+    if (chatRoomId) {
+      yield put(setChatIsLoading({ isLoading: true, stateId: chatRoomId }));
+    }
+
+    yield call(api.order.completedOrder, orderId, data);
+    yield put(getOrder(orderId));
+
+    if (chatRoomId) {
+      yield put(getChat(chatRoomId));
+    }
+
+    if (callback) {
+      callback();
+    }
+  } catch (error) {
+    console.error("[order sagaRequestConfirmOrderReady saga error]:", error);
+  } finally {
+    if (payload.chatRoomId) {
+      yield put(
+        setChatIsLoading({ isLoading: false, stateId: payload.chatRoomId })
+      );
+    }
+  }
+}
+
 export default function* order(ea: ExtraArguments) {
   yield takeLatest(setResponder.toString(), setResponderSaga, ea);
   yield takeLatest(getMyOrders.toString(), getMyOrdersSaga, ea);
   yield takeLatest(getMyWorks.toString(), sagaGetMyWorks, ea);
   yield takeLatest(getOrders.toString(), getOrdersSaga, ea);
   yield takeLatest(getOrder.toString(), getOrderSaga, ea);
+  yield takeLatest(
+    requestConfirmOrderReady.toString(),
+    sagaRequestConfirmOrderReady,
+    ea
+  );
   yield takeLatest(
     getCategoriesAndTypes.toString(),
     getCategoriesAndTypesSaga,

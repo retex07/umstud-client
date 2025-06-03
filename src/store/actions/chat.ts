@@ -37,4 +37,8 @@ export const setChatIsLoading = createAction<{
   stateId: string;
 }>(prefix + "SET_CHAT_IS_LOADING");
 
+export const sendRequestAdmin = createAction<ChatRoom["id"]>(
+  prefix + "REQUEST_ADMIN"
+);
+
 export const createChat = createAction<ChatCreate>(prefix + "CREATE_CHAR");

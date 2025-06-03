@@ -1,6 +1,11 @@
 import { createAction } from "redux-actions";
 
-import { AdGet, ExecutorBody, OptionSelect } from "@/api/handlers/order/types";
+import {
+  AdGet,
+  CompletedAd_BodyRequest,
+  ExecutorBody,
+  OptionSelect,
+} from "@/api/handlers/order/types";
 
 const prefix = "order/";
 
@@ -42,3 +47,10 @@ export const setIsLoadingOrders = createAction<boolean>(
 export const setIsLoadingOrderItem = createAction<boolean>(
   prefix + "SET_IS_LOADING_ORDER_ITEM"
 );
+
+export const requestConfirmOrderReady = createAction<{
+  chatRoomId?: string;
+  callback?: () => void;
+  orderId: string;
+  data: CompletedAd_BodyRequest;
+}>(prefix + "REQUEST_CONFIRM_ORDER_READY");

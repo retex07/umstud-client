@@ -16,6 +16,11 @@ export interface UserResponse {
   patronymic?: string;
 }
 
+export interface CompletedAd_BodyRequest {
+  count: number;
+  message?: string;
+}
+
 export interface AdGet {
   id: number;
   orderNumber?: number;

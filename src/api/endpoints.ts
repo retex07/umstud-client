@@ -18,6 +18,7 @@ export const ENDPOINTS_CONFIG = {
     chats: {
       create: "/chats/create/",
       list: "/chats/",
+      requestAdmin: "/chats/:roomId/request-admin/",
     },
     scan: "/scan/:scanId/",
     rating: {
@@ -32,6 +33,7 @@ export const ENDPOINTS_CONFIG = {
       myOrders: "/ad/users/ads/",
       myWorks: "/ad/my_work/",
       executor: "/ad/ads/executor/",
+      completed: "/ad/ads/:orderId/complete/",
     },
     discussion: {
       create: "/discussions/create/",

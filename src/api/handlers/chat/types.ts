@@ -25,6 +25,7 @@ export type ChatRoom = {
   created_at: string | null;
   created_chat_at: string;
   is_closed: boolean;
+  admin_requested: boolean;
   messages: Message[];
   last_message: Message;
   ad: {
@@ -71,6 +72,7 @@ export type ChatSocketEventData = Pick<
   message: Message["content"];
   messageId: Message["id"];
   timestamp: string;
+  type?: string;
 };
 
 export type NotificationChatSocketEventData = Pick<

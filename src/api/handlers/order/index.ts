@@ -1,20 +1,28 @@
 import { ENDPOINTS_CONFIG } from "@/api/endpoints";
 import http from "@/api/http";
-import { PureResponse } from "@/api/types";
 
-import { ExecutorBody, AdGet, OptionSelect } from "./types";
+import {
+  ExecutorBody,
+  AdGet,
+  OptionSelect,
+  CompletedAd_BodyRequest,
+} from "./types";
 
 interface QueryHandlers {
-  getMyOrders: () => PureResponse<AdGet[]>;
-  getMyWorks: () => PureResponse<AdGet[]>;
-  getOrders: () => PureResponse<AdGet[]>;
-  getOrder: (orderId: string) => PureResponse<AdGet>;
-  getTypes: () => PureResponse<OptionSelect[]>;
-  getCategories: () => PureResponse<OptionSelect[]>;
+  getMyOrders: () => Promise<AdGet[]>;
+  getMyWorks: () => Promise<AdGet[]>;
+  getOrders: () => Promise<AdGet[]>;
+  getOrder: (orderId: string) => Promise<AdGet>;
+  getTypes: () => Promise<OptionSelect[]>;
+  getCategories: () => Promise<OptionSelect[]>;
 }
 
 interface MutateHandlers {
-  setExecutor: (data: ExecutorBody) => PureResponse<ExecutorBody>;
+  setExecutor: (data: ExecutorBody) => Promise<ExecutorBody>;
+  completedOrder: (
+    orderId: string,
+    data: CompletedAd_BodyRequest
+  ) => Promise<CompletedAd_BodyRequest>;
 }
 
 export type ApiOrderHandlers = MutateHandlers & QueryHandlers;
@@ -50,6 +58,15 @@ export default function ApiOrder(): ApiOrderHandlers {
     return (await http.get(API.ad.categories)).data;
   };
 
+  const completedOrder: ApiOrderHandlers["completedOrder"] = async (
+    orderId,
+    data
+  ) => {
+    return (
+      await http.post(API.ad.completed.replace(":orderId", orderId), data)
+    ).data;
+  };
+
   return {
     setExecutor,
     getMyOrders,
@@ -58,5 +75,6 @@ export default function ApiOrder(): ApiOrderHandlers {
     getCategories,
     getOrder,
     getMyWorks,
+    completedOrder,
   };
 }

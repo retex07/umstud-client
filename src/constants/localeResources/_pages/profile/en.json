@@ -95,6 +95,29 @@
           "placeholder": "Enter a message...",
           "send": "Send"
         }
+      },
+      "status": "Status:",
+      "be": "You are the",
+      "requester": "requester",
+      "performer": "performer",
+      "actions": {
+        "submit": "Confirm completion",
+        "inviteAdmin": "Invite administrator",
+        "invitedAdmin": "Administrator invited",
+        "successInvitedAdmin": "The administrator is invited to the chat"
+      },
+      "confirmOrder": {
+        "title": "Confirm Order Completion",
+        "score": "Work Quality Rating",
+        "require": "This field is required",
+        "comment": {
+          "label": "Comment",
+          "placeholder": "Describe the quality of the work"
+        },
+        "actions": {
+          "cancel": "Cancel",
+          "submit": "Confirm"
+        }
       }
     }
   },

@@ -211,6 +211,17 @@
 }
 
 .chat-room-page {
+  &__panels {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 740px;
+
+    @media screen and (max-width: 1220px) {
+      width: 100%;
+    }
+  }
+
   &__header {
     display: flex;
     flex-direction: column;
@@ -219,14 +230,9 @@
     &_h3 {
       overflow: hidden;
       display: -webkit-box;
-      -webkit-line-clamp: 2;
-      line-clamp: 2;
+      -webkit-line-clamp: 1;
+      line-clamp: 1;
       -webkit-box-orient: vertical;
-
-      @media screen and (max-width: 1220px) {
-        -webkit-line-clamp: 1;
-        line-clamp: 1;
-      }
     }
 
     &_action-btn {
@@ -312,17 +318,15 @@
     }
 
     & .inline-loader{
-      @media screen and (min-width: 1221px) {
-        width: 1.5em;
-        height: 1.5em;
-      }
+      width: 30px;
+      height: 30px;
       
       div {
         border-color: var(--color-gray) transparent transparent transparent;
 
         @media screen and (min-width: 1221px) {
-          width: 1.5em;
-          height: 1.5em;
+          width: 25px;
+          height: 25px;
         }
       }
     }
@@ -455,5 +459,102 @@
     &_time {
       @include typography.signature;
     }
+  }
+}
+
+.umstud-manage-order {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border-radius: 26px;
+  padding: 12px;
+  box-sizing: border-box;
+
+  background-color: var(--color-white);
+
+  gap: 12px;
+  margin-bottom: 20px;
+
+  @media screen and (max-width: 1220px) {
+    width: 100%;
+  }
+
+  &__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+
+    & .card-status {
+      font-size: 14px;
+      padding: 4px 8px;
+
+      & > svg {
+        max-width: 12px;
+        align-self: flex-start;
+      }
+    }
+
+    &_head {
+      @include typography.ordinary;
+      font-weight: 600;
+    }
+
+    &_description {
+      @include typography.ordinary_subtitle;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+  }
+}
+
+.umstud-confirm-order-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    &-stars {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+
+      &-wrapper {
+        display: inline-flex;
+        align-items: center;
+        gap: 2px;
+      }
+
+      &_label {
+        @include typography.ordinary;
+
+        &::after {
+          content: '*';
+          color: var(--color-red);
+          margin-left: 2px;
+        }
+      }
+
+      &__label-warning {
+        @include typography.signature;
+        color: var(--color-red);
+      }
+    }
+  }
+
+  &__actions {
+    display: inline-flex;
+    align-self: center;
+    gap: 12px;
+    width: 100%;
   }
 }
