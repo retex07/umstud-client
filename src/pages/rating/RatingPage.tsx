@@ -44,7 +44,7 @@ export default function RatingPage() {
 
   function getFullRating(rating: number) {
     if (rating.toString().includes(".")) {
-      return rating;
+      return rating.toFixed(2);
     }
 
     return rating + ".0";

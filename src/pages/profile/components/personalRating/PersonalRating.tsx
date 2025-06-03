@@ -56,18 +56,6 @@ export default function PersonalRating({
         <p className="umstud-personal-rating-panel__header_description">
           {t("completedOrders", { count: countCompletedOrders })}
         </p>
-        <div className="umstud-personal-rating-panel__header-stars">
-          {[...Array(Math.round(countStars))].map((_, index) => (
-            <div key={index} className="blue-star fill">
-              <FillStarSvg />
-            </div>
-          ))}
-          {[...Array(5 - Math.round(countStars))].map((_, index) => (
-            <div key={index} className="blue-star">
-              <HollowStarSvg />
-            </div>
-          ))}
-        </div>
       </header>
       <div className="reviews-profile">
         {ratings.map((rating) => (
@@ -89,24 +77,28 @@ export default function PersonalRating({
                   <p className="reviews-profile__item-user_date">
                     {getFullDate(new Date(rating.created_at))}
                   </p>
+                  <div className="profile-index__stars">
+                    {[...Array(Math.round(rating.count || 0))].map(
+                      (_, index) => (
+                        <div key={index} className="blue-star fill">
+                          <FillStarSvg />
+                        </div>
+                      )
+                    )}
+                    {[...Array(5 - Math.round(rating.count || 0))].map(
+                      (_, index) => (
+                        <div key={index} className="blue-star">
+                          <HollowStarSvg />
+                        </div>
+                      )
+                    )}
+                  </div>
                 </div>
               </div>
-              <div className="profile-index__stars">
-                {[...Array(Math.round(rating.count || 0))].map((_, index) => (
-                  <div key={index} className="blue-star fill">
-                    <FillStarSvg />
-                  </div>
-                ))}
-                {[...Array(5 - Math.round(rating.count || 0))].map(
-                  (_, index) => (
-                    <div key={index} className="blue-star">
-                      <HollowStarSvg />
-                    </div>
-                  )
-                )}
-              </div>
             </div>
-            <p className="reviews-profile__item-message">{rating.message}</p>
+            {!!rating.message?.trim() && (
+              <p className="reviews-profile__item-message">{rating.message}</p>
+            )}
           </div>
         ))}
       </div>

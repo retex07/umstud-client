@@ -61,7 +61,7 @@ export type DetailUserRating = {
   author: UserRating;
   target: UserRating;
   count: number;
-  message: string;
+  message?: string;
   created_at: string;
   ad: {
     id: number;

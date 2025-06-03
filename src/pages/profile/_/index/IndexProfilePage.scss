@@ -64,6 +64,10 @@
 
   &__stars {
     display: inline-flex;
+
+    svg {
+      max-width: 14px;
+    }
   }
 
   &--subtitle {

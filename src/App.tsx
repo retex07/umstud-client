@@ -122,7 +122,7 @@ function App(props: PropsApp) {
         }
       }
     }
-  }, [userProfile, accessToken, isLoadingApp, window.location]);
+  }, [userProfile, accessToken, isLoadingApp, location.pathname]);
 
   if (isLoadingApp) {
     return <PageLoader />;
