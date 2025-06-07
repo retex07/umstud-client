@@ -61,8 +61,14 @@
     @include typography.description;
     color: var(--color-blue);
     text-decoration: none;
+
     &:hover {
       text-decoration: underline;
+    }
+
+    &.description {
+      @include typography.signature;
+      color: var(--color-blue);
     }
   }
 

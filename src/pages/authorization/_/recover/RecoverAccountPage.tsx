@@ -8,6 +8,7 @@ import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import { PasswordReset_RequestBody } from "@/api/handlers/auth/types";
 import Button from "@/components/button";
 import Field from "@/components/formElements/field";
+import urls from "@/services/router/urls";
 import { ReactComponent as LineSvg } from "@/static/images/line.svg";
 import { logout, recover } from "@/store/actions/auth";
 import { selectAccessToken, selectIsLoading } from "@/store/selectors/auth";
@@ -97,7 +98,12 @@ export default function RecoverPage() {
             isTransparent
             onClick={() => history.push(basePath + "/sign-up")}
           />
-          <p className="authorization--description">{t("police")}</p>
+          <p className="authorization--description">
+            {t("policy.title")}{" "}
+            <a className="authorization__link description" href={urls.privacy}>
+              {t("policy.document")}
+            </a>
+          </p>
         </div>
       </div>
     </div>

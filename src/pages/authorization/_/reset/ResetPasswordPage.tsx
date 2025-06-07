@@ -124,7 +124,12 @@ export default function ResetPage() {
             isTransparent
             onClick={() => history.push(basePath + "/sign-up")}
           />
-          <p className="authorization--description">{t("police")}</p>
+          <p className="authorization--description">
+            {t("policy.title")}{" "}
+            <a className="authorization__link description" href={urls.privacy}>
+              {t("policy.document")}
+            </a>
+          </p>
         </div>
       </div>
     </div>

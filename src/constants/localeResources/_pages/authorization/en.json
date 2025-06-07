@@ -52,5 +52,8 @@
       "press": "Enter your last name"
     }
   },
-  "police": "By registering and logging in, you agree to the terms of service and data processing policy"
+  "policy": {
+    "title": "By logging in, you agree to the ",
+    "document": "privacy policy"
+  }
 }

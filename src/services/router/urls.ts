@@ -1,6 +1,7 @@
 const urls = {
   index: "/",
   activate: "/activate",
+  privacy: "/privacy",
   profile: {
     index: "/profile",
     item: "/user/:profileId",

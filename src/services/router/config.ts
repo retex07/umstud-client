@@ -8,6 +8,7 @@ const RatingPageResolver = lazy(() => import("@/pages/rating"));
 const ForumPageResolver = lazy(() => import("@/pages/forum/resolver"));
 const OrdersPageResolver = lazy(() => import("@/pages/orders/resolver"));
 const ServicesPageResolver = lazy(() => import("@/pages/services"));
+const PrivacyPageResolver = lazy(() => import("@/pages/privacy"));
 const AuthorizationPageResolver = lazy(
   () => import("@/pages/authorization/resolver")
 );
@@ -55,6 +56,14 @@ const Routes: Route[] = [
   {
     path: urls.rating.index,
     component: RatingPageResolver,
+    settings: {
+      exact: false,
+    },
+    layoutSettings: {},
+  },
+  {
+    path: urls.privacy,
+    component: PrivacyPageResolver,
     settings: {
       exact: false,
     },
