@@ -117,13 +117,8 @@ function* sagaAddSocketNotificationMessage(
       })
     );
 
-    if (
-      callback &&
-      !window.location.pathname.includes(
-        urls.profile.index + urls.profile.messages.index
-      )
-    ) {
-      yield call(callback);
+    if (callback) {
+      callback();
     }
   } catch (error) {
     console.error("[chat sagaAddSocketNotificationMessage saga error]:", error);

@@ -89,7 +89,14 @@ function App(props: PropsApp) {
             data,
             callback: () => {
               messageSoundRef.current?.play().catch(console.warn);
-              toast.custom((t) => <ChatMessageToast t={t} message={data} />);
+
+              if (
+                !location.pathname.includes(
+                  urls.profile.index + urls.profile.messages.index
+                )
+              ) {
+                toast.custom((t) => <ChatMessageToast t={t} message={data} />);
+              }
             },
           })
         );
@@ -135,7 +142,7 @@ function App(props: PropsApp) {
           <>
             <audio
               ref={messageSoundRef}
-              src="/sounds/newMessage.mp3"
+              src="/sounds/newMessage.wav"
               preload="auto"
             />
             <Switch>
