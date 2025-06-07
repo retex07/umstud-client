@@ -17,7 +17,6 @@ export const AuthorizationRoutes: Route[] = [
     settings: {
       exact: false,
     },
-    layoutSettings: {},
   },
   {
     path: urls.auth.signUp,
@@ -25,7 +24,6 @@ export const AuthorizationRoutes: Route[] = [
     settings: {
       exact: false,
     },
-    layoutSettings: {},
   },
   {
     path: urls.auth.recover,
@@ -33,7 +31,6 @@ export const AuthorizationRoutes: Route[] = [
     settings: {
       exact: false,
     },
-    layoutSettings: {},
   },
   {
     path: urls.auth.reset,
@@ -41,6 +38,5 @@ export const AuthorizationRoutes: Route[] = [
     settings: {
       exact: false,
     },
-    layoutSettings: {},
   },
 ];

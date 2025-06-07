@@ -8,8 +8,4 @@ export interface Route {
     | (() => ReactElement)
     | null;
   settings: Pick<RouteProps, "exact" | "strict" | "sensitive">;
-  layoutSettings: {
-    withFooter?: boolean;
-    withHeader?: boolean;
-  };
 }

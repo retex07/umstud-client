@@ -14,7 +14,6 @@ export const Routes: Route[] = [
     settings: {
       exact: true,
     },
-    layoutSettings: {},
   },
   {
     path: urls.orders.item,
@@ -22,7 +21,6 @@ export const Routes: Route[] = [
     settings: {
       exact: false,
     },
-    layoutSettings: {},
   },
   {
     path: urls.orders.create,
@@ -30,7 +28,6 @@ export const Routes: Route[] = [
     settings: {
       exact: false,
     },
-    layoutSettings: {},
   },
   {
     path: urls.orders.edit,
@@ -38,6 +35,5 @@ export const Routes: Route[] = [
     settings: {
       exact: false,
     },
-    layoutSettings: {},
   },
 ];

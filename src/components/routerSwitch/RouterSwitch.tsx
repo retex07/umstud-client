@@ -20,13 +20,7 @@ export default function RouterSwitch(props: Props) {
           key={route.path.toString()}
           path={getRoutePath(route.path, basePath)}
           {...route.settings}
-          render={() => (
-            <LayoutBuilder
-              component={route.component}
-              renderFooter={route.layoutSettings.withFooter}
-              renderHeader={route.layoutSettings.withHeader}
-            />
-          )}
+          render={() => <LayoutBuilder component={route.component} />}
         />
       ))}
     </Switch>

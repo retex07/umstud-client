@@ -24,7 +24,6 @@ const Routes: Route[] = [
     settings: {
       exact: true,
     },
-    layoutSettings: {},
   },
   {
     path: urls.activate,
@@ -32,17 +31,12 @@ const Routes: Route[] = [
     settings: {
       exact: false,
     },
-    layoutSettings: {},
   },
   {
     path: urls.profile.index,
     component: ProfilePageResolver,
     settings: {
       exact: false,
-    },
-    layoutSettings: {
-      withFooter: false,
-      withHeader: false,
     },
   },
   {
@@ -51,7 +45,6 @@ const Routes: Route[] = [
     settings: {
       exact: false,
     },
-    layoutSettings: {},
   },
   {
     path: urls.rating.index,
@@ -59,7 +52,6 @@ const Routes: Route[] = [
     settings: {
       exact: false,
     },
-    layoutSettings: {},
   },
   {
     path: urls.privacy,
@@ -67,17 +59,12 @@ const Routes: Route[] = [
     settings: {
       exact: false,
     },
-    layoutSettings: {},
   },
   {
     path: urls.orders.index,
     component: OrdersPageResolver,
     settings: {
       exact: false,
-    },
-    layoutSettings: {
-      withFooter: false,
-      withHeader: false,
     },
   },
   {
@@ -86,20 +73,12 @@ const Routes: Route[] = [
     settings: {
       exact: false,
     },
-    layoutSettings: {
-      withFooter: false,
-      withHeader: false,
-    },
   },
   {
     path: urls.auth.index,
     component: AuthorizationPageResolver,
     settings: {
       exact: false,
-    },
-    layoutSettings: {
-      withFooter: false,
-      withHeader: false,
     },
   },
 ];

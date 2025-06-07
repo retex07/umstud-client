@@ -6,6 +6,8 @@ import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import { NotificationChatSocketEventData } from "@/api/handlers/chat/types";
 import { DetailUserProfile } from "@/api/handlers/user/types";
 import WebSocketService from "@/api/ws";
+import Footer from "@/blocks/footer";
+import Header from "@/blocks/header";
 import LayoutBuilder from "@/components/layoutBuilder";
 import PageLoader from "@/components/loaders/pageLoader";
 import { ChatMessageToast } from "@/components/toast";
@@ -145,26 +147,22 @@ function App(props: PropsApp) {
               src="/sounds/newMessage.wav"
               preload="auto"
             />
-            <Switch>
-              {Routes.map((route) => (
-                <Route
-                  key={route.path.toString()}
-                  path={route.path}
-                  exact={route.settings.exact}
-                  strict={route.settings.strict}
-                  sensitive={route.settings.sensitive}
-                  render={() => (
-                    <>
-                      <LayoutBuilder
-                        component={route.component}
-                        renderFooter={route.layoutSettings.withFooter}
-                        renderHeader={route.layoutSettings.withHeader}
-                      />
-                    </>
-                  )}
-                />
-              ))}
-            </Switch>
+            <>
+              <Header />
+              <Switch>
+                {Routes.map((route) => (
+                  <Route
+                    key={route.path.toString()}
+                    path={route.path}
+                    exact={route.settings.exact}
+                    strict={route.settings.strict}
+                    sensitive={route.settings.sensitive}
+                    render={() => <LayoutBuilder component={route.component} />}
+                  />
+                ))}
+              </Switch>
+              <Footer />
+            </>
           </>
         )}
       </Route>

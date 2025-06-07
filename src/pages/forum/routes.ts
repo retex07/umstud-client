@@ -14,7 +14,6 @@ export const Routes: Route[] = [
     settings: {
       exact: true,
     },
-    layoutSettings: {},
   },
   {
     path: urls.forum.create,
@@ -22,7 +21,6 @@ export const Routes: Route[] = [
     settings: {
       exact: false,
     },
-    layoutSettings: {},
   },
   {
     path: urls.forum.item,
@@ -30,6 +28,5 @@ export const Routes: Route[] = [
     settings: {
       exact: false,
     },
-    layoutSettings: {},
   },
 ];

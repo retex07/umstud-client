@@ -19,7 +19,6 @@ export const Routes: Route[] = [
     settings: {
       exact: true,
     },
-    layoutSettings: {},
   },
   {
     path: urls.profile.item,
@@ -27,7 +26,6 @@ export const Routes: Route[] = [
     settings: {
       exact: false,
     },
-    layoutSettings: {},
   },
   {
     path: urls.profile.security,
@@ -35,7 +33,6 @@ export const Routes: Route[] = [
     settings: {
       exact: false,
     },
-    layoutSettings: {},
   },
   {
     path: urls.profile.messages.index,
@@ -43,7 +40,6 @@ export const Routes: Route[] = [
     settings: {
       exact: true,
     },
-    layoutSettings: {},
   },
   {
     path: urls.profile.messages.item,
@@ -51,7 +47,6 @@ export const Routes: Route[] = [
     settings: {
       exact: false,
     },
-    layoutSettings: {},
   },
   {
     path: urls.profile.edit,
@@ -59,7 +54,6 @@ export const Routes: Route[] = [
     settings: {
       exact: false,
     },
-    layoutSettings: {},
   },
   {
     path: urls.profile.blackList,
@@ -67,7 +61,6 @@ export const Routes: Route[] = [
     settings: {
       exact: false,
     },
-    layoutSettings: {},
   },
   {
     path: urls.profile.myOrders,
@@ -75,7 +68,6 @@ export const Routes: Route[] = [
     settings: {
       exact: false,
     },
-    layoutSettings: {},
   },
   {
     path: urls.profile.myWork,
@@ -83,6 +75,5 @@ export const Routes: Route[] = [
     settings: {
       exact: false,
     },
-    layoutSettings: {},
   },
 ];
