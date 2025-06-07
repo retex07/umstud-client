@@ -8,6 +8,8 @@ export interface CheckboxProps
   extends Omit<HTMLAttributes<HTMLInputElement>, "onChange"> {
   label?: string;
   disabled?: boolean;
+  isControl?: boolean;
+  checked?: boolean;
   onChange?: (checked: boolean) => void;
   classNameWrapper?: string;
 }
@@ -18,10 +20,13 @@ export default function Checkbox({
   onChange,
   disabled,
   className,
+  checked: pChecked,
   classNameWrapper,
+  isControl,
   ...checkboxAttributes
 }: CheckboxProps) {
   const [checked, setChecked] = useState(defaultChecked);
+  const fieldChecked = isControl ? !!pChecked : checked;
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setChecked(e.target.checked);
@@ -36,16 +41,16 @@ export default function Checkbox({
         hidden
         type="checkbox"
         disabled={disabled}
-        checked={checked}
+        checked={fieldChecked}
         onChange={handleChange}
       />
       <div
         className={classNames("umstud-checkbox__field", className, {
           disabled,
-          active: checked,
+          active: fieldChecked,
         })}
       >
-        {checked && <CheckSvg />}
+        {fieldChecked && <CheckSvg />}
       </div>
       {label && <span className="umstud-checkbox_span">{label}</span>}
     </label>

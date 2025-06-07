@@ -23,7 +23,8 @@
           },
           "isViewOpenOnly": "Show only open ones"
         },
-        "action": "Search"
+        "action": "Search",
+        "reset": "Reset Filters"
       },
       "panels": {
         "services": {

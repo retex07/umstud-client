@@ -23,7 +23,8 @@
           },
           "isViewOpenOnly": "Показывать только открытые"
         },
-        "action": "Поиск"
+        "action": "Поиск",
+        "reset": "Сбросить фильтры"
       },
       "panels": {
         "services": {

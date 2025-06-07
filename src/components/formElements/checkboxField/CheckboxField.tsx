@@ -33,5 +33,5 @@ export default function CheckboxField<FormField extends FieldValues>(
     defaultValue: defaultValue,
   });
 
-  return <Checkbox {...field} {...rest} defaultChecked={defaultValue} />;
+  return <Checkbox {...field} {...rest} defaultChecked={defaultValue} isControl checked={field.value} />;
 }

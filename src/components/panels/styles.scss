@@ -41,6 +41,11 @@
     gap: 8px;
     padding: 10px 12px;
     width: 100%;
+    cursor: pointer;
+
+    &:hover &_head {
+      text-decoration: underline;
+    }
 
     > svg {
       width: 28px;
@@ -89,6 +94,7 @@
     &_title {
       @include typography.signature;
 
+      text-align: start;
       overflow: hidden;
       display: -webkit-box;
       -webkit-line-clamp: 4;

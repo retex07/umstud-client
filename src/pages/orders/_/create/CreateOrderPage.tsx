@@ -29,6 +29,7 @@ import {
   selectTypes,
 } from "@/store/selectors/order";
 import { SelectOption } from "@/types/components";
+import { useQuery } from "@/utils/router";
 import { checkToken } from "@/utils/user";
 import { isMobileVersion } from "@/utils/util";
 import "../styles.scss";
@@ -48,6 +49,9 @@ export default function CreateOrderPage() {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
+
+  const queryParams = useQuery();
+  const queryTypeOrder = queryParams.get("type");
 
   const createOrder = useCreateAd();
   const updateOrder = useUpdateAd();
@@ -139,6 +143,21 @@ export default function CreateOrderPage() {
       }
     }
   }, [dataOrderItem?.category, dataCategoriesAds, setValue]);
+
+  useEffect(() => {
+    if (dataTypesAds?.length && !dataOrderItem) {
+      const foundQueryType = !!Number(queryTypeOrder)
+        ? dataTypesAds.find((type) => type.id === Number(queryTypeOrder))
+        : null;
+
+      if (foundQueryType) {
+        setValue("type", {
+          value: foundQueryType.id,
+          label: foundQueryType.name,
+        });
+      }
+    }
+  }, [dataTypesAds, setValue]);
 
   function backToOrders() {
     history.goBack();

@@ -1,19 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import Button from "@/components/button";
 import Swiper from "@/components/swiper";
 import { services, servicesPremium } from "@/mocks/servicesMock";
 import urls from "@/services/router/urls";
+import { getCategoriesAndTypes } from "@/store/actions/order";
+import { selectTypes } from "@/store/selectors/order";
 import "./ServicesPage.scss";
 
 export default function ServicesPage() {
   const { t } = useTranslation("p_services");
   const history = useHistory();
+  const dispatch = useDispatch();
 
-  function goToCreateOrder() {
-    history.push(urls.orders.index + urls.orders.create);
+  useEffect(() => {
+    dispatch(getCategoriesAndTypes());
+  }, []);
+
+  const dataTypesAds = useSelector(selectTypes);
+
+  const typesTitles = dataTypesAds.map((type) => type.name);
+  const typesOrders = services
+    .filter((type) => typesTitles.includes(type.name))
+    .map((type) => ({
+      ...type,
+      ...dataTypesAds.find((dType) => dType.name === type.name),
+    }))
+    .filter(Boolean);
+
+  function goToCreateOrder(id: number) {
+    history.push(urls.orders.index + urls.orders.create + `?type=${id}`);
   }
 
   return (
@@ -38,32 +57,38 @@ export default function ServicesPage() {
           </Swiper>
         </div>
         <div className="services-list">
-          {services.map((service) => (
-            <div key={service.id} className="services-list__item">
-              <h3 className="services-list__item-title">{service.name}</h3>
-              <div className="services-list__item-info">
-                <div className="services-list__item-info small">
-                  <h4 className="services-list__item-info-title">
-                    {t("duration")}
-                  </h4>
-                  <p className="services-list__item-info-description">
-                    {service.duration}
-                  </p>
+          {typesOrders.map(
+            (service) =>
+              service && (
+                <div key={service.id} className="services-list__item">
+                  <h3 className="services-list__item-title">{service.name}</h3>
+                  <div className="services-list__item-info">
+                    <div className="services-list__item-info small">
+                      <h4 className="services-list__item-info-title">
+                        {t("duration")}
+                      </h4>
+                      <p className="services-list__item-info-description">
+                        {service.duration}
+                      </p>
+                    </div>
+                    <div className="services-list__item-info small">
+                      <h4 className="services-list__item-info-title">
+                        {t("price")}
+                      </h4>
+                      <p className="services-list__item-info-description">
+                        {service.price}
+                      </p>
+                    </div>
+                    <Button
+                      onClick={() => goToCreateOrder(service.id)}
+                      size="small"
+                    >
+                      {t("order")}
+                    </Button>
+                  </div>
                 </div>
-                <div className="services-list__item-info small">
-                  <h4 className="services-list__item-info-title">
-                    {t("price")}
-                  </h4>
-                  <p className="services-list__item-info-description">
-                    {service.price}
-                  </p>
-                </div>
-                <Button onClick={goToCreateOrder} size="small">
-                  {t("order")}
-                </Button>
-              </div>
-            </div>
-          ))}
+              )
+          )}
         </div>
       </div>
     </div>

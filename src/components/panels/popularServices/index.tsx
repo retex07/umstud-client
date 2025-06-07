@@ -16,6 +16,10 @@ export default function PanelOrderServices() {
     history.push(urls.services);
   }
 
+  function goToSearchOrders(name: string) {
+    history.push(urls.orders.index + `?searchType=${name}`);
+  }
+
   return (
     <div className="info-panel">
       <h4 className="info-panel_head">
@@ -28,7 +32,11 @@ export default function PanelOrderServices() {
         {services.map(
           (service, index) =>
             index < 4 && (
-              <div className="info-panel__service" key={service.id}>
+              <div
+                className="info-panel__service"
+                key={service.id}
+                onClick={() => goToSearchOrders(service.name)}
+              >
                 <FileSvg />
                 <div className="info-panel__service-info">
                   <h4 className="info-panel__service_head">{service.name}</h4>
