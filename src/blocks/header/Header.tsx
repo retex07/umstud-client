@@ -49,7 +49,7 @@ export default function Header() {
   function renderNavigation() {
     return (
       <nav>
-        <ul className="navigation--list">
+        <ul className="navigation__list">
           <li>
             <NavLink to={urls.index} className="navigation--item-link">
               {t("navigation.index")}
