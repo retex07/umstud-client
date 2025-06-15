@@ -7,6 +7,7 @@ import MenuUser from "@/components/menus/menuUser";
 import SwitchLanguage from "@/components/menus/switchLanguage";
 import urls from "@/services/router/urls";
 import { ReactComponent as CloseMenuSvg } from "@/static/images/exit.svg";
+import { ReactComponent as LoginSvg } from "@/static/images/log-in.svg";
 import { ReactComponent as LogoSvg } from "@/static/images/logo.svg";
 import { ReactComponent as AlignMenuSvg } from "@/static/images/menu-align.svg";
 import { ReactComponent as MessagesSvg } from "@/static/images/message-circle.svg";
@@ -46,32 +47,56 @@ export default function Header() {
     history.push(urls.profile.index + urls.profile.messages.index);
   }
 
+  function closeSideBar() {
+    setIsOpenSideBar(false);
+  }
+
   function renderNavigation() {
     return (
       <nav>
         <ul className="navigation__list">
           <li>
-            <NavLink to={urls.index} className="navigation--item-link">
+            <NavLink
+              to={urls.index}
+              className="navigation--item-link"
+              onClick={closeSideBar}
+            >
               {t("navigation.index")}
             </NavLink>
           </li>
           <li>
-            <NavLink to={urls.services} className="navigation--item-link">
+            <NavLink
+              to={urls.services}
+              className="navigation--item-link"
+              onClick={closeSideBar}
+            >
               {t("navigation.services")}
             </NavLink>
           </li>
           <li>
-            <NavLink to={urls.orders.index} className="navigation--item-link">
+            <NavLink
+              to={urls.orders.index}
+              className="navigation--item-link"
+              onClick={closeSideBar}
+            >
               {t("navigation.orders")}
             </NavLink>
           </li>
           <li>
-            <NavLink to={urls.forum.index} className="navigation--item-link">
+            <NavLink
+              to={urls.forum.index}
+              className="navigation--item-link"
+              onClick={closeSideBar}
+            >
               {t("navigation.forum")}
             </NavLink>
           </li>
           <li>
-            <NavLink to={urls.rating.index} className="navigation--item-link">
+            <NavLink
+              to={urls.rating.index}
+              className="navigation--item-link"
+              onClick={closeSideBar}
+            >
               {t("navigation.rating")}
             </NavLink>
           </li>
@@ -122,7 +147,7 @@ export default function Header() {
           </div>
           {!user && (
             <Link to={urls.auth.index + urls.auth.signIn} className="log-in">
-              {t("login")}
+              {!isMobile ? t("login") : <LoginSvg />}
             </Link>
           )}
           {user && (

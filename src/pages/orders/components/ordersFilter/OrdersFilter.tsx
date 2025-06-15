@@ -93,8 +93,10 @@ export default function OrdersFilter(props: Props) {
   }
 
   function resetFilters() {
-    // @ts-ignore
-    Object.keys(defaultState).forEach((key) => setValue(key, defaultState[key]))
+    Object.keys(defaultState).forEach((key) =>
+      // @ts-ignore
+      setValue(key, defaultState[key])
+    );
     onSubmitFilters(defaultState);
   }
 
