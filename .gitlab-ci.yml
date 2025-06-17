@@ -11,5 +11,5 @@ create-pages:
   script:
     - yarn install
     - yarn build
-    - mkdir public
+    - mkdir -p public
     - cp -r build/* public/
