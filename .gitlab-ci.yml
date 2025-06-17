@@ -1,36 +1,15 @@
+# The Docker image that will be used to build your app
 image: node:18
-
-stages:
-  - build
-  - pages
-
-cache:
-  paths:
-    - node_modules/
-
-variables:
-  BUILD_DIR: build
-
-build:
-  stage: build
+create-pages:
+  pages:
+    # The folder that contains the files to be exposed at the Page URL
+    publish: public
+  rules:
+    # This ensures that only pushes to the default branch will trigger
+    # a pages deploy
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
   script:
-    - npm ci
-    - npm run build
+    - yarn install
+    - yarn build
     - mkdir public
-    - cp -r $BUILD_DIR/* public/
-  artifacts:
-    paths:
-      - public
-    expire_in: 1 hour
-
-pages:
-  stage: pages
-  dependencies:
-    - build
-  script:
-    - echo "Deploying to GitLab Pages"
-  artifacts:
-    paths:
-      - public
-  only:
-    - main
+    - cp -r build/* public/
