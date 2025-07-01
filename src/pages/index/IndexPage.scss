@@ -362,6 +362,7 @@
 }
 .heading {
   @include typography.main_subtitle;
+  font-weight: 400;
   color: var(--color-white);
 }
 

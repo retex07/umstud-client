@@ -18,22 +18,22 @@ export default function CardReview(props: Props) {
   }
 
   return (
-    <article className="card-review">
-      <header className="card-review--header">
-        <h3 className="card-review--heading">{props.author}</h3>
-        <div className="stars">
-          {[...Array(props.countStars)].map((item, index) => (
+    <article className="umstud-card-review">
+      <header className="umstud-card-review__header">
+        <h3 className="umstud-card-review__heading">{props.author}</h3>
+        <div className="umstud-stars">
+          {[...Array(props.countStars)].map((_, index) => (
             <FillStarSvg key={index} />
           ))}
-          {[...Array(5 - props.countStars)].map((item, index) => (
+          {[...Array(5 - props.countStars)].map((_, index) => (
             <HollowStarSvg key={index} />
           ))}
         </div>
       </header>
-      <div className="card-review--comment-container">
+      <div className="umstud-card-review__comment-container">
         <p>{props.comment}</p>
       </div>
-      <footer className="card-review--date">{props.date}</footer>
+      <footer className="umstud-card-review__date">{props.date}</footer>
     </article>
   );
 }

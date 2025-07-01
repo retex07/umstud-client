@@ -18,6 +18,7 @@ import "../../_/styles.scss";
 
 interface Props {
   callback?: (data: OrdersFilters_FormData) => void;
+  closeModalFilters?: () => void;
 }
 
 export interface OrdersFilters_FormData {
@@ -81,6 +82,13 @@ export default function OrdersFilter(props: Props) {
     }
   }
 
+  function handleSubmitData(data: OrdersFilters_FormData) {
+    onSubmitFilters(data);
+    if (isFunction(props.closeModalFilters)) {
+      props.closeModalFilters();
+    }
+  }
+
   function parseValueToSelect(value: OptionSelectAd[]) {
     const options: SelectOption[] = [];
     value.forEach((option) => {
@@ -103,7 +111,7 @@ export default function OrdersFilter(props: Props) {
   return (
     <form
       className="page-orders__filters-fields"
-      onSubmit={handleSubmit(onSubmitFilters)}
+      onSubmit={handleSubmit(handleSubmitData)}
     >
       <Field
         classNames="page-orders__filters_field"

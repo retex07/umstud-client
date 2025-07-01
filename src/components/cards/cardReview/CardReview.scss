@@ -1,19 +1,21 @@
 @use "@/styles/typography";
 
-.card-review {
+.umstud-card-review {
   display: flex;
   flex-direction: column;
 
+  flex: 1;
   padding: 22px 18px;
   gap: 22px;
   box-sizing: border-box;
   max-width: 260px;
+  height: 180px;
   width: 100%;
 
   background: var(--color-white);
   border-radius: 10px;
 
-  &--header {
+  &__header {
     display: flex;
     flex-direction: row;
 
@@ -22,13 +24,13 @@
     gap: 8px;
   }
 
-  &--heading {
+  &__heading {
     @include typography.page_subtitle;
 
     color: var(--color-dark-text);
   }
 
-  &--comment-container {
+  &__comment-container {
     display: flex;
     flex-direction: column;
 
@@ -41,7 +43,7 @@
     }
   }
 
-  &--date {
+  &__date {
     @include typography.signature;
 
     margin-bottom: 0;
@@ -53,7 +55,7 @@
   }
 }
 
-.stars {
+.umstud-stars {
   display: flex;
   flex-direction: row;
 

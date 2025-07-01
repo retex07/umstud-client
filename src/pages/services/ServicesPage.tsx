@@ -49,9 +49,6 @@ export default function ServicesPage() {
                   </h3>
                   <p>{service.description}</p>
                 </div>
-                <Button fullWidth color="blue-dark" size="small">
-                  {t("choose")}
-                </Button>
               </div>
             ))}
           </Swiper>

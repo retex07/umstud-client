@@ -58,10 +58,6 @@ export default function IndexOrderPage() {
   }
 
   function callbackFilters(data: OrdersFilters_FormData) {
-    if (isOpenModalFilters) {
-      setIsOpenModalFilters(false);
-    }
-
     if (!dataOrders) {
       return;
     }
@@ -118,7 +114,10 @@ export default function IndexOrderPage() {
         isOpen={isOpenModalFilters}
         onClose={changeOpenModalFilter}
       >
-        <OrdersFilter callback={callbackFilters} />
+        <OrdersFilter
+          callback={callbackFilters}
+          closeModalFilters={changeOpenModalFilter}
+        />
       </Modal>
       <div className="page-orders__filters">
         <div className="page-orders__filters-container">
@@ -131,8 +130,8 @@ export default function IndexOrderPage() {
       <div className="page-content-wrapper">
         <header className="page-orders__header">
           <h1 className="page-content-title">{t("title")}</h1>
-          {myProfileData && accessToken && (
-            <div className="page-orders__header_btn-list">
+          <div className="page-orders__header_btn-list">
+            {myProfileData && accessToken && (
               <Button
                 classNames="page-orders__header_btn"
                 size="very-small"
@@ -141,15 +140,15 @@ export default function IndexOrderPage() {
               >
                 <PlusSvg />
               </Button>
-              <Button
-                classNames="page-orders__header_btn page-orders__filters_btn"
-                size="very-small"
-                onClick={changeOpenModalFilter}
-              >
-                <SettingsSvg />
-              </Button>
-            </div>
-          )}
+            )}
+            <Button
+              classNames="page-orders__header_btn page-orders__filters_btn"
+              size="very-small"
+              onClick={changeOpenModalFilter}
+            >
+              <SettingsSvg />
+            </Button>
+          </div>
         </header>
         <div className="page-orders__list">
           {orders?.map(
