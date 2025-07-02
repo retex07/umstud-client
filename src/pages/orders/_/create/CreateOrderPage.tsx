@@ -378,7 +378,7 @@ export default function CreateOrderPage() {
               classNames="page-orders__actions_btn"
               type="submit"
               color="green"
-              fullWidth={isMobileVersion()}
+              fullWidth
               isLoading={
                 formState.isSubmitting ||
                 createOrder.isLoading ||
@@ -391,11 +391,11 @@ export default function CreateOrderPage() {
                   : t("create.actions.submit")
               }
             />
-            <Button
+            {/*<Button TODO: Вернуть после внедрения проверки файлов
               classNames="page-orders__actions_btn"
               fullWidth={isMobileVersion()}
               label={t("create.actions.addFile")}
-            />
+            />*/}
             <Button
               color="red"
               classNames="page-orders__actions_btn page-orders__actions_cancel_btn"

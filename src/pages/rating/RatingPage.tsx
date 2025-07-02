@@ -10,6 +10,7 @@ import PanelForumList from "@/components/panels/activeDiscussions";
 import PanelForumCreate from "@/components/panels/forumCreate";
 import PanelOrderCreate from "@/components/panels/orderCreate";
 import PanelOrderServices from "@/components/panels/popularServices";
+import { MIN_COMPLETED_ADS_RATING } from "@/constants/config";
 import urls from "@/services/router/urls";
 import { ReactComponent as StarSvg } from "@/static/images/fill-star.svg";
 import { getDiscussionList } from "@/store/actions/forum";
@@ -65,7 +66,8 @@ export default function RatingPage() {
           {!ratingList.length && <NoDataComponent />}
           {ratingList.map(
             (ratingUser, index) =>
-              index < 7 && (
+              index < 7 &&
+              ratingUser.completed_ads_count >= MIN_COMPLETED_ADS_RATING && (
                 <div key={ratingUser.id} className="rating-page__item">
                   <div className="rating-page__item-info-user">
                     <div className="rating-page__item-info-user-profile">
